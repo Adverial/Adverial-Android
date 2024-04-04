@@ -1,0 +1,213 @@
+<resources>
+    <string name="app_name">Adverial</string>
+    //------------------------------------------------------------------------------home
+    <string name="search">Ara</string>
+    <string name="recent">Son Aramalar</string>
+    <string name="clean">Temizle</string>
+    <string name="deleteAccount">Hesabı silerek, tüm verileriniz kalıcı olacaktır.</string>
+    <string name="deleteAccount1">Devam etmek istediğine emin misin?</string>
+    <string name="deleteAccount3">Hesabı Sil</string>
+    //------------------------------------------------------------------------------search result
+    <string name="result_count">sonuç bulundu</string>
+    <string name="compare">Compare</string>
+    <string name="filter">Filtrele</string>
+    <string name="sort">Sırala</string>
+    //------------------------------------------------------------------------------new ad
+    <string name="new_ad_title">Gönderi ve reklam</string>
+    <string name="new_ad_search_hint">Ne satıyorsunuz / kiralıyorsunuz?</string>
+    <string name="new_ad_title2">Adım adım kategori seçimi</string>
+    <string name="new_ad_home">Arazi</string>
+    <string name="new_ad_home_desc">Konut, işyeri, arsa, bina, zaman…</string>
+    <string name="new_ad_car">Araba</string>
+    <string name="new_ad_car_desc">Otomobil, Arazi, 4x4, SUV..</string>
+    <string name="new_ad_second_hand">İkinci el</string>
+    <string name="new_ad_second_hand_desc">Bilgisayar, Telefon, Telefon Kılıfı, Macbook Çantası..</string>
+    <string name="new_ad_pet">Hayvan bakımı</string>
+    <string name="new_ad_pet_desc">Evcil hayvan, Akvaryum, Balık, köpek kıyafetleri, kedi maması</string>
+    <string name="new_ad_service">Usta &amp; Hizmet</string>
+    <string name="new_ad_service_desc">Ev Tadilatı, Uzmanlar</string>
+    <string name="new_ad_lesson">Özel ders</string>
+    <string name="new_ad_lesson_desc">Lise, Üniversite…</string>
+    //------------------------------------------------------------------------------phone auth
+    <string name="phone_auth_title">Cep Numaranızı Onaylayın\nMesaj Göndermek İçin</string>
+    <string name="phone_auth_number_hint">Cep numarası</string>
+    <string name="phone_auth_number_send">Gönder</string>
+    //------------------------------------------------------------------------------new ad info
+    <string name="new_ad_info_title1">İlan Bilgilerini Girin</string>
+    <string name="new_ad_info_next">İleri</string>
+    <string name="new_ad_info_details">İlan Detayları</string>
+    <string name="new_ad_info_enter_here">Buraya girin…</string>
+    <string name="new_ad_info_title">Başlık</string>
+    <string name="new_ad_info_price">Fiyat</string>
+    <string name="new_ad_info_description">Açıklama</string>
+    <string name="new_ad_info_select">Seçin</string>
+    <string name="new_ad_info_currency">Para birimi</string>
+    //------------------------------------------------------------------------------new ad map
+    <string name="new_ad_map_title">Konumu işaretle</string>
+    //------------------------------------------------------------------------------new ad images
+    <string name="new_ad_images_title1">İletişim bilgileri</string>
+    <string name="new_ad_images_name">Ad Soyad</string>
+    <string name="new_ad_images_phone">Telefon numarası</string>
+    <string name="new_ad_images_title2">İletişim Tercihleri</string>
+    <string name="new_ad_images_option1">Telefon ve Mesaj</string>
+    <string name="new_ad_images_option2">Telefon</string>
+    <string name="new_ad_images_option3">Mesaj</string>
+    <string name="new_ad_images_add_photo">Fotoğraf ekle</string>
+    <string name="new_ad_images_finish">Bitir</string>
+    <string name="new_ad_images_phone_hint">09123456789</string>
+    //------------------------------------------------------------------------------new ad completed
+    dialog
+    <string name="new_ad_completed_title">Tebrikler!</string>
+    <string name="new_ad_completed_desc">Reklamınız kontrol edildikten sonra\nyayınlanacaktır.</string>
+    <string name="new_ad_completed_number">İlan No:</string>
+    <string name="new_ad_completed_home">Ana sayfaya geri dön</string>
+    <string name="new_ad_completed_new_ad">Başka bir ilan ver</string>
+    //------------------------------------------------------------------------------address
+    <string name="address_title">Adres bilgilerini girin</string>
+    <string name="address_country">Ülke</string>
+    <string name="address_province">Şehir</string>
+    <string name="address_district">Semt</string>
+    <string name="address_neighbourhood">Mahhale</string>
+    //------------------------------------------------------------------------------profile
+    <string name="profile_listing">Listeleme Yönetimi ve raporlar</string>
+    <string name="profile_listing_whats_on">Yayınlanmiş ilanlar</string>
+    <string name="profile_listing_air">Kaldırılmış ilanlar</string>
+    <string name="profile_notifications">Mağaza Bildirimleri</string>
+    <string name="profile_notifications_messages">Reklam mesajları</string>
+    <string name="profile_notifications_notifications">Bildirimler</string>
+    <string name="profile_notifications_special">Size özel reklamlar</string>
+    <string name="profile_notifications_favorites_ad">Favori reklamlar</string>
+    <string name="profile_notifications_favorites_seller">Favori satıcı</string>
+    <string name="profile_settings">Ayarlar</string>
+    <string name="profile_settings_settings">Ayarlar</string>
+    <string name="profile_settings_membership">Üyelik bilgileri</string>
+    <string name="profile_settings_contact_us">Bize Ulaşın</string>
+    <string name="profile_settings_contact_us_hint">Bizimle iletişime geçin…</string>
+    <string name="profile_settings_contact_us_send">Gönder</string>
+    <string name="profile_settings_contact_us_website">Daha fazla bilgi için lütfen web sitemizi ziyaret edin.</string>
+    <string name="profile_settings_about">Hakkımızda</string>
+    <string name="profile_settings_profile">Hesabım</string>
+    <string name="profile_settings_logout">Çıkış Yap</string>
+    //------------------------------------------------------------------------------favorite
+    <string name="favorite_title">Favori</string>
+    //------------------------------------------------------------------------------my account
+    <string name="my_account_title">Hesabım</string>
+    <string name="my_account_gender">Cinsiyet</string>
+    <string name="my_account_phone">Telefon numarası</string>
+    <string name="my_account_save">Kaydet</string>
+    //------------------------------------------------------------------------------special
+    <string name="special_title">Size özel reklamlar</string>
+    //------------------------------------------------------------------------------my ads
+    <string name="favorite_my_ads_active">Yayınlanmiş ilanlar</string>
+    <string name="favorite_my_ads_deactive">Kaldırılmiş ilanlar</string>
+    //------------------------------------------------------------------------------login and signup
+    <string name="login_title">Uygulamayı Kullanmak İçin\nLütfen Giriş Yapın</string>
+    <string name="login_email_hint">E-Posta Adresi / Kullanıcı Adı</string>
+    <string name="login_password_hint">Sifre</string>
+    <string name="login">Giriş Yap</string>
+    <string name="signup">Kayıt Ol</string>
+    <string name="signup_title">Uygulamayı Kullanmak İçin\Lütfen Kaydolun</string>
+    <string name="signup_name_hint">İsim</string>
+    <string name="signup_lastname_hint">Soyisim</string>
+    <string name="signup_email_hint">E-posta Adresi</string>
+    <string name="signup_terms1">Bireysel Üyelik Sözleşmesi ve Eklerini kabul ediyorum.</string>
+    <string name="signup_terms2">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.</string>
+    //------------------------------------------------------------------------------phone auth
+    <string name="phone_auth_title1">Lütfen e-posta gelen kutunuzu kontrol edin ve gelen doğrulama kodunu girin.</string>
+    <string name="phone_auth_verify">Doğrula</string>
+    <string name="resendCode">Kodu Yeniden Gönder</string>
+    //------------------------------------------------------------------------------post
+    <string name="post_expired">Süresi doldu</string>
+    <string name="post_active">Aktif</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    //------------------------------------------------------------------------------post details
+    <string name="post_details_call">Ara</string>
+    <string name="post_details_message">Mesaj gönder</string>
+    <string name="post_details_info">İlan Bilgileri</string>
+    <string name="post_details_desc">Açıklama</string>
+    <string name="post_details_about">Teklifler hakkında</string>
+    <string name="post_details_location">Konum</string>
+    //------------------------------------------------------------------------------choose image
+    resource
+    <string name="image_resource_choose">Yöntem seçin</string>
+    <string name="image_resource_camera">Kamera</string>
+    <string name="image_resource_gallery">Galeri</string>
+    <string name="image_resource_cancel">İptal</string>
+    //------------------------------------------------------------------------------Message
+    <string name="message_list_title">Mesajlar</string>
+    <string name="message_enter_message">Mesajınızı buraya girin</string>
+    //------------------------------------------------------------------------------menu
+    <string name="menu_welcome">Hoşgeldin</string>
+    <string name="menu_profile">Benim profilim</string>
+    <string name="menu_add">İlan Ver</string>
+    <string name="menu_categories">Kategoriler</string>
+    //------------------------------------------------------------------------------menu
+    <string name="notifications_empty">Bildirim yok</string>
+    //------------------------------------------------------------------------------ad feedback
+    <string name="ad_feedback_title">Lütfen bu reklamı neden kaldırmaya karar verdiğinizi bize bildirin.</string>
+    <string name="ad_feedback_send">Bitir</string>
+    <string name="ad_feedback_hint">Buraya yaz...</string>
+    //------------------------------------------------------------------------------filter
+    <string name="filter_options">Seçenekler</string>
+    <string name="filter_address">Adres</string>
+    <string name="filter_others">Diğerleri</string>
+    <string name="filter_price">Fiyat</string>
+    <string name="filter_price_min">Min</string>
+    <string name="filter_price_max">Max</string>
+    <string name="filter_price_currency">Para birimi</string>
+    <string name="filter_image">Fotoğraflı ilanlar</string>
+    <string name="filter_video">Videolu reklamlar</string>
+    <string name="filter_apply">Filtreyi Uygula</string>
+    <string name="filter_min">Min</string>
+    <string name="filter_max">Max</string>
+    <string name="filter_enter">Buraya girin</string>
+    //------------------------------------------------------------------------------toasts
+    <string name="fieldsAreEmpty">Gerekli bilgiler doğru girilmedi.</string>
+    <string name="termsAreNotAccepted">Şartlarımızı ve sözleşmelerimizi henüz kabul etmediniz.</string>
+    <string name="passwordMustBeMoreThan6">Şifre 6 veya daha fazla karakter olmalıdır.</string>
+    <string name="EmailAddressIsWrong">E-posta adresi yanlış.</string>
+    <string name="nameIsNotEntered">Lütfen adınızı ve soyadınızı giriniz.</string>
+    <string name="phoneIsNotEntered">Telefon numarası 10 numara içerir.</string>
+    <string name="signup_successful">Hesabınız başarıyla oluşturuldu.</string>
+    <string name="signup_unsuccessful">Lütfen başka bir e-posta adresi kullanın.</string>
+    <string name="login_successful">Başarıyla giriş yaptınız.</string>
+    <string name="login_unsuccessful">E-posta veya şifre yanlış.</string>
+    <string name="enterPrice">Lütfen fiyat giriniz.</string>
+    <string name="enterTitle">Lütfen başlığı giriniz.</string>
+    <string name="enterCurrency">Lütfen para birimini seçin.</string>
+    <string name="locationNotFound">Lütfen konumunuzu seçin.</string>
+    <string name="uploadImage">Lütfen birkaç resim yükleyin.</string>
+    <string name="imageIsUploading">Yükleniyor…</string>
+    <string name="imageIsUploadingDone">Yüklendi.</string>
+    <string name="imageDeleted">Resim silindi.</string>
+    <string name="accountUpdateDone">Hesap ayrıntıları başarıyla değiştirildi.</string>
+    <string name="verificationCodeEmpty">Lütfen doğrulama kodunu giriniz.</string>
+    <string name="messageSent">Mesajınız başarıyla gönderildi.</string>
+    <string name="messageEmpty">Lütfen mesajınızı girin.</string>
+    <string name="voiceError">Ses tanıma telefonunuzda mevcut değil.</string>
+    //------------------------------------------------------------------------------Alert Dialogs
+    <string name="phoneNumberNotFound">Bu yöntemle reklamverenle iletişime geçemezsiniz.</string>
+    <string name="error">Hata</string>
+    <string name="adNotAvailable">Bu ilan artık mevcut değil.</string>
+    <string name="attention">Dikkat!</string>
+    <string name="removeMyAd">Reklamınızı kaldırmak istediğinizden emin misiniz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="sort_title">Sırala</string>
+    <string name="sort_default">En iyi eşleşme</string>
+    <string name="sort_ok">Tamam</string>
+    <string name="sort_PriceLowToHigh">Fiyata göre artır</string>
+    <string name="sort_priceHighToLow">Fiyata göre azalt</string>
+    <string name="sort_name">İsme göre (A-Z)</string>
+    <string name="sort_date">Tarihe göre artan (en yeni)</string>
+    <string name="notifications_error">Bildirim yok.</string>
+    <string name="currency">Para birimi</string>
+    <string name="noNotification">Bildirim yok.</string>
+    <string name="noFavorite">Favori reklam yok.</string>
+    <string name="ok">Tamam</string>
+    <string name="forgotPassword">Şifremi Unutum</string>
+    <string name="forgotPasswordText">Doğrulama almak için e-postanızı girin</string>
+    <string name="send">Gönder</string>
+
+</resources>

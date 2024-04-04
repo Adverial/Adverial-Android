@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F4F4F4">
+
+    <TextView
+        android:id="@+id/dropList_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:fontFamily="@font/regular"
+        android:text="@string/ad_feedback_title"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/adFeedback_message"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:background="@drawable/rounded_full"
+        android:backgroundTint="@color/white"
+        android:maxLength="100"
+        android:ems="10"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:hint="@string/ad_feedback_hint"
+        android:inputType="textMultiLine"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingTop="@dimen/_3sdp"
+        android:paddingEnd="@dimen/_3sdp"
+        android:paddingBottom="@dimen/_3sdp"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dropList_title"
+        app:layout_constraintTop_toBottomOf="@+id/dropList_title" />
+
+    <Button
+        android:id="@+id/adFeedback_finish"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_27sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/rounded_full2"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/regular"
+        android:onClick="back"
+        android:text="@string/ad_feedback_send"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/adFeedback_message"
+        app:layout_constraintTop_toBottomOf="@+id/adFeedback_message" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="search">#FF000000</color>
+    <color name="yellow">#f2bc06</color>
+    <color name="orange">#f18d05</color>
+    <color name="red">#A948D8</color>
+    <color name="red_cover">#ABFA4248</color>
+    <color name="green">#5eb11c</color>
+    <color name="blue">#2196F3</color>
+    <color name="black_cover">#C8000000</color>
+    <color name="black_cover1">#C90B0B0B</color>
+    <color name="black_cover2">#7C0B0B0B</color>
+    <color name="white_cover">#12FFFFFF</color>
+    <color name="menu_background">#FFFFFF</color>
+    <color name="menu_text">#000000</color>
+    <color name="gray_cover">#CB3C3A37</color>
+    <color name="very_light_gray">#EFEFEF</color>
+    <color name="light_gray">#CCCCCC</color>
+    <color name="gray_blue">#29333c</color>
+    <color name="gray">#878787</color>
+    <color name="dark_gray">#4C4C4C</color>
+    <color name="filter_text">#FFFFFF</color>
+    <color name="none">#00FFFFFF</color>
+
+
+    <color name="textColor">#000000</color>
+    <color name="ccpBackground">#FFFFFFFF</color>
+    <color name="viewColor">#FFFFFF</color>
+    <color name="toolbarColor">#ece1d7</color>
+</resources>

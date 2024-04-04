@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemDropList_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioButton
+        android:id="@+id/itemDropList_radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/light_gray"
+        android:checked="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/itemDropList_flag"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/itemDropList_radio"
+        app:layout_constraintStart_toEndOf="@+id/itemDropList_radio"
+        app:layout_constraintTop_toTopOf="@+id/itemDropList_radio"
+        app:srcCompat="@drawable/flag_united_states_of_america" />
+
+    <TextView
+        android:id="@+id/itemDropList_name"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_23sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:fontFamily="@font/regular"
+        android:gravity="left"
+        android:paddingTop="@dimen/_3sdp"
+        android:paddingBottom="@dimen/_3sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/itemDropList_flag"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

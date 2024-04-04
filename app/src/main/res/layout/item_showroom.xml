@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemHomeProduct_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/_7sdp"
+    android:paddingBottom="@dimen/_7sdp">
+
+    <LinearLayout
+        android:id="@+id/linearLayout18"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/itemHomeProduct_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/itemHomeProduct_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@color/white_cover"
+            android:fontFamily="@font/regular"
+            android:gravity="center_vertical|start"
+            android:maxLines="2"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/showroom_price"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_58sdp"
+        android:text="TextView"
+        android:maxLines="1"
+        android:gravity="center"
+        android:textSize="@dimen/_8ssp"
+        android:paddingStart="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_4sdp"
+        android:background="@color/black_cover"
+        android:textColor="@color/yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

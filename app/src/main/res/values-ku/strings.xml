@@ -1,0 +1,212 @@
+<resources>
+    <string name="app_name">Adverial</string>
+    //------------------------------------------------------------------------------home
+    <string name="search">لَيطةسياٌ</string>
+    <string name="recent">دوماٍيك َلىطةسياٌ</string>
+    <string name="clean">ثاقزكشٌ</string>
+    <string name="deleteAccount">دةمىَ رىَ بشىا حيظابىَ ٍةمى داتا ييًَ تة دىَ ٍَيية رىاظ بشٌ</string>
+    <string name="deleteAccount1">طشيٍةوةى حظابةكة</string>
+    //------------------------------------------------------------------------------search result
+    <string name="result_count">ئةنجامىَ ليَطةساىىَ</string>
+    <string name="compare">بەراوردکردن</string>
+    <string name="filter">فلتر</string>
+    <string name="sort">ٍةلبزاسدٌ</string>
+    //------------------------------------------------------------------------------new ad
+    <string name="new_ad_title">پۆست و ڕیکلام</string>
+    <string name="new_ad_search_hint">تۆ چی دەفرۆشیت/ کرێ؟</string>
+    <string name="new_ad_title2"> ثَييطاظ ثَييطاظ طةسةكياٌ ٍةل بزيَشة .</string>
+    <string name="new_ad_home">خانووبەرە</string>
+    <string name="new_ad_home_desc">شوێنی نیشتەجێبوون، زەوی، بینا، کات</string>
+    <string name="new_ad_car">ئۆتۆمبێل</string>
+    <string name="new_ad_car_desc">سەیارە، زەوی، 4x4، ئێس یو ڤی</string>
+    <string name="new_ad_second_hand">دەستی دووەم</string>
+    <string name="new_ad_second_hand_desc">کۆمپیوتەر، تەلەفۆن، جانتای تەلەفۆن، ماکبوک بەگ.</string>
+    <string name="new_ad_pet">چاودێری ئاژەڵ</string>
+    <string name="new_ad_pet_desc">پیت، ئەکواریۆم، ماسی، جلی سەگ، خواردنی پشیلە</string>
+    <string name="new_ad_service">ماستەر &amp; خزمەتگوزاری</string>
+    <string name="new_ad_service_desc">ڕۆنوشنی ماڵەوە، پسپۆڕەکان</string>
+    <string name="new_ad_lesson">وانەی تایبەت</string>
+    <string name="new_ad_lesson_desc">دواناوەندی، زانکۆ</string>
+    //------------------------------------------------------------------------------phone auth
+    <string name="phone_auth_title">پشتڕاستکردنەوەی ژمارەی مۆبایلەکەتبۆ ناردنی نامە</string>
+    <string name="phone_auth_number_hint">رماسا موبايلىَ</string>
+    <string name="phone_auth_number_send">ٍياستً</string>
+    //------------------------------------------------------------------------------new ad info
+    <string name="new_ad_info_title1">زانیاری ڕیکلام تێبنووسە</string>
+    <string name="new_ad_info_next">دواتر</string>
+    <string name="new_ad_info_details">وسدبيييا سَيكلامىَ</string>
+    <string name="new_ad_info_enter_here">لظَيشىَ داخل كة</string>
+    <string name="new_ad_info_title">تايتل</string>
+    <string name="new_ad_info_price">بَا</string>
+    <string name="new_ad_info_description">وسدةكاسى</string>
+    <string name="new_ad_info_select">ٍةلبزيَشة</string>
+    <string name="new_ad_info_currency">جوسىَ دساظى</string>
+    //------------------------------------------------------------------------------new ad map
+    <string name="new_ad_map_title">نیشانەکردنی شوێنەکە</string>
+    //------------------------------------------------------------------------------new ad images
+    <string name="new_ad_images_title1">زانیاری بەردەنگ</string>
+    <string name="new_ad_images_name">ناوی پاشناو</string>
+    <string name="new_ad_images_phone">رماسا موبايلىَ</string>
+    <string name="new_ad_images_title2">ٍَيظية جوسىَ ثةوةىذى كشىىَ ٍةلبزيَشة .</string>
+    <string name="new_ad_images_option1">تەلەفۆن و نامە</string>
+    <string name="new_ad_images_option2">تەلەفۆن</string>
+    <string name="new_ad_images_option3">نامە</string>
+    <string name="new_ad_images_add_photo">وَيية</string>
+    <string name="new_ad_images_finish"> تمامبوٌ</string>
+    <string name="new_ad_images_phone_hint">09123456789</string>
+    //------------------------------------------------------------------------------new ad completed
+    dialog
+    <string name="new_ad_completed_title">ثيروص بيت</string>
+    <string name="new_ad_completed_desc">ثشتى ثةطةىذكشىا سَيكلاماتة دىَ ٍَيتة ثوطت كشٌ</string>
+    <string name="new_ad_completed_number">رماسا سَيكلامىَ</string>
+    <string name="new_ad_completed_home">بو لاثةسىَ طةسةكى</string>
+    <string name="new_ad_completed_new_ad">ڕێکلامێکی تر دابنێ</string>
+    //------------------------------------------------------------------------------address
+    <string name="address_title">صاىياسييًَ ىاظ و ىيشاىى داخل بكة</string>
+    <string name="address_country">وةلات</string>
+    <string name="address_province">بارَيش</string>
+    <string name="address_district">قةصا/ىاحية</string>
+    <string name="address_neighbourhood">دەوڵەت</string>
+    //------------------------------------------------------------------------------profile
+    <string name="profile_listing">ليظتا سيَخظتن و ساثوستا .</string>
+    <string name="profile_listing_whats_on">ض ٍةية</string>
+    <string name="profile_listing_air">ىة لظةس خةتة</string>
+    <string name="profile_notifications">ٍةلبزاسدىا ساطةٍاىذىكشىىَ</string>
+    <string name="profile_notifications_messages">پەیامەکانی ڕیکلام</string>
+    <string name="profile_notifications_notifications">ساطةٍاىذىكشٌ</string>
+    <string name="profile_notifications_special">سيَكلامَيت تايبةت بو تة .</string>
+    <string name="profile_notifications_favorites_ad">سيكلامَيت تايبةت .</string>
+    <string name="profile_notifications_favorites_seller">ساللەری دڵخواز</string>
+    <string name="profile_settings">سيَكخظتن</string>
+    <string name="profile_settings_settings">سيَكخظتن</string>
+    <string name="profile_settings_membership">زانیاری ئەندامێتی</string>
+    <string name="profile_settings_contact_us">ثةيوةىذيىَ بمة بكة</string>
+    <string name="profile_settings_contact_us_hint">ثةيوةىذيىَ بمة بكة</string>
+    <string name="profile_settings_contact_us_send">ٍياستً</string>
+    <string name="profile_settings_contact_us_website">بو ثتر ثيَضاىيياطةسةداىا مالجةسىَ مة بكة .</string>
+    <string name="profile_settings_about">دةسباسةى مة</string>
+    <string name="profile_settings_profile">حظابا مً</string>
+    <string name="profile_settings_logout">دةسكةفتن</string>
+    //------------------------------------------------------------------------------favorite
+    <string name="favorite_title">پەسەندترین</string>
+    //------------------------------------------------------------------------------my account
+    <string name="my_account_title">حظابا مً</string>
+    <string name="my_account_gender">ڕەگەز</string>
+    <string name="my_account_phone">رماسا موبايلىَ</string>
+    <string name="my_account_save">ثاساطتن</string>
+    //------------------------------------------------------------------------------special
+    <string name="special_title">ڕیکلامی تایبەت بۆ تۆ</string>
+    //------------------------------------------------------------------------------my ads
+    <string name="favorite_my_ads_active">ض ٍةية</string>
+    <string name="favorite_my_ads_deactive">ىة لظةس خةتة</string>
+    //------------------------------------------------------------------------------login and signup
+    <string name="login_title">بۆ بەکارهێنانی کاربەرنامە،تکایە چوونەژوورەوە </string>
+    <string name="login_email_hint">ناونیشانی ئیمەیڵ / ناوی بەکارهێنەر</string>
+    <string name="login_password_hint">نهێنوشە</string>
+    <string name="login">ضوىا روس</string>
+    <string name="signup">خو توماس بكة</string>
+    <string name="signup_title">بۆ بەکارهێنانی کاربەرنامە،تکایە تۆماربکە</string>
+    <string name="signup_name_hint">ناو</string>
+    <string name="signup_lastname_hint">پاشناو</string>
+    <string name="signup_email_hint">ناونیشانی ئیمەیڵ</string>
+    <string name="signup_terms1">من رێکەوتننامەی ئەندامێتی تاکەکەسی و پاشکۆکانی قبوڵ دەکەم.</string>
+    <string name="signup_terms2">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.</string>
+    //------------------------------------------------------------------------------phone auth
+    <string name="phone_auth_title1">تکایە ئیمەیڵەکەت بپشکنە و کۆدی پشتڕاستکردنەوەی وەرگیراو دابنێ.</string>
+    <string name="phone_auth_verify">سەلماندن</string>
+    <string name="resendCode">دوبارە ناردنی کۆد</string>
+    //------------------------------------------------------------------------------post
+    <string name="post_expired">ماوة بظةسظة ضوية</string>
+    <string name="post_active">كاساية .</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    //------------------------------------------------------------------------------post details
+    <string name="post_details_call">ثةيوةىذى كشٌ</string>
+    <string name="post_details_message">ىامةكىَ بَيَيشة</string>
+    <string name="post_details_info">صاىياسيَيت سيَكلامىَ</string>
+    <string name="post_details_desc">سوىكشٌ</string>
+    <string name="post_details_about">دەربارەی ئۆفەرەکان</string>
+    <string name="post_details_location">شوێن</string>
+    //------------------------------------------------------------------------------choose image
+    resource
+    <string name="image_resource_choose">سيَكىَ ٍةلبزيَشة</string>
+    <string name="image_resource_camera">كاميرا</string>
+    <string name="image_resource_gallery">البوو</string>
+    <string name="image_resource_cancel">ركاس ئيَخظتنc</string>
+    //------------------------------------------------------------------------------Message
+    <string name="message_list_title">نامەکان</string>
+    <string name="message_enter_message">نامەکەت لێرە بنووسە</string>
+    //------------------------------------------------------------------------------menu
+    <string name="menu_welcome">بخَيشٍاتي</string>
+    <string name="menu_profile">پرۆفایلی من</string>
+    <string name="menu_add">سَيكلامىَ ثوطت بكة</string>
+    <string name="menu_categories">طةسةكي</string>
+    //------------------------------------------------------------------------------menu
+    <string name="notifications_empty">ساطةٍاىذٌ ىيية</string>
+    //------------------------------------------------------------------------------ad feedback
+    <string name="ad_feedback_title">ٍَيظيةدياسبكة بو ضي تة دظَيت سَيكلامىَ رىاظ ببةى .</string>
+    <string name="ad_feedback_send"> تمامبوٌ</string>
+    <string name="ad_feedback_hint">ل ظَيشىَ بيظيظة</string>
+    //------------------------------------------------------------------------------filter
+    <string name="filter_options">جوس</string>
+    <string name="filter_address">ىاظ و ىيشاٌ</string>
+    <string name="filter_others">ئەوانی تر</string>
+    <string name="filter_price">بَا</string>
+    <string name="filter_price_min">كيَكتريً</string>
+    <string name="filter_price_max">ثترتشيً</string>
+    <string name="filter_price_currency">جوسىَ دساظى</string>
+    <string name="filter_image">ڕیکلامەکان لەگەڵ وێنە</string>
+    <string name="filter_video">ڕیکلامەکان بە ڤیدیۆ</string>
+    <string name="filter_apply">فلتةسى دوثاتبكة</string>
+    <string name="filter_min">كيَكتريً</string>
+    <string name="filter_max">ثترتشيً</string>
+    <string name="filter_enter">لظَيشىَ داخل كة</string>
+    //------------------------------------------------------------------------------toasts
+    <string name="fieldsAreEmpty">ٍَيظية ٍةمى خالاٌ دابطشة</string>
+    <string name="termsAreNotAccepted">ٍَيظية ساصيبوىا ٍةوة لظةسشيَواصىَ بكاسئيياىىَ . </string>
+    <string name="passwordMustBeMoreThan6">وشەی نهێنی دەبێت 6 یان زیاتر پیت بێت.</string>
+    <string name="EmailAddressIsWrong">ٍَيظية ئينيَلةكىَ دسوطت دابطشة</string>
+    <string name="nameIsNotEntered">تکایە ناو و پاشناوەکەت تێبنووسە.</string>
+    <string name="phoneIsNotEntered">ژمارەی تەلەفۆن 10 ژمارەی تێدایە.</string>
+    <string name="signup_successful">ئەژمێرەکەت سەرکەوتووانە دروست کراوە.</string>
+    <string name="signup_unsuccessful">تکایە ئیمەیڵێکی تر بەکاربهێنە.</string>
+    <string name="login_successful">تۆ سەرکەوتوانە چوونە ژوورەوە.</string>
+    <string name="login_unsuccessful">ئیمەیڵ یان نهێنوشە هەڵەیە.</string>
+    <string name="enterPrice">ٍَيظية بَاى داخل بكة</string>
+    <string name="enterTitle">ٍَيظية تايتلى داخل بكة</string>
+    <string name="enterCurrency">تکایە دراوەکە هەڵبژێرە.</string>
+    <string name="locationNotFound">تکایە کاردانەوەکەت دیاریبکە.</string>
+    <string name="uploadImage">تکایە هەندێک وێنە بار بکە.</string>
+    <string name="imageIsUploading">بارکردن</string>
+    <string name="imageIsUploadingDone">بارکرا.</string>
+    <string name="imageDeleted">وێنە سڕایەوە.</string>
+    <string name="accountUpdateDone">وردەکاریەکانی ئەژمێر بەسەرکەوتوویی گۆڕا.</string>
+    <string name="verificationCodeEmpty">تکایە کۆدی سەلماندن تێبنووسە.</string>
+    <string name="messageSent">پەیامەکەت بە سەرکەوتوویی نێردرا.</string>
+    <string name="messageEmpty">تکایە نامەکەت تێبنووسە.</string>
+    <string name="voiceError">ناسینەوەی دەنگ بەردەست نیە لەسەر تەلەفۆنەکەت.</string>
+    //------------------------------------------------------------------------------Alert Dialogs
+    <string name="phoneNumberNotFound">ناتوانیت بەم شێوازە پەیوەندی بە ریکلامکارەکەوە بکەیت.</string>
+    <string name="error">خةلةت</string>
+    <string name="adNotAvailable">ئةظ سَيكلامة لبةسدةطت ىةماية .</string>
+    <string name="attention">ٍوشذاسى</string>
+    <string name="removeMyAd">َتو يىسردى كو سَيكلاما خو رىاظ ببةى . </string>
+    <string name="yes">بةلىَ</string>
+    <string name="no">ركاس ئيَخظتن</string>
+    <string name="sort_title">ٍةلبزاسدٌ</string>
+    <string name="sort_default">باشتريً شَيواص</string>
+    <string name="sort_ok">بةلىَ</string>
+    <string name="sort_PriceLowToHigh">ىةسخ بليتر بو ىضو .</string>
+    <string name="sort_priceHighToLow">ىةسخ ىضمتر بو بليذ</string>
+    <string name="sort_name">بىاظ(ا-ي)</string>
+    <string name="sort_date">ىضمتر بو بليذ ميَزوا داىاىىَ ( ىويتريً)</string>
+    <string name="notifications_error">ساطةٍاىذٌ ىيية</string>
+    <string name="currency">جوسىَ دساظى</string>
+    <string name="noNotification">ساطةٍاىذٌ ىيية</string>
+    <string name="noFavorite">سيَكلامَيت تايبةت ىيية</string>
+    <string name="ok">بةلىَ</string>
+    <string name="forgotPassword">هل نسيت كلمة السر</string>
+    <string name="forgotPasswordText">بۆ وەرگرتنی پشتڕاستکردنەوە ئیمەیڵەکەت بنووسە</string>
+    <string name="send">گۆندەر</string>
+
+</resources>

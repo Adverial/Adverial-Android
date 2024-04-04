@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/home2">
+
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.application.adverial.ui.fragment.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/activity_home" >
+        <action
+            android:id="@+id/action_home2_to_newAd2"
+            app:destination="@id/newAd2" />
+        <action
+            android:id="@+id/action_home2_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_home2_to_notification"
+            app:destination="@id/notification" />
+        <action
+            android:id="@+id/action_home2_to_favorite"
+            app:destination="@id/favorite" />
+    </fragment>
+    <fragment
+        android:id="@+id/newAd2"
+        android:name="com.application.adverial.ui.fragment.NewAd"
+        android:label="fragment_new_ad"
+        tools:layout="@layout/activity_new_ad" >
+        <action
+            android:id="@+id/action_newAd2_to_home2"
+            app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_newAd2_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_newAd2_to_notification"
+            app:destination="@id/notification" />
+        <action
+            android:id="@+id/action_newAd2_to_favorite"
+            app:destination="@id/favorite" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.application.adverial.ui.fragment.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/activity_profile" >
+        <action
+            android:id="@+id/action_profile_to_newAd2"
+            app:destination="@id/newAd2" />
+        <action
+            android:id="@+id/action_profile_to_home2"
+            app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_profile_to_notification"
+            app:destination="@id/notification" />
+        <action
+            android:id="@+id/action_profile_to_favorite"
+            app:destination="@id/favorite" />
+    </fragment>
+    <fragment
+        android:id="@+id/notification"
+        android:name="com.application.adverial.ui.fragment.Notification"
+        android:label="fragment_notification"
+        tools:layout="@layout/activity_notifications2" >
+        <action
+            android:id="@+id/action_notification_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_notification_to_newAd2"
+            app:destination="@id/newAd2" />
+        <action
+            android:id="@+id/action_notification_to_home2"
+            app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_notification_to_favorite"
+            app:destination="@id/favorite" />
+    </fragment>
+    <fragment
+        android:id="@+id/favorite"
+        android:name="com.application.adverial.ui.fragment.Favorite"
+        android:label="fragment_favorite"
+        tools:layout="@layout/activity_favorites" >
+        <action
+            android:id="@+id/action_favorite_to_home2"
+            app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_favorite_to_newAd2"
+            app:destination="@id/newAd2" />
+        <action
+            android:id="@+id/action_favorite_to_notification"
+            app:destination="@id/notification" />
+        <action
+            android:id="@+id/action_favorite_to_profile"
+            app:destination="@id/profile" />
+    </fragment>
+</navigation>

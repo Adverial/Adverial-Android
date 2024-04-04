@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_address"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout17"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/textView30"
+        tools:layout_editor_absoluteX="1dp">
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/address_country"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <ImageView
+            android:id="@+id/filter_countryDrop"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/im_3dot"
+            app:tint="@color/filter_text" />
+
+        <TextView
+            android:id="@+id/filter_countryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iraq"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout19"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout17"
+        tools:layout_editor_absoluteX="1dp">
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/address_province"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <ImageView
+            android:id="@+id/filter_cityDrop"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/im_3dot"
+            app:tint="@color/filter_text" />
+
+        <TextView
+            android:id="@+id/filter_cityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iraq"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout19"
+        tools:layout_editor_absoluteX="1dp">
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/address_district"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <ImageView
+            android:id="@+id/filter_districtDrop"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/im_3dot"
+            app:tint="@color/filter_text" />
+
+        <TextView
+            android:id="@+id/filter_districtValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iraq"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView52"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/filter_price"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout20" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout21"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView52">
+
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/filter_price_min"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <EditText
+            android:id="@+id/filter_priceMin"
+            android:layout_width="@dimen/_105sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:background="@color/white_cover"
+            android:ems="10"
+            android:gravity="end"
+            android:hint="@string/filter_min"
+            android:inputType="numberDecimal"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textColor="@color/filter_text"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout22"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout21">
+
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/filter_price_max"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <EditText
+            android:id="@+id/filter_priceMax"
+            android:layout_width="@dimen/_105sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:background="@color/white_cover"
+            android:ems="10"
+            android:gravity="end"
+            android:hint="@string/filter_max"
+            android:inputType="numberDecimal"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textColor="@color/filter_text"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_12ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout23"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout22">
+
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/filter_price_currency"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <ImageView
+            android:id="@+id/filter_currencyDrop"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/im_3dot"
+            app:tint="@color/filter_text" />
+
+        <TextView
+            android:id="@+id/filter_currencyValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iraq"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/filter_optionsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/filter_options"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout23" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filter_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_optionsTitle" />
+
+    <TextView
+        android:id="@+id/textView59"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/filter_others"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/_12ssp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_recyclerView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView59">
+
+        <TextView
+            android:id="@+id/textView60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/filter_image"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <CheckBox
+            android:id="@+id/filter_photoCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout25"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout24">
+
+        <TextView
+            android:id="@+id/textView60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/filter_video"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <CheckBox
+            android:id="@+id/filter_videoCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/filter_apply"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:text="@string/filter_apply"
+        android:background="@drawable/rounded_full2"
+        android:backgroundTint="@color/yellow"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout25" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

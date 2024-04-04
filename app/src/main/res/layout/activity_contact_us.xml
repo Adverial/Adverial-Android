@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/contactUsRoot"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper"
+    tools:context=".ui.activity.ContactUs">
+
+    <ImageView
+        android:id="@+id/newAdCategory_back7"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:onClick="back"
+        android:padding="@dimen/_3sdp"
+        android:src="@drawable/im_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/imageView55"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        android:src="@drawable/test1"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/newAdCategory_back7" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_7sdp"
+        android:background="@color/yellow"
+        android:fontFamily="@font/regular"
+        android:gravity="start|center_vertical"
+        android:paddingStart="@dimen/_15sdp"
+        android:text="@string/profile_settings_contact_us"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView55" />
+
+    <EditText
+        android:id="@+id/contactUs_text"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/rounded_full2"
+        android:ems="10"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:hint="@string/profile_settings_contact_us_hint"
+        android:inputType="textPersonName"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_7sdp"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/rounded_full2"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/regular"
+        android:onClick="send"
+        android:text="@string/profile_settings_contact_us_send"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/contactUs_text"
+        app:layout_constraintStart_toStartOf="@+id/contactUs_text"
+        app:layout_constraintTop_toBottomOf="@+id/contactUs_text" />
+
+    <TextView
+        android:id="@+id/contactUs_website"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/regular"
+        android:onClick="website"
+        android:text="https://www.wookweb.com"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ddfwjk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:text="@string/profile_settings_contact_us_website"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_9ssp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        app:layout_constraintBottom_toTopOf="@+id/contactUs_website"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

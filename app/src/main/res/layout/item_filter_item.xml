@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/itemFilterItem_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <EditText
+            android:id="@+id/itemFilterItem_enter"
+            android:layout_width="@dimen/_105sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:background="@color/white_cover"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:gravity="end"
+            android:hint="@string/filter_enter"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textColor="@color/filter_text"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/itemFilterItem_min"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:background="@color/white_cover"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:hint="@string/filter_min"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textColor="@color/filter_text"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/itemFilterItem_max"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:background="@color/white_cover"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:hint="@string/filter_max"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textColor="@color/filter_text"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/itemFilterItem_value"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:gravity="end|center_vertical"
+            android:maxLines="1"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:text="TextView"
+            android:textColor="@color/filter_text"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/itemFilterItem_drop"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/im_3dot"
+            app:tint="@color/filter_text" />
+
+        <TextView
+            android:id="@+id/itemFilterItem_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="TextView"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

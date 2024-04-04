@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemPost_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_120sdp"
+        android:background="@color/gray_cover"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/itemPost_image"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7"
+        app:layout_constraintVertical_bias="0.484"
+        app:srcCompat="@drawable/im_image" />
+
+    <TextView
+        android:id="@+id/itemResult_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/regular"
+        android:text="Announcement end date\n19 March 2021, 16:16"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout16"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout16"
+        app:layout_constraintTop_toBottomOf="@+id/itemResult_name" />
+
+    <com.application.adverial.service.AutoResizeTextView
+        android:id="@+id/itemPost_price"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_gravity="end"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:autoSizeMinTextSize="@dimen/_5ssp"
+        android:background="@drawable/im_price"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingStart="@dimen/_3sdp"
+        android:paddingEnd="@dimen/_3sdp"
+        android:text="100.000"
+        android:textColor="@color/black_cover"
+        android:textSize="@dimen/_9ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout16"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout16" />
+
+    <com.application.adverial.service.AutoResizeTextView
+        android:id="@+id/itemResult_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:maxLines="3"
+        android:autoSizeMinTextSize="@dimen/_9ssp"
+        android:text="MENGERLER ATAŞEHİR 2020 RUBICON 2.0 VELOCE 6.300 KM"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintEnd_toEndOf="@+id/itemResult_date"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout16"
+        app:layout_constraintTop_toTopOf="@+id/itemPost_image" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout16"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/itemPost_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/itemPost_image">
+
+        <ImageView
+            android:id="@+id/itemPost_statusImage"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            app:srcCompat="@drawable/ic_denied"
+            app:tint="@color/red" />
+
+        <TextView
+            android:id="@+id/itemPost_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="@string/post_expired"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_9ssp" />
+
+        <ImageView
+            android:id="@+id/itemPost_notification"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_notification" />
+
+        <ImageView
+            android:id="@+id/itemPost_remove"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:padding="@dimen/_3sdp"
+            app:srcCompat="@drawable/im_close" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

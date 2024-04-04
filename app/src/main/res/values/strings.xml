@@ -1,0 +1,213 @@
+<resources>
+    <string name="app_name">Adverial</string>
+    //------------------------------------------------------------------------------home
+    <string name="search">Search</string>
+    <string name="recent">Recent Searches</string>
+    <string name="clean">Clean</string>
+    <string name="deleteAccount">By deleting account, all your data will be remove permanently.</string>
+    <string name="deleteAccount1">Are you sure you want to proceed?</string>
+    <string name="deleteAccount3">Hesabı Sil</string>
+    //------------------------------------------------------------------------------search result
+    <string name="result_count">result found</string>
+    <string name="compare">Compare</string>
+    <string name="filter">Filter</string>
+    <string name="sort">Sort</string>
+    //------------------------------------------------------------------------------new ad
+    <string name="new_ad_title">Post and ad</string>
+    <string name="new_ad_search_hint">What are you selling / renting?</string>
+    <string name="new_ad_title2">Step by step category selection</string>
+    <string name="new_ad_home">Estate</string>
+    <string name="new_ad_home_desc">Residence, workplace, land, building, time…</string>
+    <string name="new_ad_car">Car</string>
+    <string name="new_ad_car_desc">Automobile, Land, 4x4, SUV..</string>
+    <string name="new_ad_second_hand">Second Hand</string>
+    <string name="new_ad_second_hand_desc">Computer, Phone, Phonecase, Macbook Bag..</string>
+    <string name="new_ad_pet">Animal Care</string>
+    <string name="new_ad_pet_desc">Pet, Aquarium, Fish, dog clothes, cat food</string>
+    <string name="new_ad_service">Master &amp; Service</string>
+    <string name="new_ad_service_desc">Home Rnovation, Expertis</string>
+    <string name="new_ad_lesson">Private Lesson</string>
+    <string name="new_ad_lesson_desc">High school, University…</string>
+    //------------------------------------------------------------------------------phone auth
+    <string name="phone_auth_title">Confirm Your Mobile Number\nTo Send Message</string>
+    <string name="phone_auth_number_hint">Mobile Number</string>
+    <string name="phone_auth_number_send">Send</string>
+    //------------------------------------------------------------------------------new ad info
+    <string name="new_ad_info_title1">Enter Ad Information</string>
+    <string name="new_ad_info_next">Next</string>
+    <string name="new_ad_info_details">Ad Details</string>
+    <string name="new_ad_info_enter_here">Enter here…</string>
+    <string name="new_ad_info_title">Title</string>
+    <string name="new_ad_info_price">Price</string>
+    <string name="new_ad_info_description">Description</string>
+    <string name="new_ad_info_select">Select</string>
+    <string name="new_ad_info_currency">Currency</string>
+    //------------------------------------------------------------------------------new ad map
+    <string name="new_ad_map_title">Mark the location</string>
+    //------------------------------------------------------------------------------new ad images
+    <string name="new_ad_images_title1">Contact information</string>
+    <string name="new_ad_images_name">Name Surname</string>
+    <string name="new_ad_images_phone">Phone Number</string>
+    <string name="new_ad_images_title2">Communication preferences</string>
+    <string name="new_ad_images_option1">Phone and Message</string>
+    <string name="new_ad_images_option2">Phone</string>
+    <string name="new_ad_images_option3">Message</string>
+    <string name="new_ad_images_add_photo">Add Photo</string>
+    <string name="new_ad_images_finish">Finish</string>
+    <string name="new_ad_images_phone_hint">9123456789</string>
+    //------------------------------------------------------------------------------new ad completed
+    dialog
+    <string name="new_ad_completed_title">Congratulations!</string>
+    <string name="new_ad_completed_desc">After your ad is checked\nwill be published.</string>
+    <string name="new_ad_completed_number">Ad No:</string>
+    <string name="new_ad_completed_home">Back to home page</string>
+    <string name="new_ad_completed_new_ad">Place another ad</string>
+    //------------------------------------------------------------------------------address
+    <string name="address_title">Enter address information</string>
+    <string name="address_country">Country</string>
+    <string name="address_province">City</string>
+    <string name="address_district">District</string>
+    <string name="address_neighbourhood">State</string>
+    //------------------------------------------------------------------------------profile
+    <string name="profile_listing">Listing Management and reports</string>
+    <string name="profile_listing_whats_on">What’s on</string>
+    <string name="profile_listing_air">Not on air</string>
+    <string name="profile_notifications">Store Notifications</string>
+    <string name="profile_notifications_messages">Ad messages</string>
+    <string name="profile_notifications_notifications">Notifications</string>
+    <string name="profile_notifications_special">Special ads for you</string>
+    <string name="profile_notifications_favorites_ad">Favorite ads</string>
+    <string name="profile_notifications_favorites_seller">Favorite saller</string>
+    <string name="profile_settings">Settings</string>
+    <string name="profile_settings_settings">Settings</string>
+    <string name="profile_settings_membership">Membership information</string>
+    <string name="profile_settings_contact_us">Contact us</string>
+    <string name="profile_settings_contact_us_hint">Be in contact with us…</string>
+    <string name="profile_settings_contact_us_send">Send</string>
+    <string name="profile_settings_contact_us_website">For more information, please visit our website.</string>
+    <string name="profile_settings_about">About Us</string>
+    <string name="profile_settings_profile">My account</string>
+    <string name="profile_settings_logout">Logout</string>
+    //------------------------------------------------------------------------------favorite
+    <string name="favorite_title">Favorite</string>
+    //------------------------------------------------------------------------------my account
+    <string name="my_account_title">My account</string>
+    <string name="my_account_gender">Gender</string>
+    <string name="my_account_phone">Phone Number</string>
+    <string name="my_account_save">Save</string>
+    //------------------------------------------------------------------------------special
+    <string name="special_title">Special ads for you</string>
+    //------------------------------------------------------------------------------my ads
+    <string name="favorite_my_ads_active">What\'s on</string>
+    <string name="favorite_my_ads_deactive">Not on air</string>
+    //------------------------------------------------------------------------------login and signup
+    <string name="login_title">To Use The App,\nPlease Login</string>
+    <string name="login_email_hint">E-Mail Address / Username</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="signup_title">To Use The App,\nPlease Sign Up</string>
+    <string name="signup_name_hint">Name</string>
+    <string name="signup_lastname_hint">Surname</string>
+    <string name="signup_email_hint">E-Mail Address</string>
+    <string name="signup_terms1">I accept the Individual Membership Agreement and its Annexes.</string>
+    <string name="signup_terms2">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.</string>
+    //------------------------------------------------------------------------------phone auth
+    <string name="phone_auth_title1">Please check your email inbox and enter the received verification code.</string>
+    <string name="phone_auth_verify">Verify</string>
+    <string name="resendCode">Resend Code</string>
+    //------------------------------------------------------------------------------post
+    <string name="post_expired">Expired</string>
+    <string name="post_active">Active</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    //------------------------------------------------------------------------------post details
+    <string name="post_details_call">Call</string>
+    <string name="post_details_message">Send a Message</string>
+    <string name="post_details_info">Ad Information</string>
+    <string name="post_details_desc">Description</string>
+    <string name="post_details_about">About Offers</string>
+    <string name="post_details_location">Location</string>
+    //------------------------------------------------------------------------------choose image
+    resource
+    <string name="image_resource_choose">Choose method</string>
+    <string name="image_resource_camera">Camera</string>
+    <string name="image_resource_gallery">Gallery</string>
+    <string name="image_resource_cancel">Cancel</string>
+    //------------------------------------------------------------------------------Message
+    <string name="message_list_title">Messages</string>
+    <string name="message_enter_message">Enter your message here</string>
+    //------------------------------------------------------------------------------menu
+    <string name="menu_welcome">Welcome</string>
+    <string name="menu_profile">My profile</string>
+    <string name="menu_add">Post Ad</string>
+    <string name="menu_categories">Categories</string>
+    //------------------------------------------------------------------------------menu
+    <string name="notifications_empty">There is no notification</string>
+    //------------------------------------------------------------------------------ad feedback
+    <string name="ad_feedback_title">Please tell us why you decided to remove this ad?</string>
+    <string name="ad_feedback_send">Finish</string>
+    <string name="ad_feedback_hint">Write here...</string>
+    //------------------------------------------------------------------------------filter
+    <string name="filter_options">Options</string>
+    <string name="filter_address">Address</string>
+    <string name="filter_others">Others</string>
+    <string name="filter_price">Price</string>
+    <string name="filter_price_min">Min</string>
+    <string name="filter_price_max">Max</string>
+    <string name="filter_price_currency">Currency</string>
+    <string name="filter_image">Ads with photo</string>
+    <string name="filter_video">Ads with video</string>
+    <string name="filter_apply">Apply Filter</string>
+    <string name="filter_min">Min</string>
+    <string name="filter_max">Max</string>
+    <string name="filter_enter">Enter here</string>
+    //------------------------------------------------------------------------------toasts
+    <string name="fieldsAreEmpty">Required information didn\'t enter correctly.</string>
+    <string name="termsAreNotAccepted">You didn\'t accept our terms and agreements yet.</string>
+    <string name="passwordMustBeMoreThan6">Password must be 6 or more characters.</string>
+    <string name="EmailAddressIsWrong">Email address is wrong.</string>
+    <string name="nameIsNotEntered">Please enter your name and surname.</string>
+    <string name="phoneIsNotEntered">Phone number contains 10 numbers.</string>
+    <string name="signup_successful">Your account successfully created.</string>
+    <string name="signup_unsuccessful">Please use another email address.</string>
+    <string name="login_successful">You successfully logged in.</string>
+    <string name="login_unsuccessful">Email or password is wrong.</string>
+    <string name="enterPrice">Please enter price.</string>
+    <string name="enterTitle">Please enter title.</string>
+    <string name="enterCurrency">Please choose the currency.</string>
+    <string name="locationNotFound">Please select your loaction.</string>
+    <string name="uploadImage">Please upload some images.</string>
+    <string name="imageIsUploading">Uploading…</string>
+    <string name="imageIsUploadingDone">Uploaded.</string>
+    <string name="imageDeleted">Image deleted.</string>
+    <string name="accountUpdateDone">Account details successfully changed.</string>
+    <string name="verificationCodeEmpty">Please enter the verification code.</string>
+    <string name="messageSent">Your message sent successfully.</string>
+    <string name="messageEmpty">Please enter your message.</string>
+    <string name="voiceError">Voice recognition is not available on your phone.</string>
+    //------------------------------------------------------------------------------Alert Dialogs
+    <string name="phoneNumberNotFound">You can not contact the advertiser by this method.</string>
+    <string name="error">Error</string>
+    <string name="adNotAvailable">This advertisement is no longer available.</string>
+    <string name="attention">Attention!</string>
+    <string name="removeMyAd">Are you sure you want to remove your advertisement?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="sort_title">Sort</string>
+    <string name="sort_default">Best match</string>
+    <string name="sort_ok">Okey</string>
+    <string name="sort_PriceLowToHigh">Increase by price</string>
+    <string name="sort_priceHighToLow">Decrease by price</string>
+    <string name="sort_name">By name (A-Z)</string>
+    <string name="sort_date">Ascending by date (newest)</string>
+    <string name="notifications_error">There is no notification.</string>
+    <string name="currency">Currency</string>
+    <string name="noNotification">There is no notification.</string>
+    <string name="noFavorite">There is no favorite ad.</string>
+    <string name="ok">Okey</string>
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="forgotPasswordText">Enter your email to get verification code </string>
+    <string name="send">Send</string>
+
+</resources>

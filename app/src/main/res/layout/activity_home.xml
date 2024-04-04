@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/home_drawerLayout"
+    tools:context=".ui.navigation.Home">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homeRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wallpaper"
+        tools:context=".ui.fragment.Home">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:foreground="@color/black_cover"
+            android:scaleType="centerCrop"
+            android:src="@drawable/wallpaper"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_products"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/home_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_category"
+            app:layout_constraintTop_toTopOf="@+id/home_category" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_category"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_50sdp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_55sdp"
+            android:scaleType="fitXY"
+            android:src="@drawable/im_bar1"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/home_logo"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/test1"
+            app:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/home_menu"
+            app:layout_constraintEnd_toStartOf="@+id/home_language"
+            app:layout_constraintStart_toEndOf="@+id/home_menu"
+            app:layout_constraintTop_toTopOf="@+id/home_menu" />
+
+        <TextView
+            android:id="@+id/home_language"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:gravity="end"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:fontFamily="@font/bold"
+            android:text="En"
+            android:onClick="language"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/home_menu"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:onClick="menu"
+            app:tint="@color/white"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/im_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/home_menu"
+            app:layout_constraintTop_toBottomOf="@+id/home_logo">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/home_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_full"
+                    android:ems="10"
+                    android:onClick="search"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start|center_vertical"
+                    android:inputType="textPersonName"
+                    android:paddingStart="@dimen/_35sdp"
+                    android:paddingEnd="@dimen/_25sdp"
+                    android:text="@string/search"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/_11ssp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    app:tint="@color/textColor"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:src="@drawable/im_search" />
+
+                <ImageView
+                    android:id="@+id/home_voice"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:padding="@dimen/_3sdp"
+                    android:onClick="voice"
+                    android:src="@drawable/im_mic" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/home_sort"
+                android:layout_width="@dimen/_43sdp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_15sdp"
+                android:onClick="sort"
+                app:tint="@color/white"
+                android:src="@drawable/im_sort" />
+
+            <ImageView
+                android:id="@+id/home_filter"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:src="@drawable/im_filter"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="@dimen/_1sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2">
+
+            <ImageView
+                android:id="@+id/home_home"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="home"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/im_home" />
+
+            <ImageView
+                android:id="@+id/home_favorite"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="favorites"
+                android:padding="@dimen/_18sdp"
+                android:src="@drawable/im_favorite" />
+
+            <ImageView
+                android:id="@+id/home_add"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="newAd"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_20sdp"
+                android:src="@drawable/im_add" />
+
+            <ImageView
+                android:id="@+id/home_notification"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="notifications"
+                android:padding="@dimen/_17sdp"
+                android:src="@drawable/im_notification" />
+
+            <ImageView
+                android:id="@+id/home_profile"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="profile"
+                android:padding="@dimen/_17sdp"
+                android:src="@drawable/im_profile" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filterMenu"
+            android:layout_width="@dimen/_240sdp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_minus3sdp"
+            android:layout_marginEnd="@dimen/_minus3sdp"
+            android:layout_marginBottom="@dimen/_minus3sdp"
+            android:background="@drawable/rounded_left"
+            android:elevation="@dimen/_2sdp"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:padding="@dimen/_10sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/black_cover2"
+            android:elevation="@dimen/_4sdp"
+            android:padding="@dimen/_50sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/animation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_menu"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/menu_background"
+        android:fitsSystemWindows="true"
+        android:overScrollMode="never"
+        app:headerLayout="@layout/menu"
+        app:itemHorizontalPadding="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -67,14 +67,24 @@ class Notifications : AppCompatActivity() {
             val repo= Repository(this@Notifications)
             repo.notification()
             runOnUiThread {
-                repo.getNotificationData().observe(this@Notifications) {
-                    if (it.status) {
-                        notifications_recyclerView.adapter = NotificationAdapter(it.data as ArrayList<NotificationData>)
-                        if (it.data.isEmpty()) notification_no.visibility = View.VISIBLE
-                    } else notification_no.visibility = View.VISIBLE
-                    notificationsStatus = true
-                    lottieHide()
+                repo.getNotificationData().observe(this@Notifications) { notifications ->
+                    notifications?.let {
+                        if (it.status) {
+                            notifications_recyclerView.adapter = NotificationAdapter(it.data as ArrayList<NotificationData>)
+                            if (it.data.isEmpty()) notification_no.visibility = View.VISIBLE
+                        } else {
+                            notification_no.visibility = View.VISIBLE
+                        }
+                        notificationsStatus = true
+                        lottieHide()
+                    } ?: run {
+                        // Handle case when notifications is null
+                        notification_no.visibility = View.VISIBLE
+                        notificationsStatus = true
+                        lottieHide()
+                    }
                 }
+
             }
         }
     }
@@ -91,8 +101,10 @@ class Notifications : AppCompatActivity() {
         if(Tools().authCheck(this)){
             val repo= Repository(this)
             repo.user()
-            repo.getUserData().observe(this) {
-                name.text = getString(R.string.menu_welcome) + it.data.name + ","
+            repo.getUserData().observe(this) { userData ->
+                userData?.let {
+                    name.text = "Welcome " + it.data?.name + ","
+                }
             }
         }else{
             name.text= getString(R.string.menu_welcome)

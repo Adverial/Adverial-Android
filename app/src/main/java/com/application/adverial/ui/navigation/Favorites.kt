@@ -66,22 +66,32 @@ class Favorites : AppCompatActivity() {
             val repo= Repository(this@Favorites)
             repo.favorite()
             runOnUiThread {
-                repo.getFavoriteData().observe(this@Favorites) {
-                    if (it.status) {
-                        itemList = it.data as ArrayList<FavoriteData>
-                        itemList.reverse()
-                        val adapter = FavoriteAdapter(itemList)
-                        favorite_recyclerView.adapter = adapter
-                        adapter.getResult().observe(this@Favorites) { position ->
-                            itemList.removeAt(position)
-                            adapter.notifyDataSetChanged()
+                repo.getFavoriteData().observe(this@Favorites) { favorites ->
+                    favorites?.let {
+                        if (it.status) {
+                            itemList = it.data as ArrayList<FavoriteData>
+                            itemList.reverse()
+                            val adapter = FavoriteAdapter(itemList)
+                            favorite_recyclerView.adapter = adapter
+                            adapter.getResult().observe(this@Favorites) { position ->
+                                itemList.removeAt(position)
+                                adapter.notifyDataSetChanged()
+                                if (itemList.isEmpty()) favorites_no.visibility = View.VISIBLE
+                            }
                             if (itemList.isEmpty()) favorites_no.visibility = View.VISIBLE
+                        } else {
+                            favorites_no.visibility = View.VISIBLE
                         }
-                        if (itemList.isEmpty()) favorites_no.visibility = View.VISIBLE
-                    } else favorites_no.visibility = View.VISIBLE
-                    favoriteStatus= true
-                    lottieHide()
+                        favoriteStatus = true
+                        lottieHide()
+                    } ?: run {
+                        // Handle case when favorites is null
+                        favorites_no.visibility = View.VISIBLE
+                        favoriteStatus = true
+                        lottieHide()
+                    }
                 }
+
             }
         }
     }
@@ -98,8 +108,10 @@ class Favorites : AppCompatActivity() {
         if(Tools().authCheck(this)){
             val repo= Repository(this)
             repo.user()
-            repo.getUserData().observe(this) {
-                name.text = "Welcome " + it.data.name + ","
+            repo.getUserData().observe(this) { userData ->
+                userData?.let {
+                    name.text = "Welcome " + it.data?.name + ","
+                }
             }
         }else{
             name.text= "Welcome"

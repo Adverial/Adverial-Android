@@ -159,11 +159,14 @@ class Profile : AppCompatActivity() {
         menuCategoriesRecyclerView= headerView.findViewById(R.id.menu_recyclerView)
         menuCategoriesRecyclerView.layoutManager= LinearLayoutManager(this)
         if(Tools().authCheck(this)){
-            val repo= Repository(this)
+            val repo = Repository(this)
             repo.user()
-            repo.getUserData().observe(this) {
-                name.text = "Welcome " + it.data.name + ","
+            repo.getUserData().observe(this) { userData ->
+                userData?.let {
+                    name.text = "Welcome " + it.data?.name + ","
+                }
             }
+
         }else name.text= "Welcome"
         add.setOnClickListener{
             val intent= Intent(this, NewAd::class.java)

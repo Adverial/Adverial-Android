@@ -7,7 +7,10 @@
     android:layout_height="match_parent"
     android:id="@+id/home_drawerLayout"
     tools:context=".ui.navigation.Home">
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeRoot"
         android:layout_width="match_parent"
@@ -27,6 +30,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_products"
@@ -273,6 +278,8 @@
             app:lottie_rawRes="@raw/animation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_menu"

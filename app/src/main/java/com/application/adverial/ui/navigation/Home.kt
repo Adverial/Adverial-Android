@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.speech.RecognizerIntent
 import android.util.Log
 import android.view.Gravity
@@ -42,6 +44,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import java.util.*
 import kotlin.collections.ArrayList
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 
 class Home : AppCompatActivity() {
@@ -58,6 +61,7 @@ class Home : AppCompatActivity() {
     private var page = 0
     private val posts = ArrayList<ShowRoomData>()
     private var showRoomType = ""
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onBackPressed() {}
 
@@ -66,7 +70,10 @@ class Home : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         Tools().changeViewFromTheme(this, homeRoot)
 
-
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
+        swipeRefreshLayout.setOnRefreshListener {
+            fetchDataAds();
+        }
         drawerInit()
         pageInit()
 
@@ -77,6 +84,12 @@ class Home : AppCompatActivity() {
                 Log.e("KEY", it.data.toString())
             }
         }
+    }
+
+    private fun fetchDataAds() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            swipeRefreshLayout.isRefreshing = false
+        }, 2000) // Simulate a 2-second delay
     }
 
     private fun pageInit() {

@@ -131,14 +131,20 @@ class Repository(val context: Context) {
         })
     }
 
-    fun showRoom(type: String, page: Int){
-        val service: APIService = RetroClass().apiService()
-        val call = service.showRoom(currentLang,type, "look-showroom?page=$page")
-        call.enqueue(object : retrofit2.Callback<ShowRoom> {
-            override fun onResponse(call: Call<ShowRoom>, response: Response<ShowRoom>) { showRoom.value = response.body() }
-            override fun onFailure(call: Call<ShowRoom>, t: Throwable) {}
-        })
-    }
+  fun showRoom(type: String, page: Int){
+
+    val service: APIService = RetroClassV2().apiService()
+    val call = service.showRoom(currentLang,type, "look-showroom?page=$page&type=0")
+    call.enqueue(object : retrofit2.Callback<ShowRoom> {
+        override fun onResponse(call: Call<ShowRoom>, response: Response<ShowRoom>) {
+            showRoom.value = response.body()
+
+        }
+        override fun onFailure(call: Call<ShowRoom>, t: Throwable) {
+            Log.d("showRoom", "onFailure called with error: ${t.message}")
+        }
+    })
+}
 
     fun search(keyword: String, type: String){
         val service: APIService = RetroClass().apiService()

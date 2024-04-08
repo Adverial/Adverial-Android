@@ -55,7 +55,7 @@ class Home : AppCompatActivity() {
     private lateinit var profile: LinearLayout
     private lateinit var menuCategoriesRecyclerView: RecyclerView
     private var theme = "light"
-    private lateinit var adapter: HomePostsAdapter
+    private lateinit var homeAdsAdapter: HomePostsAdapter
     private var scrollPermission = false
     private var isFinished = false
     private var page = 0
@@ -100,8 +100,8 @@ class Home : AppCompatActivity() {
         Tools().viewEnable(window.decorView.rootView, false)
         home_category.layoutManager = LinearLayoutManager(this)
         home_products.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-        adapter = HomePostsAdapter(posts)
-        home_products.adapter = adapter
+        homeAdsAdapter = HomePostsAdapter(posts)
+        home_products.adapter = homeAdsAdapter
         home_products.setOnScrollChangeListener { _, _, _, _, _ ->
             if (!home_products.canScrollVertically(1)) nextPage()
         }
@@ -130,35 +130,36 @@ class Home : AppCompatActivity() {
 
     }
 
-    private fun nextPage() {
-        if (!isFinished) {
-            scrollPermission = false
-            page++
-            Log.e("", page.toString())
-            val coroutineScope1 = CoroutineScope(Dispatchers.IO)
-            coroutineScope1.async(Dispatchers.IO) {
-                val repo = Repository(this@Home)
-                repo.showRoom(showRoomType, page)
-                runOnUiThread {
-                    repo.getShowRoomData().observe(this@Home) {
-                        if (it.data.isNullOrEmpty()) {
-                            isFinished = true
-                        } else {
+   private fun nextPage() {
+    if (!isFinished) {
+        scrollPermission = false
+        page++
+        val coroutineScope1 = CoroutineScope(Dispatchers.IO)
+        coroutineScope1.async(Dispatchers.IO) {
+            val repo = Repository(this@Home)
+            repo.showRoom(showRoomType, page)
+            runOnUiThread {
+                repo.getShowRoomData().observe(this@Home) {
+                    if (it.data.isNullOrEmpty()) {
+                        isFinished = true
+                    } else {
 
-                            for (i in it.data ?: listOf()) {
-
-                                posts.add(i)
-                            }
-                            adapter.notifyDataSetChanged()
-                            scrollPermission = true
-                            showRoomStatus = true
-                            lottieHide()
+                        for (i in it.data ?: listOf()) {
+                            posts.add(i)
                         }
+                        homeAdsAdapter.notifyDataSetChanged()
+                        scrollPermission = true
+                        showRoomStatus = true
+                        lottieHide()
+
                     }
                 }
             }
         }
+    } else {
+        Log.e("nextPage", "isFinished is true. Not fetching new page.")
     }
+}
 
     @SuppressLint("SetTextI18n")
     private fun drawerInit() {

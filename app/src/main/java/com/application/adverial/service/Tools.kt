@@ -562,7 +562,7 @@ class Tools {
     }
 
     fun getPath(): String {
-        return "https://adverial.com/"
+        return "https://test.adverial.com/"
     }
 
     @Throws(IOException::class)

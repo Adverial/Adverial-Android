@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         Log.e("", getSharedPreferences("user", 0).getString("token", "")!!)
     }
 
-    val base = "https://adverial.com/images/backgrounds/"
+    val base = "https://test.adverial.com/images/backgrounds/"
 
     override fun onResume() {
         super.onResume()
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             SharedPrefManager(this)
         }
 
-        val base = "https://adverial.com/images/backgrounds/"
+        val base = "https://test.adverial.com/images/backgrounds/"
         val repo = Repository(this)
         repo.getBackground()
         repo.backgroundLV.observe(this) {

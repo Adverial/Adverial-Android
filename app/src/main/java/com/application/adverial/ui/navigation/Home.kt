@@ -74,6 +74,7 @@ class Home : AppCompatActivity() {
         swipeRefreshLayout.setOnRefreshListener {
             fetchDataAds();
         }
+
         drawerInit()
         pageInit()
 
@@ -87,9 +88,11 @@ class Home : AppCompatActivity() {
     }
 
     private fun fetchDataAds() {
-        Handler(Looper.getMainLooper()).postDelayed({
+        //fetch home product
+        pageInit()
+
             swipeRefreshLayout.isRefreshing = false
-        }, 2000) // Simulate a 2-second delay
+
     }
 
     private fun pageInit() {
@@ -141,7 +144,9 @@ class Home : AppCompatActivity() {
                         if (it.data.isNullOrEmpty()) {
                             isFinished = true
                         } else {
+
                             for (i in it.data ?: listOf()) {
+
                                 posts.add(i)
                             }
                             adapter.notifyDataSetChanged()

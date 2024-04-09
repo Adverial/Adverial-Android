@@ -3,6 +3,7 @@ package com.application.adverial.ui.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +28,9 @@ class NotificationAdapter(var itemList: ArrayList<NotificationData>) : RecyclerV
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: NotificationAdapter.ViewHolder, position: Int) {
-        holder.text.text= itemList[position].text
-        holder.title.text= itemList[position].title
+
+        holder.text.text= itemList[position].title
+        holder.title.text= itemList[position].text
         holder.date.text= itemList[position].created_at
         holder.item.setOnClickListener {
             if(itemList[holder.adapterPosition].ad_visibility == 1){

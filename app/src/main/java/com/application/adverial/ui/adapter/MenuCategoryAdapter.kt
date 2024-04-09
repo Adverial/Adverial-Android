@@ -28,7 +28,7 @@ class MenuCategoryAdapter(var itemList: List<com.application.adverial.remote.mod
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: MenuCategoryAdapter.ViewHolder, position: Int) {
-        Glide.with(context).load(Tools().getPath() + itemList[position].image).into(holder.image)
+        Glide.with(context).load(Tools().getPublicPath() + itemList[position].image).into(holder.image)
         holder.title.text= itemList[position].name
         if(itemList[position].total_ad_count != null) holder.count.text= "(${itemList[position].total_ad_count})"
         holder.title.setOnClickListener {

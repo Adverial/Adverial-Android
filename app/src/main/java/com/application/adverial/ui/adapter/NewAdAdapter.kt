@@ -27,7 +27,7 @@ class NewAdAdapter(var itemList: List<com.application.adverial.remote.model.SubC
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: NewAdAdapter.ViewHolder, position: Int) {
-        Glide.with(context).load(Tools().getPath() + (itemList[position].image?:"")).into(holder.image)
+        Glide.with(context).load(Tools().getPublicPath() + (itemList[position].image?:"")).into(holder.image)
         holder.name.text= itemList[position].name
         Tools().rotateLayout(context,holder.arrow)
         holder.item.setOnClickListener {

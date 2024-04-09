@@ -209,5 +209,6 @@
     <string name="forgotPassword">هل نسيت كلمة السر</string>
     <string name="forgotPasswordText">أدخل بريدك الإلكتروني للحصول على التحقق</string>
     <string name="send">جوندر</string>
+    <string name="profile_privacy_policy">Privacy Policy</string>
 
 </resources>

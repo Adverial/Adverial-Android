@@ -208,5 +208,6 @@
     <string name="forgotPassword">هل نسيت كلمة السر</string>
     <string name="forgotPasswordText">بۆ وەرگرتنی پشتڕاستکردنەوە ئیمەیڵەکەت بنووسە</string>
     <string name="send">گۆندەر</string>
+    <string name="profile_privacy_policy">Privacy Policy</string>
 
 </resources>

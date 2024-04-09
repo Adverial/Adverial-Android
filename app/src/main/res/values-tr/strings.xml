@@ -209,5 +209,6 @@
     <string name="forgotPassword">Şifremi Unutum</string>
     <string name="forgotPasswordText">Doğrulama almak için e-postanızı girin</string>
     <string name="send">Gönder</string>
+    <string name="profile_privacy_policy">Privacy Policy</string>
 
 </resources>

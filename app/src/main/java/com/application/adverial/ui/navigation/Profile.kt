@@ -123,7 +123,10 @@ class Profile : AppCompatActivity() {
             }
         }
         profile_about.setOnClickListener{
-            Tools().openBrowser(this, "https://www.wookweb.com")
+            Tools().openBrowser(this, "https://www.adverial.com")
+        }
+        profile_privacy_policy.setOnClickListener{
+            Tools().openBrowser(this, "https://www.adverial.com/privacy-policy")
         }
         profile_myAccount.setOnClickListener{
             if(Tools().authCheck(this)){

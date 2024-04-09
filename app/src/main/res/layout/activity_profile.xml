@@ -296,6 +296,24 @@
                         android:paddingStart="@dimen/_15sdp"
                         android:text="@string/profile_settings_about"
                         android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/textView34"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/gray"
+                        android:text="TextView" />
+                    <TextView
+                        android:id="@+id/profile_privacy_policy"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+
+                        android:fontFamily="@font/regular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:text="@string/profile_privacy_policy"
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/profile_logoutSeparator"

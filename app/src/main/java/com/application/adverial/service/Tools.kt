@@ -562,6 +562,9 @@ class Tools {
     }
 
     fun getPath(): String {
+        return "https://test.adverial.com/storage/"
+    }
+    fun getPublicPath(): String {
         return "https://test.adverial.com/"
     }
 

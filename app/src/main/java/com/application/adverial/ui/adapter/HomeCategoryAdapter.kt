@@ -25,7 +25,7 @@ class HomeCategoryAdapter(var itemList: List<com.application.adverial.remote.mod
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: HomeCategoryAdapter.ViewHolder, position: Int) {
-        Glide.with(context).load(Tools().getPath() + itemList[position].image).into(holder.image)
+        Glide.with(context).load(Tools().getPublicPath() + itemList[position].image).into(holder.image)
         holder.image.setOnClickListener {
             val intent= Intent(context, Category::class.java)
             intent.putExtra("position", holder.adapterPosition)

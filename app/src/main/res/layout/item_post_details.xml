@@ -22,10 +22,10 @@
             android:id="@+id/itemPostDetails_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
             android:text="itemPostDetails_title"
-            android:textColor="@color/textColor"
             android:textSize="@dimen/_10ssp" />
 
         <TextView

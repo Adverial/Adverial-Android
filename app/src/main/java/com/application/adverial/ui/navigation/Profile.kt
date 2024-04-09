@@ -39,7 +39,7 @@ class Profile : AppCompatActivity() {
 
 
         drawerInit()
-        pageInit()
+        //pageInit()
         buttons()
     }
 

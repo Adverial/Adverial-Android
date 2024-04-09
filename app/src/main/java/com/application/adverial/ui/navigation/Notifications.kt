@@ -39,11 +39,35 @@ class Notifications : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications2)
         Tools().changeViewFromTheme(this,notificationRoot)
+        notifications_recyclerView.layoutManager = LinearLayoutManager(this)
 
-        drawerInit()
-        pageInit()
+        // Load notifications
+        loadNotifications()
+//        drawerInit()
+//        pageInit()
     }
 
+    private fun loadNotifications() {
+        val repo = Repository(this)
+        repo.notification()
+        repo.getNotificationData().observe(this) { notifications ->
+            notifications?.let {
+                if (it.status) {
+                    notifications_recyclerView.adapter = NotificationAdapter(it.data as ArrayList<NotificationData>)
+                    if (it.data.isEmpty()) notification_no.visibility = View.VISIBLE
+                } else {
+                    notification_no.visibility = View.VISIBLE
+                }
+                notificationsStatus = true
+                lottieHide()
+            } ?: run {
+                // Handle case when notifications is null
+                notification_no.visibility = View.VISIBLE
+                notificationsStatus = true
+                lottieHide()
+            }
+        }
+    }
     @SuppressLint("NotifyDataSetChanged")
     private fun pageInit(){
         lottie17.visibility= View.VISIBLE

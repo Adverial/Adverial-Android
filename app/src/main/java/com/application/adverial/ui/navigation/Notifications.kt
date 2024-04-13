@@ -43,8 +43,8 @@ class Notifications : AppCompatActivity() {
 
         // Load notifications
         loadNotifications()
-//        drawerInit()
-//        pageInit()
+          drawerInit()
+       pageInit()
     }
 
     private fun loadNotifications() {

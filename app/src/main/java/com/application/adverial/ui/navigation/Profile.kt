@@ -85,16 +85,16 @@ class Profile : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        profile_myAdsDeactive.setOnClickListener{
-            if(Tools().authCheck(this)){
-                val intent= Intent(this, MyAds::class.java)
-                getSharedPreferences("data", 0).edit().putString("type", "deactive").apply()
-                startActivity(intent)
-            }else{
-                val intent= Intent(this, Login::class.java)
-                startActivity(intent)
-            }
-        }
+//        profile_myAdsDeactive.setOnClickListener{
+//            if(Tools().authCheck(this)){
+//                val intent= Intent(this, MyAds::class.java)
+//                getSharedPreferences("data", 0).edit().putString("type", "deactive").apply()
+//                startActivity(intent)
+//            }else{
+//                val intent= Intent(this, Login::class.java)
+//                startActivity(intent)
+//            }
+//        }
         profile_message.setOnClickListener{
             if(Tools().authCheck(this)){
                 val intent= Intent(this, MessagesList::class.java)

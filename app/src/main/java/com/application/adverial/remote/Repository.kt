@@ -174,7 +174,7 @@ class Repository(val context: Context) {
     }
 
     fun favorite(){
-        val service: APIService = RetroClass().apiService()
+        val service: APIService = RetroClassV2().apiService()
         val call = service.favorite("Bearer $token",currentLang)
         call.enqueue(object : retrofit2.Callback<Favorite> {
             override fun onResponse(call: Call<Favorite>, response: Response<Favorite>) { favorite.value = response.body() }

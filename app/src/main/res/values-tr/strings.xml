@@ -55,8 +55,7 @@
     <string name="new_ad_images_add_photo">Fotoğraf ekle</string>
     <string name="new_ad_images_finish">Bitir</string>
     <string name="new_ad_images_phone_hint">09123456789</string>
-    //------------------------------------------------------------------------------new ad completed
-    dialog
+    //------------------------------------------------------------------------------new ad complete dialog
     <string name="new_ad_completed_title">Tebrikler!</string>
     <string name="new_ad_completed_desc">Reklamınız kontrol edildikten sonra\nyayınlanacaktır.</string>
     <string name="new_ad_completed_number">İlan No:</string>
@@ -120,7 +119,7 @@
     <string name="post_expired">Süresi doldu</string>
     <string name="post_active">Aktif</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Üzgünüz, eksik/boş bilgiler</string>
     //------------------------------------------------------------------------------post details
     <string name="post_details_call">Ara</string>
     <string name="post_details_message">Mesaj gönder</string>
@@ -128,8 +127,7 @@
     <string name="post_details_desc">Açıklama</string>
     <string name="post_details_about">Teklifler hakkında</string>
     <string name="post_details_location">Konum</string>
-    //------------------------------------------------------------------------------choose image
-    resource
+    //------------------------------------------------------------------------------choose imag resource
     <string name="image_resource_choose">Yöntem seçin</string>
     <string name="image_resource_camera">Kamera</string>
     <string name="image_resource_gallery">Galeri</string>
@@ -209,6 +207,5 @@
     <string name="forgotPassword">Şifremi Unutum</string>
     <string name="forgotPasswordText">Doğrulama almak için e-postanızı girin</string>
     <string name="send">Gönder</string>
-    <string name="profile_privacy_policy">Privacy Policy</string>
-
+    <string name="profile_privacy_policy">Gizlilik Politikası</string>
 </resources>

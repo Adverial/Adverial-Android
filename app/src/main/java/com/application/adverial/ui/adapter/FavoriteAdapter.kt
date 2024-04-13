@@ -49,7 +49,13 @@ class FavoriteAdapter(var itemList: ArrayList<FavoriteData>) : RecyclerView.Adap
         }
         holder.price.text= itemList[position].ad_detail!!.price_currency
         holder.name.text= itemList[position].ad_detail!!.title
-        holder.date.text= itemList[position].ad_detail!!.city_detail!!.name + ", " + itemList[position].ad_detail!!.country_detail!!.name + "\n" + itemList[position].ad_detail!!.created_at!!.split("T")[0]
+        val cityDetailName = itemList[position].ad_detail?.city_detail?.name ?: ""
+        val countryDetailName = itemList[position].ad_detail?.country_detail?.name ?: ""
+        val createdAt = itemList[position].ad_detail?.created_at?.split("T")?.get(0) ?: ""
+
+        holder.date.text = "$cityDetailName, $countryDetailName\n$createdAt"
+
+       // holder.date.text= itemList[position].ad_detail!!.city_detail!!.name + ", " + itemList[position].ad_detail!!.country_detail!!.name + "\n" + itemList[position].ad_detail!!.created_at!!.split("T")[0]
         holder.remove.setOnClickListener {
             val repo= Repository(context)
             repo.removeFavorite(itemList[holder.adapterPosition].ad_detail!!.id.toString())

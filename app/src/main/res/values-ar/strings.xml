@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Adverial</string>
     //------------------------------------------------------------------------------home
-    <string name="search">يبحث</string>
+    <string name="search">بحث</string>
     <string name="recent">عمليات البحث الأخيرة</string>
-    <string name="clean">ينظف</string>
+    <string name="clean">تصفير</string>
     <string name="deleteAccount">عند حذف الحساب، جميع المعلومات سوف تحذف بشكل نهائي</string>
     <string name="deleteAccount1">هل انت متأكد انك تريد المتابعة؟</string>
     <string name="deleteAccount3">حذف الحساب</string>
@@ -18,15 +18,15 @@
     <string name="new_ad_title2">اختيار فئة خطوة بخطوة</string>
     <string name="new_ad_home">ملكية</string>
     <string name="new_ad_home_desc">الإقامة ، مكان العمل ، الأرض ، البناء ، الوقت..</string>
-    <string name="new_ad_car">جمل</string>
+    <string name="new_ad_car">سيارات</string>
     <string name="new_ad_car_desc">السيارات ، الأرض ، الدفع الرباعي ، الدفع الرباعي ..</string>
-    <string name="new_ad_second_hand">اليد الثانية</string>
+    <string name="new_ad_second_hand">مستعملة</string>
     <string name="new_ad_second_hand_desc">كمبيوتر ، هاتف ، هاتف ، حقيبة ماك بوك ..</string>
     <string name="new_ad_pet">االاعتناء بالحيوان</string>
     <string name="new_ad_pet_desc">الحيوانات الأليفة ، حوض السمك ، الأسماك ، ملابس الكلاب ، طعام القطط</string>
-    <string name="new_ad_service">ماجستير وأمبير. خدمة</string>
-    <string name="new_ad_service_desc">تجديد المنزل ، الخبراء</string>
-    <string name="new_ad_lesson">درس خاص</string>
+    <string name="new_ad_service">خدمات</string>
+    <string name="new_ad_service_desc">ترميم البنايات ، وصف</string>
+    <string name="new_ad_lesson">دروس خاص</string>
     <string name="new_ad_lesson_desc">مدرسة ثانوية ، جامعة..</string>
     //------------------------------------------------------------------------------phone auth
     <string name="phone_auth_title">قم بتأكيد رقم هاتفك المحمول \n لإرسال رسالة</string>
@@ -37,13 +37,13 @@
     <string name="new_ad_info_next">التالي</string>
     <string name="new_ad_info_details">تفاصيل الإعلان</string>
     <string name="new_ad_info_enter_here">أدخل هنا…</string>
-    <string name="new_ad_info_title">لقب</string>
+    <string name="new_ad_info_title">عنوان</string>
     <string name="new_ad_info_price">السعر</string>
     <string name="new_ad_info_description">وصف</string>
-    <string name="new_ad_info_select">يختار</string>
+    <string name="new_ad_info_select">اختيار</string>
     <string name="new_ad_info_currency">عملة</string>
     //------------------------------------------------------------------------------new ad map
-    <string name="new_ad_map_title">ضع علامة على الموقع</string>
+    <string name="new_ad_map_title">عنوان خريطة الإعلان الجديد</string>
     //------------------------------------------------------------------------------new ad images
     <string name="new_ad_images_title1">معلومات للتواصل</string>
     <string name="new_ad_images_name">اسم اللقب</string>
@@ -51,12 +51,11 @@
     <string name="new_ad_images_title2">تفضيلات التواصل</string>
     <string name="new_ad_images_option1">الهاتف والرسالة</string>
     <string name="new_ad_images_option2">هاتف</string>
-    <string name="new_ad_images_option3">رسالة</string>
+    <string name="new_ad_images_option3">رسائل</string>
     <string name="new_ad_images_add_photo">إضافة صورة</string>
     <string name="new_ad_images_finish">إنهاء</string>
-    <string name="new_ad_images_phone_hint">09123456789</string>
-    //------------------------------------------------------------------------------new ad completed
-    dialog
+    <string name="new_ad_images_phone_hint">+96470000000</string>
+    //------------------------------------------------------------------------------new ad completed dialog
     <string name="new_ad_completed_title">تهانينا!</string>
     <string name="new_ad_completed_desc">بعد فحص إعلانك \n سيتم نشره.</string>
     <string name="new_ad_completed_number">رقم الإعلان:</string>
@@ -66,18 +65,18 @@
     <string name="address_title">أدخل معلومات العنوان</string>
     <string name="address_country">دولة</string>
     <string name="address_province">مدينة</string>
-    <string name="address_district">يصرف</string>
-    <string name="address_neighbourhood">ولاية</string>
+    <string name="address_district">قضاء</string>
+    <string name="address_neighbourhood">منطقة</string>
     //------------------------------------------------------------------------------profile
     <string name="profile_listing">إدارة القوائم والتقارير</string>
     <string name="profile_listing_whats_on">ماذا يجري</string>
     <string name="profile_listing_air">ليس على الهواء</string>
-    <string name="profile_notifications">إخطارات المتجر</string>
+    <string name="profile_notifications">الاشعارات</string>
     <string name="profile_notifications_messages">الرسائل الإعلانية</string>
     <string name="profile_notifications_notifications">إشعارات</string>
     <string name="profile_notifications_special">إعلانات خاصة لك</string>
     <string name="profile_notifications_favorites_ad">الإعلانات المفضلة</string>
-    <string name="profile_notifications_favorites_seller">سالير المفضل</string>
+    <string name="profile_notifications_favorites_seller">البائع المفضل</string>
     <string name="profile_settings">إعدادات</string>
     <string name="profile_settings_settings">إعدادات</string>
     <string name="profile_settings_membership">معلومات العضوية</string>
@@ -92,7 +91,7 @@
     <string name="favorite_title">مفضل</string>
     //------------------------------------------------------------------------------my account
     <string name="my_account_title">حسابي</string>
-    <string name="my_account_gender">جنس تذكير أو تأنيث</string>
+    <string name="my_account_gender">جنس ذكر أو انثى</string>
     <string name="my_account_phone">رقم الهاتف</string>
     <string name="my_account_save">يحفظ</string>
     //------------------------------------------------------------------------------special
@@ -105,7 +104,7 @@
     <string name="login_email_hint">عنوان البريد الإلكتروني / اسم المستخدم</string>
     <string name="login_password_hint">كلمة المرور</string>
     <string name="login">تسجيل الدخول</string>
-    <string name="signup">اشتراك</string>
+    <string name="signup">التسجيل</string>
     <string name="signup_title">لاستخدام التطبيق ، \n الرجاء التسجيل</string>
     <string name="signup_name_hint">اسم</string>
     <string name="signup_lastname_hint">اسم العائلة</string>
@@ -120,20 +119,19 @@
     <string name="post_expired">منتهية الصلاحية</string>
     <string name="post_active">نشيط</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">عذرا، معلومات غير كاملة/فارغة</string>
     //------------------------------------------------------------------------------post details
-    <string name="post_details_call">يتصل</string>
+    <string name="post_details_call">اتصال</string>
     <string name="post_details_message">ارسل رسالة</string>
     <string name="post_details_info">معلومات الإعلان</string>
     <string name="post_details_desc">وصف</string>
     <string name="post_details_about">حول العروض</string>
     <string name="post_details_location">موقع</string>
-    //------------------------------------------------------------------------------choose image
-    resource
+    //------------------------------------------------------------------------------choose image resource
     <string name="image_resource_choose">اختر الطريقة</string>
     <string name="image_resource_camera">آلة تصوير</string>
     <string name="image_resource_gallery">صالة عرض</string>
-    <string name="image_resource_cancel">يلغي</string>
+    <string name="image_resource_cancel">الغاء</string>
     //------------------------------------------------------------------------------Message
     <string name="message_list_title">رسائل</string>
     <string name="message_enter_message">أدخل رسالتك هنا</string>
@@ -143,14 +141,14 @@
     <string name="menu_add">إعلان آخر</string>
     <string name="menu_categories">فئات</string>
     //------------------------------------------------------------------------------menu
-    <string name="notifications_empty">لا يوجد إخطار</string>
+    <string name="notifications_empty">لا يوجد اشعار</string>
     //------------------------------------------------------------------------------ad feedback
     <string name="ad_feedback_title">من فضلك أخبرنا لماذا قررت إزالة هذا الإعلان؟</string>
     <string name="ad_feedback_send">إنهاء</string>
     <string name="ad_feedback_hint">اكتب هنا..</string>
     //------------------------------------------------------------------------------filter
     <string name="filter_options">خيارات</string>
-    <string name="filter_address">تبوك</string>
+    <string name="filter_address">العنوان</string>
     <string name="filter_others">آحرون</string>
     <string name="filter_price">السعر</string>
     <string name="filter_price_min">دقيقة</string>
@@ -159,8 +157,8 @@
     <string name="filter_image">إعلانات بها صور</string>
     <string name="filter_video">إعلانات بالفيديو</string>
     <string name="filter_apply">تطبيق عامل التصفية</string>
-    <string name="filter_min">دقيقة</string>
-    <string name="filter_max">الأعلى</string>
+    <string name="filter_min">الحد الأدنى</string>
+    <string name="filter_max">الحد الأقصى</string>
     <string name="filter_enter">أدخل هنا</string>
     //------------------------------------------------------------------------------toasts
     <string name="fieldsAreEmpty">لم يتم إدخال المعلومات المطلوبة بشكل صحيح.</string>
@@ -190,25 +188,24 @@
     <string name="phoneNumberNotFound">لا يمكنك الاتصال بالمعلن بهذه الطريقة.</string>
     <string name="error">خطأ</string>
     <string name="adNotAvailable">هذا الإعلان لم يعد متاحا.</string>
-    <string name="attention">الانتباه!</string>
+    <string name="attention">انتباه!</string>
     <string name="removeMyAd">هل أنت متأكد أنك تريد إزالة إعلانك؟</string>
     <string name="yes">نعم</string>
-    <string name="no">رقم</string>
+    <string name="no">لا</string>
     <string name="sort_title">نوع</string>
-    <string name="sort_default">افضل مباراة</string>
+    <string name="sort_default">أفضل تطابق</string>
     <string name="sort_ok">حسنا</string>
     <string name="sort_PriceLowToHigh">زيادة حسب السعر</string>
-    <string name="sort_priceHighToLow">إنقاص السعر</string>
+    <string name="sort_priceHighToLow">إنقاص حسب السعر</string>
     <string name="sort_name">بالاسم (أ-ي)</string>
     <string name="sort_date">تصاعدي حسب التاريخ (الأحدث)</string>
-    <string name="notifications_error">لا يوجد إخطار.</string>
+    <string name="notifications_error">لا يوجد اشعار.</string>
     <string name="currency">عملة</string>
-    <string name="noNotification">لا يوجد إخطار.</string>
+    <string name="noNotification">لا يوجد إشعار.</string>
     <string name="noFavorite">لا يوجد إعلان مفضل..</string>
     <string name="ok">حسنا</string>
-    <string name="forgotPassword">هل نسيت كلمة السر</string>
+    <string name="forgotPassword">نسيت كلمة السر</string>
     <string name="forgotPasswordText">أدخل بريدك الإلكتروني للحصول على التحقق</string>
-    <string name="send">جوندر</string>
-    <string name="profile_privacy_policy">Privacy Policy</string>
-
+    <string name="send">ارسال</string>
+    <string name="profile_privacy_policy">سياسة الخصوصية</string>
 </resources>

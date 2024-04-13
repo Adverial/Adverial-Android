@@ -6,7 +6,7 @@
     <string name="clean">Clean</string>
     <string name="deleteAccount">By deleting account, all your data will be remove permanently.</string>
     <string name="deleteAccount1">Are you sure you want to proceed?</string>
-    <string name="deleteAccount3">Hesabı Sil</string>
+    <string name="deleteAccount3">delete account</string>
     //------------------------------------------------------------------------------search result
     <string name="result_count">result found</string>
     <string name="compare">Compare</string>
@@ -55,8 +55,7 @@
     <string name="new_ad_images_add_photo">Add Photo</string>
     <string name="new_ad_images_finish">Finish</string>
     <string name="new_ad_images_phone_hint">9123456789</string>
-    //------------------------------------------------------------------------------new ad completed
-    dialog
+    //------------------------------------------------------------------------------new ad completeddialog
     <string name="new_ad_completed_title">Congratulations!</string>
     <string name="new_ad_completed_desc">After your ad is checked\nwill be published.</string>
     <string name="new_ad_completed_number">Ad No:</string>
@@ -120,7 +119,7 @@
     <string name="post_expired">Expired</string>
     <string name="post_active">Active</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment"> Sorry, incomplete/empty information </string>
     //------------------------------------------------------------------------------post details
     <string name="post_details_call">Call</string>
     <string name="post_details_message">Send a Message</string>
@@ -128,8 +127,7 @@
     <string name="post_details_desc">Description</string>
     <string name="post_details_about">About Offers</string>
     <string name="post_details_location">Location</string>
-    //------------------------------------------------------------------------------choose image
-    resource
+    //------------------------------------------------------------------------------choose image resource
     <string name="image_resource_choose">Choose method</string>
     <string name="image_resource_camera">Camera</string>
     <string name="image_resource_gallery">Gallery</string>
@@ -209,6 +207,5 @@
     <string name="forgotPassword">Forgot Password</string>
     <string name="forgotPasswordText">Enter your email to get verification code </string>
     <string name="send">Send</string>
-    <string name="profile_privacy_policy">Privacy Policy</string>
-
+     <string name="profile_privacy_policy">Privacy Policy</string>
 </resources>

@@ -2,13 +2,11 @@ package com.application.adverial.ui.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.R
@@ -18,8 +16,14 @@ import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.SearchFilterAdapter
 import com.application.adverial.ui.adapter.SearchResultsAdapter
 import com.application.adverial.ui.dialog.DropList
-import kotlinx.android.synthetic.main.activity_new_ad_category.*
-import kotlinx.android.synthetic.main.activity_search_result.*
+import kotlinx.android.synthetic.main.activity_search_result.filterMenu
+import kotlinx.android.synthetic.main.activity_search_result.filterMenuCover
+import kotlinx.android.synthetic.main.activity_search_result.imageView6
+import kotlinx.android.synthetic.main.activity_search_result.lottie5
+import kotlinx.android.synthetic.main.activity_search_result.result_count
+import kotlinx.android.synthetic.main.activity_search_result.result_name
+import kotlinx.android.synthetic.main.activity_search_result.result_recyclerView
+import kotlinx.android.synthetic.main.activity_search_result.searchResultRoot
 import org.json.JSONArray
 import org.json.JSONObject
 

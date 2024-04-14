@@ -1,21 +1,14 @@
 package com.application.adverial
 
 import android.app.Activity
-import android.content.Context
-import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.SharedPrefManager
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.navigation.Home
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 
 class MainActivity : AppCompatActivity() {
 

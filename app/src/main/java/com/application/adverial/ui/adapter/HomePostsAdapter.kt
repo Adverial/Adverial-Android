@@ -3,7 +3,6 @@ package com.application.adverial.ui.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,11 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.application.adverial.R
 import com.application.adverial.remote.model.ShowRoomData
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.Post
+import com.bumptech.glide.Glide
 
 class HomePostsAdapter(var itemList: ArrayList<ShowRoomData>) : RecyclerView.Adapter<HomePostsAdapter.ViewHolder>() {
 

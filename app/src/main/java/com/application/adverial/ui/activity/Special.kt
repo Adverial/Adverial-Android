@@ -2,13 +2,11 @@ package com.application.adverial.ui.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.R
@@ -18,11 +16,12 @@ import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.SearchFilterAdapter
 import com.application.adverial.ui.adapter.SpecialAdapter
 import com.application.adverial.ui.dialog.DropList
-import kotlinx.android.synthetic.main.activity_favorite.*
 import kotlinx.android.synthetic.main.activity_favorite.lottie6
 import kotlinx.android.synthetic.main.activity_favorite.newAdCategory_back2
 import kotlinx.android.synthetic.main.activity_search_result.filterMenu
-import kotlinx.android.synthetic.main.activity_special.*
+import kotlinx.android.synthetic.main.activity_special.filterMenuCover2
+import kotlinx.android.synthetic.main.activity_special.specialRoot
+import kotlinx.android.synthetic.main.activity_special.special_recyclerView
 import org.json.JSONArray
 import org.json.JSONObject
 

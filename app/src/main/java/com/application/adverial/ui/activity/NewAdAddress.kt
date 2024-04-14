@@ -2,21 +2,29 @@ package com.application.adverial.ui.activity
 
 import android.Manifest
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.dialog.DropList
-import kotlinx.android.synthetic.main.activity_address.*
-import kotlinx.android.synthetic.main.activity_new_ad_category.*
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
+import kotlinx.android.synthetic.main.activity_address.addressRoot
+import kotlinx.android.synthetic.main.activity_address.arrow1
+import kotlinx.android.synthetic.main.activity_address.arrow2
+import kotlinx.android.synthetic.main.activity_address.arrow3
+import kotlinx.android.synthetic.main.activity_address.home_menu3
+import kotlinx.android.synthetic.main.activity_address.lottie9
+import kotlinx.android.synthetic.main.activity_address.newAdAddress_DistrictSelect
+import kotlinx.android.synthetic.main.activity_address.newAdAddress_city
+import kotlinx.android.synthetic.main.activity_address.newAdAddress_citySelect
+import kotlinx.android.synthetic.main.activity_address.newAdAddress_country
+import kotlinx.android.synthetic.main.activity_address.newAdAddress_countrySelect
+import kotlinx.android.synthetic.main.activity_address.newAdAddress_district
 
 class NewAdAddress : AppCompatActivity() {
 

@@ -3,25 +3,22 @@ package com.application.adverial.ui.activity
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.application.adverial.R
+import com.application.adverial.remote.Repository
+import com.application.adverial.service.Tools
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.application.adverial.R
-import com.application.adverial.remote.Repository
-import com.application.adverial.service.Tools
 import io.nlopez.smartlocation.SmartLocation
-import kotlinx.android.synthetic.main.activity_new_ad_category.*
-import kotlinx.android.synthetic.main.activity_new_ad_map.*
+import kotlinx.android.synthetic.main.activity_new_ad_map.lottie12
 
 class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 

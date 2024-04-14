@@ -2,13 +2,8 @@ package com.application.adverial.ui.navigation
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.speech.RecognizerIntent
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -16,11 +11,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.ShowRoomData
@@ -34,17 +28,17 @@ import com.application.adverial.ui.adapter.MenuCategoryAdapter
 import com.application.adverial.ui.dialog.DropList
 import com.application.adverial.ui.dialog.Language
 import com.application.adverial.ui.dialog.SearchDialog
-import com.application.adverial.utils.changeBackgroundRes
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.shape.CornerFamily
-import com.google.android.material.shape.ShapeAppearanceModel
-import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_home.homeRoot
+import kotlinx.android.synthetic.main.activity_home.home_category
+import kotlinx.android.synthetic.main.activity_home.home_drawerLayout
+import kotlinx.android.synthetic.main.activity_home.home_language
+import kotlinx.android.synthetic.main.activity_home.home_products
+import kotlinx.android.synthetic.main.activity_home.lottie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import java.util.*
-import kotlin.collections.ArrayList
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import java.util.Objects
 
 
 class Home : AppCompatActivity() {

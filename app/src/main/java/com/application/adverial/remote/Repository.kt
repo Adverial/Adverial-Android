@@ -141,7 +141,7 @@ class Repository(val context: Context) {
 
         }
         override fun onFailure(call: Call<ShowRoom>, t: Throwable) {
-            Log.d("showRoom", "onFailure called with error: ${t.message}")
+//            Log.e("KEY",t.localizedMessage!!)
         }
     })
 }
@@ -416,7 +416,7 @@ class Repository(val context: Context) {
             }
 
             override fun onFailure(call: Call<com.application.adverial.remote.model.Response>, t: Throwable) {
-               Log.e("KEY",t.localizedMessage!!)
+//               Log.e("KEY",t.localizedMessage!!)
             }
         })
     }
@@ -434,7 +434,7 @@ class Repository(val context: Context) {
                 }
             }
             override fun onFailure(call: Call<BackgroundResponseModel>, t: Throwable) {
-                Log.e("KEY",t.localizedMessage!!)
+//                Log.e("KEY",t.localizedMessage!!)
             }
         })
     }
@@ -449,7 +449,7 @@ class Repository(val context: Context) {
                 }
             }
             override fun onFailure(call: Call<AutoComplete>, t: Throwable) {
-                Log.e("KEY",t.localizedMessage!!)
+//                Log.e("KEY",t.localizedMessage!!)
             }
         })
     }
@@ -464,7 +464,7 @@ class Repository(val context: Context) {
                 }
             }
             override fun onFailure(call: Call<AutoComplete>, t: Throwable) {
-                Log.e("KEY",t.localizedMessage!!)
+//                Log.e("KEY",t.localizedMessage!!)
             }
         })
     }

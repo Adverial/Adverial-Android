@@ -58,7 +58,7 @@ class NewAdAddress : AppCompatActivity() {
                     country= result.id
                     city= ""
                     district= ""
-                    Log.d("ddd", country)
+//                    Log.d("ddd", country)
                     newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.gray))
                     newAdAddress_city.setTextColor(ContextCompat.getColor(this, R.color.gray))
                     newAdAddress_district.text= resources.getString(R.string.new_ad_info_select)
@@ -84,7 +84,7 @@ class NewAdAddress : AppCompatActivity() {
                         newAdAddress_city.text= result.name
                         city= result.id
                         district= ""
-                        Log.d("ddd", city)
+//                        Log.d("ddd", city)
                         newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.gray))
                         newAdAddress_district.text= resources.getString(R.string.new_ad_info_select)
                         newAdAddress_city.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -108,7 +108,7 @@ class NewAdAddress : AppCompatActivity() {
                     dialog.getStatus().observe(this, { result ->
                         newAdAddress_district.text= result.name
                         district= result.id
-                        Log.d("ddd", district)
+//                        Log.d("ddd", district)
                         newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.white))
                     })
                 })

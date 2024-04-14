@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imgr.hideSoftInputFromWindow(this.window.decorView.rootView.windowToken, 0)
 
-        Log.e("", getSharedPreferences("user", 0).getString("token", "")!!)
+
     }
 
     val base = "https://test.adverial.com/images/backgrounds/"

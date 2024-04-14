@@ -182,19 +182,19 @@ class Tools {
                 Configuration.UI_MODE_NIGHT_YES -> {
                     context.getSharedPreferences("system", 0).edit().putBoolean("darkMode", true)
                         .apply()
-                    Log.d("theme", "dark mode is on")
+//                    Log.d("theme", "dark mode is on")
                     result = "dark"
                 }
                 Configuration.UI_MODE_NIGHT_NO -> {
                     context.getSharedPreferences("system", 0).edit().putBoolean("darkMode", false)
                         .apply()
-                    Log.d("theme", "dark mode is off")
+//                    Log.d("theme", "dark mode is off")
                     result = "light"
                 }
                 Configuration.UI_MODE_NIGHT_UNDEFINED -> {
                     context.getSharedPreferences("system", 0).edit().putBoolean("darkMode", false)
                         .apply()
-                    Log.d("theme", "dark mode is off")
+//                    Log.d("theme", "dark mode is off")
                     result = "light"
                 }
             }
@@ -215,7 +215,7 @@ class Tools {
             SharedPrefManager(appCompatActivity)
         }
 
-       Log.e("KEY",sharedPrefManager.getBackground().toString())
+//       Log.e("KEY",sharedPrefManager.getBackground().toString())
 
         loadUrlDrawable(appCompatActivity,sharedPrefManager.getBackground()?:""){
             view.background = it

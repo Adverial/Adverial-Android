@@ -12,6 +12,16 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+android {
+    buildTypes {
+        release {
+            isDebuggable = false
+        }
+        debug {
+            isDebuggable = true
+        }
+    }
+}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

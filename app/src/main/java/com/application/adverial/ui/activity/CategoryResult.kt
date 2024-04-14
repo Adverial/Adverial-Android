@@ -86,7 +86,7 @@ class CategoryResult : AppCompatActivity() {
         if(!isFinished){
             scrollPermission= false
             page++
-            Log.e("", page.toString())
+
             val repo= Repository(this)
             repo.categoryAds(id, sort, page)
             repo.getCategoryAdsData().observe(this) {
@@ -140,7 +140,7 @@ class CategoryResult : AppCompatActivity() {
             optionsData.put(jsonObj)
         }
         val filter = JSONObject().put("filter", JSONObject().put("address", addressData).put("price", priceData).put("options", optionsData).put("others", othersData))
-        Log.d("ddd", filter.toString())
+
         hideFilterMenu()
         lottie5.visibility= View.VISIBLE
         Tools().viewEnable(this.window.decorView.rootView, false)

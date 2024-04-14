@@ -65,7 +65,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         map.setOnCameraChangeListener{
             lat= it.target.latitude.toString()
             lon= it.target.longitude.toString()
-            Log.d("ddd", "lat:$lat   lon:$lon")
+//            Log.d("ddd", "lat:$lat   lon:$lon")
         }
     }
 
@@ -76,7 +76,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
                 lon= it.longitude.toString()
                 val latLng = LatLng(it.latitude, it.longitude)
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                Log.d("ddd", "lat:$lat   lon:$lon")
+//                Log.d("ddd", "lat:$lat   lon:$lon")
             }
         }
     }

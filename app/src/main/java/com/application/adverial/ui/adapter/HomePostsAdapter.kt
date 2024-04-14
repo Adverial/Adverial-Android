@@ -31,7 +31,7 @@ class HomePostsAdapter(var itemList: ArrayList<ShowRoomData>) : RecyclerView.Ada
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: HomePostsAdapter.ViewHolder, position: Int) {
         holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.im_image))
-        Log.d("image", Tools().getPublicPath() + (itemList[position].ad_images?.get(0)?.image ?: ""))
+//        Log.d("image", Tools().getPublicPath() + (itemList[position].ad_images?.get(0)?.image ?: ""))
         holder.price.text= itemList[position].price_currency
         if(itemList[position].ad_images!!.isNotEmpty()) Glide.with(context).load(Tools().getPath() + (itemList[position].ad_images?.get(0)?.image ?: "")).into(holder.image)
         holder.name.text= itemList[position].title

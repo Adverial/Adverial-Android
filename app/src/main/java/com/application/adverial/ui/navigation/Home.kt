@@ -82,7 +82,7 @@ class Home : AppCompatActivity() {
         repo.getBackground()
         repo.backgroundLV.observe(this) {
             if (it.status == true) {
-                Log.e("KEY", it.data.toString())
+//                Log.e("KEY", it.data.toString())
             }
         }
     }
@@ -157,7 +157,7 @@ class Home : AppCompatActivity() {
             }
         }
     } else {
-        Log.e("nextPage", "isFinished is true. Not fetching new page.")
+//        Log.e("nextPage", "isFinished is true. Not fetching new page.")
     }
 }
 

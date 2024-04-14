@@ -96,7 +96,7 @@ class SearchResult : AppCompatActivity() {
             optionsData.put(jsonObj)
         }
         val filter = JSONObject().put("filter", JSONObject().put("address", addressData).put("price", priceData).put("options", optionsData).put("others", othersData))
-        Log.d("ddd", filter.toString())
+//        Log.d("ddd", filter.toString())
     }
 
     @SuppressLint("SetTextI18n")

@@ -240,67 +240,67 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textView32"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/dark_gray" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/textView32"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1dp"-->
+<!--                        android:layout_marginStart="@dimen/_5sdp"-->
+<!--                        android:layout_marginTop="@dimen/_8sdp"-->
+<!--                        android:background="@color/dark_gray" />-->
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_20sdp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/linearLayout3"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="@dimen/_20sdp"-->
+<!--                        android:layout_marginTop="@dimen/_8sdp"-->
+<!--                        android:layout_marginEnd="@dimen/_20sdp"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <TextView
-                            android:id="@+id/textView29"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_20sdp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/new_ad_images_option2"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_14ssp" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/textView29"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="@dimen/_20sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:fontFamily="@font/regular"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:text="@string/new_ad_images_option2"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textSize="@dimen/_14ssp" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <TextView
-                        android:id="@+id/textView37"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/dark_gray" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/textView37"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1dp"-->
+<!--                        android:layout_marginStart="@dimen/_5sdp"-->
+<!--                        android:layout_marginTop="@dimen/_8sdp"-->
+<!--                        android:background="@color/dark_gray" />-->
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_20sdp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/linearLayout3"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginStart="@dimen/_20sdp"-->
+<!--                        android:layout_marginTop="@dimen/_8sdp"-->
+<!--                        android:layout_marginEnd="@dimen/_20sdp"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <TextView
-                            android:id="@+id/textView29"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_20sdp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/new_ad_images_option3"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_14ssp" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/textView29"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="@dimen/_20sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:fontFamily="@font/regular"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:text="@string/new_ad_images_option3"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textSize="@dimen/_14ssp" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <TextView
                         android:id="@+id/textView43"
@@ -323,38 +323,38 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:buttonTint="@color/textColor"
+                        android:buttonTint="@color/ccpBackground"
                         android:checked="true" />
 
-                    <TextView
-                        android:id="@+id/textView41"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/dark_gray" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/textView41"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1dp"-->
+<!--                        android:layout_marginTop="@dimen/_8sdp"-->
+<!--                        android:background="@color/dark_gray" />-->
 
-                    <RadioButton
-                        android:id="@+id/publishRadio2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
-                        android:buttonTint="@color/textColor" />
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/publishRadio2"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="@dimen/_20sdp"-->
+<!--                        android:layout_marginTop="@dimen/_8sdp"-->
+<!--                        android:layout_marginEnd="@dimen/_15sdp"-->
+<!--                        android:buttonTint="@color/ccpBackground" />-->
 
-                    <TextView
-                        android:id="@+id/textView42"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/dark_gray" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/textView42"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1dp"-->
+<!--                        android:layout_marginTop="@dimen/_8sdp"-->
+<!--                        android:background="@color/dark_gray" />-->
 
-                    <RadioButton
-                        android:id="@+id/publishRadio3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_15sdp"
-                        android:buttonTint="@color/textColor" />
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/publishRadio3"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="@dimen/_20sdp"-->
+<!--                        android:layout_marginTop="@dimen/_8sdp"-->
+<!--                        android:layout_marginEnd="@dimen/_15sdp"-->
+<!--                        android:buttonTint="@color/ccpBackground" />-->
 
                     <TextView
                         android:id="@+id/textView44"

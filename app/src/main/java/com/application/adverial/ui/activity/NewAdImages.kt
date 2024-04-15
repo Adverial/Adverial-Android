@@ -8,7 +8,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
@@ -16,11 +15,16 @@ import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.NewAdImagesAdapter
 import com.application.adverial.ui.dialog.NewAdCompletedDialog
 import com.application.adverial.ui.model.Image
-import com.application.adverial.utils.CustomPhoneNumberFormattingTextWatcher
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.wookweb.lezzetapp.service.ItemDecorations
-import kotlinx.android.synthetic.main.activity_new_ad_images.*
+import kotlinx.android.synthetic.main.activity_new_ad_images.home_menu3
+import kotlinx.android.synthetic.main.activity_new_ad_images.lottie10
+import kotlinx.android.synthetic.main.activity_new_ad_images.newAdImageRoot
+import kotlinx.android.synthetic.main.activity_new_ad_images.newAdImages_recyclerView
+import kotlinx.android.synthetic.main.activity_new_ad_images.publishName
+import kotlinx.android.synthetic.main.activity_new_ad_images.publishPhone
+import kotlinx.android.synthetic.main.activity_new_ad_images.publishRadio1
 
 class NewAdImages : AppCompatActivity() {
 
@@ -98,7 +102,7 @@ class NewAdImages : AppCompatActivity() {
                 var type= ""
                 type = when {
                     publishRadio1.isChecked -> "1"
-                    publishRadio2.isChecked -> "2"
+//                    publishRadio2.isChecked -> "2"
                     else -> "3"
                 }
                 val repo= Repository(this)

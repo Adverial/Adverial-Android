@@ -103,4 +103,6 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
         else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
     }
+
+    fun back(view: View){ finish() }
 }

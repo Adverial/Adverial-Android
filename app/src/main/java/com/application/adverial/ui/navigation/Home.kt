@@ -72,13 +72,13 @@ class Home : AppCompatActivity() {
         drawerInit()
         pageInit()
 
-        val repo = Repository(context = this)
-        repo.getBackground()
-        repo.backgroundLV.observe(this) {
-            if (it.status == true) {
-//                Log.e("KEY", it.data.toString())
-            }
-        }
+//        val repo = Repository(context = this)
+//        repo.getBackground()
+//        repo.backgroundLV.observe(this) {
+//            if (it.status == true) {
+////                Log.e("KEY", it.data.toString())
+//            }
+//        }
     }
 
     private fun fetchDataAds() {

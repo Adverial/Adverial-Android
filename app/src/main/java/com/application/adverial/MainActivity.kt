@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import com.application.adverial.remote.Repository
 import com.application.adverial.service.SharedPrefManager
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.navigation.Home
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    val base = "https://test.adverial.com/images/backgrounds/"
+
 
     override fun onResume() {
         super.onResume()
@@ -37,15 +36,16 @@ class MainActivity : AppCompatActivity() {
             SharedPrefManager(this)
         }
 
-        val base = "https://test.adverial.com/images/backgrounds/"
-        val repo = Repository(this)
-        repo.getBackground()
-        repo.backgroundLV.observe(this) {
-            if (it.status == true) {
-                sharedPrefManager.saveBackground(base+it.data?.image)
+//        val base = "https://test.adverial.com/images/backgrounds/"
+//        val repo = Repository(this)
+//        repo.getBackground()
+//        repo.backgroundLV.observe(this) {
+//            if (it.status == true) {
+//                Log.d("background", it.data?.image.toString())
+                sharedPrefManager.saveBackground("")
                 Tools().goto(this, Home(), false)
-            }
-        }
+//            }
+//        }
     }
 
 }

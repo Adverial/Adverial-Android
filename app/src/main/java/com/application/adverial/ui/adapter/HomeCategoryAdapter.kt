@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.application.adverial.R
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.Category
+import com.bumptech.glide.Glide
 
 class HomeCategoryAdapter(var itemList: List<com.application.adverial.remote.model.SubCategory>) : RecyclerView.Adapter<HomeCategoryAdapter.ViewHolder>() {
 
@@ -25,7 +25,20 @@ class HomeCategoryAdapter(var itemList: List<com.application.adverial.remote.mod
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: HomeCategoryAdapter.ViewHolder, position: Int) {
-        Glide.with(context).load(Tools().getPublicPath() + itemList[position].image).into(holder.image)
+
+        if(itemList[position].image != null)
+        {
+            Glide.with(context).load(Tools().getPublicPath() + itemList[position].image).into(holder.image)
+        }
+        else
+        {
+            // set image as name
+            holder.image.setImageResource(R.drawable.im_logo)
+
+        }
+
+
+
         holder.image.setOnClickListener {
             val intent= Intent(context, Category::class.java)
             intent.putExtra("position", holder.adapterPosition)

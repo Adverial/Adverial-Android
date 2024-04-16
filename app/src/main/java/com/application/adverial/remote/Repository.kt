@@ -78,7 +78,7 @@ class Repository(val context: Context) {
     var currentLang = Tools().getCurrentLanguage(context)
 
     fun mainCategory(){
-        val service: APIService = RetroClass().apiService()
+        val service: APIService = RetroClassV2().apiService()
         val call = service.mainCategory(currentLang)
         call.enqueue(object : retrofit2.Callback<MainCategory> {
             override fun onResponse(call: Call<MainCategory>, response: Response<MainCategory>) {

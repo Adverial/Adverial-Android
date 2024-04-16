@@ -11,10 +11,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.application.adverial.R
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.Category
+import com.bumptech.glide.Glide
 
 class MenuCategoryAdapter(var itemList: List<com.application.adverial.remote.model.SubCategory>) : RecyclerView.Adapter<MenuCategoryAdapter.ViewHolder>() {
 
@@ -28,7 +28,13 @@ class MenuCategoryAdapter(var itemList: List<com.application.adverial.remote.mod
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: MenuCategoryAdapter.ViewHolder, position: Int) {
-        Glide.with(context).load(Tools().getPublicPath() + itemList[position].image).into(holder.image)
+        if (itemList[position].image != null) {
+            Glide.with(context).load(Tools().getPublicPath() + itemList[position].image).into(holder.image)
+        }
+        else
+        {
+            holder.image.setImageResource(R.drawable.im_logo)
+        }
         holder.title.text= itemList[position].name
         if(itemList[position].total_ad_count != null) holder.count.text= "(${itemList[position].total_ad_count})"
         holder.title.setOnClickListener {

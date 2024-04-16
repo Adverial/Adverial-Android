@@ -93,7 +93,7 @@ class Home : AppCompatActivity() {
         lottie.visibility = View.VISIBLE
         Tools().viewEnable(window.decorView.rootView, false)
         home_category.layoutManager = LinearLayoutManager(this)
-        home_products.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        home_products.layoutManager = GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false)
         homeAdsAdapter = HomePostsAdapter(posts)
         home_products.adapter = homeAdsAdapter
         home_products.setOnScrollChangeListener { _, _, _, _, _ ->
@@ -108,7 +108,7 @@ class Home : AppCompatActivity() {
                 repo.getMainCategoryData().observe(this@Home) {
                     if (it.status) {
                         val list = ArrayList<SubCategory>()
-                        for (i in it.data) if (i.image != null) list.add(i)
+                        for (i in it.data)  list.add(i)
                         menuCategoriesRecyclerView.adapter =
                             MenuCategoryAdapter(list as List<SubCategory>)
                         home_category.adapter = HomeCategoryAdapter(list as List<SubCategory>)

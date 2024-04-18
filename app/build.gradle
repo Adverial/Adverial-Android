@@ -13,8 +13,8 @@ android {
         applicationId "com.application.adverial"
         minSdk 22
         targetSdk 31
-        versionCode 11 // Update the version code to a unique integer
-        versionName "1.0.11" // Update the version name to a string that represents the version
+        versionCode 12 // Update the version code to a unique integer
+        versionName "1.0.12" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
@@ -22,6 +22,16 @@ android {
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfigs {
+            release {
+                if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                    storeFile file(MYAPP_RELEASE_STORE_FILE)
+                    storePassword MYAPP_RELEASE_STORE_PASSWORD
+                    keyAlias MYAPP_RELEASE_KEY_ALIAS
+                    keyPassword MYAPP_RELEASE_KEY_PASSWORD
+                }
+            }
+        }
     }
 
     buildTypes {
@@ -29,6 +39,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             multiDexEnabled true
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

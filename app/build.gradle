@@ -5,14 +5,14 @@ plugins {
 apply plugin: "kotlin-android-extensions"
 
 android {
-    compileSdk 31
+    compileSdk 32
     buildToolsVersion "30.0.3"
     ndkVersion "22.1.7171670"
 
     defaultConfig {
         applicationId "com.application.adverial"
         minSdk 22
-        targetSdk 31
+        targetSdk 32
         versionCode 12 // Update the version code to a unique integer
         versionName "1.0.12" // Update the version name to a string that represents the version
         renderscriptTargetApi 22

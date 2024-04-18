@@ -25,3 +25,9 @@ End users can mark ads as their favorites for easy access and tracking.
 
 ## Platforms
 The Adverial project supports both iOS and Android platforms.
+
+## Important Information for Developers
+- The `kotlin-android-extensions` Gradle plugin is deprecated. Please migrate to using View Binding and the `kotlin-parcelize` plugin. Refer to the migration guide [here](https://goo.gle/kotlin-android-extensions-deprecation).
+- View Binding has been enabled for this project. Make sure to use binding classes generated for XML layouts to access views efficiently.
+- The minimum SDK version required for this project is 22, and the target SDK version is 31.
+- Various third-party libraries are used in this project, including Glide, Retrofit, Picasso, and others. Make sure to check their documentation for usage instructions.

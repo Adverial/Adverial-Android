@@ -143,7 +143,7 @@ class Profile : AppCompatActivity() {
             Tools().openBrowser(this, "https://www.adverial.com")
         }
         profile_privacy_policy.setOnClickListener{
-            Tools().openBrowser(this, "https://www.adverial.com/privacy-policy")
+            Tools().openBrowser(this, "https://adverial.com/privacy.html")
         }
         profile_myAccount.setOnClickListener{
             if(Tools().authCheck(this)){

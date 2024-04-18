@@ -2,41 +2,57 @@ package com.application.adverial.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import android.provider.Telephony
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.AnimationUtils
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.application.adverial.R
 import com.application.adverial.remote.Repository
+import com.application.adverial.service.OnSwipeTouchListener
 import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
-import kotlinx.android.synthetic.main.activity_post.*
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-
-import android.view.ViewGroup.MarginLayoutParams
-import com.application.adverial.service.OnSwipeTouchListener
-import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import android.provider.Telephony
-
-import android.os.Build
-import android.util.Log
-import android.view.MotionEvent
-import androidx.appcompat.app.AppCompatDelegate
-
-import androidx.core.content.res.ResourcesCompat
-import com.application.adverial.R
-import kotlinx.android.synthetic.main.item_post_page.*
+import kotlinx.android.synthetic.main.activity_post.about_indicator
+import kotlinx.android.synthetic.main.activity_post.activityPostRoot
+import kotlinx.android.synthetic.main.activity_post.location_btn
+import kotlinx.android.synthetic.main.activity_post.location_indicator
+import kotlinx.android.synthetic.main.activity_post.lottie13
+import kotlinx.android.synthetic.main.activity_post.message_call_btn
+import kotlinx.android.synthetic.main.activity_post.phone_call_btn
+import kotlinx.android.synthetic.main.activity_post.post_about
+import kotlinx.android.synthetic.main.activity_post.post_city1
+import kotlinx.android.synthetic.main.activity_post.post_favorite
+import kotlinx.android.synthetic.main.activity_post.post_la
+import kotlinx.android.synthetic.main.activity_post.post_layout
+import kotlinx.android.synthetic.main.activity_post.post_location
+import kotlinx.android.synthetic.main.activity_post.post_mapLayout
+import kotlinx.android.synthetic.main.activity_post.post_page
+import kotlinx.android.synthetic.main.activity_post.post_sideBarAction
+import kotlinx.android.synthetic.main.activity_post.post_sideSlide
+import kotlinx.android.synthetic.main.activity_post.post_title1
+import kotlinx.android.synthetic.main.activity_post.profile_menu2
+import kotlinx.android.synthetic.main.activity_post.show_ad_details
+import kotlinx.android.synthetic.main.item_post_page.post_address
+import kotlinx.android.synthetic.main.item_post_page.post_city
+import kotlinx.android.synthetic.main.item_post_page.post_title
 
 
 class Post : AppCompatActivity(), OnMapReadyCallback {
@@ -60,6 +76,11 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
         pageInit()
         fetchData()
+
+        // hide
+        show_ad_details.visibility = View.GONE
+            // hide post_sideSlide
+        post_sideSlide.visibility = View.GONE
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -381,5 +402,34 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             post_la.layoutDirection = View.LAYOUT_DIRECTION_RTL
         }
         post_layout.layoutDirection = View.LAYOUT_DIRECTION_LTR
+    }
+
+    fun showLocation(view: View) {
+
+        //hide call and message buttons   location_btn phone_call_btn message_call_btn
+         location_btn.visibility = View.GONE
+        phone_call_btn.visibility = View.GONE
+        message_call_btn.visibility = View.GONE
+        show_ad_details.visibility = View.VISIBLE
+        location(view)
+
+    }
+
+    fun showAdDetails(view: View) {
+
+            //show call and message buttons
+////            post_sideBarAction.visibility = View.VISIBLE
+////            post_favorite.visibility = View.VISIBLE
+//            post_sideSlide.visibility = View.VISIBLE
+////            post_mapLayout.visibility = View.GONE
+
+
+        location_btn.visibility = View.VISIBLE
+        phone_call_btn.visibility = View.VISIBLE
+        message_call_btn.visibility = View.VISIBLE
+        show_ad_details.visibility = View.GONE
+
+            about(view)
+
     }
 }

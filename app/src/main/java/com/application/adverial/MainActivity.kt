@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             SharedPrefManager(this)
         }
 
-//        val base = "https://test.adverial.com/images/backgrounds/"
+//        val base = "https://admin.adverial.com/images/backgrounds/"
 //        val repo = Repository(this)
 //        repo.getBackground()
 //        repo.backgroundLV.observe(this) {

@@ -1,10 +1,41 @@
 package com.application.adverial.remote
 
-import com.application.adverial.remote.model.*
+import com.application.adverial.remote.model.AdDetails
+import com.application.adverial.remote.model.AddAdInfo
+import com.application.adverial.remote.model.AutoComplete
+import com.application.adverial.remote.model.BackgroundResponseModel
+import com.application.adverial.remote.model.Category
+import com.application.adverial.remote.model.CategoryAds
+import com.application.adverial.remote.model.CategoryOptions
+import com.application.adverial.remote.model.City
+import com.application.adverial.remote.model.Currency
+import com.application.adverial.remote.model.Favorite
+import com.application.adverial.remote.model.Filter
+import com.application.adverial.remote.model.ForgotPasswordRequestModel
+import com.application.adverial.remote.model.ImageUpload
+import com.application.adverial.remote.model.LatestSearch
+import com.application.adverial.remote.model.MainCategory
+import com.application.adverial.remote.model.Notification
+import com.application.adverial.remote.model.PublishAd
+import com.application.adverial.remote.model.Response
+import com.application.adverial.remote.model.Search
+import com.application.adverial.remote.model.ShowRoom
+import com.application.adverial.remote.model.Signup
+import com.application.adverial.remote.model.User
+import com.application.adverial.remote.model.VerifyCode
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Url
 
 interface APIService {
 
@@ -285,7 +316,7 @@ interface APIService {
         @Field("message") message: String
     ): Call<Response>
 
-    @GET("delete-account")
+    @DELETE("delete-account")
     fun deleteAccount(
         @Header("Authorization") token: String,
     ): Call<Response>

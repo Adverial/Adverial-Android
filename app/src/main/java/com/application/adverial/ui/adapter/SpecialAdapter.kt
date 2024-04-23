@@ -14,13 +14,13 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.ShowRoomData
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.Post
 import com.application.adverial.ui.dialog.AlertDialog
+import com.bumptech.glide.Glide
 
 class SpecialAdapter(var itemList: ArrayList<ShowRoomData>) : RecyclerView.Adapter<SpecialAdapter.ViewHolder>() {
 
@@ -50,7 +50,15 @@ class SpecialAdapter(var itemList: ArrayList<ShowRoomData>) : RecyclerView.Adapt
         }
         holder.price.text= itemList[position].price_currency
         holder.name.text= itemList[position].title
-        holder.date.text= itemList[position].city_detail!!.name + ", " + itemList[position].country_detail!!.name + "\n" + itemList[position].created_at.split("T")[0]
+        val cityDetail = itemList[position].city_detail
+        val countryDetail = itemList[position].country_detail
+
+        val city = cityDetail?.name ?: "Unknown City"
+        val country = countryDetail?.name ?: "Unknown Country"
+        val createdAt = itemList[position].created_at.split("T")[0]
+
+        holder.date.text = "$city, $country\n$createdAt"
+
         holder.remove.setOnClickListener {
             val repo= Repository(context)
             repo.removeFavorite(itemList[holder.adapterPosition].id.toString())

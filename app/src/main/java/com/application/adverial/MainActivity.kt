@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Check network connectivity
-        if (isNetworkAvailable(this) ) {
+        if (isNetworkAvailable(this) ){
             // Network is available, proceed to home page
             Tools().goto(this, Home(), false)
         } else {
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    fun isNetworkAvailable(context: Context): Boolean {
+    private fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val network = connectivityManager.activeNetwork ?: return false
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun isNetworkBaseUrlAvailable(): Boolean {
 
-        val url="172.18.16.1"
+        val url="http://172.18.16.1"
 
         val runtime = Runtime.getRuntime()
         try {

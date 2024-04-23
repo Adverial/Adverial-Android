@@ -18,7 +18,7 @@ android {
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
-            debugSymbolLevel 'NONE' // change to SYMBOL_TABLE to enable file and line number info
+            debugSymbolLevel 'SYMBOL_TABLE' // change to SYMBOL_TABLE to enable file and line number info
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

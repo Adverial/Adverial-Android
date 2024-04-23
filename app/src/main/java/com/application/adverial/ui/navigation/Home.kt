@@ -82,8 +82,36 @@ class Home : AppCompatActivity() {
     }
 
     private fun fetchDataAds() {
-        //fetch home product
-        pageInit()
+         //DELTEE ALL HOME PRODUCT
+        posts.clear()
+        homeAdsAdapter.notifyDataSetChanged()
+        page = 0
+        scrollPermission = true
+        isFinished = false
+        nextPage()
+
+//        val coroutineScope1 = CoroutineScope(Dispatchers.IO)
+//        coroutineScope1.async(Dispatchers.IO) {
+//            val repo = Repository(this@Home)
+//            repo.showRoom(showRoomType, page)
+//            runOnUiThread {
+//                repo.getShowRoomData().observe(this@Home) {
+//                    if (it.data.isNullOrEmpty()) {
+//                        isFinished = true
+//                    } else {
+//
+//                        for (i in it.data ?: listOf()) {
+//                            posts.add(i)
+//                        }
+//                        homeAdsAdapter.notifyDataSetChanged()
+//                        scrollPermission = true
+//                        showRoomStatus = true
+//                        lottieHide()
+//
+//                    }
+//                }
+//            }
+//        }
 
             swipeRefreshLayout.isRefreshing = false
 

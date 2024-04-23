@@ -13,8 +13,8 @@ android {
         applicationId "com.application.adverial"
         minSdk 22
         targetSdk 33
-        versionCode 12 // Update the version code to a unique integer
-        versionName "1.0.12" // Update the version name to a string that represents the version
+        versionCode 16 // Update the version code to a unique integer
+        versionName "1.0.16" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
@@ -36,7 +36,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             multiDexEnabled true
             signingConfig signingConfigs.release

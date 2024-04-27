@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 class RetroClass {
     //val BASE_PATH="https://api.luuk.wookproje.com/public/test/"
-    private val basePath="http://172.18.16.1/api/v2/"
+    private val basePath="http://172.26.96.1/api/v2/"
     private fun retrofitInstance():Retrofit{
         val okhttp=OkHttpClient().newBuilder().connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS).build()
         val gsonBuilder = GsonBuilder()

@@ -94,7 +94,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:fontFamily="@font/regular"
         android:onClick="website"
-        android:text="https://www.wookweb.com"
+        android:text="https://www.adverial.com"
         android:textColor="@color/white"
         android:textSize="@dimen/_9ssp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -13,12 +13,12 @@ android {
         applicationId "com.application.adverial"
         minSdk 22
         targetSdk 33
-        versionCode 16 // Update the version code to a unique integer
-        versionName "1.0.16" // Update the version name to a string that represents the version
+        versionCode 22 // Update the version code to a unique integer
+        versionName "1.0.22" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
-            debugSymbolLevel 'SYMBOL_TABLE' // change to SYMBOL_TABLE to enable file and line number info
+            debugSymbolLevel 'NONE' // change to SYMBOL_TABLE to enable file and line number info
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -41,6 +41,7 @@ android {
             multiDexEnabled true
             signingConfig signingConfigs.release
         }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11

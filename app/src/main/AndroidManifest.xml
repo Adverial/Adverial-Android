@@ -19,10 +19,10 @@
     <!-- Required only if your app needs to access images or photos
      that other apps created. -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
-    <!-- Required only if your app needs to access videos
-         that other apps created. -->
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+
+
 
     <!-- Required only if your app needs to access audio files
          that other apps created. -->
@@ -54,7 +54,8 @@
             android:name="com.application.adverial.ui.navigation.NewAd"
             android:windowSoftInputMode="adjustNothing"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor"
+            tools:ignore="DiscouragedApi" />
         <activity
             android:name="com.application.adverial.ui.navigation.Profile"
             android:exported="false"

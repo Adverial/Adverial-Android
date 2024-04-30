@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
-import android.os.StrictMode.ThreadPolicy
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +14,7 @@ import com.application.adverial.utils.NetworkUtils
 
 
 class MainActivity : AppCompatActivity() {
+    private val CAMERA_PERMISSION_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
         imgr.hideSoftInputFromWindow(this.window.decorView.rootView.windowToken, 0)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Enable cleartext traffic
             StrictMode.setThreadPolicy(
-                ThreadPolicy.Builder()
+                StrictMode.ThreadPolicy.Builder()
                     .permitNetwork().build()
             )
         }
+
     }
 
     override fun onResume() {

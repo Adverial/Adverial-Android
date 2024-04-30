@@ -1,5 +1,6 @@
 package com.application.adverial.ui.navigation
 
+//import kotlinx.android.synthetic.main.activity_profile.profile_message
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -16,7 +17,6 @@ import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.ContactUs
 import com.application.adverial.ui.activity.Favorite
 import com.application.adverial.ui.activity.Login
-import com.application.adverial.ui.activity.MessagesList
 import com.application.adverial.ui.activity.MyAccount
 import com.application.adverial.ui.activity.MyAds
 import com.application.adverial.ui.activity.Notifications
@@ -31,7 +31,6 @@ import kotlinx.android.synthetic.main.activity_profile.profile_drawerLayout
 import kotlinx.android.synthetic.main.activity_profile.profile_favorite1
 import kotlinx.android.synthetic.main.activity_profile.profile_logout
 import kotlinx.android.synthetic.main.activity_profile.profile_logoutSeparator
-import kotlinx.android.synthetic.main.activity_profile.profile_message
 import kotlinx.android.synthetic.main.activity_profile.profile_myAccount
 import kotlinx.android.synthetic.main.activity_profile.profile_myAdsActive
 import kotlinx.android.synthetic.main.activity_profile.profile_notifications
@@ -112,15 +111,15 @@ class Profile : AppCompatActivity() {
 //                startActivity(intent)
 //            }
 //        }
-        profile_message.setOnClickListener{
-            if(Tools().authCheck(this)){
-                val intent= Intent(this, MessagesList::class.java)
-                startActivity(intent)
-            }else{
-                val intent= Intent(this, Login::class.java)
-                startActivity(intent)
-            }
-        }
+//        profile_message.setOnClickListener{
+//            if(Tools().authCheck(this)){
+//                val intent= Intent(this, MessagesList::class.java)
+//                startActivity(intent)
+//            }else{
+//                val intent= Intent(this, Login::class.java)
+//                startActivity(intent)
+//            }
+//        }
         profile_special.setOnClickListener{
             if(Tools().authCheck(this)){
                 val intent= Intent(this, Special::class.java)

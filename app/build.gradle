@@ -7,14 +7,14 @@ apply plugin: "kotlin-android-extensions"
 android {
     compileSdk 33
     buildToolsVersion "30.0.3"
-    ndkVersion "22.1.7171670"
+    ndkVersion '27.0.11718014 rc1'
 
     defaultConfig {
         applicationId "com.application.adverial"
         minSdk 22
         targetSdk 33
-        versionCode 22 // Update the version code to a unique integer
-        versionName "1.0.22" // Update the version name to a string that represents the version
+        versionCode 26 // Update the version code to a unique integer
+        versionName "1.0.26" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
@@ -40,6 +40,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             multiDexEnabled true
             signingConfig signingConfigs.release
+            ndk.debugSymbolLevel = 'FULL'
         }
 
     }

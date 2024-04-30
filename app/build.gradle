@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.application.adverial"
-        minSdk 22
+        minSdkVersion  24
         targetSdk 33
         versionCode 26 // Update the version code to a unique integer
         versionName "1.0.26" // Update the version name to a string that represents the version

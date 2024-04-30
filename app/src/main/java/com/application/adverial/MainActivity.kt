@@ -14,14 +14,14 @@ import com.application.adverial.utils.NetworkUtils
 
 
 class MainActivity : AppCompatActivity() {
-    private val CAMERA_PERMISSION_CODE = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val imgr: InputMethodManager =
+        val inputMethodManager: InputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imgr.hideSoftInputFromWindow(this.window.decorView.rootView.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(this.window.decorView.rootView.windowToken, 0)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             StrictMode.setThreadPolicy(

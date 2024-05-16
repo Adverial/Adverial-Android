@@ -4,12 +4,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -17,8 +16,11 @@ import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.navigation.Home
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_signup.*
+import kotlinx.android.synthetic.main.activity_login.loginRoot
+import kotlinx.android.synthetic.main.activity_login.login_email
+import kotlinx.android.synthetic.main.activity_login.login_password
+import kotlinx.android.synthetic.main.activity_login.login_showPassword
+import kotlinx.android.synthetic.main.activity_login.lottie7
 import java.util.regex.Pattern
 
 class Login : AppCompatActivity() {
@@ -68,12 +70,13 @@ class Login : AppCompatActivity() {
                     if(it.data.status == 1 || it.data.token != null){
                         getSharedPreferences("user", 0).edit().putString("token", it.data.token).apply()
                         Toast.makeText(this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
-                        Tools().goto(this, Home(), false)
+
                     }else{
                         val intent= Intent(this, PhoneAuth::class.java)
                         intent.putExtra("email", login_email.text.toString())
                         intent.putExtra("parent", "login")
                         startActivity(intent)
+                        Tools().goto(this, Home(), false)
                     }
                 } else Toast.makeText(this, getString(R.string.login_unsuccessful), Toast.LENGTH_SHORT).show()
             }

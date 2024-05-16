@@ -1,29 +1,27 @@
 package com.application.adverial.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.telephony.PhoneNumberFormattingTextWatcher
-import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
-import com.application.adverial.ui.navigation.Home
 import com.application.adverial.utils.CustomPhoneNumberFormattingTextWatcher
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_my_account.*
-import kotlinx.android.synthetic.main.activity_new_ad_category.*
-import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.activity_signup.lottie14
+import kotlinx.android.synthetic.main.activity_signup.signUpRoot
+import kotlinx.android.synthetic.main.activity_signup.signup_email
+import kotlinx.android.synthetic.main.activity_signup.signup_firstname
+import kotlinx.android.synthetic.main.activity_signup.signup_lastname
+import kotlinx.android.synthetic.main.activity_signup.signup_password
+import kotlinx.android.synthetic.main.activity_signup.signup_phone
+import kotlinx.android.synthetic.main.activity_signup.signup_showPassword
+import kotlinx.android.synthetic.main.activity_signup.signup_terms1
 import java.util.regex.Pattern
 
 class Signup : AppCompatActivity() {
@@ -61,34 +59,88 @@ class Signup : AppCompatActivity() {
         }
     }
 
-    fun signup(view: View){
+    fun signup(view: View) {
+        if (!isInputValid()) return
+    
+        lottie14.visibility = View.VISIBLE
+        Tools().viewEnable(this.window.decorView.rootView, false)
+    
+        val repo = Repository(this)
+        repo.signup(
+            signup_firstname.text.toString(),
+            signup_lastname.text.toString(),
+            signup_email.text.toString(),
+            signup_password.text.toString(),
+            signup_phone.text.toString().replace(" ", "")
+        )
+    
+        observeSignupData(repo)
+    }
+    
+    private fun isInputValid(): Boolean {
+        if (!isNameEntered()) return false
+        if (!isPhoneValid()) return false
+        if (!isEmailValid()) return false
+        if (!isPasswordValid()) return false
+        if (!isTermsAccepted()) return false
+        return true
+    }
+    
+    private fun isNameEntered(): Boolean {
+        if (signup_firstname.text.isNotBlank() && signup_lastname.text.isNotBlank()) {
+            return true
+        }
+        Toast.makeText(this, getString(R.string.nameIsNotEntered), Toast.LENGTH_SHORT).show()
+        return false
+    }
+    
+    private fun isPhoneValid(): Boolean {
+        if (signup_phone.text.toString().replace(" ", "").length == 10) {
+            return true
+        }
+        Toast.makeText(this, getString(R.string.phoneIsNotEntered), Toast.LENGTH_SHORT).show()
+        return false
+    }
+    
+    private fun isEmailValid(): Boolean {
         val emailPattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")
         val emailMatcher = emailPattern.matcher(signup_email.text.toString())
-        if(signup_firstname.text.isNotBlank() && signup_lastname.text.isNotBlank()){
-            if(signup_phone.text.toString().replace(" ", "").length == 10){
-                if(emailMatcher.find()){
-                    if(signup_password.text.length >= 6){
-                        if(signup_terms1.isChecked){
-                            lottie14.visibility= View.VISIBLE
-                            Tools().viewEnable(this.window.decorView.rootView, false)
-                            val repo= Repository(this)
-                            repo.signup(signup_firstname.text.toString(), signup_lastname.text.toString(), signup_email.text.toString(), signup_password.text.toString(), signup_phone.text.toString().replace(" ", ""))
-                            repo.getSignupData().observe(this) {
-                                lottie14.visibility = View.GONE
-                                Tools().viewEnable(this.window.decorView.rootView, true)
-                                if (it.status) {
-                                    //Toast.makeText(this, getString(R.string.signup_successful), Toast.LENGTH_SHORT).show()
-                                    val intent= Intent(this, PhoneAuth::class.java)
-                                    intent.putExtra("email", signup_email.text.toString())
-                                    intent.putExtra("parent", "register")
-                                    startActivity(intent)
-                                } else Toast.makeText(this, getString(R.string.signup_unsuccessful), Toast.LENGTH_SHORT).show()
-                            }
-                        }else Toast.makeText(this, getString(R.string.termsAreNotAccepted), Toast.LENGTH_SHORT).show()
-                    }else Toast.makeText(this, getString(R.string.passwordMustBeMoreThan6), Toast.LENGTH_SHORT).show()
-                }else Toast.makeText(this, getString(R.string.EmailAddressIsWrong), Toast.LENGTH_SHORT).show()
-            }else Toast.makeText(this, getString(R.string.phoneIsNotEntered), Toast.LENGTH_SHORT).show()
-        }else Toast.makeText(this, getString(R.string.nameIsNotEntered), Toast.LENGTH_SHORT).show()
+        if (emailMatcher.find()) {
+            return true
+        }
+        Toast.makeText(this, getString(R.string.EmailAddressIsWrong), Toast.LENGTH_SHORT).show()
+        return false
+    }
+    
+    private fun isPasswordValid(): Boolean {
+        if (signup_password.text.length >= 6) {
+            return true
+        }
+        Toast.makeText(this, getString(R.string.passwordMustBeMoreThan6), Toast.LENGTH_SHORT).show()
+        return false
+    }
+    
+    private fun isTermsAccepted(): Boolean {
+        if (signup_terms1.isChecked) {
+            return true
+        }
+        Toast.makeText(this, getString(R.string.termsAreNotAccepted), Toast.LENGTH_SHORT).show()
+        return false
+    }
+    
+    private fun observeSignupData(repo: Repository) {
+        repo.getSignupData().observe(this) {
+            lottie14.visibility = View.GONE
+            Tools().viewEnable(this.window.decorView.rootView, true)
+            if (it.status) {
+                val intent = Intent(this, PhoneAuth::class.java)
+                intent.putExtra("email", signup_email.text.toString())
+                intent.putExtra("parent", "register")
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, getString(R.string.signup_unsuccessful), Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     fun clear(view: View){

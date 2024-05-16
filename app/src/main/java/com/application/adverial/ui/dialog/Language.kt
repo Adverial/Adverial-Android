@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,8 +19,7 @@ import com.application.adverial.R
 import com.application.adverial.ui.adapter.LanguageAdapter
 import com.application.adverial.ui.model.Language
 import com.application.adverial.ui.model.Language1
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 
 class Language() : DialogFragment(){
@@ -55,8 +58,8 @@ class Language() : DialogFragment(){
         itemList.add(Language("English", "0", R.drawable.im_flag_england))
         itemList.add(Language("Turkish", "1", R.drawable.img_turkey_flag))
         itemList.add(Language("Arabic", "2", R.drawable.img_flag_arabic))
-        itemList.add(Language("Kurdish Badini", "3", R.drawable.img_irak_flag))
-        itemList.add(Language("Kurdish Sorani", "4", R.drawable.img_irak_flag))
+        itemList.add(Language("Kurdish Sorani", "3", R.drawable.img_irak_flag))
+        itemList.add(Language("Kurdish Badini", "4", R.drawable.img_irak_flag))
         recyclerView.layoutManager= LinearLayoutManager(requireContext())
         val selected= requireContext().getSharedPreferences("user", 0).getString("languageId", "0")!!.toInt()
         for(i in itemList.indices){

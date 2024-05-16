@@ -195,8 +195,8 @@
     <string name="sort_title">Sort</string>
     <string name="sort_default">Best match</string>
     <string name="sort_ok">Okey</string>
-    <string name="sort_PriceLowToHigh">Increase by price</string>
-    <string name="sort_priceHighToLow">Decrease by price</string>
+    <string name="sort_PriceLowToHigh">Decrease by price</string>
+    <string name="sort_priceHighToLow">Increase by price</string>
     <string name="sort_name">By name (A-Z)</string>
     <string name="sort_date">Ascending by date (newest)</string>
     <string name="notifications_error">There is no notification.</string>

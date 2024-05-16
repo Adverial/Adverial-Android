@@ -121,7 +121,7 @@ class Home : AppCompatActivity() {
         lottie.visibility = View.VISIBLE
         Tools().viewEnable(window.decorView.rootView, false)
         home_category.layoutManager = LinearLayoutManager(this)
-        home_products.layoutManager = GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false)
+        home_products.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         homeAdsAdapter = HomePostsAdapter(posts)
         home_products.adapter = homeAdsAdapter
         home_products.setOnScrollChangeListener { _, _, _, _, _ ->

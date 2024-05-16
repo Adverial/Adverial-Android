@@ -38,7 +38,7 @@ class NewAdImages : AppCompatActivity() {
         Tools().changeViewFromTheme(this,newAdImageRoot)
 
         permissions()
-
+        setDefaultUserDetails()
         publishPhone.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -59,6 +59,22 @@ class NewAdImages : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) {}
         })
         pageInit()
+    }
+
+  private  fun setDefaultUserDetails(){
+      if (Tools().authCheck(this)) {
+          val repo = Repository(this)
+          repo.user()
+
+          repo.getUserData().observe(this) { userData ->
+              userData?.let {
+                  publishPhone.setText(userData.data.phone)
+                  publishName.setText(userData.data.name)
+
+              }
+          }
+
+      }
     }
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")

@@ -370,14 +370,14 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     fun share(view: View) {
         try {
             val intent = Intent(Intent.ACTION_SEND)
-            val shareBody = "Luuk App advertisement\n" +
+            val shareBody = "App advertisement\n" +
                     "Ad title: ${post_city.text}" +
                     "\n" +
                     "Ad price: ${post_title.text}" +
                     "\n" +
                     "Ad location: ${post_address.text}" +
                     "\n" +
-                    "Ad link: https://www.wookweb.com"
+                    "Ad link: https://www.adverial.com"
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_SUBJECT, shareBody)
             intent.putExtra(Intent.EXTRA_TEXT, shareBody)

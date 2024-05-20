@@ -5,6 +5,7 @@
     android:id="@+id/itemHomeProduct_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:paddingStart="@dimen/_7sdp"
     android:paddingBottom="@dimen/_7sdp">
 
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
         android:orientation="vertical"
+        android:background="@color/menu_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,7 +34,7 @@
             android:maxLines="2"
             android:paddingStart="@dimen/_4sdp"
             android:paddingEnd="@dimen/_4sdp"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_10ssp" />
     </LinearLayout>
 
@@ -47,7 +49,7 @@
         android:textSize="@dimen/_8ssp"
         android:paddingStart="@dimen/_4sdp"
         android:paddingEnd="@dimen/_4sdp"
-        android:background="@color/black_cover"
+        android:background="@color/white_cover"
         android:textColor="@color/yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

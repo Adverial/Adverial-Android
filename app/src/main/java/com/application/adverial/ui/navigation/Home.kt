@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -71,7 +72,17 @@ class Home : AppCompatActivity() {
 
         drawerInit()
         pageInit()
-
+     Log.d("Home", "onCreate: " + Tools().getTheme(this))
+        if (Tools().getTheme(this)=="dark") {
+            findViewById<View>(R.id.home_menu).setBackgroundResource(R.drawable.im_menu)
+            //home_sort
+            findViewById<View>(R.id.home_sort).setBackgroundResource(R.drawable.im_sort_light)
+        }
+        else
+        {
+            findViewById<View>(R.id.home_menu).setBackgroundResource(R.drawable.im_menu_dark)
+            findViewById<View>(R.id.home_sort).setBackgroundResource(R.drawable.im_sort_dark)
+        }
 //        val repo = Repository(context = this)
 //        repo.getBackground()
 //        repo.backgroundLV.observe(this) {
@@ -89,6 +100,8 @@ class Home : AppCompatActivity() {
         scrollPermission = true
         isFinished = false
         nextPage()
+
+
 
 //        val coroutineScope1 = CoroutineScope(Dispatchers.IO)
 //        coroutineScope1.async(Dispatchers.IO) {

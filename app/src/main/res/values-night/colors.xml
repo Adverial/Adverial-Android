@@ -13,7 +13,7 @@
     <color name="black_cover1">#C90B0B0B</color>
     <color name="black_cover2">#7C0B0B0B</color>
     <color name="white_cover">#12FFFFFF</color>
-    <color name="menu_background">#E6000000</color>
+    <color name="menu_background">#181818</color>
     <color name="menu_text">#FFFFFF</color>
     <color name="gray_cover">#CB3C3A37</color>
     <color name="very_light_gray">#EFEFEF</color>

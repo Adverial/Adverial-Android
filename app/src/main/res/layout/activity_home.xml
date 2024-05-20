@@ -15,7 +15,7 @@
         android:id="@+id/homeRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/menu_background"
         tools:context=".ui.fragment.Home">
 
         <ImageView
@@ -49,6 +49,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_category"
             android:layout_width="@dimen/_70sdp"
+            android:background="@color/menu_background"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_marginTop="@dimen/_10sdp"
@@ -75,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_20sdp"
             android:src="@drawable/test1"
-            app:tint="@color/white"
+            android:background="@color/menu_background"
             app:layout_constraintBottom_toBottomOf="@+id/home_menu"
             app:layout_constraintEnd_toStartOf="@+id/home_language"
             app:layout_constraintStart_toEndOf="@+id/home_menu"
@@ -88,7 +89,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:gravity="end"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="16sp"
             android:fontFamily="@font/bold"
             android:text="En"
@@ -103,9 +104,8 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:onClick="menu"
-            app:tint="@color/white"
             android:padding="@dimen/_5sdp"
-            android:src="@drawable/im_menu"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -167,12 +167,13 @@
 
             <ImageView
                 android:id="@+id/home_sort"
-                android:layout_width="@dimen/_43sdp"
+                android:layout_width="@dimen/_28sdp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_15sdp"
                 android:onClick="sort"
                 app:tint="@color/white"
-                android:src="@drawable/im_sort" />
+
+                />
 
             <ImageView
                 android:id="@+id/home_filter"

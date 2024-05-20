@@ -588,4 +588,18 @@ class Tools {
         )
         return Uri.parse(path)
     }
+
+    fun getTheme(context: Context): String {
+        val currentNightMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                return "light"
+            }
+
+            Configuration.UI_MODE_NIGHT_YES -> {
+                return "dark"
+            }
+        }
+        return "light"
+    }
 }

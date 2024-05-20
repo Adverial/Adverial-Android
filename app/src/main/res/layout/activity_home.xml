@@ -73,10 +73,9 @@
 
         <ImageView
             android:id="@+id/home_logo"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_20sdp"
-            android:src="@drawable/test1"
-            android:background="@color/menu_background"
+
             app:layout_constraintBottom_toBottomOf="@+id/home_menu"
             app:layout_constraintEnd_toStartOf="@+id/home_language"
             app:layout_constraintStart_toEndOf="@+id/home_menu"
@@ -169,7 +168,7 @@
                 android:id="@+id/home_sort"
                 android:layout_width="@dimen/_28sdp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_15sdp"
+                android:padding="@dimen/_13sdp"
                 android:onClick="sort"
                 app:tint="@color/white"
 

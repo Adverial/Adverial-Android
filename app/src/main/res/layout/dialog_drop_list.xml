@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/menu_background"
     android:layout_height="wrap_content">
 
     <TextView
@@ -13,7 +14,8 @@
         android:layout_marginTop="@dimen/_13sdp"
         android:fontFamily="@font/regular"
         android:text="@string/sort_title"
-        android:textColor="@color/black"
+
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +24,7 @@
         android:id="@+id/dropList_recyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/menu_background"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_15sdp"

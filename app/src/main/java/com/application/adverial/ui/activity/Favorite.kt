@@ -25,7 +25,7 @@ class Favorite : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
         Tools().changeViewFromTheme(this,favoriteRoot)
-        Tools().setBasedLogo(this, R.id.imageView51)
+        Tools().setBasedLogo(this, R.id.imageView38)
 
 
     }

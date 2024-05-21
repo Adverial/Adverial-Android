@@ -37,7 +37,7 @@ class Special : AppCompatActivity() {
         setContentView(R.layout.activity_special)
         Tools().rotateLayout(this,newAdCategory_back2)
         Tools().changeViewFromTheme(this,specialRoot)
-
+        Tools().setBasedLogo(this, R.id.imageView38)
         pageInit()
         filterSliderInit()
     }

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.Phone">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,7 +65,7 @@
             android:layout_marginTop="@dimen/_25sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:text="@string/phone_auth_title"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_15ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/phone_auth_number_hint"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subCategory_name" />
@@ -147,7 +147,7 @@
             android:onClick="ok"
             android:text="@string/phone_auth_number_send"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="@+id/imageView21"
             app:layout_constraintStart_toStartOf="@+id/imageView21"

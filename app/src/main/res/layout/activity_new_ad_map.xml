@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
             android:text="@string/new_ad_info_details"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_10ssp" />
 
         <LinearLayout
@@ -152,7 +152,7 @@
         android:onClick="next"
         android:text="@string/new_ad_info_next"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_11ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

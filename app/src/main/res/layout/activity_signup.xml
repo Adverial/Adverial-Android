@@ -10,7 +10,7 @@
         android:id="@+id/signUpRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/menu_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
             android:layout_marginEnd="@dimen/_15sdp"
             android:fontFamily="@font/regular"
             android:text="@string/signup_title"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_15ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +184,7 @@
             android:onClick="signup"
             android:text="@string/signup"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="@+id/signup_email"
             app:layout_constraintHorizontal_bias="1.0"
@@ -268,7 +268,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/signup_terms1"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_text"
                 android:textSize="@dimen/_9ssp" />
 
             <ImageView
@@ -306,7 +306,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/signup_terms2"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_text"
                 android:textSize="@dimen/_9ssp" />
         </LinearLayout>
 

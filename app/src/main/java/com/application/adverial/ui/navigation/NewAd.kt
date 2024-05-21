@@ -3,7 +3,6 @@ package com.application.adverial.ui.navigation
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.text.Editable
@@ -14,26 +13,27 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.Nullable
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
-import com.application.adverial.service.AutoComplete
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.Login
 import com.application.adverial.ui.adapter.MenuCategoryAdapter
 import com.application.adverial.ui.adapter.NewAdAdapter
-import kotlinx.android.synthetic.main.activity_favorites.*
-import kotlinx.android.synthetic.main.activity_new_ad.*
-import kotlinx.android.synthetic.main.activity_profile.*
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_new_ad.home_search2
+import kotlinx.android.synthetic.main.activity_new_ad.lottie3
+import kotlinx.android.synthetic.main.activity_new_ad.newAd_drawerLayout
+import kotlinx.android.synthetic.main.activity_new_ad.newAd_recyclerView
+import kotlinx.android.synthetic.main.activity_new_ad.newAd_voice
+import kotlinx.android.synthetic.main.activity_new_ad.newAddRoot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import java.lang.Exception
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
+import java.util.Objects
 
 class NewAd : AppCompatActivity() {
 
@@ -49,7 +49,15 @@ class NewAd : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_ad)
         Tools().changeViewFromTheme(this,newAddRoot)
-
+        if (Tools().getTheme(this)=="dark") {
+            findViewById<View>(R.id.home_menu2).setBackgroundResource(R.drawable.im_menu)
+            findViewById<View>(R.id.imageView12).setBackgroundResource(R.drawable.test1)
+        }
+        else
+        {
+            findViewById<View>(R.id.home_menu2).setBackgroundResource(R.drawable.im_menu_dark)
+            findViewById<View>(R.id.imageView12).setBackgroundResource(R.drawable.logo_dark)
+        }
         //AutoComplete(this, recyclerView, home_search2, "category")
         drawerInit()
         pageInit()

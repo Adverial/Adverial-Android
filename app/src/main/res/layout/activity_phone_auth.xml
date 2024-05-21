@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.PhoneAuth">
 
     <ImageView
@@ -42,7 +42,7 @@
         android:layout_marginEnd="@dimen/_15sdp"
         android:fontFamily="@font/regular"
         android:text="@string/phone_auth_title1"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_15ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -69,7 +69,7 @@
             android:layout_height="@dimen/_35sdp"
             android:background="@drawable/stroke2"
             android:gravity="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/menu_text" />
 
         <TextView
             android:id="@+id/phoneAuth_t2"
@@ -78,7 +78,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:background="@drawable/stroke1"
             android:gravity="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/menu_text" />
 
         <TextView
             android:id="@+id/phoneAuth_t3"
@@ -87,7 +87,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:background="@drawable/stroke1"
             android:gravity="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/menu_text" />
 
         <TextView
             android:id="@+id/phoneAuth_t4"
@@ -96,7 +96,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:background="@drawable/stroke1"
             android:gravity="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/menu_text" />
 
         <TextView
             android:id="@+id/phoneAuth_t5"
@@ -105,7 +105,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:background="@drawable/stroke1"
             android:gravity="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/menu_text" />
 
         <TextView
             android:id="@+id/phoneAuth_t6"
@@ -114,7 +114,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:background="@drawable/stroke1"
             android:gravity="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/menu_text" />
     </LinearLayout>
 
     <EditText
@@ -147,7 +147,7 @@
         android:onClick="verify"
         android:text="@string/phone_auth_verify"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
         app:layout_constraintHorizontal_bias="1.0"
@@ -164,7 +164,7 @@
         android:onClick="resendCode"
         android:text="@string/resendCode"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
         app:layout_constraintHorizontal_bias="1.0"

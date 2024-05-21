@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.ContactUs">
 
     <ImageView
@@ -82,7 +82,7 @@
         android:onClick="send"
         android:text="@string/profile_settings_contact_us_send"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         app:layout_constraintEnd_toEndOf="@+id/contactUs_text"
         app:layout_constraintStart_toStartOf="@+id/contactUs_text"
         app:layout_constraintTop_toBottomOf="@+id/contactUs_text" />
@@ -95,7 +95,7 @@
         android:fontFamily="@font/regular"
         android:onClick="website"
         android:text="https://www.adverial.com"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_9ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:text="@string/profile_settings_contact_us_website"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_9ssp"
         android:layout_marginBottom="@dimen/_5sdp"
         app:layout_constraintBottom_toTopOf="@+id/contactUs_website"

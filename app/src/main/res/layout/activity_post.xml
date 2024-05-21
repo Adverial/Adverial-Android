@@ -5,7 +5,7 @@
     android:id="@+id/activityPostRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.Post">
 
 
@@ -246,7 +246,7 @@
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:fontFamily="@font/regular"
                         android:text="Istanbul"
-                        android:textColor="@color/white"
+                        android:textColor="@color/menu_text"
                         android:textSize="@dimen/_15ssp" />
 
                     <TextView
@@ -371,7 +371,7 @@
                     android:onClick="showAdDetails"
                     android:text="@string/post_details_about"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/menu_text"
                     android:textSize="@dimen/_10ssp" />
 
                 <Button
@@ -386,7 +386,7 @@
                     android:onClick="showLocation"
                     android:text="@string/post_details_location"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/menu_text"
                     android:textSize="@dimen/_10ssp" />
 
                 <Button
@@ -401,7 +401,7 @@
                     android:onClick="call"
                     android:text="@string/post_details_call"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/menu_text"
                     android:textSize="@dimen/_10ssp" />
 
                 <Button
@@ -416,7 +416,7 @@
                     android:onClick="message"
                     android:text="@string/post_details_message"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/menu_text"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>
 

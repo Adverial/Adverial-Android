@@ -48,7 +48,7 @@
         android:onClick="back"
         android:text="@string/sort_ok"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_11ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

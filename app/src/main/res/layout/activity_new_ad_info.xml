@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.NewAdInfo">
 
     <ImageView
@@ -14,7 +14,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/wallpaper"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +88,7 @@
         android:onClick="next"
         android:text="@string/new_ad_info_next"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_11ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -110,7 +109,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
             android:text="@string/new_ad_info_details"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_10ssp" />
 
         <LinearLayout
@@ -165,7 +164,7 @@
         android:id="@+id/lottie11"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/black_cover2"
+        android:background="@color/menu_background"
         android:elevation="@dimen/_4sdp"
         android:padding="@dimen/_50sdp"
         app:layout_constraintBottom_toBottomOf="parent"

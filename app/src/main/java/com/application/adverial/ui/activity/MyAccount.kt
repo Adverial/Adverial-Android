@@ -26,14 +26,7 @@ class MyAccount : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_account)
         Tools().changeViewFromTheme(this,myAccountRoot)
-
-        if (Tools().getTheme(this)=="dark") {
-            findViewById<View>(R.id.imageView42).setBackgroundResource(R.drawable.test1)
-        }
-        else
-        {
-            findViewById<View>(R.id.imageView42).setBackgroundResource(R.drawable.logo_dark)
-        }
+        Tools().setBasedLogo(this, R.id.imageView42)
         pageInit()
     }
 

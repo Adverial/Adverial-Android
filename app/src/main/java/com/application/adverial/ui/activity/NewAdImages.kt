@@ -36,13 +36,7 @@ class NewAdImages : AppCompatActivity() {
         setContentView(R.layout.activity_new_ad_images)
         Tools().rotateLayout(this,home_menu3)
         Tools().changeViewFromTheme(this,newAdImageRoot)
-         if (Tools().getTheme(this)=="dark") {
-             findViewById<View>(R.id.imageView32).setBackgroundResource(R.drawable.test1)
-         }
-         else
-         {
-             findViewById<View>(R.id.imageView32).setBackgroundResource(R.drawable.logo_dark)
-         }
+        Tools().setBasedLogo(this, R.id.imageView32)
         permissions()
         setDefaultUserDetails()
         publishPhone.addTextChangedListener(object : TextWatcher{

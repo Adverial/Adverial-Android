@@ -38,13 +38,8 @@ class NewAdAddress : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
-        if (Tools().getTheme(this)=="dark") {
-            findViewById<View>(R.id.imageView32).setBackgroundResource(R.drawable.test1)
-        }
-        else
-        {
-            findViewById<View>(R.id.imageView32).setBackgroundResource(R.drawable.logo_dark)
-        }
+
+        Tools().setBasedLogo(this, R.id.imageView32)
 
         Tools().rotateLayout(this,home_menu3)
         Tools().changeViewFromTheme(this,addressRoot)

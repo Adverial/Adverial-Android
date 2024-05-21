@@ -44,14 +44,8 @@ class Category : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_ad_category)
-        if (Tools().getTheme(this)=="dark") {
-            findViewById<View>(R.id.imageView12).setBackgroundResource(R.drawable.test1)
-        }
-        else
-        {
-            findViewById<View>(R.id.imageView12).setBackgroundResource(R.drawable.logo_dark)
-        }
 
+        Tools().setBasedLogo(this, R.id.imageView12)
         Tools().changeViewFromTheme(this,newAddCategoryRoot)
         Tools().rotateLayout(this, newAdCategory_back)
 

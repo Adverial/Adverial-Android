@@ -35,13 +35,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_ad_map)
 
-        if (Tools().getTheme(this)=="dark") {
-            findViewById<View>(R.id.imageView47).setBackgroundResource(R.drawable.test1)
-        }
-        else
-        {
-            findViewById<View>(R.id.imageView47).setBackgroundResource(R.drawable.logo_dark)
-        }
+        Tools().setBasedLogo(this, R.id.imageView47)
         pageInit()
         Tools().locationRequest(this)
         myLocation()

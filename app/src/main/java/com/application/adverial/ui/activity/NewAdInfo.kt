@@ -29,13 +29,8 @@ class NewAdInfo : AppCompatActivity() {
         Tools().rotateLayout(this,newAdCategory_back3)
         Tools().changeViewFromTheme(this,newAdInfoRoot)
 
-        if (Tools().getTheme(this)=="dark") {
-            findViewById<View>(R.id.imageView24).setBackgroundResource(R.drawable.test1)
-        }
-        else
-        {
-            findViewById<View>(R.id.imageView24).setBackgroundResource(R.drawable.logo_dark)
-        }
+
+        Tools().setBasedLogo(this, R.id.imageView24)
         pageInit()
     }
 

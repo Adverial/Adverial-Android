@@ -50,12 +50,12 @@ class NewAd : AppCompatActivity() {
         setContentView(R.layout.activity_new_ad)
         Tools().changeViewFromTheme(this,newAddRoot)
         if (Tools().getTheme(this)=="dark") {
-            findViewById<View>(R.id.home_menu2).setBackgroundResource(R.drawable.im_menu)
+           // findViewById<View>(R.id.home_menu2).setBackgroundResource(R.drawable.im_menu)
             findViewById<View>(R.id.imageView12).setBackgroundResource(R.drawable.test1)
         }
         else
         {
-            findViewById<View>(R.id.home_menu2).setBackgroundResource(R.drawable.im_menu_dark)
+            //findViewById<View>(R.id.home_menu2).setBackgroundResource(R.drawable.im_menu_dark)
             findViewById<View>(R.id.imageView12).setBackgroundResource(R.drawable.logo_dark)
         }
         //AutoComplete(this, recyclerView, home_search2, "category")
@@ -220,4 +220,5 @@ class NewAd : AppCompatActivity() {
         if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
         else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
     }
+
 }

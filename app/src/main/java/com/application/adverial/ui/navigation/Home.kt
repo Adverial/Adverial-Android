@@ -72,10 +72,9 @@ class Home : AppCompatActivity() {
 
         drawerInit()
         pageInit()
-     Log.d("Home", "onCreate: " + Tools().getTheme(this))
+
         if (Tools().getTheme(this)=="dark") {
             findViewById<View>(R.id.home_menu).setBackgroundResource(R.drawable.im_menu)
-            //home_sort
             findViewById<View>(R.id.home_sort).setBackgroundResource(R.drawable.im_sort_light)
             findViewById<View>(R.id.home_logo).setBackgroundResource(R.drawable.test1)
         }

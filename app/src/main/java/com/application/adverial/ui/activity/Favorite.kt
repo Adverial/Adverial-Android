@@ -21,11 +21,22 @@ class Favorite : AppCompatActivity() {
     private var itemList= ArrayList<FavoriteData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("Favorite", "onCreate")
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
-//        Tools().rotateLayout(this,favoriteRoot)
         Tools().changeViewFromTheme(this,favoriteRoot)
+        Log.d("Favorite", Tools().getTheme(this))
+        if (Tools().getTheme(this)=="dark") {
+            findViewById<View>(R.id.profile_menu3).setBackgroundResource(R.drawable.im_menu)
+            findViewById<View>(R.id.imageView51).setBackgroundResource(R.drawable.test1)
+        }
+        else
+        {
+            findViewById<View>(R.id.profile_menu3).setBackgroundResource(R.drawable.im_menu_dark)
+            findViewById<View>(R.id.imageView51).setBackgroundResource(R.drawable.logo_dark)
+        }
+
+
     }
 
     @SuppressLint("NotifyDataSetChanged")

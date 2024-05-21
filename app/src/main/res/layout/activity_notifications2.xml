@@ -26,11 +26,9 @@
 
         <ImageView
             android:id="@+id/imageView47"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:src="@drawable/test1"
-            app:tint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,8 +41,6 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_5sdp"
             android:onClick="menu"
-            app:tint="@color/white"
-            android:src="@drawable/im_menu"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

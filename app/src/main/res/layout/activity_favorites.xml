@@ -59,6 +59,7 @@
             android:layout_marginBottom="@dimen/_47sdp"
             android:clipToPadding="false"
             android:overScrollMode="never"
+            android:background="@color/menu_background"
             android:paddingBottom="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -17,17 +17,15 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:onClick="back"
         android:padding="@dimen/_3sdp"
-        android:src="@drawable/im_back"
+        app:srcCompat="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+         />
 
     <ImageView
         android:id="@+id/imageView55"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_20sdp"
-        android:src="@drawable/test1"
-        app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/newAdCategory_back7" />
@@ -67,6 +65,7 @@
         android:paddingEnd="@dimen/_8sdp"
         android:paddingBottom="@dimen/_7sdp"
         android:textSize="@dimen/_12ssp"
+        android:textColor="@color/menu_text"
         app:layout_constraintEnd_toEndOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />

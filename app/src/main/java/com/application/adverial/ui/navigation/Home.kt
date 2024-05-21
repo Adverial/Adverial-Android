@@ -74,14 +74,14 @@ class Home : AppCompatActivity() {
         pageInit()
 
         if (Tools().getTheme(this)=="dark") {
-            findViewById<View>(R.id.home_menu).setBackgroundResource(R.drawable.im_menu)
-            findViewById<View>(R.id.home_sort).setBackgroundResource(R.drawable.im_sort_light)
+//            findViewById<View>(R.id.home_menu).setBackgroundResource(R.drawable.im_menu)
+//            findViewById<View>(R.id.home_sort).setBackgroundResource(R.drawable.im_sort_light)
             findViewById<View>(R.id.home_logo).setBackgroundResource(R.drawable.test1)
         }
         else
         {
-            findViewById<View>(R.id.home_menu).setBackgroundResource(R.drawable.im_menu_dark)
-            findViewById<View>(R.id.home_sort).setBackgroundResource(R.drawable.im_sort_dark)
+//            findViewById<View>(R.id.home_menu).setBackgroundResource(R.drawable.im_menu_dark)
+//            findViewById<View>(R.id.home_sort).setBackgroundResource(R.drawable.im_sort_dark)
             findViewById<View>(R.id.home_logo).setBackgroundResource(R.drawable.logo_dark)
         }
 //        val repo = Repository(context = this)

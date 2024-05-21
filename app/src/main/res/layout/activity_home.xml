@@ -90,7 +90,7 @@
             android:gravity="end"
             android:textColor="@color/menu_text"
             android:textSize="16sp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/regular"
             android:text="En"
             android:onClick="language"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,12 +99,12 @@
         <ImageView
             android:id="@+id/home_menu"
             android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_22sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:onClick="menu"
             android:padding="@dimen/_5sdp"
-
+            app:srcCompat="@drawable/menu_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,11 +146,13 @@
                 <ImageView
                     android:id="@+id/imageView11"
                     android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
+                    android:layout_height="@dimen/_14sdp"
                     app:tint="@color/textColor"
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginStart="@dimen/_15sdp"
-                    android:src="@drawable/im_search" />
+                    app:srcCompat="@drawable/search_icon"
+
+                    />
 
                 <ImageView
                     android:id="@+id/home_voice"
@@ -161,17 +163,16 @@
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:padding="@dimen/_3sdp"
                     android:onClick="voice"
+                    android:visibility="invisible"
                     android:src="@drawable/im_mic" />
             </FrameLayout>
 
             <ImageView
                 android:id="@+id/home_sort"
                 android:layout_width="@dimen/_28sdp"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_13sdp"
+                android:layout_height="@dimen/_28sdp"
                 android:onClick="sort"
-                app:tint="@color/white"
-
+                app:srcCompat="@drawable/im_sort_dark"
                 />
 
             <ImageView

@@ -36,8 +36,9 @@
 
         <ImageView
             android:id="@+id/profile_menu"
+            app:srcCompat="@drawable/menu_icon"
             android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_22sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_5sdp"

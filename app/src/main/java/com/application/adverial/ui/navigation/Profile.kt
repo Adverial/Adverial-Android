@@ -52,16 +52,7 @@ class Profile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         Tools().changeViewFromTheme(this,profileRoot)
-
-        if (Tools().getTheme(this)=="dark") {
-        //    findViewById<View>(R.id.profile_menu).setBackgroundResource(R.drawable.im_menu)
-            findViewById<View>(R.id.imageView23).setBackgroundResource(R.drawable.test1)
-        }
-        else
-        {
-         //   findViewById<View>(R.id.profile_menu).setBackgroundResource(R.drawable.im_menu_dark)
-            findViewById<View>(R.id.imageView23).setBackgroundResource(R.drawable.logo_dark)
-        }
+        Tools().setThemeBasedImage(this, R.id.imageView23)
         drawerInit()
         pageInit()
         buttons()

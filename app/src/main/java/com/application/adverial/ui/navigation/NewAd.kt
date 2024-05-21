@@ -49,16 +49,8 @@ class NewAd : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_ad)
         Tools().changeViewFromTheme(this,newAddRoot)
-        if (Tools().getTheme(this)=="dark") {
-           // findViewById<View>(R.id.home_menu2).setBackgroundResource(R.drawable.im_menu)
-            findViewById<View>(R.id.imageView12).setBackgroundResource(R.drawable.test1)
-        }
-        else
-        {
-            //findViewById<View>(R.id.home_menu2).setBackgroundResource(R.drawable.im_menu_dark)
-            findViewById<View>(R.id.imageView12).setBackgroundResource(R.drawable.logo_dark)
-        }
-        //AutoComplete(this, recyclerView, home_search2, "category")
+
+        Tools().setThemeBasedImage(this, R.id.imageView12)
         drawerInit()
         pageInit()
     }

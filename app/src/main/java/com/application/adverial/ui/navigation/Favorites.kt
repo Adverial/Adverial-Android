@@ -42,15 +42,7 @@ class Favorites : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
         Tools().changeViewFromTheme(this,activityFavoritesRoot)
-        if (Tools().getTheme(this)=="dark") {
-//            findViewById<View>(R.id.profile_menu3).setBackgroundResource(R.drawable.im_menu)
-            findViewById<View>(R.id.imageView51).setBackgroundResource(R.drawable.test1)
-        }
-        else
-        {
-//            findViewById<View>(R.id.profile_menu3).setBackgroundResource(R.drawable.im_menu_dark)
-            findViewById<View>(R.id.imageView51).setBackgroundResource(R.drawable.logo_dark)
-        }
+        Tools().setThemeBasedImage(this, R.id.imageView51)
         drawerInit()
         pageInit()
     }

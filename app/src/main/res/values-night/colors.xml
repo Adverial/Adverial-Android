@@ -27,5 +27,6 @@
     <color name="textColor">#FFFFFF</color>
     <color name="ccpBackground">#FF000000</color>
     <color name="viewColor">#CB3C3A37</color>
+    <color name="inputBgColor">#FF2F2F2F</color>
     <color name="toolbarColor">#30271c</color>
 </resources>

@@ -1,17 +1,21 @@
 package com.application.adverial.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.dialog.AlertDialog1
 import com.application.adverial.ui.navigation.Home
-import kotlinx.android.synthetic.main.activity_my_account.*
+import kotlinx.android.synthetic.main.activity_my_account.deleteAccount
+import kotlinx.android.synthetic.main.activity_my_account.myAccountRoot
+import kotlinx.android.synthetic.main.activity_my_account.myaccount_email
+import kotlinx.android.synthetic.main.activity_my_account.myaccount_firstname
+import kotlinx.android.synthetic.main.activity_my_account.myaccount_lastname
+import kotlinx.android.synthetic.main.activity_my_account.myaccount_phone
 import kotlinx.android.synthetic.main.activity_signup.lottie14
 import java.util.regex.Pattern
 
@@ -23,6 +27,13 @@ class MyAccount : AppCompatActivity() {
         setContentView(R.layout.activity_my_account)
         Tools().changeViewFromTheme(this,myAccountRoot)
 
+        if (Tools().getTheme(this)=="dark") {
+            findViewById<View>(R.id.imageView42).setBackgroundResource(R.drawable.test1)
+        }
+        else
+        {
+            findViewById<View>(R.id.imageView42).setBackgroundResource(R.drawable.logo_dark)
+        }
         pageInit()
     }
 

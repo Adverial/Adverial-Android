@@ -52,7 +52,7 @@ class Profile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         Tools().changeViewFromTheme(this,profileRoot)
-        Tools().setThemeBasedImage(this, R.id.imageView23)
+        Tools().setBasedLogo(this, R.id.imageView23)
         drawerInit()
         pageInit()
         buttons()

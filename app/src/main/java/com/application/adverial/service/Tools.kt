@@ -608,7 +608,7 @@ class Tools {
         }
         return "light"
     }
-    fun setThemeBasedImage(context: Context, viewId: Int) {
+    fun setBasedLogo(context: Context, viewId: Int) {
         val view = (context as Activity).findViewById<View>(viewId)
         if (getTheme(context) == "dark") {
             view.setBackgroundResource(R.drawable.test1)

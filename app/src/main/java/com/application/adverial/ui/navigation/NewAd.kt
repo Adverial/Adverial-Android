@@ -50,7 +50,7 @@ class NewAd : AppCompatActivity() {
         setContentView(R.layout.activity_new_ad)
         Tools().changeViewFromTheme(this,newAddRoot)
 
-        Tools().setThemeBasedImage(this, R.id.imageView12)
+        Tools().setBasedLogo(this, R.id.imageView12)
         drawerInit()
         pageInit()
     }

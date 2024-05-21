@@ -42,7 +42,7 @@ class Notifications : AppCompatActivity() {
         Tools().changeViewFromTheme(this,notificationRoot)
         notifications_recyclerView.layoutManager = LinearLayoutManager(this)
 
-           Tools().setThemeBasedImage(this, R.id.imageView47)
+           Tools().setBasedLogo(this, R.id.imageView47)
 
 
 

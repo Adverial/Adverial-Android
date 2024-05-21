@@ -42,7 +42,7 @@ class Favorites : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
         Tools().changeViewFromTheme(this,activityFavoritesRoot)
-        Tools().setThemeBasedImage(this, R.id.imageView51)
+        Tools().setBasedLogo(this, R.id.imageView51)
         drawerInit()
         pageInit()
     }

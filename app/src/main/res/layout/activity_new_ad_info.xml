@@ -27,18 +27,17 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:onClick="back"
         android:padding="@dimen/_3sdp"
-        android:src="@drawable/im_back"
+        app:srcCompat="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+       />
 
     <ImageView
         android:id="@+id/imageView24"
         android:layout_width="0dp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_35sdp"
-        android:src="@drawable/test1"
-        app:tint="@color/white"
+        app:srcCompat="@drawable/menu_icon"
         app:layout_constraintBottom_toBottomOf="@+id/newAdCategory_back3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/newAdCategory_back3"

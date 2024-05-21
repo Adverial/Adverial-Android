@@ -39,7 +39,7 @@
             android:autoSizeMinTextSize="@dimen/_9ssp"
             android:fontFamily="@font/regular"
             android:maxLines="2"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_10ssp"
             android:textStyle="bold|italic" />
 
@@ -52,7 +52,7 @@
             android:fontFamily="@font/regular"
             android:maxLines="1"
             android:text="notification"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_10ssp" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:fontFamily="@font/regular"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_9ssp" />
     </LinearLayout>
 

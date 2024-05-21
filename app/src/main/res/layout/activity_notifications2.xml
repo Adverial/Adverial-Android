@@ -11,7 +11,7 @@
         android:id="@+id/notificationRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/menu_background"
         tools:context=".ui.fragment.Notification">
 
         <ImageView
@@ -139,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/noNotification"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -151,7 +151,7 @@
             android:id="@+id/lottie17"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/black_cover2"
+            android:background="@color/menu_background"
             android:elevation="@dimen/_4sdp"
             android:padding="@dimen/_50sdp"
             android:visibility="gone"

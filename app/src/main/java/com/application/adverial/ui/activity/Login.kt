@@ -70,13 +70,13 @@ class Login : AppCompatActivity() {
                     if(it.data.status == 1 || it.data.token != null){
                         getSharedPreferences("user", 0).edit().putString("token", it.data.token).apply()
                         Toast.makeText(this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
+                        Tools().goto(this, Home(), false)
 
                     }else{
                         val intent= Intent(this, PhoneAuth::class.java)
                         intent.putExtra("email", login_email.text.toString())
                         intent.putExtra("parent", "login")
                         startActivity(intent)
-                        Tools().goto(this, Home(), false)
                     }
                 } else Toast.makeText(this, getString(R.string.login_unsuccessful), Toast.LENGTH_SHORT).show()
             }

@@ -1,5 +1,11 @@
 package com.application.adverial.ui.activity
 
+//import kotlinx.android.synthetic.main.activity_post.about_indicator
+//import kotlinx.android.synthetic.main.activity_post.location_indicator
+//import kotlinx.android.synthetic.main.activity_post.post_about
+//import kotlinx.android.synthetic.main.activity_post.post_location
+//import kotlinx.android.synthetic.main.activity_post.post_sideBarAction
+//import kotlinx.android.synthetic.main.activity_post.post_sideSlide
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
@@ -8,10 +14,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
-import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,7 +22,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
-import com.application.adverial.service.OnSwipeTouchListener
 import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
@@ -30,25 +32,19 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_post.about_indicator
 import kotlinx.android.synthetic.main.activity_post.activityPostRoot
+import kotlinx.android.synthetic.main.activity_post.back_icon
 import kotlinx.android.synthetic.main.activity_post.location_btn
-import kotlinx.android.synthetic.main.activity_post.location_indicator
 import kotlinx.android.synthetic.main.activity_post.lottie13
 import kotlinx.android.synthetic.main.activity_post.message_call_btn
 import kotlinx.android.synthetic.main.activity_post.phone_call_btn
-import kotlinx.android.synthetic.main.activity_post.post_about
 import kotlinx.android.synthetic.main.activity_post.post_city1
 import kotlinx.android.synthetic.main.activity_post.post_favorite
 import kotlinx.android.synthetic.main.activity_post.post_la
 import kotlinx.android.synthetic.main.activity_post.post_layout
-import kotlinx.android.synthetic.main.activity_post.post_location
 import kotlinx.android.synthetic.main.activity_post.post_mapLayout
 import kotlinx.android.synthetic.main.activity_post.post_page
-import kotlinx.android.synthetic.main.activity_post.post_sideBarAction
-import kotlinx.android.synthetic.main.activity_post.post_sideSlide
 import kotlinx.android.synthetic.main.activity_post.post_title1
-import kotlinx.android.synthetic.main.activity_post.profile_menu2
 import kotlinx.android.synthetic.main.activity_post.show_ad_details
 import kotlinx.android.synthetic.main.item_post_page.post_address
 import kotlinx.android.synthetic.main.item_post_page.post_city
@@ -71,16 +67,17 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
-        Tools().rotateLayout(this, profile_menu2)
+        Tools().rotateLayout(this, back_icon)
         Tools().changeViewFromTheme(this, activityPostRoot)
 
         pageInit()
         fetchData()
+        Tools().setBasedLogo(this, R.id.app_logo)
 
         // hide
         show_ad_details.visibility = View.GONE
             // hide post_sideSlide
-        post_sideSlide.visibility = View.GONE
+//        post_sideSlide.visibility = View.GONE
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -92,90 +89,90 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         mapFragment!!.getMapAsync(this)
         id = intent.getStringExtra("id")!!
 
-        post_sideSlide.setOnTouchListener(object : OnSwipeTouchListener(this) {
-            override fun onSwipeRight() {
-                actionBarMode = "opened"
-                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
-                params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
-                post_sideSlide.requestLayout()
-                post_sideSlide.startAnimation(
-                    AnimationUtils.loadAnimation(
-                        this@Post,
-                        R.anim.slide_right1
-                    )
-                )
-            }
+//        post_sideSlide.setOnTouchListener(object : OnSwipeTouchListener(this) {
+//            override fun onSwipeRight() {
+//                actionBarMode = "opened"
+//                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
+//                params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
+//                post_sideSlide.requestLayout()
+//                post_sideSlide.startAnimation(
+//                    AnimationUtils.loadAnimation(
+//                        this@Post,
+//                        R.anim.slide_right1
+//                    )
+//                )
+//            }
+//
+//            override fun onSwipeLeft() {
+//                actionBarMode = "closed"
+//                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
+//                params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
+//                post_sideSlide.requestLayout()
+//                post_sideSlide.startAnimation(
+//                    AnimationUtils.loadAnimation(
+//                        this@Post,
+//                        R.anim.slide_left1
+//                    )
+//                )
+//            }
+//        })
 
-            override fun onSwipeLeft() {
-                actionBarMode = "closed"
-                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
-                params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
-                post_sideSlide.requestLayout()
-                post_sideSlide.startAnimation(
-                    AnimationUtils.loadAnimation(
-                        this@Post,
-                        R.anim.slide_left1
-                    )
-                )
-            }
-        })
+//        post_sideBarAction.setOnTouchListener { view, motionEvent ->
+//            if (motionEvent.action == MotionEvent.ACTION_UP) {
+//                if (actionBarMode == "opened") {
+//                    actionBarMode = "closed"
+//                    val params: MarginLayoutParams =
+//                        post_sideSlide.layoutParams as MarginLayoutParams
+//                    params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
+//                    post_sideSlide.requestLayout()
+//                    post_sideSlide.startAnimation(
+//                        AnimationUtils.loadAnimation(
+//                            this@Post,
+//                            R.anim.slide_left1
+//                        )
+//                    )
+//                } else {
+//                    actionBarMode = "opened"
+//                    val params: MarginLayoutParams =
+//                        post_sideSlide.layoutParams as MarginLayoutParams
+//                    params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
+//                    post_sideSlide.requestLayout()
+//                    post_sideSlide.startAnimation(
+//                        AnimationUtils.loadAnimation(
+//                            this@Post,
+//                            R.anim.slide_right1
+//                        )
+//                    )
+//                }
+//            }
+//            true
+//        }
 
-        post_sideBarAction.setOnTouchListener { view, motionEvent ->
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                if (actionBarMode == "opened") {
-                    actionBarMode = "closed"
-                    val params: MarginLayoutParams =
-                        post_sideSlide.layoutParams as MarginLayoutParams
-                    params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
-                    post_sideSlide.requestLayout()
-                    post_sideSlide.startAnimation(
-                        AnimationUtils.loadAnimation(
-                            this@Post,
-                            R.anim.slide_left1
-                        )
-                    )
-                } else {
-                    actionBarMode = "opened"
-                    val params: MarginLayoutParams =
-                        post_sideSlide.layoutParams as MarginLayoutParams
-                    params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
-                    post_sideSlide.requestLayout()
-                    post_sideSlide.startAnimation(
-                        AnimationUtils.loadAnimation(
-                            this@Post,
-                            R.anim.slide_right1
-                        )
-                    )
-                }
-            }
-            true
-        }
-
-        post_sideBarAction.setOnClickListener {
-            if (actionBarMode == "opened") {
-                actionBarMode = "closed"
-                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
-                params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
-                post_sideSlide.requestLayout()
-                post_sideSlide.startAnimation(
-                    AnimationUtils.loadAnimation(
-                        this@Post,
-                        R.anim.slide_left1
-                    )
-                )
-            } else {
-                actionBarMode = "opened"
-                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
-                params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
-                post_sideSlide.requestLayout()
-                post_sideSlide.startAnimation(
-                    AnimationUtils.loadAnimation(
-                        this@Post,
-                        R.anim.slide_right1
-                    )
-                )
-            }
-        }
+//        post_sideBarAction.setOnClickListener {
+//            if (actionBarMode == "opened") {
+//                actionBarMode = "closed"
+//                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
+//                params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
+//                post_sideSlide.requestLayout()
+//                post_sideSlide.startAnimation(
+//                    AnimationUtils.loadAnimation(
+//                        this@Post,
+//                        R.anim.slide_left1
+//                    )
+//                )
+//            } else {
+//                actionBarMode = "opened"
+//                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
+//                params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
+//                post_sideSlide.requestLayout()
+//                post_sideSlide.startAnimation(
+//                    AnimationUtils.loadAnimation(
+//                        this@Post,
+//                        R.anim.slide_right1
+//                    )
+//                )
+//            }
+//        }
 
         (mapFragment as ScrollableMapFragment).setListener {
             post_mapLayout.requestDisallowInterceptTouchEvent(
@@ -286,12 +283,12 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun location(view: View) {
-        location_indicator.visibility = View.VISIBLE
-        about_indicator.visibility = View.INVISIBLE
+//        location_indicator.visibility = View.VISIBLE
+//        about_indicator.visibility = View.INVISIBLE
         val regular = ResourcesCompat.getFont(this, R.font.regular)
         val bold = ResourcesCompat.getFont(this, R.font.bold)
-        post_about.typeface = regular
-        post_location.typeface = bold
+//        post_about.typeface = regular
+//        post_location.typeface = bold
         /*post_location.typeface = Typeface.DEFAULT_BOLD
         post_about.typeface = Typeface.DEFAULT*/
         post_mapLayout.visibility = View.VISIBLE
@@ -299,14 +296,14 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun about(view: View) {
-        location_indicator.visibility = View.INVISIBLE
-        about_indicator.visibility = View.VISIBLE
+//        location_indicator.visibility = View.INVISIBLE
+//        about_indicator.visibility = View.VISIBLE
         /*post_location.typeface = Typeface.DEFAULT
         post_about.typeface = Typeface.DEFAULT_BOLD*/
         val regular = ResourcesCompat.getFont(this, R.font.regular)
         val bold = ResourcesCompat.getFont(this, R.font.bold)
-        post_location.typeface = regular
-        post_about.typeface = bold
+//        post_location.typeface = regular
+//        post_about.typeface = bold
         post_mapLayout.visibility = View.GONE
         post_page.visibility = View.VISIBLE
     }

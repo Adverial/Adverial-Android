@@ -12,6 +12,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:gravity="center"
+        android:background="@color/menu_background"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,14 +26,14 @@
             android:layout_weight="1"
             android:maxLines="1"
             android:fontFamily="@font/regular"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <EditText
             android:id="@+id/itemFilterItem_enter"
             android:layout_width="@dimen/_105sdp"
             android:layout_height="@dimen/_16sdp"
-            android:background="@color/white_cover"
+            android:background="@drawable/rounded_corners"
             android:ems="10"
             android:fontFamily="@font/regular"
             android:gravity="end"

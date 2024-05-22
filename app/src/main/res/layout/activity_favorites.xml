@@ -71,6 +71,7 @@
             android:layout_height="@dimen/_55sdp"
             android:scaleType="fitXY"
             android:src="@drawable/im_bar1"
+            app:tint="@color/menu_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -85,6 +86,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+
             app:layout_constraintTop_toTopOf="@+id/imageView52">
 
             <ImageView
@@ -94,6 +96,7 @@
                 android:layout_weight="1"
                 android:onClick="home"
                 android:padding="@dimen/_10sdp"
+                app:tint="@color/menu_background"
                 android:src="@drawable/im_home" />
 
             <ImageView
@@ -103,6 +106,7 @@
                 android:layout_weight="1"
                 android:onClick="favorites"
                 android:padding="@dimen/_18sdp"
+                app:tint="@color/menu_background"
                 android:src="@drawable/im_favorite" />
 
             <ImageView
@@ -112,6 +116,7 @@
                 android:layout_weight="1"
                 android:onClick="newAd"
                 android:paddingTop="@dimen/_10sdp"
+                app:tint="@color/menu_background"
                 android:paddingBottom="@dimen/_20sdp"
                 android:src="@drawable/im_add" />
 
@@ -122,6 +127,7 @@
                 android:layout_weight="1"
                 android:onClick="notifications"
                 android:padding="@dimen/_17sdp"
+                app:tint="@color/menu_background"
                 android:src="@drawable/im_notification" />
 
             <ImageView
@@ -130,6 +136,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="profile"
+                app:tint="@color/menu_background"
                 android:padding="@dimen/_17sdp"
                 android:src="@drawable/im_profile" />
         </LinearLayout>

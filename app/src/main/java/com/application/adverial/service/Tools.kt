@@ -617,4 +617,13 @@ class Tools {
         }
     }
 
+    fun setBarBackground(context: Context, viewId: Int) {
+        val view = (context as Activity).findViewById<View>(viewId)
+        if (getTheme(context) == "dark") {
+            view.setBackgroundResource(R.drawable.im_bar1)
+        } else {
+            view.setBackgroundResource(R.drawable.im_bar_black)
+        }
+    }
+
 }

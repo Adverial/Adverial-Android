@@ -71,6 +71,9 @@ class Home : AppCompatActivity() {
         drawerInit()
         pageInit()
         Tools().setBasedLogo(this, R.id.home_logo)
+
+        Tools().setBarBackground(this, R.id.image_bg_bar)
+
     }
 
     private fun fetchDataAds() {

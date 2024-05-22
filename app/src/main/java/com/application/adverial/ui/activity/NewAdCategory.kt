@@ -2,17 +2,20 @@ package com.application.adverial.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.SubCategory
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.NewAdCategoryAdapter
-import kotlinx.android.synthetic.main.activity_new_ad_category.*
+import kotlinx.android.synthetic.main.activity_new_ad_category.lottie4
+import kotlinx.android.synthetic.main.activity_new_ad_category.newAdCategory_back
+import kotlinx.android.synthetic.main.activity_new_ad_category.newAdCategory_recyclerView
+import kotlinx.android.synthetic.main.activity_new_ad_category.newAddCategoryRoot
+import kotlinx.android.synthetic.main.activity_new_ad_category.subCategory_name
 
 class NewAdCategory : AppCompatActivity() {
 
@@ -40,6 +43,7 @@ class NewAdCategory : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_ad_category)
         Tools().rotateLayout(this,newAdCategory_back)
+        Tools().setBasedLogo(this, R.id.imageView12)
         Tools().changeViewFromTheme(this,newAddCategoryRoot)
         pageInit()
     }

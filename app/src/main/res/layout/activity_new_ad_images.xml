@@ -323,7 +323,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:buttonTint="@color/ccpBackground"
+                        android:buttonTint="@color/menu_text"
                         android:checked="true" />
 
 <!--                    <TextView-->

@@ -35,6 +35,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_ad_map)
 
+        Tools().setBasedLogo(this, R.id.imageView47)
         pageInit()
         Tools().locationRequest(this)
         myLocation()

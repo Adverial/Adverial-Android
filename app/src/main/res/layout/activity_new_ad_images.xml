@@ -5,7 +5,7 @@
     android:id="@+id/newAdImageRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.NewAdImages">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,19 +40,19 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:onClick="back"
             android:padding="@dimen/_3sdp"
-            android:src="@drawable/im_back"
+            app:srcCompat="@drawable/baseline_arrow_back_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+ />
 
         <ImageView
             android:id="@+id/imageView32"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_35sdp"
             android:layout_marginEnd="@dimen/_35sdp"
-            android:src="@drawable/test1"
-            android:tint="@color/white"
+
+
             app:layout_constraintBottom_toBottomOf="@+id/home_menu3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="center_vertical"
                         android:text="@string/new_ad_images_name"
-                        android:textColor="@color/white"
+                        android:textColor="@color/menu_text"
                         android:textSize="@dimen/_14ssp" />
 
                     <EditText
@@ -125,7 +125,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="end|center_vertical"
                         android:hint="@string/new_ad_info_enter_here"
-                        android:textColor="@color/white"
+                        android:textColor="@color/menu_text"
                         android:textColorHint="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
@@ -156,7 +156,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="center_vertical"
                         android:text="@string/new_ad_images_phone"
-                        android:textColor="@color/white"
+                        android:textColor="@color/menu_text"
                         android:textSize="@dimen/_14ssp" />
 
                     <EditText
@@ -173,7 +173,7 @@
                         android:textColorHint="@color/white"
                         android:gravity="end"
                         android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/menu_text"
                         android:fontFamily="@font/regular" />
 
 
@@ -235,7 +235,7 @@
                             android:fontFamily="@font/regular"
                             android:gravity="center_vertical"
                             android:text="@string/new_ad_images_option1"
-                            android:textColor="@color/white"
+                            android:textColor="@color/menu_text"
                             android:textSize="@dimen/_14ssp" />
 
                     </LinearLayout>
@@ -266,7 +266,7 @@
 <!--                            android:fontFamily="@font/regular"-->
 <!--                            android:gravity="center_vertical"-->
 <!--                            android:text="@string/new_ad_images_option2"-->
-<!--                            android:textColor="@color/white"-->
+<!--                            android:textColor="@color/menu_text"-->
 <!--                            android:textSize="@dimen/_14ssp" />-->
 
 <!--                    </LinearLayout>-->
@@ -297,7 +297,7 @@
 <!--                            android:fontFamily="@font/regular"-->
 <!--                            android:gravity="center_vertical"-->
 <!--                            android:text="@string/new_ad_images_option3"-->
-<!--                            android:textColor="@color/white"-->
+<!--                            android:textColor="@color/menu_text"-->
 <!--                            android:textSize="@dimen/_14ssp" />-->
 
 <!--                    </LinearLayout>-->
@@ -323,7 +323,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        android:buttonTint="@color/ccpBackground"
+                        android:buttonTint="@color/menu_text"
                         android:checked="true" />
 
 <!--                    <TextView-->
@@ -384,7 +384,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
                 android:text="@string/new_ad_info_details"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_text"
                 android:textSize="@dimen/_10ssp" />
 
             <LinearLayout
@@ -447,7 +447,7 @@
             android:onClick="next"
             android:text="@string/new_ad_images_finish"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_11ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

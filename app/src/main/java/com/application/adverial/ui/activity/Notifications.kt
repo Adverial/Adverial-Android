@@ -20,7 +20,7 @@ class Notifications : AppCompatActivity() {
         setContentView(R.layout.activity_notifications)
         Tools().rotateLayout(this,home_menu4)
         Tools().changeViewFromTheme(this,notificationRot)
-
+        Tools().setBasedLogo(this,R.id.imageView47)
 
         pageInit()
     }

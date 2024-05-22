@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemDropList_item"
     android:layout_width="match_parent"
+    android:background="@color/menu_background"
     android:layout_height="wrap_content">
 
     <RadioButton
@@ -22,6 +23,7 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:scaleType="centerCrop"
         android:visibility="gone"
+
         app:layout_constraintBottom_toBottomOf="@+id/itemDropList_radio"
         app:layout_constraintStart_toEndOf="@+id/itemDropList_radio"
         app:layout_constraintTop_toTopOf="@+id/itemDropList_radio"
@@ -36,7 +38,7 @@
         android:gravity="left"
         android:paddingTop="@dimen/_3sdp"
         android:paddingBottom="@dimen/_3sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/itemDropList_flag"

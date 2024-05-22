@@ -17,7 +17,7 @@
         android:fontFamily="@font/regular"
         android:text="@string/new_ad_completed_home"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toTopOf="@+id/newAdCompleted_repeat"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:fontFamily="@font/regular"
         android:text="@string/new_ad_completed_new_ad"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_12ssp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,7 +70,7 @@
             android:fontFamily="@font/regular"
             android:gravity="center"
             android:text="@string/new_ad_completed_title"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_20ssp" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:fontFamily="@font/regular"
             android:gravity="center"
             android:text="@string/new_ad_completed_desc"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_15ssp" />
 
         <TextView

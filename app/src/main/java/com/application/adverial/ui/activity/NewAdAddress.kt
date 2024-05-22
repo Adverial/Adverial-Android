@@ -38,6 +38,9 @@ class NewAdAddress : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
+
+        Tools().setBasedLogo(this, R.id.imageView32)
+
         Tools().rotateLayout(this,home_menu3)
         Tools().changeViewFromTheme(this,addressRoot)
 
@@ -71,7 +74,7 @@ class NewAdAddress : AppCompatActivity() {
                     newAdAddress_city.setTextColor(ContextCompat.getColor(this, R.color.gray))
                     newAdAddress_district.text= resources.getString(R.string.new_ad_info_select)
                     newAdAddress_city.text= resources.getString(R.string.new_ad_info_select)
-                    newAdAddress_country.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    newAdAddress_country.setTextColor(ContextCompat.getColor(this, R.color.gray))
                 })
             })
         }
@@ -95,7 +98,7 @@ class NewAdAddress : AppCompatActivity() {
 //                        Log.d("ddd", city)
                         newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.gray))
                         newAdAddress_district.text= resources.getString(R.string.new_ad_info_select)
-                        newAdAddress_city.setTextColor(ContextCompat.getColor(this, R.color.white))
+                        newAdAddress_city.setTextColor(ContextCompat.getColor(this, R.color.gray))
                     })
                 })
             }
@@ -117,7 +120,7 @@ class NewAdAddress : AppCompatActivity() {
                         newAdAddress_district.text= result.name
                         district= result.id
 //                        Log.d("ddd", district)
-                        newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.white))
+                        newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.gray    ))
                     })
                 })
             }

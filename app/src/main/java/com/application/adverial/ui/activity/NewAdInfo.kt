@@ -1,19 +1,20 @@
 package com.application.adverial.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.CategoryOptionsData
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.NewAdInfoAdapter
-import kotlinx.android.synthetic.main.activity_new_ad_category.*
-import kotlinx.android.synthetic.main.activity_new_ad_info.*
+import kotlinx.android.synthetic.main.activity_new_ad_info.lottie11
+import kotlinx.android.synthetic.main.activity_new_ad_info.newAdCategory_back3
+import kotlinx.android.synthetic.main.activity_new_ad_info.newAdInfoRoot
+import kotlinx.android.synthetic.main.activity_new_ad_info.newAdInfo_recyclerView
 
 class NewAdInfo : AppCompatActivity() {
 
@@ -28,6 +29,8 @@ class NewAdInfo : AppCompatActivity() {
         Tools().rotateLayout(this,newAdCategory_back3)
         Tools().changeViewFromTheme(this,newAdInfoRoot)
 
+
+        Tools().setBasedLogo(this, R.id.imageView24)
         pageInit()
     }
 

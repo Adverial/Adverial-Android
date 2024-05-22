@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.MyAccount">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,27 +34,25 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:id="@+id/imageView42"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:src="@drawable/test1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    android:id="@+id/imageView42"
+    android:layout_width="@dimen/_60sdp"
+    android:layout_height="@dimen/_20sdp"
+    android:layout_marginTop="@dimen/_15sdp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/newAdCategory_back5"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:onClick="back"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/im_close"
-            app:layout_constraintEnd_toEndOf="@+id/imageView42"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+<ImageView
+    android:id="@+id/newAdCategory_back5"
+    android:layout_width="@dimen/_30sdp"
+    android:layout_height="@dimen/_22sdp"
+    android:layout_marginTop="@dimen/_15sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
+    android:onClick="back"
+    android:src="@drawable/close_icon"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+  />
 
         <TextView
             android:id="@+id/textView2"
@@ -81,7 +79,8 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/rounded_full2"
-            android:backgroundTint="@color/viewColor"
+            android:backgroundTint="@color/inputBgColor"
+
             android:ems="10"
             android:fontFamily="@font/regular"
             android:hint="@string/signup_email_hint"
@@ -101,7 +100,8 @@
             android:layout_height="@dimen/_35sdp"
             android:background="@drawable/rounded_full2"
             android:layout_marginTop="@dimen/_10sdp"
-            android:backgroundTint="@color/viewColor"
+            android:backgroundTint="@color/inputBgColor"
+
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,14 +128,15 @@
             android:id="@+id/myaccount_phone"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/viewColor"
+            android:background="@color/inputBgColor"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/textColor"
             android:ems="10"
             android:fontFamily="@font/regular"
             android:hint="@string/my_account_phone"
             android:inputType="phone"
             android:maxLength="10"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/textColor"
+
             android:textSize="@dimen/_12ssp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintEnd_toStartOf="@+id/imageView62"
@@ -166,7 +167,7 @@
             android:onClick="save"
             android:text="@string/my_account_save"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="@+id/myaccount_email"
             app:layout_constraintHorizontal_bias="1.0"
@@ -217,7 +218,8 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_full2"
-                android:backgroundTint="@color/viewColor"
+                android:backgroundTint="@color/inputBgColor"
+
                 android:ems="10"
                 android:fontFamily="@font/regular"
                 android:hint="@string/signup_name_hint"
@@ -237,7 +239,8 @@
                 android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_full2"
-                android:backgroundTint="@color/viewColor"
+                android:backgroundTint="@color/inputBgColor"
+
                 android:ems="10"
                 android:fontFamily="@font/regular"
                 android:hint="@string/signup_lastname_hint"

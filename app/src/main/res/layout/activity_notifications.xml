@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.Notifications">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,27 +33,27 @@
 
         <ImageView
             android:id="@+id/imageView47"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:src="@drawable/test1"
-            app:tint="@color/white"
+
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/home_menu4"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
+            app:srcCompat="@drawable/baseline_arrow_back_24"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:onClick="back"
             android:padding="@dimen/_3sdp"
-            android:src="@drawable/im_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+             />
 
         <TextView
             android:id="@+id/textView27"

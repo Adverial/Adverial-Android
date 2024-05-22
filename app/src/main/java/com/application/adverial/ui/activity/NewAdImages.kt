@@ -36,7 +36,7 @@ class NewAdImages : AppCompatActivity() {
         setContentView(R.layout.activity_new_ad_images)
         Tools().rotateLayout(this,home_menu3)
         Tools().changeViewFromTheme(this,newAdImageRoot)
-
+        Tools().setBasedLogo(this, R.id.imageView32)
         permissions()
         setDefaultUserDetails()
         publishPhone.addTextChangedListener(object : TextWatcher{

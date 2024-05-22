@@ -15,7 +15,7 @@
     <color name="white_cover">#12FFFFFF</color>
     <color name="menu_background">#FFFFFF</color>
     <color name="menu_text">#000000</color>
-    <color name="gray_cover">#CB3C3A37</color>
+    <color name="gray_cover">#CB8C8984</color>
     <color name="very_light_gray">#EFEFEF</color>
     <color name="light_gray">#CCCCCC</color>
     <color name="gray_blue">#29333c</color>
@@ -28,5 +28,6 @@
     <color name="textColor">#000000</color>
     <color name="ccpBackground">#FFFFFFFF</color>
     <color name="viewColor">#FFFFFF</color>
+    <color name="inputBgColor">#BFD3D3D3</color> <!-- Change the color code as per your requirement -->
     <color name="toolbarColor">#ece1d7</color>
 </resources>

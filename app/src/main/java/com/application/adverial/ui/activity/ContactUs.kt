@@ -17,7 +17,7 @@ class ContactUs : AppCompatActivity() {
         setContentView(R.layout.activity_contact_us)
         Tools().rotateLayout(this,newAdCategory_back7)
         Tools().changeViewFromTheme(this,contactUsRoot)
-
+        Tools().setBasedLogo(this, R.id.imageView55)
         pageInit()
     }
 

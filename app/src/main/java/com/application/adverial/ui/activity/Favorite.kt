@@ -21,11 +21,13 @@ class Favorite : AppCompatActivity() {
     private var itemList= ArrayList<FavoriteData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("Favorite", "onCreate")
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
-//        Tools().rotateLayout(this,favoriteRoot)
         Tools().changeViewFromTheme(this,favoriteRoot)
+        Tools().setBasedLogo(this, R.id.imageView38)
+
+
     }
 
     @SuppressLint("NotifyDataSetChanged")

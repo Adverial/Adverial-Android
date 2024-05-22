@@ -68,17 +68,12 @@ class Home : AppCompatActivity() {
         swipeRefreshLayout.setOnRefreshListener {
             fetchDataAds();
         }
-
         drawerInit()
         pageInit()
+        Tools().setBasedLogo(this, R.id.home_logo)
 
-//        val repo = Repository(context = this)
-//        repo.getBackground()
-//        repo.backgroundLV.observe(this) {
-//            if (it.status == true) {
-////                Log.e("KEY", it.data.toString())
-//            }
-//        }
+        Tools().setBarBackground(this, R.id.image_bg_bar)
+
     }
 
     private fun fetchDataAds() {
@@ -89,6 +84,8 @@ class Home : AppCompatActivity() {
         scrollPermission = true
         isFinished = false
         nextPage()
+
+
 
 //        val coroutineScope1 = CoroutineScope(Dispatchers.IO)
 //        coroutineScope1.async(Dispatchers.IO) {

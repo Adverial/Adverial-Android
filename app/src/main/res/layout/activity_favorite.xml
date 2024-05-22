@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.Favorite">
 
     <ImageView
@@ -25,10 +25,10 @@
 
     <ImageView
         android:id="@+id/imageView38"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:src="@drawable/test1"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,10 +41,10 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:onClick="back"
         android:padding="@dimen/_3sdp"
-        android:src="@drawable/im_back"
+        app:srcCompat="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+         />
 
     <TextView
         android:id="@+id/textView46"

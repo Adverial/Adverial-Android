@@ -21,7 +21,7 @@
         android:paddingEnd="@dimen/_15sdp"
         android:paddingBottom="@dimen/_12sdp"
         android:text="Hello. Of course, you can pay just 450,000 $ and deal. 😍"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_10ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.ContactUs">
 
     <ImageView
@@ -17,17 +17,15 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:onClick="back"
         android:padding="@dimen/_3sdp"
-        android:src="@drawable/im_back"
+        app:srcCompat="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+         />
 
     <ImageView
         android:id="@+id/imageView55"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_20sdp"
-        android:src="@drawable/test1"
-        app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/newAdCategory_back7" />
@@ -67,6 +65,7 @@
         android:paddingEnd="@dimen/_8sdp"
         android:paddingBottom="@dimen/_7sdp"
         android:textSize="@dimen/_12ssp"
+        android:textColor="@color/menu_text"
         app:layout_constraintEnd_toEndOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -82,7 +81,7 @@
         android:onClick="send"
         android:text="@string/profile_settings_contact_us_send"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         app:layout_constraintEnd_toEndOf="@+id/contactUs_text"
         app:layout_constraintStart_toStartOf="@+id/contactUs_text"
         app:layout_constraintTop_toBottomOf="@+id/contactUs_text" />
@@ -95,7 +94,7 @@
         android:fontFamily="@font/regular"
         android:onClick="website"
         android:text="https://www.adverial.com"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_9ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +106,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:text="@string/profile_settings_contact_us_website"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:textSize="@dimen/_9ssp"
         android:layout_marginBottom="@dimen/_5sdp"
         app:layout_constraintBottom_toTopOf="@+id/contactUs_website"

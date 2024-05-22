@@ -6,14 +6,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/menu_background"
     tools:context=".ui.activity.CategoryResult">
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:foreground="@color/black_cover"
+        android:foreground="@color/menu_background"
         android:scaleType="centerCrop"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -93,7 +93,7 @@
         android:id="@+id/filterMenuCover"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#00FFFFFF"
+        android:background="@color/menu_background"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -168,7 +168,7 @@
                 android:fontFamily="@font/regular"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:text="@string/filter"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_text"
                 android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 
@@ -197,7 +197,7 @@
                 android:fontFamily="@font/regular"
                 android:text="@string/sort"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_text"
                 android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 

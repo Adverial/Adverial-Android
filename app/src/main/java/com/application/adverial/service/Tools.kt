@@ -178,12 +178,14 @@ class Tools {
 //                    Log.d("theme", "dark mode is on")
                     result = "dark"
                 }
+
                 Configuration.UI_MODE_NIGHT_NO -> {
                     context.getSharedPreferences("system", 0).edit().putBoolean("darkMode", false)
                         .apply()
 //                    Log.d("theme", "dark mode is off")
                     result = "light"
                 }
+
                 Configuration.UI_MODE_NIGHT_UNDEFINED -> {
                     context.getSharedPreferences("system", 0).edit().putBoolean("darkMode", false)
                         .apply()
@@ -204,13 +206,13 @@ class Tools {
     }
 
     fun changeViewFromTheme(appCompatActivity: AppCompatActivity, view: View) {
-        val sharedPrefManager : SharedPrefManager by lazy {
+        val sharedPrefManager: SharedPrefManager by lazy {
             SharedPrefManager(appCompatActivity)
         }
 
 //       Log.e("KEY",sharedPrefManager.getBackground().toString())
 
-        loadUrlDrawable(appCompatActivity,sharedPrefManager.getBackground()?:""){
+        loadUrlDrawable(appCompatActivity, sharedPrefManager.getBackground() ?: "") {
             view.background = it
         }
 
@@ -222,6 +224,7 @@ class Tools {
                         appCompatActivity.window
                     )
                 }
+
                 Configuration.UI_MODE_NIGHT_YES -> {
                     Tools().toolbarStatusBar(
                         appCompatActivity.applicationContext,
@@ -280,6 +283,7 @@ class Tools {
                         )
                     } catch (e: IntentSender.SendIntentException) {
                     }
+
                     LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
                         Toast.makeText(
                             activity,
@@ -557,6 +561,7 @@ class Tools {
     fun getPath(): String {
         return "https://admin.adverial.com/storage/"
     }
+
     fun getPublicPath(): String {
         return "https://admin.adverial.com/"
     }
@@ -588,4 +593,37 @@ class Tools {
         )
         return Uri.parse(path)
     }
+
+    fun getTheme(context: Context): String {
+        val currentNightMode =
+            context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                return "light"
+            }
+
+            Configuration.UI_MODE_NIGHT_YES -> {
+                return "dark"
+            }
+        }
+        return "light"
+    }
+    fun setBasedLogo(context: Context, viewId: Int) {
+        val view = (context as Activity).findViewById<View>(viewId)
+        if (getTheme(context) == "dark") {
+            view.setBackgroundResource(R.drawable.test1)
+        } else {
+            view.setBackgroundResource(R.drawable.logo_dark)
+        }
+    }
+
+    fun setBarBackground(context: Context, viewId: Int) {
+        val view = (context as Activity).findViewById<View>(viewId)
+        if (getTheme(context) == "dark") {
+            view.setBackgroundResource(R.drawable.im_bar1)
+        } else {
+            view.setBackgroundResource(R.drawable.im_bar_black)
+        }
+    }
+
 }

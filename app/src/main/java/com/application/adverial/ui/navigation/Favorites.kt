@@ -2,22 +2,26 @@ package com.application.adverial.ui.navigation
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.FavoriteData
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.FavoriteAdapter
 import com.application.adverial.ui.adapter.MenuCategoryAdapter
-import kotlinx.android.synthetic.main.activity_favorites.*
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_favorites.activityFavoritesRoot
+import kotlinx.android.synthetic.main.activity_favorites.favorite_recyclerView
+import kotlinx.android.synthetic.main.activity_favorites.favorites_drawerLayout
+import kotlinx.android.synthetic.main.activity_favorites.favorites_no
+import kotlinx.android.synthetic.main.activity_favorites.lottie2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -38,7 +42,7 @@ class Favorites : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
         Tools().changeViewFromTheme(this,activityFavoritesRoot)
-
+        Tools().setBasedLogo(this, R.id.imageView51)
         drawerInit()
         pageInit()
     }

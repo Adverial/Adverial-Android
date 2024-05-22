@@ -11,7 +11,7 @@
         android:id="@+id/newAddRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/menu_background"
         tools:context=".ui.activity.NewAd">
 
         <ImageView
@@ -29,11 +29,9 @@
 
         <ImageView
             android:id="@+id/imageView12"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_35sdp"
-            app:tint="@color/white"
-            android:src="@drawable/test1"
             app:layout_constraintBottom_toBottomOf="@+id/home_menu2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/home_menu2"
@@ -41,13 +39,13 @@
 
         <ImageView
             android:id="@+id/home_menu2"
+            app:srcCompat="@drawable/menu_icon"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_5sdp"
-            android:src="@drawable/im_menu"
-            app:tint="@color/white"
+            android:onClick="menu"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +57,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/regular"
             android:text="@string/new_ad_title"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_15ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_menu2" />
@@ -130,7 +128,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/regular"
             android:text="@string/new_ad_title2"
-            android:textColor="@color/white"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="@+id/home_menu2"
             app:layout_constraintTop_toBottomOf="@+id/home_search2" />
@@ -155,6 +153,7 @@
             android:layout_height="@dimen/_55sdp"
             android:scaleType="fitXY"
             android:src="@drawable/im_bar1"
+            app:tint="@color/menu_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -177,6 +176,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="home"
+                app:tint="@color/menu_background"
                 android:padding="@dimen/_10sdp"
                 android:src="@drawable/im_home" />
 
@@ -187,6 +187,7 @@
                 android:layout_weight="1"
                 android:onClick="favorites"
                 android:padding="@dimen/_18sdp"
+                app:tint="@color/menu_background"
                 android:src="@drawable/im_favorite" />
 
             <ImageView
@@ -195,6 +196,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="newAd"
+                app:tint="@color/menu_background"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
                 android:src="@drawable/im_add" />
@@ -204,6 +206,7 @@
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                app:tint="@color/menu_background"
                 android:onClick="notifications"
                 android:padding="@dimen/_17sdp"
                 android:src="@drawable/im_notification" />
@@ -214,6 +217,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="profile"
+                app:tint="@color/menu_background"
                 android:padding="@dimen/_17sdp"
                 android:src="@drawable/im_profile" />
         </LinearLayout>

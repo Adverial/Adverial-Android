@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/menu_background"
     android:layout_height="wrap_content">
 
     <TextView
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/address_country"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <ImageView
@@ -39,14 +40,14 @@
             android:layout_width="@dimen/_15sdp"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/im_3dot"
-            app:tint="@color/filter_text" />
+            app:tint="@color/menu_text" />
 
         <TextView
             android:id="@+id/filter_countryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Iraq"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             android:visibility="gone" />
     </LinearLayout>
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/address_province"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <ImageView
@@ -75,14 +76,14 @@
             android:layout_width="@dimen/_15sdp"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/im_3dot"
-            app:tint="@color/filter_text" />
+            app:tint="@color/menu_text" />
 
         <TextView
             android:id="@+id/filter_cityValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Iraq"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             android:visibility="gone" />
     </LinearLayout>
@@ -103,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/address_district"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <ImageView
@@ -111,14 +112,14 @@
             android:layout_width="@dimen/_15sdp"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/im_3dot"
-            app:tint="@color/filter_text" />
+            app:tint="@color/menu_text" />
 
         <TextView
             android:id="@+id/filter_districtValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Iraq"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             android:visibility="gone" />
     </LinearLayout>
@@ -150,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/filter_price_min"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <EditText
@@ -164,7 +165,7 @@
             android:inputType="numberDecimal"
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textColorHint="@color/gray"
             android:textSize="@dimen/_12ssp" />
     </LinearLayout>
@@ -185,7 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/filter_price_max"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <EditText
@@ -199,7 +200,7 @@
             android:inputType="numberDecimal"
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textColorHint="@color/gray"
             android:textSize="@dimen/_12ssp" />
     </LinearLayout>
@@ -220,7 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/filter_price_currency"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <ImageView
@@ -228,14 +229,14 @@
             android:layout_width="@dimen/_15sdp"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/im_3dot"
-            app:tint="@color/filter_text" />
+            app:tint="@color/menu_text" />
 
         <TextView
             android:id="@+id/filter_currencyValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Iraq"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
             android:visibility="gone" />
 
@@ -291,7 +292,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/filter_image"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <CheckBox
@@ -317,7 +318,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/filter_video"
-            android:textColor="@color/filter_text"
+            android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp" />
 
         <CheckBox

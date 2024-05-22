@@ -2,25 +2,26 @@ package com.application.adverial.ui.navigation
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.NotificationData
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.MenuCategoryAdapter
 import com.application.adverial.ui.adapter.NotificationAdapter
-import kotlinx.android.synthetic.main.activity_favorites.*
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_notifications2.*
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_notifications2.lottie17
+import kotlinx.android.synthetic.main.activity_notifications2.notificationRoot
+import kotlinx.android.synthetic.main.activity_notifications2.notification_no
+import kotlinx.android.synthetic.main.activity_notifications2.notifications_drawerLayout
+import kotlinx.android.synthetic.main.activity_notifications2.notifications_recyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -41,7 +42,12 @@ class Notifications : AppCompatActivity() {
         Tools().changeViewFromTheme(this,notificationRoot)
         notifications_recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Load notifications
+           Tools().setBasedLogo(this, R.id.imageView47)
+
+
+
+
+
         loadNotifications()
           drawerInit()
        pageInit()

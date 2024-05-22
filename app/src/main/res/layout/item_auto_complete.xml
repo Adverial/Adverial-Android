@@ -11,7 +11,7 @@
         android:layout_height="@dimen/_25sdp"
         android:text="TextView"
         android:gravity="center_vertical"
-        android:textColor="@color/white"
+        android:textColor="@color/menu_text"
         android:fontFamily="@font/bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

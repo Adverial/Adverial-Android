@@ -72,7 +72,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
         pageInit()
         fetchData()
-        Tools().setBasedLogo(this, R.id.app_logo)
+//        Tools().setBasedLogo(this, R.id.app_logo)
 
         // hide
         show_ad_details.visibility = View.GONE

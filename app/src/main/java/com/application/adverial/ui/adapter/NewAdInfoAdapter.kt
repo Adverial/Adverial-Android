@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -16,15 +18,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
+import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.CategoryOptionsData
 import com.application.adverial.ui.dialog.DropList
-import java.util.*
-import kotlin.collections.ArrayList
-
-import android.view.Gravity
-import android.widget.LinearLayout
-
-import com.application.adverial.remote.Repository
 
 
 class NewAdInfoAdapter(var itemList: ArrayList<CategoryOptionsData>) : RecyclerView.Adapter<NewAdInfoAdapter.ViewHolder>() {
@@ -45,8 +41,8 @@ class NewAdInfoAdapter(var itemList: ArrayList<CategoryOptionsData>) : RecyclerV
             0 -> {
                 holder.title.text= itemList[position].title
                 holder.enter.visibility= View.VISIBLE
-                holder.enter.layoutParams.height= context.resources.getDimension(R.dimen._30sdp).toInt()
-                holder.enter.setPadding(context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt())
+                holder.enter.layoutParams.height= context.resources.getDimension(com.intuit.sdp.R.dimen._30sdp).toInt()
+                holder.enter.setPadding(context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt())
                 holder.enter.background= ContextCompat.getDrawable(context, R.drawable.rounded_full3)
                 holder.enter.backgroundTintList= ContextCompat.getColorStateList(context, R.color.white_cover)
                 holder.enter.addTextChangedListener(object: TextWatcher{
@@ -73,7 +69,7 @@ class NewAdInfoAdapter(var itemList: ArrayList<CategoryOptionsData>) : RecyclerV
             2 -> {
                 holder.title.text= itemList[position].title
                 holder.dropList.visibility= View.VISIBLE
-                holder.value.setPadding(context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt())
+                holder.value.setPadding(context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt())
                 holder.dropList.setOnClickListener {
                     result.value= "show"
                     currency.clear()
@@ -116,9 +112,9 @@ class NewAdInfoAdapter(var itemList: ArrayList<CategoryOptionsData>) : RecyclerV
             itemList.size - 1 -> {
                 holder.title.text= itemList[position].title
                 holder.enter.visibility= View.VISIBLE
-                holder.enter.layoutParams.height= context.resources.getDimension(R.dimen._100sdp).toInt()
-                holder.enter.setPadding(context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt(),
-                    context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt())
+                holder.enter.layoutParams.height= context.resources.getDimension(com.intuit.sdp.R.dimen._100sdp).toInt()
+                holder.enter.setPadding(context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(),
+                    context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt())
                 holder.enter.background= ContextCompat.getDrawable(context, R.drawable.rounded_full3)
                 holder.enter.backgroundTintList= ContextCompat.getColorStateList(context, R.color.white_cover)
                 holder.enter.gravity= Gravity.RIGHT or Gravity.TOP
@@ -134,11 +130,11 @@ class NewAdInfoAdapter(var itemList: ArrayList<CategoryOptionsData>) : RecyclerV
             }
             else -> {
                 holder.title.text= itemList[position].title
-                holder.enter.layoutParams.height= context.resources.getDimension(R.dimen._30sdp).toInt()
-                holder.enter.setPadding(context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt(),
-                    context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt())
-                holder.value.setPadding(context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt(),
-                    context.resources.getDimension(R.dimen._5sdp).toInt(), context.resources.getDimension(R.dimen._5sdp).toInt())
+                holder.enter.layoutParams.height= context.resources.getDimension(com.intuit.sdp.R.dimen._30sdp).toInt()
+                holder.enter.setPadding(context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(),
+                    context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt())
+                holder.value.setPadding(context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(),
+                    context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt(), context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt())
                 if(itemList[position].values == null || itemList[position].values!!.isEmpty()){
                     holder.id.text= itemList[position].id.toString()
                     holder.enter.visibility= View.VISIBLE

@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.application.adverial.R
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.ShapeAppearanceModel
-
-import com.application.adverial.R
 
 
 class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -53,7 +52,8 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         val text: TextView = itemView.findViewById(R.id.itemLeft_text)
         val profileImage: ShapeableImageView = itemView.findViewById(R.id.itemLeft_profileImage)
         init {
-            profileImage.shapeAppearanceModel= ShapeAppearanceModel().toBuilder().setAllCorners(CornerFamily.ROUNDED, context.resources.getDimension(R.dimen._15sdp)).build()
+            profileImage.shapeAppearanceModel= ShapeAppearanceModel().toBuilder().setAllCorners(CornerFamily.ROUNDED, context.resources.getDimension(
+                com.intuit.sdp.R.dimen._15sdp)).build()
         }
     }
 
@@ -61,7 +61,8 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         val text: TextView = itemView.findViewById(R.id.itemRight_text)
         val profileImage: ShapeableImageView = itemView.findViewById(R.id.itemRight_profileImage)
         init {
-            profileImage.shapeAppearanceModel= ShapeAppearanceModel().toBuilder().setAllCorners(CornerFamily.ROUNDED, context.resources.getDimension(R.dimen._15sdp)).build()
+            profileImage.shapeAppearanceModel= ShapeAppearanceModel().toBuilder().setAllCorners(CornerFamily.ROUNDED, context.resources.getDimension(
+                com.intuit.sdp.R.dimen._15sdp)).build()
         }
     }
 

@@ -38,6 +38,8 @@ import kotlinx.android.synthetic.main.activity_home.lottie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.invoke
+import kotlinx.coroutines.withContext
 import java.util.Objects
 
 
@@ -129,14 +131,12 @@ class Home : AppCompatActivity() {
         coroutineScope.async(Dispatchers.IO) {
             val repo = Repository(this@Home)
             repo.mainCategory()
-            runOnUiThread {
+           withContext (Dispatchers.Main) {
                 repo.getMainCategoryData().observe(this@Home) {
                     if (it.status) {
-                        val list = ArrayList<SubCategory>()
-                        for (i in it.data)  list.add(i)
                         menuCategoriesRecyclerView.adapter =
-                            MenuCategoryAdapter(list as List<SubCategory>)
-                        home_category.adapter = HomeCategoryAdapter(list as List<SubCategory>)
+                            MenuCategoryAdapter(it.data as List<SubCategory>)
+                        home_category.adapter = HomeCategoryAdapter(it.data as List<SubCategory>)
                     }
                     categoriesStatus = true
                     lottieHide()

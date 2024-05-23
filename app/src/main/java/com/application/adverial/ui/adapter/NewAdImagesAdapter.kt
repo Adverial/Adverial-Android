@@ -13,14 +13,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.shape.CornerFamily
-import com.google.android.material.shape.ShapeAppearanceModel
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.ui.dialog.ChooseImageResource
 import com.application.adverial.ui.dialog.SinglePhotoViewer
-import kotlinx.android.synthetic.main.activity_post.*
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.ShapeAppearanceModel
 import java.io.File
 
 class NewAdImagesAdapter(var itemList: ArrayList<com.application.adverial.ui.model.Image>, var adId: String) : RecyclerView.Adapter<NewAdImagesAdapter.ViewHolder>() {
@@ -38,7 +37,7 @@ class NewAdImagesAdapter(var itemList: ArrayList<com.application.adverial.ui.mod
     override fun onBindViewHolder(holder: NewAdImagesAdapter.ViewHolder, position: Int) {
         if(position == itemList.size){
             val params: ViewGroup.MarginLayoutParams = holder.item.layoutParams as ViewGroup.MarginLayoutParams
-            params.rightMargin = context.resources.getDimension(R.dimen._5sdp).toInt()
+            params.rightMargin = context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt()
             holder.item.setOnClickListener {
                 val dialog= ChooseImageResource()
                 dialog.show((context as AppCompatActivity).supportFragmentManager, "ChooseImageResource")
@@ -91,7 +90,7 @@ class NewAdImagesAdapter(var itemList: ArrayList<com.application.adverial.ui.mod
         val item: ConstraintLayout= itemView.findViewById(R.id.itemNewAdImage_item)
 
         init {
-            val radius= context.resources.getDimension(R.dimen._10sdp)
+            val radius= context.resources.getDimension(com.intuit.sdp.R.dimen._10sdp)
             image.shapeAppearanceModel= ShapeAppearanceModel().toBuilder().setAllCorners(CornerFamily.ROUNDED, radius).build()
         }
     }

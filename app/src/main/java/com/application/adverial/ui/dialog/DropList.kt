@@ -2,10 +2,14 @@ package com.application.adverial.ui.dialog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,7 +53,7 @@ class DropList(var itemList: ArrayList<DropList>, var title: String) : DialogFra
         val ok= view.findViewById<Button>(R.id.dropList_ok)
         dialogTitle.text= title
         recyclerView.layoutManager= LinearLayoutManager(requireContext())
-        if(itemList.size > 10) recyclerView.layoutParams.height= resources.getDimension(R.dimen._300sdp).toInt()
+        if(itemList.size > 10) recyclerView.layoutParams.height= resources.getDimension(com.intuit.sdp.R.dimen._300sdp).toInt()
         for(i in itemList.indices) items.add(DropList1(itemList[i].name, itemList[i].id, -1))
         val adapter= DropListAdapter(items)
         recyclerView.adapter= adapter

@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.activity_home.home_category
 import kotlinx.android.synthetic.main.activity_home.home_drawerLayout
 import kotlinx.android.synthetic.main.activity_home.home_language
 import kotlinx.android.synthetic.main.activity_home.home_products
-import kotlinx.android.synthetic.main.activity_home.lottie
+//import kotlinx.android.synthetic.main.activity_home.lottie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -84,39 +84,13 @@ class Home : AppCompatActivity() {
         scrollPermission = true
         isFinished = false
         nextPage()
-
-
-
-//        val coroutineScope1 = CoroutineScope(Dispatchers.IO)
-//        coroutineScope1.async(Dispatchers.IO) {
-//            val repo = Repository(this@Home)
-//            repo.showRoom(showRoomType, page)
-//            runOnUiThread {
-//                repo.getShowRoomData().observe(this@Home) {
-//                    if (it.data.isNullOrEmpty()) {
-//                        isFinished = true
-//                    } else {
-//
-//                        for (i in it.data ?: listOf()) {
-//                            posts.add(i)
-//                        }
-//                        homeAdsAdapter.notifyDataSetChanged()
-//                        scrollPermission = true
-//                        showRoomStatus = true
-//                        lottieHide()
-//
-//                    }
-//                }
-//            }
-//        }
-
-            swipeRefreshLayout.isRefreshing = false
+swipeRefreshLayout.isRefreshing = false
 
     }
 
     private fun pageInit() {
-        lottie.visibility = View.VISIBLE
-        Tools().viewEnable(window.decorView.rootView, false)
+      //  lottie.visibility = View.VISIBLE
+        Tools().viewEnable(window.decorView.rootView, true)
         home_category.layoutManager = LinearLayoutManager(this)
         home_products.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         homeAdsAdapter = HomePostsAdapter(posts)
@@ -139,7 +113,7 @@ class Home : AppCompatActivity() {
                         home_category.adapter = HomeCategoryAdapter(list as List<SubCategory>)
                     }
                     categoriesStatus = true
-                    lottieHide()
+                   // lottieHide()
                 }
             }
         }
@@ -169,7 +143,7 @@ class Home : AppCompatActivity() {
                         homeAdsAdapter.notifyDataSetChanged()
                         scrollPermission = true
                         showRoomStatus = true
-                        lottieHide()
+                        //lottieHide()
 
                     }
                 }
@@ -269,7 +243,7 @@ class Home : AppCompatActivity() {
         val dialog = DropList(sortItems, resources.getString(R.string.sort_title))
         dialog.show(supportFragmentManager, "DropList")
         dialog.getStatus().observe(this) { itt ->
-            lottie.visibility = View.VISIBLE
+            //lottie.visibility = View.VISIBLE
             Tools().viewEnable(view, false)
             showRoomType = itt.id
             page = 0
@@ -326,7 +300,7 @@ class Home : AppCompatActivity() {
 
     private fun lottieHide() {
         if (categoriesStatus && showRoomStatus) {
-            lottie.visibility = View.GONE
+           // lottie.visibility = View.GONE
             Tools().viewEnable(window.decorView.rootView, true)
         }
     }

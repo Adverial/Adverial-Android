@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.wookweb.luuk",
+  "applicationId": "com.application.adverial",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0",
+      "versionCode": 30,
+      "versionName": "1.0.30",
       "outputFile": "app-release.apk"
     }
   ],

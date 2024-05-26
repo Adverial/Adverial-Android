@@ -11,25 +11,31 @@ android {
 
     defaultConfig {
         applicationId "com.application.adverial"
-        minSdkVersion  24
+        minSdkVersion 24
         targetSdk 33
         versionCode 30 // Update the version code to a unique integer
         versionName "1.0.30" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
-            debugSymbolLevel 'NONE' // change to SYMBOL_TABLE to enable file and line number info
+            debugSymbolLevel 'SYMBOL_TABLE'
+            // change to SYMBOL_TABLE to enable file and line number info
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfigs {
             release {
-                if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                    storeFile file(MYAPP_RELEASE_STORE_FILE)
-                    storePassword MYAPP_RELEASE_STORE_PASSWORD
-                    keyAlias MYAPP_RELEASE_KEY_ALIAS
-                    keyPassword MYAPP_RELEASE_KEY_PASSWORD
-                }
+//                if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+//                    storeFile file(MYAPP_RELEASE_STORE_FILE)
+//                    storePassword MYAPP_RELEASE_STORE_PASSWORD
+//                    keyAlias MYAPP_RELEASE_KEY_ALIAS
+//                    keyPassword MYAPP_RELEASE_KEY_PASSWORD
+//                } else {
+                storeFile file('D:\\Adverial Projects\\Adverial-Android\\store_key.jks')
+                storePassword '123456'
+                keyAlias 'key0'
+                keyPassword '123456'
+//                }
             }
         }
     }
@@ -41,11 +47,11 @@ android {
             keyAlias 'key0'
             keyPassword '123456'
         }
-        }
+    }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             multiDexEnabled true
             signingConfig signingConfigs.release

@@ -82,7 +82,7 @@
             android:fontFamily="@font/regular"
             android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center"
-            android:text="08.09.2021"
+            android:text="@string/_08_09_2021"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_11ssp" />
 
@@ -95,7 +95,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/regular"
             android:gravity="center"
-            android:text="Halkali, Istanbul"
+            android:text="@string/halkali_istanbul"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_11ssp" />
 
@@ -120,7 +120,7 @@
                 android:background="@color/yellow"
                 android:fontFamily="@font/regular"
                 android:gravity="center"
-                android:onClick="info"
+
                 android:text="@string/post_details_info"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
@@ -135,7 +135,7 @@
                 android:background="@color/light_gray"
                 android:fontFamily="@font/regular"
                 android:gravity="center"
-                android:onClick="desc"
+
                 android:text="@string/post_details_desc"
                 android:textAllCaps="false"
                 android:textColor="@color/black"

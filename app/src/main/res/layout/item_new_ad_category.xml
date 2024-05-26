@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemNewAdCategory_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -8,24 +9,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/newAd_home1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:id="@+id/imageView19"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_marginStart="@dimen/_35sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:background="@drawable/im_path"
-            android:backgroundTint="@color/gray_cover"
-            android:gravity="center_vertical|start"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/_30sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/itemNewAdCategory_image"
-            app:layout_constraintTop_toTopOf="parent">
+    android:id="@+id/imageView19"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/_60sdp"
+    android:layout_marginStart="@dimen/_35sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
+    android:background="@drawable/im_path"
+    android:backgroundTint="@color/gray_cover"
+    android:gravity="center_vertical|start"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/_30sdp"
+    android:paddingBottom="@dimen/_5sdp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="@+id/itemNewAdCategory_image"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.5">
 
             <TextView
                 android:id="@+id/itemNewAdCategory_name"

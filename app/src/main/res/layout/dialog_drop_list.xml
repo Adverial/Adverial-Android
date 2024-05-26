@@ -20,20 +20,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dropList_recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/menu_background"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:overScrollMode="never"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropList_title">
-
-    </androidx.recyclerview.widget.RecyclerView>
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/dropList_recyclerView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="@color/menu_background"
+    android:layout_marginStart="@dimen/_15sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
+    android:overScrollMode="never"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/dropList_title"
+    app:layout_constraintBottom_toTopOf="@+id/dropList_ok">
+</androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/dropList_ok"

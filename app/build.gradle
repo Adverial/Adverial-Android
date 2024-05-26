@@ -13,8 +13,8 @@ android {
         applicationId "com.application.adverial"
         minSdkVersion  24
         targetSdk 33
-        versionCode 28 // Update the version code to a unique integer
-        versionName "1.0.28" // Update the version name to a string that represents the version
+        versionCode 30 // Update the version code to a unique integer
+        versionName "1.0.30" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
@@ -33,6 +33,15 @@ android {
             }
         }
     }
+
+    signingConfigs {
+        release {
+            storeFile file('D:\\Adverial Projects\\Adverial-Android\\store_key.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+        }
 
     buildTypes {
         release {

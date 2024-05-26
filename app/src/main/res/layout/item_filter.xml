@@ -27,7 +27,7 @@
         tools:layout_editor_absoluteX="1dp">
 
         <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/textView31_31"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -63,7 +63,7 @@
         tools:layout_editor_absoluteX="1dp">
 
         <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/textView31_34"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -99,7 +99,7 @@
         tools:layout_editor_absoluteX="1dp">
 
         <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/textView31_45"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -146,7 +146,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView52">
 
         <TextView
-            android:id="@+id/textView53"
+            android:id="@+id/textView53_texts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -181,7 +181,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout21">
 
         <TextView
-            android:id="@+id/textView53"
+            android:id="@+id/textView53_rff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -216,7 +216,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout22">
 
         <TextView
-            android:id="@+id/textView53"
+            android:id="@+id/textView53_ty6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -313,7 +313,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout24">
 
         <TextView
-            android:id="@+id/textView60"
+            android:id="@+id/textView60_45"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

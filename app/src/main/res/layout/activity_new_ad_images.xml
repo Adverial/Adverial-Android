@@ -89,14 +89,14 @@
                 android:overScrollMode="never" />
 
             <LinearLayout
-                android:id="@+id/linearLayout4"
+                android:id="@+id/linearLayout4_user_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout2"
+                    android:id="@+id/linearLayout2_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
@@ -228,7 +228,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView29"
+                            android:id="@+id/textView29_com"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_weight="1"

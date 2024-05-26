@@ -15,7 +15,7 @@
         android:layout_height="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:src="@drawable/test1"
-        app:tint="@color/white"
+        app:tint="@color/menu_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
         android:src="@drawable/im_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/menu_text" />
 
     <TextView
         android:id="@+id/textView9"

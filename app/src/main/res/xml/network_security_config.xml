@@ -17,5 +17,6 @@
     <!-- Specific domain configuration -->
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">admin.adverial.com</domain>
+         <domain includeSubdomains="true"> 185.171.91.196 </domain>
     </domain-config>
 </network-security-config>

@@ -5,6 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="22"
+        android:targetSdkVersion="33"
         tools:ignore="GradleOverrides" />
     <uses-feature
         android:name="android.hardware.camera"

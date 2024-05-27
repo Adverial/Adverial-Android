@@ -13,8 +13,8 @@ android {
         applicationId "com.application.adverial"
         minSdkVersion 24
         targetSdk 33
-        versionCode 31 // Update the version code to a unique integer
-        versionName "1.0.31" // Update the version name to a string that represents the version
+        versionCode 32 // Update the version code to a unique integer
+        versionName "1.0.32" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {

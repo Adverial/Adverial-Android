@@ -23,7 +23,7 @@
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/dropList_recyclerView"
     android:layout_width="0dp"
-    android:layout_height="0dp"
+    android:layout_height="wrap_content"
     android:background="@color/menu_background"
     android:layout_marginStart="@dimen/_15sdp"
     android:layout_marginTop="@dimen/_10sdp"

@@ -67,7 +67,7 @@ class Language() : DialogFragment(){
         }
         val adapter= LanguageAdapter(items)
         recyclerView.adapter= adapter
-        recyclerView.setHasFixedSize(true)
+            // recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(itemList.size)
         adapter.getResult().observe(viewLifecycleOwner, {
             data= Language(it.name, it.id, it.flag)

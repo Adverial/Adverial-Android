@@ -53,7 +53,7 @@ class DropList(var itemList: ArrayList<DropList>, var title: String) : DialogFra
         for(i in itemList.indices) items.add(DropList1(itemList[i].name, itemList[i].id, -1))
         val adapter= DropListAdapter(items)
         recyclerView.adapter= adapter
-        recyclerView.setHasFixedSize(true)
+       // recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(itemList.size)
         adapter.getResult().observe(viewLifecycleOwner, {
             data= DropList(it.name, it.id)

@@ -39,7 +39,7 @@ class ContactUs : AppCompatActivity() {
     }
 
     fun website(view: View){
-        Tools().openBrowser(this, "https://www.adverial.com")
+        Tools().openBrowser(this, "https://www.adverial.net")
     }
 
     fun back(view: View){ finish() }

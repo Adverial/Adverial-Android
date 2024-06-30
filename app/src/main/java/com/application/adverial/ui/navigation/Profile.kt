@@ -138,10 +138,10 @@ class Profile : AppCompatActivity() {
             }
         }
         profile_about.setOnClickListener{
-            Tools().openBrowser(this, "https://www.adverial.com")
+            Tools().openBrowser(this, "https://www.adverial.net")
         }
         profile_privacy_policy.setOnClickListener{
-            Tools().openBrowser(this, "https://adverial.com/privacy.html")
+            Tools().openBrowser(this, "https://adverial.net/privacy.html")
         }
         profile_myAccount.setOnClickListener{
             if(Tools().authCheck(this)){

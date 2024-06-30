@@ -374,7 +374,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                     "\n" +
                     "Ad location: ${post_address.text}" +
                     "\n" +
-                    "Ad link: https://www.adverial.com"
+                    "Ad link: https://www.adverial.net"
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_SUBJECT, shareBody)
             intent.putExtra(Intent.EXTRA_TEXT, shareBody)

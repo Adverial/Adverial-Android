@@ -559,11 +559,11 @@ class Tools {
     }
 
     fun getPath(): String {
-        return "https://admin.adverial.com/storage/"
+        return "https://admin.adverial.net/storage/"
     }
 
     fun getPublicPath(): String {
-        return "https://admin.adverial.com/"
+        return "https://admin.adverial.net/"
     }
 
     @Throws(IOException::class)

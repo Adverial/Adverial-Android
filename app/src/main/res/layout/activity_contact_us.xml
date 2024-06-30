@@ -93,7 +93,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:fontFamily="@font/regular"
         android:onClick="website"
-        android:text="https://www.adverial.com"
+        android:text="https://www.adverial.net"
         android:textColor="@color/menu_text"
         android:textSize="@dimen/_9ssp"
         app:layout_constraintBottom_toBottomOf="parent"

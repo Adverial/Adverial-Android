@@ -210,4 +210,6 @@
     <string name="forgotPasswordText">هیڤییە ئیمێلێ خو پشکنین بکە  و کۆدێ  پشتراستکری  دانە</string>
     <string name="send">فرێکرن</string>
     <string name="profile_privacy_policy">سیاسەتا پاراستنا نهێنی</string>
-    </resources>
+    <string name="login_phone_hint">Login Phone</string>
+    <string name="login_otp_hint">Login Otp</string>
+</resources>

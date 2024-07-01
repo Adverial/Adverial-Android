@@ -210,4 +210,6 @@
     <string name="forgotPasswordText">بۆ وەرگرتنی کۆدی پشتڕاستکردنەوە ئیمەیڵەکەت دابنێ</string>
     <string name="send">ناردن</string>
     <string name="profile_privacy_policy">سیاسەتی پاراستنی نهێنی</string>
+    <string name="login_phone_hint">Login Phone</string>
+    <string name="login_otp_hint">Login Otp</string>
 </resources>

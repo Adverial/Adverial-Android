@@ -210,4 +210,6 @@
     <string name="forgotPasswordText">Doğrulama almak için e-postanızı girin</string>
     <string name="send">Gönder</string>
     <string name="profile_privacy_policy">Gizlilik Politikası</string>
+    <string name="login_phone_hint">Login Phone</string>
+    <string name="login_otp_hint">Login Otp</string>
 </resources>

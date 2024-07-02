@@ -33,21 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/menu_text" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:fontFamily="@font/regular"
-        android:text="@string/phone_auth_title1"
-        android:textColor="@color/menu_text"
-        android:textSize="@dimen/_15ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView63" />
+
 
     <TextView
         android:id="@+id/verification_heading"
@@ -63,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView63" />
 
     <TextView
         android:id="@+id/verification_subtext"
@@ -73,7 +59,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         android:fontFamily="@font/regular"
-        android:text="WE'VE SENT A VERIFICATION CODE TO YOUR WHATSAPP +97483465"
+
         android:textColor="@color/menu_text"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"

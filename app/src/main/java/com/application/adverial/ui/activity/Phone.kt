@@ -21,7 +21,6 @@ class Phone : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_phone)
         Tools().changeViewFromTheme(this,phoneRoot)
-
         pageInit()
     }
 

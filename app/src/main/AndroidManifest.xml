@@ -141,14 +141,10 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.application.adverial.ui.activity.LoginWa"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:exported="true" />
         <activity
             android:name="com.application.adverial.ui.activity.VerifyWa"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:exported="true" />
         <activity
             android:name="com.application.adverial.ui.activity.MyAds"
             android:exported="true"

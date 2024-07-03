@@ -54,7 +54,7 @@ class AuthRepository(val context: Context) {
                 if (response.isSuccessful && response.body() != null){
                     verifyResponse.value = response.body()
                 } else {
-                    verifyResponse.value = VerifyOtpResponse(token = null, message = "Invalid OTP", response.body()?.data)
+                    verifyResponse.value = VerifyOtpResponse(null, "Invalid OTP")
                 }
 
             }

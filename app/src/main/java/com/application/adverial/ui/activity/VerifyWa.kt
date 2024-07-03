@@ -48,12 +48,12 @@ class VerifyWa : AppCompatActivity() {
                 lottie15.visibility = View.GONE
                 Tools().viewEnable(this.window.decorView.rootView, true)
 
-                if (it.token != null) {
-                    Log.e("token", it.token)
+                if (it.data?.token != null) {
+//                    Log.e("token", it.data.token.toString())
                     lottie15.visibility = View.GONE
-                    getSharedPreferences("user", 0).edit().putString("token", it.token).apply()
+                    getSharedPreferences("user", 0).edit().putString("token", it.data.token).apply()
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    //Tools().goto(this, Home(), false)
+                    Tools().goto(this, Home(), false)
                 } else {
                     lottie15.visibility = View.GONE
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()

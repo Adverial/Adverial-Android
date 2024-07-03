@@ -46,7 +46,6 @@ interface APIService {
     fun registerViaWa(
         @Header("Accept") accept: String,
         @Field("name") name: String,
-        @Field("last_name") lastName: String?,
         @Field("whatsapp_number") whatsappNumber: String
     ): Call<GenericResponse>
 

@@ -15,20 +15,25 @@ class AuthRepository(val context: Context) {
     private val service: APIService = RetroClass().apiService()
     private val loginResponse = MutableLiveData<GenericResponse>()
     private val verifyResponse = MutableLiveData<VerifyOtpResponse>()
-    fun registerViaWa(name: String, lastName: String?, whatsappNumber: String): LiveData<GenericResponse> {
-        val responseLiveData = MutableLiveData<GenericResponse>()
-        val call = service.registerViaWa("application/json", name, lastName, whatsappNumber)
+    private val signupResponse = MutableLiveData<GenericResponse>()
+
+    fun registerViaWa(name: String, whatsappNumber: String): LiveData<GenericResponse> {
+        val call = service.registerViaWa("application/json", name, whatsappNumber)
         call.enqueue(object : Callback<GenericResponse> {
             override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
-                responseLiveData.value = response.body()
+               if (response.isSuccessful && response.body() != null){
+                   signupResponse.value = response.body()
+               } else {
+                   signupResponse.value = GenericResponse("please check your phone number if associated with whatsapp number")
+               }
             }
+
             override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                // Handle failure
+                signupResponse.value = GenericResponse("please check your phone number if associated with whatsapp number")
             }
         })
-        return responseLiveData
+        return signupResponse
     }
-
     fun loginViaWa(whatsappNumber: String): LiveData<GenericResponse> {
         val call = service.loginViaWa("application/json", whatsappNumber)
         call.enqueue(object : Callback<GenericResponse> {
@@ -41,7 +46,7 @@ class AuthRepository(val context: Context) {
             }
 
             override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-
+                loginResponse.value = GenericResponse("please check your phone number if associated with whatsapp number")
             }
         })
         return loginResponse
@@ -59,7 +64,7 @@ class AuthRepository(val context: Context) {
 
             }
             override fun onFailure(call: Call<VerifyOtpResponse>, t: Throwable) {
-                // Handle failure
+                verifyResponse.value = VerifyOtpResponse(null, "Invalid OTP")
             }
         })
         return verifyResponse
@@ -85,5 +90,8 @@ class AuthRepository(val context: Context) {
 
     fun getVerifyResponse(): LiveData<VerifyOtpResponse> {
         return verifyResponse
+    }
+    fun getSignupResponse(): LiveData<GenericResponse> {
+        return signupResponse
     }
 }

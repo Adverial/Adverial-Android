@@ -5,77 +5,68 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.application.adverial.R
 import com.application.adverial.remote.AuthRepository
 import com.application.adverial.service.Tools
 import com.application.adverial.utils.CustomPhoneNumberFormattingTextWatcher
-import kotlinx.android.synthetic.main.activity_login_wa.*
+import kotlinx.android.synthetic.main.activity_signup_wa.*
 
-class LoginWa : AppCompatActivity() {
+class SignupWa : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_wa)
-        Tools().changeViewFromTheme(this, loginWaRoot)
-        login_phone.addTextChangedListener(CustomPhoneNumberFormattingTextWatcher())
-
+        setContentView(R.layout.activity_signup_wa)
+        Tools().changeViewFromTheme(this, signupWaRoot)
+        signup_phone.addTextChangedListener(CustomPhoneNumberFormattingTextWatcher())
     }
 
-    fun sendOTP(view: View) {
+    fun register(view: View) {
+        val name = signup_name.text.toString().trim()
+        val phoneNumberWithOutCountryCode = signup_phone.text.toString().removePrefix("0").replace(" ", "")
+        val whatsappNumber = countryCodePickerWaSignup.selectedCountryCodeWithPlus + phoneNumberWithOutCountryCode
 
-        //login_phone.text.toString().removePrefix("0")
-        val phoneNumberWithOutCountryCode = login_phone.text.toString().removePrefix("0").replace(" ", "")
-
-        val phoneNumber =
-            countryCodePickerWaLogin.selectedCountryCodeWithPlus + phoneNumberWithOutCountryCode
-
-
-
-        if (phoneNumberWithOutCountryCode.length == 10) {
+        if (name.isNotBlank() && phoneNumberWithOutCountryCode.length == 10) {
             lottie7.visibility = View.VISIBLE
             Tools().viewEnable(this.window.decorView.rootView, false)
             val repo = AuthRepository(this)
-            repo.loginViaWa(phoneNumber)
-            repo.getLoginResponse().observe(this) { response ->
+            repo.registerViaWa(name, whatsappNumber)
+            repo.getSignupResponse().observe(this, Observer { response ->
                 Tools().viewEnable(this.window.decorView.rootView, true)
                 response?.let {
-                    if (it.message == "Please verify the OTP sent to your WhatsApp to complete login.") {
+                    if (it.message.contains("OTP sent to your WhatsApp")) {
                         lottie7.visibility = View.GONE
                         val intent = Intent(this, VerifyWa::class.java)
-                        intent.putExtra("whatsapp_number", phoneNumber)
+                        intent.putExtra("whatsapp_number", whatsappNumber)
                         startActivity(intent)
                     } else {
                         lottie7.visibility = View.GONE
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                 } ?: run {
-                    Toast.makeText(this, "An error occurred. Please try again.", Toast.LENGTH_SHORT)
-                        .show()
+                    lottie7.visibility = View.GONE
+                    Toast.makeText(this, "An error occurred. Please try again.", Toast.LENGTH_SHORT).show()
                 }
-            }
+            })
         } else {
-            Toast.makeText(this, "Please enter a valid phone number.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please enter valid details.", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun clear(view: View) {
-        login_phone.setText("")
+    fun gotoLogin(view: View) {
+        val intent = Intent(this, LoginWa::class.java)
+        startActivity(intent)
     }
 
     fun back(view: View) {
         finish()
     }
-//signup
-    fun gotoSignup(view: View) {
-        val intent = Intent(this, SignupWa::class.java)
-        startActivity(intent)
-    }
+
     override fun onResume() {
         super.onResume()
         Tools().getLocale(this)
         val language = getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" || language == "0" || language == "1") window.decorView.layoutDirection =
-            View.LAYOUT_DIRECTION_LTR
+        if (language == "" || language == "0" || language == "1") window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
         else window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
     }
 }

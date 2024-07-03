@@ -212,4 +212,6 @@
     <string name="halkali_istanbul">Halkali, Istanbul</string>
     <string name="login_phone_hint">Login Phone</string>
     <string name="login_otp_hint">Login Otp</string>
+    <string name="signup_phone_hint">7xx xxx xxxx</string>
+    <string name="already_have_account">Already have account</string>
 </resources>

@@ -31,27 +31,39 @@ class SignupWa : AppCompatActivity() {
             Tools().viewEnable(this.window.decorView.rootView, false)
             val repo = AuthRepository(this)
             repo.registerViaWa(name, whatsappNumber)
-            repo.getSignupResponse().observe(this, Observer { response ->
+            repo.getSignupResponse().observe(this) { response ->
                 Tools().viewEnable(this.window.decorView.rootView, true)
                 response?.let {
-                    if (it.message?.contains("OTP sent to your WhatsApp") == true) {
-                        lottie7.visibility = View.GONE
-                        val intent = Intent(this, VerifyWa::class.java)
-                        intent.putExtra("whatsapp_number", whatsappNumber)
-                        startActivity(intent)
-                    } else {
-                        lottie7.visibility = View.GONE
-                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    when {
+                        it.message?.contains("OTP sent to your WhatsApp") == true -> {
+                            lottie7.visibility = View.GONE
+                            val intent = Intent(this, VerifyWa::class.java)
+                            intent.putExtra("whatsapp_number", whatsappNumber)
+                            startActivity(intent)
+                        }
+                        it.whatsappNumber != null -> {
+                            lottie7.visibility = View.GONE
+                            Toast.makeText(this, it.whatsappNumber.joinToString(), Toast.LENGTH_SHORT).show()
+                        }
+                        it.error != null -> {
+                            lottie7.visibility = View.GONE
+                            Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            lottie7.visibility = View.GONE
+                            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 } ?: run {
                     lottie7.visibility = View.GONE
                     Toast.makeText(this, "An error occurred. Please try again.", Toast.LENGTH_SHORT).show()
                 }
-            })
+            }
         } else {
             Toast.makeText(this, "Please enter valid details.", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     fun gotoLogin(view: View) {
         val intent = Intent(this, LoginWa::class.java)

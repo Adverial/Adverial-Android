@@ -277,7 +277,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                 })
             }
         } else {
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, LoginWa::class.java)
             startActivity(intent)
         }
     }
@@ -325,7 +325,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             val intent= Intent(this, Message::class.java)
             startActivity(intent)
         }else{
-            val intent= Intent(this, Login::class.java)
+            val intent= Intent(this, LoginWa::class.java)
             startActivity(intent)
         }*/
         if (phoneNumber.isNotBlank() && (type == "1" || type == "3")) {

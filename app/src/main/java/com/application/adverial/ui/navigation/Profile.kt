@@ -17,6 +17,7 @@ import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.ContactUs
 import com.application.adverial.ui.activity.Favorite
 import com.application.adverial.ui.activity.Login
+import com.application.adverial.ui.activity.LoginWa
 import com.application.adverial.ui.activity.MyAccount
 import com.application.adverial.ui.activity.MyAds
 import com.application.adverial.ui.activity.Notifications
@@ -86,7 +87,7 @@ class Profile : AppCompatActivity() {
                 val intent= Intent(this, Favorite::class.java)
                 startActivity(intent)
             }else{
-                val intent= Intent(this, Login::class.java)
+                val intent= Intent(this, LoginWa::class.java)
                 startActivity(intent)
             }
         }
@@ -96,7 +97,7 @@ class Profile : AppCompatActivity() {
                 getSharedPreferences("data", 0).edit().putString("type", "active").apply()
                 startActivity(intent)
             }else{
-                val intent= Intent(this, Login::class.java)
+                val intent= Intent(this, LoginWa::class.java)
                 startActivity(intent)
             }
         }
@@ -106,7 +107,7 @@ class Profile : AppCompatActivity() {
 //                getSharedPreferences("data", 0).edit().putString("type", "deactive").apply()
 //                startActivity(intent)
 //            }else{
-//                val intent= Intent(this, Login::class.java)
+//                val intent= Intent(this, LoginWa::class.java)
 //                startActivity(intent)
 //            }
 //        }
@@ -115,7 +116,7 @@ class Profile : AppCompatActivity() {
 //                val intent= Intent(this, MessagesList::class.java)
 //                startActivity(intent)
 //            }else{
-//                val intent= Intent(this, Login::class.java)
+//                val intent= Intent(this, LoginWa::class.java)
 //                startActivity(intent)
 //            }
 //        }
@@ -124,7 +125,7 @@ class Profile : AppCompatActivity() {
                 val intent= Intent(this, Special::class.java)
                 startActivity(intent)
             }else{
-                val intent= Intent(this, Login::class.java)
+                val intent= Intent(this, LoginWa::class.java)
                 startActivity(intent)
             }
         }
@@ -133,7 +134,7 @@ class Profile : AppCompatActivity() {
                 val intent= Intent(this, Notifications::class.java)
                 startActivity(intent)
             }else{
-                val intent= Intent(this, Login::class.java)
+                val intent= Intent(this, LoginWa::class.java)
                 startActivity(intent)
             }
         }
@@ -148,7 +149,7 @@ class Profile : AppCompatActivity() {
                 val intent= Intent(this, MyAccount::class.java)
                 startActivity(intent)
             }else{
-                val intent= Intent(this, Login::class.java)
+                val intent= Intent(this, LoginWa::class.java)
                 startActivity(intent)
             }
         }
@@ -157,7 +158,7 @@ class Profile : AppCompatActivity() {
                 val intent= Intent(this, ContactUs::class.java)
                 startActivity(intent)
             }else{
-                val intent= Intent(this, Login::class.java)
+                val intent= Intent(this, LoginWa::class.java)
                 startActivity(intent)
             }
         }
@@ -215,7 +216,7 @@ class Profile : AppCompatActivity() {
             overridePendingTransition(0,0)
             finish()
         }else{
-            val intent= Intent(this, Login::class.java)
+            val intent= Intent(this, LoginWa::class.java)
             startActivity(intent)
         }
     }
@@ -234,7 +235,7 @@ class Profile : AppCompatActivity() {
             overridePendingTransition(0,0)
             finish()
         }else{
-            val intent= Intent(this, Login::class.java)
+            val intent= Intent(this, LoginWa::class.java)
             startActivity(intent)
         }
     }

@@ -22,22 +22,35 @@ class AuthRepository(val context: Context) {
     private var currentLang = Tools().getCurrentLanguage(context)
 
     fun registerViaWa(name: String, whatsappNumber: String): LiveData<GenericResponse> {
-        val call = service.registerViaWa("application/json", name, whatsappNumber)
+        val call = service.registerViaWa(currentLang,"application/json", name, whatsappNumber)
         call.enqueue(object : Callback<GenericResponse> {
             override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
-               if (response.isSuccessful && response.body() != null){
-                   signupResponse.value = response.body()
-               } else {
-                   signupResponse.value = GenericResponse("please check your phone number if associated with whatsapp number")
-               }
+                if (response.isSuccessful && response.body() != null) {
+                    signupResponse.value = response.body()
+                } else {
+                    val errorResponse = response.errorBody()?.string()
+                    val genericResponse = if (errorResponse != null) {
+                        try {
+                            Gson().fromJson(errorResponse, GenericResponse::class.java).copy(
+                                error = Gson().fromJson(errorResponse, ErrorResponse::class.java).error
+                            )
+                        } catch (e: Exception) {
+                            GenericResponse(error = "An unknown error occurred. Please try again later.")
+                        }
+                    } else {
+                        GenericResponse(error = "An unknown error occurred. Please try again later.")
+                    }
+                    signupResponse.value = genericResponse
+                }
             }
 
             override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                signupResponse.value = GenericResponse("please check your phone number if associated with whatsapp number")
+                signupResponse.value = GenericResponse(error = "Failed to process your request. Please try again later.")
             }
         })
         return signupResponse
     }
+
     fun loginViaWa(whatsappNumber: String): LiveData<GenericResponse> {
         val call = service.loginViaWa(currentLang,"application/json", whatsappNumber)
         call.enqueue(object : Callback<GenericResponse> {

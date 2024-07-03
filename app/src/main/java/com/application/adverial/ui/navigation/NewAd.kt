@@ -20,6 +20,7 @@ import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.Login
+import com.application.adverial.ui.activity.LoginWa
 import com.application.adverial.ui.adapter.MenuCategoryAdapter
 import com.application.adverial.ui.adapter.NewAdAdapter
 import com.google.android.material.navigation.NavigationView
@@ -174,7 +175,7 @@ class NewAd : AppCompatActivity() {
             overridePendingTransition(0,0)
             finish()
         }else{
-            val intent= Intent(this, Login::class.java)
+            val intent= Intent(this, LoginWa::class.java)
             startActivity(intent)
         }
     }
@@ -193,7 +194,7 @@ class NewAd : AppCompatActivity() {
             overridePendingTransition(0,0)
             finish()
         }else{
-            val intent= Intent(this, Login::class.java)
+            val intent= Intent(this, LoginWa::class.java)
             startActivity(intent)
         }
     }

@@ -44,6 +44,7 @@ interface APIService {
     @FormUrlEncoded
     @POST("register-via-wa")
     fun registerViaWa(
+        @Header("lang") lang: String,
         @Header("Accept") accept: String,
         @Field("name") name: String,
         @Field("whatsapp_number") whatsappNumber: String

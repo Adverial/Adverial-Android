@@ -8,5 +8,7 @@ data class GenericResponse(
     val error: String? = null
 )
 data class ErrorResponse(
-    val error: String
+    val error: String,
+    @SerializedName("whatsapp_number") val whatsappNumber: List<String>? = null
+
 )

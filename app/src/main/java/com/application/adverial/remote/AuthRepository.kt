@@ -84,22 +84,33 @@ class AuthRepository(val context: Context) {
 
 
     fun verifyOtpWa(whatsappNumber: String, otp: Int): LiveData<VerifyOtpResponse> {
-        val call = service.verifyOtpWa("application/json", whatsappNumber, otp)
+        val call = service.verifyOtpWa(currentLang, "application/json", whatsappNumber, otp)
         call.enqueue(object : Callback<VerifyOtpResponse> {
             override fun onResponse(call: Call<VerifyOtpResponse>, response: Response<VerifyOtpResponse>) {
-                if (response.isSuccessful && response.body() != null){
+                if (response.isSuccessful && response.body() != null) {
                     verifyResponse.value = response.body()
                 } else {
-                    verifyResponse.value = VerifyOtpResponse(null, "Invalid OTP")
+                    val errorResponse = response.errorBody()?.string()
+                    val verifyOtpResponse = if (errorResponse != null) {
+                        try {
+                            Gson().fromJson(errorResponse, VerifyOtpResponse::class.java)
+                        } catch (e: Exception) {
+                            VerifyOtpResponse(message = "An unknown error occurred. Please try again later.")
+                        }
+                    } else {
+                        VerifyOtpResponse(message = "An unknown error occurred. Please try again later.")
+                    }
+                    verifyResponse.value = verifyOtpResponse
                 }
-
             }
+
             override fun onFailure(call: Call<VerifyOtpResponse>, t: Throwable) {
-                verifyResponse.value = VerifyOtpResponse(null, "Invalid OTP")
+                verifyResponse.value = VerifyOtpResponse(message = "Failed to process your request. Please try again later.")
             }
         })
         return verifyResponse
     }
+
 
     fun resendOtpWa(whatsappNumber: String): LiveData<GenericResponse> {
         val call = service.resendOtpWa("application/json", whatsappNumber)

@@ -44,26 +44,39 @@ class VerifyWa : AppCompatActivity() {
             Tools().viewEnable(this.window.decorView.rootView, false)
             val repo = AuthRepository(this)
             repo.verifyOtpWa(whatsappNumber, otp)
-            repo.getVerifyResponse().observe(this) {
+            repo.getVerifyResponse().observe(this) { response ->
                 lottie15.visibility = View.GONE
                 Tools().viewEnable(this.window.decorView.rootView, true)
 
-                if (it.data?.token != null) {
-//                    Log.e("token", it.data.token.toString())
-                    lottie15.visibility = View.GONE
-                    getSharedPreferences("user", 0).edit().putString("token", it.data.token).apply()
-                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    Tools().goto(this, Home(), false)
-                } else {
-                    lottie15.visibility = View.GONE
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                response?.let {
+                    when {
+                        it.data?.token != null -> {
+                            getSharedPreferences("user", 0).edit().putString("token", it.data.token).apply()
+                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                            Tools().goto(this, Home(), false)
+                        }
+                        it.otp != null -> {
+                            Toast.makeText(this, it.otp.joinToString(), Toast.LENGTH_SHORT).show()
+                        }
+                        it.whatsappNumber != null -> {
+                            Toast.makeText(this, it.whatsappNumber.joinToString(), Toast.LENGTH_SHORT).show()
+                        }
+                        it.message != null -> {
+                            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            Toast.makeText(this, "An unknown error occurred. Please try again later.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } ?: run {
+                    Toast.makeText(this, "An error occurred. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             }
         } else {
-            Toast.makeText(this, getString(R.string.verificationCodeEmpty), Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this, getString(R.string.verificationCodeEmpty), Toast.LENGTH_SHORT).show()
         }
     }
+
 
     fun resendCode(view: View) {
         lottie15.visibility = View.VISIBLE

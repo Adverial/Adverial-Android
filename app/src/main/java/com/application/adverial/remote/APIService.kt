@@ -68,6 +68,7 @@ interface APIService {
     @FormUrlEncoded
     @POST("verify-otp-wa")
     fun verifyOtpWa(
+        @Header("lang") lang: String,
         @Header("Accept") accept: String,
         @Field("whatsapp_number") whatsappNumber: String,
         @Field("otp") otp: Int

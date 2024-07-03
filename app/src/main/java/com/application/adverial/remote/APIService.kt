@@ -52,6 +52,7 @@ interface APIService {
     @FormUrlEncoded
     @POST("login-via-wa")
     fun loginViaWa(
+        @Header("lang") lang: String,
         @Header("Accept") accept: String,
         @Field("whatsapp_number") whatsappNumber: String
     ): Call<GenericResponse>

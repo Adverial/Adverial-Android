@@ -4,8 +4,11 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.application.adverial.remote.model.ErrorResponse
 import com.application.adverial.remote.model.GenericResponse
 import com.application.adverial.remote.model.VerifyOtpResponse
+import com.application.adverial.service.Tools
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,6 +19,7 @@ class AuthRepository(val context: Context) {
     private val loginResponse = MutableLiveData<GenericResponse>()
     private val verifyResponse = MutableLiveData<VerifyOtpResponse>()
     private val signupResponse = MutableLiveData<GenericResponse>()
+    private var currentLang = Tools().getCurrentLanguage(context)
 
     fun registerViaWa(name: String, whatsappNumber: String): LiveData<GenericResponse> {
         val call = service.registerViaWa("application/json", name, whatsappNumber)
@@ -35,22 +39,36 @@ class AuthRepository(val context: Context) {
         return signupResponse
     }
     fun loginViaWa(whatsappNumber: String): LiveData<GenericResponse> {
-        val call = service.loginViaWa("application/json", whatsappNumber)
+        val call = service.loginViaWa(currentLang,"application/json", whatsappNumber)
         call.enqueue(object : Callback<GenericResponse> {
             override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
-                if (response.isSuccessful && response.body() != null){
+                if (response.isSuccessful && response.body() != null) {
                     loginResponse.value = response.body()
                 } else {
-                    loginResponse.value = GenericResponse("please check your phone number if associated with whatsapp number")
+                    val errorResponse = response.errorBody()?.string()
+                    val errorMessage = if (errorResponse != null) {
+                        try {
+                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
+                            error.error
+                        } catch (e: Exception) {
+                            "An unknown error occurred. Please try again later."
+                        }
+                    } else {
+                        "An unknown error occurred. Please try again later."
+                    }
+                    loginResponse.value = GenericResponse(message = "", error = errorMessage)
                 }
             }
 
             override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                loginResponse.value = GenericResponse("please check your phone number if associated with whatsapp number")
+                loginResponse.value = GenericResponse(message = "", error = "Failed to process your request. Please try again later.")
             }
         })
         return loginResponse
     }
+
+
+
 
     fun verifyOtpWa(whatsappNumber: String, otp: Int): LiveData<VerifyOtpResponse> {
         val call = service.verifyOtpWa("application/json", whatsappNumber, otp)

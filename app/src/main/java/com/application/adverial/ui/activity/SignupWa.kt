@@ -34,7 +34,7 @@ class SignupWa : AppCompatActivity() {
             repo.getSignupResponse().observe(this, Observer { response ->
                 Tools().viewEnable(this.window.decorView.rootView, true)
                 response?.let {
-                    if (it.message.contains("OTP sent to your WhatsApp")) {
+                    if (it.message?.contains("OTP sent to your WhatsApp") == true) {
                         lottie7.visibility = View.GONE
                         val intent = Intent(this, VerifyWa::class.java)
                         intent.putExtra("whatsapp_number", whatsappNumber)

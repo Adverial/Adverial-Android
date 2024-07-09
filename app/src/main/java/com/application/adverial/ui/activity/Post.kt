@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.ScrollableMapFragment
@@ -374,7 +375,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                     "\n" +
                     "Ad location: ${post_address.text}" +
                     "\n" +
-                    "Ad link: https://www.adverial.net"
+                    "Ad link: ${BuildConfig.API_BASE_URL}"
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_SUBJECT, shareBody)
             intent.putExtra(Intent.EXTRA_TEXT, shareBody)

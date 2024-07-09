@@ -3,6 +3,7 @@ package com.application.adverial.ui.navigation
 //import kotlinx.android.synthetic.main.activity_profile.profile_message
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
@@ -138,10 +140,10 @@ class Profile : AppCompatActivity() {
             }
         }
         profile_about.setOnClickListener{
-            Tools().openBrowser(this, "https://www.adverial.net")
+            Tools().openBrowser(this, BuildConfig.API_BASE_URL)
         }
         profile_privacy_policy.setOnClickListener{
-            Tools().openBrowser(this, "https://adverial.net/privacy.html")
+            Tools().openBrowser(this, BuildConfig.API_BASE_URL+"privacy.html")
         }
         profile_myAccount.setOnClickListener{
             if(Tools().authCheck(this)){

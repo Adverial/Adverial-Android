@@ -56,8 +56,12 @@ android {
             multiDexEnabled true
             signingConfig signingConfigs.release
             ndk.debugSymbolLevel = 'FULL'
+            buildConfigField "String", "API_BASE_URL", "\"https://admin.adverial.net/\""
         }
-
+        debug {
+            debuggable true
+            buildConfigField "String", "API_BASE_URL", "\"http://192.168.1.23/\""
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11

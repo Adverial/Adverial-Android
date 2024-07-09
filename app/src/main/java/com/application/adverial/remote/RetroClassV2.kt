@@ -1,5 +1,6 @@
 package com.application.adverial.remote
 
+import com.application.adverial.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -9,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class RetroClassV2 {
     //val BASE_PATH="https://api.luuk.wookproje.com/public/test/"
-    private val basePath="https://admin.adverial.net/api/v2/"
+    private val basePath=   BuildConfig.API_BASE_URL+"/api/v2/"
     private fun retrofitInstance():Retrofit{
         val okhttp=OkHttpClient().newBuilder().connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS).build()
         val gsonBuilder = GsonBuilder()

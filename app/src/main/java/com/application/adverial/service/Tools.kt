@@ -22,6 +22,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
@@ -559,12 +560,14 @@ class Tools {
     }
 
     fun getPath(): String {
-        return "https://admin.adverial.net/storage/"
+        return BuildConfig.API_BASE_URL + "storage/"
     }
 
-    fun getPublicPath(): String {
-        return "https://admin.adverial.net/"
-    }
+
+        fun getPublicPath(): String {
+            return BuildConfig.API_BASE_URL
+        }
+
 
     @Throws(IOException::class)
     fun rotateImageIfRequired(context: Context, img: Bitmap, selectedImage: Uri): Bitmap? {

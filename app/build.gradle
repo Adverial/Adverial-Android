@@ -54,7 +54,7 @@ android {
         }
         debug {
             debuggable true
-            buildConfigField "String", "API_BASE_URL", "\"http://192.168.1.23/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://admin.adverial.net/\""
         }
     }
     compileOptions {

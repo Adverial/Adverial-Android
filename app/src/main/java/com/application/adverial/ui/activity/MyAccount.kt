@@ -10,6 +10,7 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.dialog.AlertDialog1
 import com.application.adverial.ui.navigation.Home
+import kotlinx.android.synthetic.main.activity_my_account.countryCodePicker
 import kotlinx.android.synthetic.main.activity_my_account.deleteAccount
 import kotlinx.android.synthetic.main.activity_my_account.myAccountRoot
 import kotlinx.android.synthetic.main.activity_my_account.myaccount_email
@@ -27,6 +28,8 @@ class MyAccount : AppCompatActivity() {
         setContentView(R.layout.activity_my_account)
         Tools().changeViewFromTheme(this,myAccountRoot)
         Tools().setBasedLogo(this, R.id.imageView42)
+        //disable the phone number field
+        myaccount_phone.isEnabled= false
         pageInit()
     }
 
@@ -35,17 +38,19 @@ class MyAccount : AppCompatActivity() {
         Tools().viewEnable(this.window.decorView.rootView, false)
         val repo= Repository(this)
         repo.user()
-        repo.getUserData().observe(this, {
-            lottie14.visibility= View.GONE
+        repo.getUserData().observe(this) {
+            lottie14.visibility = View.GONE
             Tools().viewEnable(this.window.decorView.rootView, true)
-            if(it.status){
-                lastPhone= it.data.phone?:""
-                myaccount_firstname.setText(it.data.name?:"")
-                myaccount_lastname.setText(it.data.last_name?:"")
-                myaccount_email.setText(it.data.email?:"")
-                myaccount_phone.setText(it.data.phone?:"")
+            if (it.status) {
+                lastPhone = it.data.phone ?: ""
+                myaccount_firstname.setText(it.data.name ?: "")
+                myaccount_lastname.setText(it.data.last_name ?: "")
+                myaccount_email.setText(it.data.email ?: "")
+   // update countryCodePicker to be first four digits of it.data.whatsappNumber and other 11 digits to be in login_phone
+                countryCodePicker.setCountryForPhoneCode(it.data.whatsappNumber?.substring(0, 4)?.toInt() ?: 0)
+                myaccount_phone.setText(it.data.whatsappNumber?.substring(4) ?: "")
             }
-        })
+        }
 
         deleteAccount.setOnClickListener {
             val dialog= AlertDialog1(getString(R.string.attention), getString(R.string.deleteAccount))

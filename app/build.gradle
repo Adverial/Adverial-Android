@@ -18,19 +18,13 @@ android {
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
-            debugSymbolLevel 'SYMBOL_TABLE'
+            debugSymbolLevel 'FULL'
             // change to SYMBOL_TABLE to enable file and line number info
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfigs {
             release {
-//                if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-//                    storeFile file(MYAPP_RELEASE_STORE_FILE)
-//                    storePassword MYAPP_RELEASE_STORE_PASSWORD
-//                    keyAlias MYAPP_RELEASE_KEY_ALIAS
-//                    keyPassword MYAPP_RELEASE_KEY_PASSWORD
-//                } else {
                 storeFile file('D:\\Adverial Projects\\Adverial-Android\\store_key.jks')
                 storePassword '123456'
                 keyAlias 'key0'

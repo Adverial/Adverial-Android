@@ -161,7 +161,7 @@ class NewAdCategory : AppCompatActivity() {
             intent.putExtra("idArray", id)
             startActivity(intent)
         }else{
-            val intent= Intent(this, Login()::class.java)
+            val intent= Intent(this, LoginWa()::class.java)
             startActivity(intent)
         }
         idArray.removeAt(idArray.size-1)

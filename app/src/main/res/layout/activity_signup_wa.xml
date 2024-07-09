@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.SignupWa">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/signupWaRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/menu_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ui.activity.SignupWa">
+
+        <ImageView
+            android:id="@+id/imageView42"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/test1"
+            app:tint="@color/menu_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/newAdCategory_back5"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:onClick="back"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/im_close"
+            app:layout_constraintEnd_toEndOf="@+id/imageView42"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/menu_text" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:fontFamily="@font/regular"
+            android:text="@string/signup_title"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView42" />
+
+        <EditText
+            android:id="@+id/signup_name"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rounded_corners"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:hint="@string/signup_name_hint"
+            android:inputType="text"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_12sdp"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="@+id/textView22"
+            app:layout_constraintStart_toStartOf="@+id/textView22"
+            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+        <ImageView
+            android:id="@+id/imageView67"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/rounded_corners"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signup_name" />
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/countryCodePickerWaSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_3sdp"
+            android:layout_marginStart="3dp"
+            app:ccpDialog_backgroundColor="@color/ccpBackground"
+            app:ccpDialog_textColor="@color/textColor"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_contentColor="@color/textColor"
+            app:ccp_showFlag="true"
+            app:ccp_showNameCode="false"
+            app:ccp_textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView67"
+            app:layout_constraintStart_toStartOf="@+id/imageView67"
+            app:layout_constraintTop_toTopOf="@+id/imageView67" />
+
+        <EditText
+            android:id="@+id/signup_phone"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:hint="@string/signup_phone_hint"
+            android:inputType="phone"
+            android:maxLength="15"
+            android:background="@color/none"
+            android:backgroundTint="@color/textColor"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView67"
+            app:layout_constraintEnd_toEndOf="@+id/imageView67"
+            app:layout_constraintStart_toEndOf="@+id/countryCodePickerWaSignup"
+            app:layout_constraintTop_toTopOf="@+id/imageView67" />
+
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="165dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_full2"
+            android:backgroundTint="@color/red"
+            android:fontFamily="@font/regular"
+            android:onClick="register"
+            android:text="@string/signup"
+            android:textAllCaps="false"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView67" />
+
+        <TextView
+            android:id="@+id/login_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/already_have_account"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_12ssp"
+            android:onClick="gotoLogin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signup_button" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie7"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/black_cover2"
+            android:elevation="@dimen/_4sdp"
+            android:padding="@dimen/_50sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/animation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

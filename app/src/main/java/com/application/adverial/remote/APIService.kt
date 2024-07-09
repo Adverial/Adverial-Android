@@ -12,6 +12,7 @@ import com.application.adverial.remote.model.Currency
 import com.application.adverial.remote.model.Favorite
 import com.application.adverial.remote.model.Filter
 import com.application.adverial.remote.model.ForgotPasswordRequestModel
+import com.application.adverial.remote.model.GenericResponse
 import com.application.adverial.remote.model.ImageUpload
 import com.application.adverial.remote.model.LatestSearch
 import com.application.adverial.remote.model.MainCategory
@@ -23,6 +24,7 @@ import com.application.adverial.remote.model.ShowRoom
 import com.application.adverial.remote.model.Signup
 import com.application.adverial.remote.model.User
 import com.application.adverial.remote.model.VerifyCode
+import com.application.adverial.remote.model.VerifyOtpResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -38,6 +40,41 @@ import retrofit2.http.Part
 import retrofit2.http.Url
 
 interface APIService {
+
+    @FormUrlEncoded
+    @POST("register-via-wa")
+    fun registerViaWa(
+        @Header("lang") lang: String,
+        @Header("Accept") accept: String,
+        @Field("name") name: String,
+        @Field("whatsapp_number") whatsappNumber: String
+    ): Call<GenericResponse>
+
+    @FormUrlEncoded
+    @POST("login-via-wa")
+    fun loginViaWa(
+        @Header("lang") lang: String,
+        @Header("Accept") accept: String,
+        @Field("whatsapp_number") whatsappNumber: String
+    ): Call<GenericResponse>
+
+    @FormUrlEncoded
+    @POST("resend-otp-wa")
+    fun resendOtpWa(
+        @Header("Accept") accept: String,
+        @Field("whatsapp_number") whatsappNumber: String
+    ): Call<GenericResponse>
+
+    @FormUrlEncoded
+    @POST("verify-otp-wa")
+    fun verifyOtpWa(
+        @Header("lang") lang: String,
+        @Header("Accept") accept: String,
+        @Field("whatsapp_number") whatsappNumber: String,
+        @Field("otp") otp: Int
+    ): Call<VerifyOtpResponse>
+
+
 
     @GET("main-categories")
     fun mainCategory(

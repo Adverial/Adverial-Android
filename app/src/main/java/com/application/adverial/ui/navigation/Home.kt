@@ -21,6 +21,7 @@ import com.application.adverial.remote.model.ShowRoomData
 import com.application.adverial.remote.model.SubCategory
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.Login
+import com.application.adverial.ui.activity.LoginWa
 import com.application.adverial.ui.activity.SearchResult
 import com.application.adverial.ui.adapter.HomeCategoryAdapter
 import com.application.adverial.ui.adapter.HomePostsAdapter
@@ -319,7 +320,7 @@ swipeRefreshLayout.isRefreshing = false
             overridePendingTransition(0, 0)
             finish()
         } else {
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, LoginWa::class.java)
             startActivity(intent)
         }
     }
@@ -338,7 +339,7 @@ swipeRefreshLayout.isRefreshing = false
             overridePendingTransition(0, 0)
             finish()
         } else {
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, LoginWa::class.java)
             startActivity(intent)
         }
     }

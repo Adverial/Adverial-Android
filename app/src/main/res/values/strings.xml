@@ -105,7 +105,7 @@
     <string name="login_password_hint">Password</string>
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
-    <string name="signup_title">To Use The App,\nPlease Sign Up</string>
+    <string name="signup_title">Signup with WhatsApp Number</string>
     <string name="signup_name_hint">Name</string>
     <string name="signup_lastname_hint">Surname</string>
     <string name="signup_email_hint">E-Mail Address</string>
@@ -210,4 +210,8 @@
      <string name="profile_privacy_policy">Privacy Policy</string>
     <string name="_08_09_2021">08.09.2021</string>
     <string name="halkali_istanbul">Halkali, Istanbul</string>
+    <string name="login_phone_hint">Login Phone</string>
+    <string name="login_otp_hint">Login Otp</string>
+    <string name="signup_phone_hint">7xx xxx xxxx</string>
+    <string name="already_have_account">Already have account</string>
 </resources>

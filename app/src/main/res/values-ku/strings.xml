@@ -107,7 +107,7 @@
     <string name="login_password_hint">ژمارەی نهێنی</string>
     <string name="login">چونه‌ ژووره‌وه‌</string>
     <string name="signup">خۆت تۆمار بکە</string>
-    <string name="signup_title">بۆ بەکارهێنانی ئەپەکە،\nتکایە ناوت تۆمار بکە</string>
+    <string name="signup_title">خۆتۆمارکردن بە ژمارەی واتساپ</string>
     <string name="signup_name_hint">ناو</string>
     <string name="signup_lastname_hint">نازناو</string>
     <string name="signup_email_hint">ناونیشانی ئیمەیڵ</string>
@@ -210,4 +210,8 @@
     <string name="forgotPasswordText">بۆ وەرگرتنی کۆدی پشتڕاستکردنەوە ئیمەیڵەکەت دابنێ</string>
     <string name="send">ناردن</string>
     <string name="profile_privacy_policy">سیاسەتی پاراستنی نهێنی</string>
+    <string name="login_phone_hint">ژمارەی تەلەفونەکەت داخل بکە</string>
+    <string name="login_otp_hint">کۆدی دڵنیاکردنەوە داخل بکە</string>
+    <string name="already_have_account">تۆ ھەژمارێکی پێشترت هەیە؟</string>
+
 </resources>

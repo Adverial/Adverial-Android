@@ -107,7 +107,7 @@
     <string name="login_password_hint">Sifre</string>
     <string name="login">Giriş Yap</string>
     <string name="signup">Kayıt Ol</string>
-    <string name="signup_title">Uygulamayı Kullanmak İçin\Lütfen Kaydolun</string>
+    <string name="signup_title">WhatsApp Numarası ile Kaydol</string>
     <string name="signup_name_hint">İsim</string>
     <string name="signup_lastname_hint">Soyisim</string>
     <string name="signup_email_hint">E-posta Adresi</string>
@@ -210,4 +210,8 @@
     <string name="forgotPasswordText">Doğrulama almak için e-postanızı girin</string>
     <string name="send">Gönder</string>
     <string name="profile_privacy_policy">Gizlilik Politikası</string>
+    <string name="login_phone_hint">Telefon numaranızı girin</string>
+    <string name="login_otp_hint">Doğrulama kodunu girin</string>
+    <string name="already_have_account">Zaten bir hesabınız var mı?</string>
+
 </resources>

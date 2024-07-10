@@ -15,7 +15,7 @@ import retrofit2.Response
 
 
 class AuthRepository(val context: Context) {
-    private val service: APIService = RetroClass().apiService()
+    private val service: APIService = RetroClassV2().apiService()
     private val loginResponse = MutableLiveData<GenericResponse>()
     private val verifyResponse = MutableLiveData<VerifyOtpResponse>()
     private val signupResponse = MutableLiveData<GenericResponse>()

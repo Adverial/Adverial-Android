@@ -1,139 +1,103 @@
 package com.application.adverial.remote
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.application.adverial.remote.model.ErrorResponse
-import com.application.adverial.remote.model.GenericResponse
-import com.application.adverial.remote.model.VerifyOtpResponse
-import com.application.adverial.service.Tools
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.application.adverial.remote.model.Conversation
+import com.application.adverial.remote.model.ConversationResponse
+import com.application.adverial.remote.model.GenericResponse
+import com.application.adverial.remote.model.Message
+import com.application.adverial.remote.model.MessageResponse
+import com.application.adverial.service.Tools
+import okhttp3.RequestBody
 
 
-class AuthRepository(val context: Context) {
-    private val service: APIService = RetroClassV2().apiService()
-    private val loginResponse = MutableLiveData<GenericResponse>()
-    private val verifyResponse = MutableLiveData<VerifyOtpResponse>()
-    private val signupResponse = MutableLiveData<GenericResponse>()
-    private var currentLang = Tools().getCurrentLanguage(context)
 
-    fun registerViaWa(name: String, whatsappNumber: String): LiveData<GenericResponse> {
-        val call = service.registerViaWa(currentLang,"application/json", name, whatsappNumber)
-        call.enqueue(object : Callback<GenericResponse> {
-            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    signupResponse.value = response.body()
-                } else {
-                    val errorResponse = response.errorBody()?.string()
-                    val genericResponse = if (errorResponse != null) {
-                        try {
-                            Gson().fromJson(errorResponse, GenericResponse::class.java).copy(
-                                error = Gson().fromJson(errorResponse, ErrorResponse::class.java).error
-                            )
-                        } catch (e: Exception) {
-                            GenericResponse(error = "An unknown error occurred. Please try again later.")
-                        }
-                    } else {
-                        GenericResponse(error = "An unknown error occurred. Please try again later.")
-                    }
-                    signupResponse.value = genericResponse
+
+class ConversationRepository(val context: Context) {
+
+    private val apiService: APIService = RetroClassV2().apiService()
+    private val token = "Bearer " + context.getSharedPreferences("user", 0).getString("token", "")
+    private val lang = Tools().getCurrentLanguage(context)
+
+    val initialConversationLiveData = MutableLiveData<ConversationResponse>()
+    val userConversationsLiveData = MutableLiveData<List<Conversation>>()
+    val sendMessageLiveData = MutableLiveData<MessageResponse>()
+    val messagesLiveData = MutableLiveData<List<Message>>()
+
+    fun initialConversation(partnerUserId: Int) {
+        val call = apiService.initialConversation(partnerUserId, token, lang)
+        call.enqueue(object : Callback<ConversationResponse> {
+            override fun onResponse(call: Call<ConversationResponse>, response: Response<ConversationResponse>) {
+                if (response.isSuccessful) {
+                    initialConversationLiveData.value = response.body()
                 }
             }
 
-            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                signupResponse.value = GenericResponse(error = "Failed to process your request. Please try again later.")
+            override fun onFailure(call: Call<ConversationResponse>, t: Throwable) {
+                // Handle error
             }
         })
-        return signupResponse
     }
 
-    fun loginViaWa(whatsappNumber: String): LiveData<GenericResponse> {
-        val call = service.loginViaWa(currentLang,"application/json", whatsappNumber)
-        call.enqueue(object : Callback<GenericResponse> {
-            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    loginResponse.value = response.body()
-                } else {
-                    val errorResponse = response.errorBody()?.string()
-                    val errorMessage = if (errorResponse != null) {
-                        try {
-                            val error = Gson().fromJson(errorResponse, ErrorResponse::class.java)
-                            error.error
-                        } catch (e: Exception) {
-                            "An unknown error occurred. Please try again later."
-                        }
-                    } else {
-                        "An unknown error occurred. Please try again later."
-                    }
-                    loginResponse.value = GenericResponse(message = "", error = errorMessage)
+    fun getUserConversations() {
+        val call = apiService.getUserConversations(token, "application/json", lang)
+        call.enqueue(object : Callback<List<Conversation>> {
+            override fun onResponse(call: Call<List<Conversation>>, response: Response<List<Conversation>>) {
+                if (response.isSuccessful) {
+                    userConversationsLiveData.value = response.body()
                 }
             }
 
-            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                loginResponse.value = GenericResponse(message = "", error = "Failed to process your request. Please try again later.")
+            override fun onFailure(call: Call<List<Conversation>>, t: Throwable) {
+                // Handle error
             }
         })
-        return loginResponse
     }
 
-
-
-
-    fun verifyOtpWa(whatsappNumber: String, otp: Int): LiveData<VerifyOtpResponse> {
-        val call = service.verifyOtpWa(currentLang, "application/json", whatsappNumber, otp)
-        call.enqueue(object : Callback<VerifyOtpResponse> {
-            override fun onResponse(call: Call<VerifyOtpResponse>, response: Response<VerifyOtpResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    verifyResponse.value = response.body()
-                } else {
-                    val errorResponse = response.errorBody()?.string()
-                    val verifyOtpResponse = if (errorResponse != null) {
-                        try {
-                            Gson().fromJson(errorResponse, VerifyOtpResponse::class.java)
-                        } catch (e: Exception) {
-                            VerifyOtpResponse(message = "An unknown error occurred. Please try again later.")
-                        }
-                    } else {
-                        VerifyOtpResponse(message = "An unknown error occurred. Please try again later.")
-                    }
-                    verifyResponse.value = verifyOtpResponse
+    fun sendMessage(conversionId: Int, message: String, media: RequestBody?) {
+        val call = apiService.sendMessage(conversionId, token, "multipart/form-data", lang, message, media)
+        call.enqueue(object : Callback<MessageResponse> {
+            override fun onResponse(call: Call<MessageResponse>, response: Response<MessageResponse>) {
+                if (response.isSuccessful) {
+                    sendMessageLiveData.value = response.body()
                 }
             }
 
-            override fun onFailure(call: Call<VerifyOtpResponse>, t: Throwable) {
-                verifyResponse.value = VerifyOtpResponse(message = "Failed to process your request. Please try again later.")
+            override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
+                // Handle error
             }
         })
-        return verifyResponse
     }
 
-
-    fun resendOtpWa(whatsappNumber: String): LiveData<GenericResponse> {
-        val call = service.resendOtpWa("application/json", whatsappNumber)
-        call.enqueue(object : Callback<GenericResponse> {
-            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
-                loginResponse.value = response.body()
+    fun getMessagesByConversationId(conversionId: Int) {
+        val call = apiService.getMessagesByConversationId(conversionId, token, "multipart/form-data", lang)
+        call.enqueue(object : Callback<List<Message>> {
+            override fun onResponse(call: Call<List<Message>>, response: Response<List<Message>>) {
+                if (response.isSuccessful) {
+                    messagesLiveData.value = response.body()
+                }
             }
 
-            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                // Handle failure
+            override fun onFailure(call: Call<List<Message>>, t: Throwable) {
+                // Handle error
             }
         })
-        return loginResponse
     }
-
-    fun getLoginResponse(): LiveData<GenericResponse> {
-        return loginResponse
+    fun getUserConversationsResponse(): LiveData<List<Conversation>> {
+        return userConversationsLiveData
     }
-
-    fun getVerifyResponse(): LiveData<VerifyOtpResponse> {
-        return verifyResponse
+    fun getSendMessageResponse(): LiveData<MessageResponse> {
+        return sendMessageLiveData
     }
-    fun getSignupResponse(): LiveData<GenericResponse> {
-        return signupResponse
+    fun getMessagesResponse(): LiveData<List<Message>> {
+        return messagesLiveData
+    }
+    fun getInitialConversationResponse(): LiveData<ConversationResponse> {
+        return initialConversationLiveData
     }
 }
+

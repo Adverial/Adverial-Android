@@ -148,6 +148,12 @@
         <activity
             android:name="com.application.adverial.ui.activity.SignupWa"
             android:exported="true" />
+
+        <activity
+            android:name="com.application.adverial.ui.activity.ChatActivity"
+            android:exported="true" />
+
+
         <activity
             android:name="com.application.adverial.ui.activity.MyAds"
             android:exported="true"

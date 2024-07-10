@@ -20,6 +20,7 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.ShowRoomData
 import com.application.adverial.remote.model.SubCategory
 import com.application.adverial.service.Tools
+import com.application.adverial.ui.activity.ChatActivity
 import com.application.adverial.ui.activity.Login
 import com.application.adverial.ui.activity.LoginWa
 import com.application.adverial.ui.activity.SearchResult
@@ -334,7 +335,7 @@ swipeRefreshLayout.isRefreshing = false
 
     fun notifications(view: View) {
         if (Tools().authCheck(this)) {
-            val intent = Intent(this, Notifications::class.java)
+            val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)
             finish()

@@ -12,6 +12,9 @@ data class Conversation(
     @SerializedName("conversion_id") val conversionId: Int,
     @SerializedName("chat_partner_name") val chatPartnerName: String,
     @SerializedName("chat_partner_email") val chatPartnerEmail: String,
+    @SerializedName("last_message") val lastMessage: String,
+    @SerializedName("last_message_time") val lastMessageAt: String,
+
     val avatar: String
 )
 

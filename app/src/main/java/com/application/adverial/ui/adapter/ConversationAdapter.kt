@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
 import com.application.adverial.remote.model.Conversation
+import com.application.adverial.service.Tools
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_conversation.view.*
 
@@ -36,9 +37,9 @@ class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.Conversatio
     class ConversationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(conversation: Conversation) {
             itemView.textViewChatPartnerName.text = conversation.chatPartnerName
-            itemView.textViewChatPartnerEmail.text = conversation.chatPartnerEmail
+            itemView.textViewChatPartnerEmail.text = conversation.lastMessage
             Glide.with(itemView.context)
-                .load(conversation.avatar)
+                .load (Tools().getPath().plus(conversation.avatar))
                 .placeholder(R.drawable.baseline_arrow_back_24)
                 .into(itemView.imageViewAvatar)
         }

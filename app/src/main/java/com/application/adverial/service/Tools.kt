@@ -15,6 +15,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +64,7 @@ class Tools {
         else if (language == "4") lang = "ckb"
         return lang
     }
+
 
     @SuppressLint("SourceLockedOrientationActivity")
     fun rotateLayout(context: Context, view: View) {

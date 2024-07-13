@@ -1,5 +1,6 @@
 package com.application.adverial.ui.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -11,20 +12,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
 import com.application.adverial.remote.model.Conversation
 import com.application.adverial.ui.activity.MessageActivity
-import kotlinx.android.synthetic.main.item_conversation.view.*
+import kotlinx.android.synthetic.main.item_conversation.view.imageViewAvatar
+import kotlinx.android.synthetic.main.item_conversation.view.last_message
+import kotlinx.android.synthetic.main.item_conversation.view.last_message_time
+import kotlinx.android.synthetic.main.item_conversation.view.textViewChatPartnerName
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.ConversationViewHolder>() {
     private var conversations: List<Conversation> = listOf()
     override fun onBindViewHolder(holder: ConversationViewHolder, position: Int) {
         holder.bind(conversations[position])
     }
+
     override fun getItemCount(): Int = conversations.size
     fun setConversations(conversations: List<Conversation>) {
         this.conversations = conversations
@@ -32,11 +40,13 @@ class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.Conversatio
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_conversation, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_conversation, parent, false)
         return ConversationViewHolder(view)
     }
 
     class ConversationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SuspiciousIndentation")
         fun bind(conversation: Conversation) {
             itemView.textViewChatPartnerName.text = conversation.chatPartnerName ?: "Unknown"
             itemView.last_message.text = conversation.lastMessage?.let {
@@ -51,11 +61,13 @@ class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.Conversatio
                 )
             )
             itemView.textViewChatPartnerName.text = conversation.chatPartnerName
-                    itemView.setOnClickListener {
-                        val intent = Intent(itemView.context, MessageActivity::class.java)
-                        intent.putExtra("conversation_id", conversation.conversionId)
-                        itemView.context.startActivity(intent)
-                    }
+            itemView.setOnClickListener {
+//                Toast.makeText(itemView.context, "Clicked on ${conversation.conversionId}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(itemView.context, MessageActivity::class.java)
+                intent.putExtra("conversation_id", conversation.conversionId)
+                intent.putExtra("chat_partner_name", conversation.chatPartnerName)
+                itemView.context.startActivity(intent)
+            }
         }
 
 

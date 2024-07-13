@@ -22,7 +22,7 @@ data class MessageResponse(
     val id: Int,
     @SerializedName("conversion_id") val conversionId: Int,
     val message: String,
-    @SerializedName("media_url") val mediaUrl: String?,
+    @SerializedName("media") val mediaUrl: String?,
     @SerializedName("created_at") val createdAt: String
 )
 

@@ -1,6 +1,7 @@
 package com.application.adverial.ui
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.application.adverial.remote.ConversationRepository

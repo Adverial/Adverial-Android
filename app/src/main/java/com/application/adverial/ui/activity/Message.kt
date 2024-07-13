@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.R
 import com.application.adverial.service.Tools
-import com.application.adverial.ui.adapter.MessageAdapter
+
 import kotlinx.android.synthetic.main.activity_message.*
 
 class Message : AppCompatActivity() {

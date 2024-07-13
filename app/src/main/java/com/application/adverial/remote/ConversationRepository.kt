@@ -1,6 +1,7 @@
 package com.application.adverial.remote
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
@@ -12,6 +13,7 @@ import com.application.adverial.remote.model.GenericResponse
 import com.application.adverial.remote.model.Message
 import com.application.adverial.remote.model.MessageResponse
 import com.application.adverial.service.Tools
+import okhttp3.MediaType
 import okhttp3.RequestBody
 
 
@@ -59,16 +61,19 @@ class ConversationRepository(val context: Context) {
     }
 
     fun sendMessage(conversionId: Int, message: String, media: RequestBody?) {
-        val call = apiService.sendMessage(conversionId, token, "multipart/form-data", lang, message, media)
+        val messageBody = RequestBody.create(MediaType.parse("text/plain"), message)
+        val call = apiService.sendMessage(conversionId, token, "multipart/form-data", lang, messageBody, media)
         call.enqueue(object : Callback<MessageResponse> {
             override fun onResponse(call: Call<MessageResponse>, response: Response<MessageResponse>) {
                 if (response.isSuccessful) {
                     sendMessageLiveData.value = response.body()
+                } else {
+                    Log.e("MessageViewModel", "Response Error: ${response.errorBody()?.string()}")
                 }
             }
 
             override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
-                // Handle error
+                Log.e("MessageViewModel", "Error: ${t.message}")
             }
         })
     }

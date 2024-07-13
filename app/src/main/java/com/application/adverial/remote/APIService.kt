@@ -409,7 +409,7 @@ interface APIService {
         @Header("Authorization") authorization: String,
         @Header("content-type") contentType: String,
         @Header("lang") lang: String,
-        @Part("message") message: String,
+        @Part("message") message: RequestBody,
         @Part("media") media: RequestBody?
     ): Call<MessageResponse>
 

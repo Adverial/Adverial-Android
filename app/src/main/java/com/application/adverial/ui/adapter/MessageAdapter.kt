@@ -1,12 +1,13 @@
-package com.application.adverial.ui.adapter
+package com.application.adverial.ui
 
-
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
 import com.application.adverial.remote.model.Message
+import com.application.adverial.service.Tools
 import kotlinx.android.synthetic.main.item_message_left.view.*
 import kotlinx.android.synthetic.main.item_message_right.view.*
 
@@ -15,7 +16,12 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val messages = mutableListOf<Message>()
     private val VIEW_TYPE_LEFT = 1
     private val VIEW_TYPE_RIGHT = 2
-    private val currentUserId = 1 // Assuming current user ID is 1 for demonstration
+    private var currentUserId =8;
+    //set current user id
+    fun setCurrentUserId(id:Int){
+        currentUserId=id
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_RIGHT) {
@@ -45,6 +51,11 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         messages.clear()
         messages.addAll(newMessages)
         notifyDataSetChanged()
+    }
+
+    fun addMessage(message: Message) {
+        messages.add(message)
+        notifyItemInserted(messages.size - 1)
     }
 
     class RightMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

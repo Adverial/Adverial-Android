@@ -13,15 +13,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
 import com.application.adverial.remote.model.Conversation
-import kotlinx.android.synthetic.main.item_conversation.view.imageViewAvatar
-import kotlinx.android.synthetic.main.item_conversation.view.last_message
-import kotlinx.android.synthetic.main.item_conversation.view.last_message_time
-import kotlinx.android.synthetic.main.item_conversation.view.textViewChatPartnerName
+import kotlinx.android.synthetic.main.item_conversation.view.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.ConversationViewHolder>() {
     private var conversations: List<Conversation> = listOf()
@@ -32,8 +27,7 @@ class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.Conversatio
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_conversation, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_conversation, parent, false)
         return ConversationViewHolder(view)
     }
 
@@ -47,18 +41,16 @@ class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.Conversatio
 
     class ConversationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(conversation: Conversation) {
-            itemView.textViewChatPartnerName.text = conversation.chatPartnerName
-            itemView.last_message.text = if (conversation.lastMessage.length > 20) {
-                conversation.lastMessage.substring(0, 25) + "..."
-            } else {
-                conversation.lastMessage
-            }
+            itemView.textViewChatPartnerName.text = conversation.chatPartnerName ?: "Unknown"
+            itemView.last_message.text = conversation.lastMessage?.let {
+                if (it.length > 20) it.substring(0, 25) + "..." else it
+            } ?: "No message"
             itemView.last_message_time.text = formatLastMessageAt(conversation.lastMessageAt)
-            // Load the avatar  as image of first char chatPartnerName
+            // Load the avatar as image of first char chatPartnerName
             itemView.imageViewAvatar.setImageDrawable(
                 getAvatar(
                     itemView.context,
-                    conversation.chatPartnerName[0].toString()
+                    conversation.chatPartnerName?.get(0)?.toString() ?: "?"
                 )
             )
         }
@@ -134,7 +126,5 @@ class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.Conversatio
                 return "Invalid date format"
             }
         }
-
     }
-
 }

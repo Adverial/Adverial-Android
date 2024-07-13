@@ -1,40 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="start"
+    android:padding="8dp">
 
     <TextView
-        android:id="@+id/itemLeft_text"
+        android:id="@+id/textViewMessageLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/rounded_message_left"
-        android:fontFamily="@font/regular"
-        android:gravity="start|center_vertical"
-        android:maxWidth="@dimen/_240sdp"
-        android:minHeight="@dimen/_36sdp"
-        android:paddingStart="@dimen/_15sdp"
-        android:paddingTop="@dimen/_12sdp"
-        android:paddingEnd="@dimen/_15sdp"
-        android:paddingBottom="@dimen/_12sdp"
-        android:text="Hello. Of course, you can pay just 450,000 $ and deal. 😍"
-        android:textColor="@color/menu_text"
-        android:textSize="@dimen/_10ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/itemLeft_profileImage"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/im_profile1" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:background="@drawable/message_background_left"
+        android:padding="8dp"
+        android:text="Message"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+</LinearLayout>

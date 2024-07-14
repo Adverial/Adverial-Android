@@ -155,6 +155,9 @@
         <activity
             android:name="com.application.adverial.ui.activity.MessageActivity"
             android:exported="true" />
+        <activity
+            android:name="com.application.adverial.ui.activity.FullImageActivity"
+            android:exported="true" />
 
 
         <activity

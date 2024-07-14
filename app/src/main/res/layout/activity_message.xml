@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MessageActivity">
-
+    tools:context=".ui.activity.MessageActivity">
     <!-- Header layout -->
     <LinearLayout
         android:id="@+id/headerContainer"
@@ -61,6 +60,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageView
+            android:id="@+id/imageViewMediaPreview"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Selected Media" />
+
         <EditText
             android:id="@+id/editTextMessage"
             android:layout_width="0dp"
@@ -69,10 +77,18 @@
             android:hint="Type a message"/>
 
         <ImageButton
+            android:id="@+id/buttonAddMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:contentDescription="Add Media"/>
+
+        <ImageButton
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_message"
             android:contentDescription="Send"/>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

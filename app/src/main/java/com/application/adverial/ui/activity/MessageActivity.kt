@@ -1,12 +1,18 @@
 package com.application.adverial.ui.activity
 
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,11 +43,19 @@ class MessageActivity : AppCompatActivity() {
 
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageViewModel: MessageViewModel
+    private var selectedMediaUri: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
-
+        buttonAddMedia.setOnClickListener {
+            // Check for storage permissions and open media picker
+            if (checkStoragePermission()) {
+                openMediaPicker()
+            } else {
+                requestStoragePermission()
+            }
+        }
         val conversationId = intent.getIntExtra("conversation_id", -1)
         val chatPartnerName = intent.getStringExtra("chat_partner_name") ?: "Chat Partner"
         if (conversationId == -1) {
@@ -166,6 +180,32 @@ class MessageActivity : AppCompatActivity() {
         }
 
 
+    }
+    private fun checkStoragePermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_STORAGE_PERMISSION)
+    }
+
+    private fun openMediaPicker() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, REQUEST_MEDIA_PICK)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_MEDIA_PICK && resultCode == Activity.RESULT_OK) {
+//            selectedMediaUri = data?.data.toString()
+//            imageViewMediaPreview.setImageURI(selectedMediaUri)
+//            imageViewMediaPreview.visibility = View.VISIBLE
+        }
+    }
+
+    companion object {
+        private const val REQUEST_MEDIA_PICK = 1
+        private const val REQUEST_STORAGE_PERMISSION = 2
     }
 
 }

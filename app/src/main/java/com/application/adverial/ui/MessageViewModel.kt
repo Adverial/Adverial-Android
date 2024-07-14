@@ -22,6 +22,9 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun sendMessage(conversationId: Int, message: String, media: RequestBody?) {
+        if (message.isEmpty()) {
+            return
+        }
         repository.sendMessage(conversationId, message, media)
     }
 }

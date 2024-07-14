@@ -82,12 +82,10 @@ class MessageActivity : AppCompatActivity() {
         buttonSend.setOnClickListener {
             val message = editTextMessage.text.toString().trim()
             if (message.isNotEmpty()) {
-
                 messageViewModel.sendMessage(conversationId, message, null)
-//                messageViewModel.getMessagesResponse().observe(this, Observer { messages ->
-//                    messageAdapter.setMessages(messages)
-//                })
                 editTextMessage.text.clear()
+            } else {
+                Toast.makeText(this, "Message is required", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -103,15 +101,16 @@ class MessageActivity : AppCompatActivity() {
     private fun handleSendMessageResponse(response: MessageResponse?) {
         if (response == null) {
             Toast.makeText(this, "Failed to send message. Please try again.", Toast.LENGTH_SHORT).show()
-
         } else {
-            // Successfully sent message, update UI or do additional actions if needed
             Toast.makeText(this, "Message sent successfully.", Toast.LENGTH_SHORT).show()
-            // log response
             Log.i("Pusher", "Response: $response")
-
+//            response.message?.let { message as Message ->
+//                messageAdapter.addMessage(message)
+//                recyclerViewMessages.scrollToPosition(messageAdapter.itemCount - 1)
+//            }
         }
     }
+
 
     private fun setupPusher(conversationId: Int) {
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.application.adverial.BuildConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,9 +14,11 @@ import com.application.adverial.remote.model.Message
 import com.application.adverial.remote.model.MessageResponse
 import com.application.adverial.service.Tools
 import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody
-
-
+import java.io.IOException
 
 
 class ConversationRepository(val context: Context) {
@@ -60,22 +63,41 @@ class ConversationRepository(val context: Context) {
     }
 
     fun sendMessage(conversionId: Int, message: String, media: RequestBody?) {
-        val messageBody = RequestBody.create(MediaType.parse("text/plain"), message)
-        val call = apiService.sendMessage(conversionId, token, "multipart/form-data", lang, messageBody, media)
-        call.enqueue(object : Callback<MessageResponse> {
-            override fun onResponse(call: Call<MessageResponse>, response: Response<MessageResponse>) {
-                if (response.isSuccessful) {
-                    sendMessageLiveData.value = response.body()
-                } else {
-                    //Log.e("MessageViewModel", "Response Error: ${response.errorBody()?.string()}")
-                }
+        val client = OkHttpClient()
+
+        // Build the multipart body
+        val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("message", message)
+
+        // Add media if present
+        media?.let {
+            requestBodyBuilder.addFormDataPart("media", "media", it)
+        }
+
+        val requestBody = requestBodyBuilder.build()
+
+        // Build the request
+        val request = Request.Builder()
+            .url( BuildConfig.API_BASE_URL+ "api/v2/send-message/$conversionId")
+            .post(requestBody)
+            .addHeader("Authorization", token)
+            .addHeader("lang", lang)
+            .build()
+
+        // Send the request
+        client.newCall(request).enqueue(object : okhttp3.Callback {
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                Log.e("MessageRepository", "Failed to send message", e)
             }
 
-            override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
-                Log.e("MessageViewModel", "Error: ${t.message}")
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                val body = response.body().toString()
+               // Log.i("MessageRepository", "Response: $body")
             }
         })
     }
+
+
 
     fun getMessagesByConversationId(conversionId: Int) {
         val call = apiService.getMessagesByConversationId(conversionId, token, "multipart/form-data", lang)

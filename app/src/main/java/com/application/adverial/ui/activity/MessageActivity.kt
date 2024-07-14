@@ -103,8 +103,13 @@ class MessageActivity : AppCompatActivity() {
     private fun handleSendMessageResponse(response: MessageResponse?) {
         if (response == null) {
             Toast.makeText(this, "Failed to send message. Please try again.", Toast.LENGTH_SHORT).show()
+
         } else {
             // Successfully sent message, update UI or do additional actions if needed
+            Toast.makeText(this, "Message sent successfully.", Toast.LENGTH_SHORT).show()
+            // log response
+            Log.i("Pusher", "Response: $response")
+
         }
     }
 
@@ -117,14 +122,14 @@ class MessageActivity : AppCompatActivity() {
         pusher.connect(object : ConnectionEventListener {
             override fun onConnectionStateChange(change: ConnectionStateChange) {
 
-                Log.i("Pusher", "State changed from ${change.previousState} to ${change.currentState}")
+             //   Log.i("Pusher", "State changed from ${change.previousState} to ${change.currentState}")
             }
             override fun onError(
                 message: String,
                 code: String,
                 e: Exception
             ) {
-                Log.i("Pusher", "There was a problem connecting! code ($code), message ($message), exception($e)")
+              //  Log.i("Pusher", "There was a problem connecting! code ($code), message ($message), exception($e)")
             }
         }, ConnectionState.ALL)
 

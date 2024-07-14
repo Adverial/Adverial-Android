@@ -9,7 +9,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.application.adverial.remote.model.Conversation
 import com.application.adverial.remote.model.ConversationResponse
-import com.application.adverial.remote.model.GenericResponse
 import com.application.adverial.remote.model.Message
 import com.application.adverial.remote.model.MessageResponse
 import com.application.adverial.service.Tools
@@ -68,7 +67,7 @@ class ConversationRepository(val context: Context) {
                 if (response.isSuccessful) {
                     sendMessageLiveData.value = response.body()
                 } else {
-                    Log.e("MessageViewModel", "Response Error: ${response.errorBody()?.string()}")
+                    //Log.e("MessageViewModel", "Response Error: ${response.errorBody()?.string()}")
                 }
             }
 

@@ -20,6 +20,9 @@ import com.application.adverial.ui.MessageViewModel
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.channel.SubscriptionEventListener
+import com.pusher.client.connection.ConnectionEventListener
+import com.pusher.client.connection.ConnectionState
+import com.pusher.client.connection.ConnectionStateChange
 import kotlinx.android.synthetic.main.activity_message.*
 import kotlinx.android.synthetic.main.activity_my_account.countryCodePicker
 import kotlinx.android.synthetic.main.activity_my_account.myaccount_email
@@ -106,32 +109,59 @@ class MessageActivity : AppCompatActivity() {
     }
 
     private fun setupPusher(conversationId: Int) {
+
+
         val options = PusherOptions().setCluster("us2")
         val pusher = Pusher("0f97d1f616126b909ce3", options)
 
-        val channel = pusher.subscribe("chat.$conversationId")
+        pusher.connect(object : ConnectionEventListener {
+            override fun onConnectionStateChange(change: ConnectionStateChange) {
 
+                Log.i("Pusher", "State changed from ${change.previousState} to ${change.currentState}")
+            }
+            override fun onError(
+                message: String,
+                code: String,
+                e: Exception
+            ) {
+                Log.i("Pusher", "There was a problem connecting! code ($code), message ($message), exception($e)")
+            }
+        }, ConnectionState.ALL)
+
+        val channel = pusher.subscribe("chat.$conversationId")
         channel.bind("message.sent") { event ->
-            Log.e("PUSHER", event.data)
+//            Log.i("Pusher","Received event with data: $event")
             val jsonObject = JSONObject(event.data)
+            //log jsonObject
+//            Log.i("Pusher", "Received event with data: $jsonObject")
+          //  2024-07-14 10:30:23.967 28738-28904 Pusher                  com.application.adverial             I  Received event with data: {"message":{"message":"Hello facebook","chat_room_id":"2","user_id":8,"updated_at":"2024-07-14T07:30:23.000000Z","created_at":"2024-07-14T07:30:23.000000Z","id":67,"user":{"id":8,"name":"ali","last_name":"","email":"9aeXYRBTFu@gmail.com","whatsapp_number":"+9647508961058","email_verified_at":null,"birth_date":null,"photo":"uploads\/user\/default.png","phone":null,"is_verified":1,"is_store":0,"status":0,"created_at":"2024-07-03T08:20:35.000000Z","updated_at":"2024-07-14T06:44:20.000000Z","type":null}},"user":{"id":8,"name":"ali","last_name":"","email":"9aeXYRBTFu@gmail.com","whatsapp_number":"+9647508961058","email_verified_at":null,"birth_date":null,"photo":"uploads\/user\/default.png","phone":null,"is_verified":1,"is_store":0,"status":0,"created_at":"2024-07-03T08:20:35.000000Z","updated_at":"2024-07-14T06:44:20.000000Z","type":null}}
+
             val message = jsonObject.getJSONObject("message").getString("message")
             val senderId = jsonObject.getJSONObject("user").getInt("id")
             val mediaUrl = jsonObject.getJSONObject("message").optString("media_url", null)
+            val createdAt = jsonObject.getJSONObject("message").getString("created_at")
+            val messageId = jsonObject.getJSONObject("message").getInt("id")
             val newMessage = Message(
-                messageId = 0, // Assume 0 for simplicity
+                messageId = messageId,
                 conversionId = conversationId,
                 message = message,
                 mediaUrl = mediaUrl,
-                createdAt = "", // Provide correct timestamp
+                createdAt = createdAt,
                 senderId = senderId
             )
-            runOnUiThread {
+            // log newMessage
+//            Log.i("Pusher", "newMessage: $newMessage")
+            try{
+                runOnUiThread {
                 messageAdapter.addMessage(newMessage)
                 recyclerViewMessages.scrollToPosition(messageAdapter.itemCount - 1)
             }
+            }catch (e: Exception){
+                Log.i("Pusher", "Error: $e")
+            }
         }
 
-        pusher.connect()
+
     }
 
 }

@@ -23,6 +23,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.Message
@@ -128,8 +129,8 @@ class MessageActivity : AppCompatActivity() {
     }
 
     private fun setupPusher(conversationId: Int) {
-        val options = PusherOptions().setCluster("us2")
-        val pusher = Pusher("0f97d1f616126b909ce3", options)
+        val options = PusherOptions().setCluster(BuildConfig.PUSHER_APP_CLUSTER)
+        val pusher = Pusher(BuildConfig.PUSHER_APP_KEY, options)
 
         pusher.connect(object : ConnectionEventListener {
             override fun onConnectionStateChange(change: ConnectionStateChange) {

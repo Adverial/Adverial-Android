@@ -3,6 +3,17 @@ plugins {
     id 'kotlin-android'
 }
 apply plugin: "kotlin-android-extensions"
+def loadProperties() {
+    def propertiesFile = rootProject.file('env.properties')
+    def properties = new Properties()
+    if (propertiesFile.exists()) {
+        properties.load(new FileInputStream(propertiesFile))
+    }
+    return properties
+}
+
+// Step 2: Call loadProperties and assign to envProperties
+def envProperties = loadProperties()
 
 android {
     compileSdk 33
@@ -21,6 +32,8 @@ android {
             debugSymbolLevel 'FULL'
             // change to SYMBOL_TABLE to enable file and line number info
         }
+        buildConfigField "String", "PUSHER_APP_KEY", "\"${envProperties['PUSHER_APP_KEY']}\""
+        buildConfigField "String", "PUSHER_APP_CLUSTER", "\"${envProperties['PUSHER_APP_CLUSTER']}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfigs {
@@ -50,11 +63,12 @@ android {
             multiDexEnabled true
             signingConfig signingConfigs.release
             ndk.debugSymbolLevel = 'FULL'
-            buildConfigField "String", "API_BASE_URL", "\"https://admin.adverial.net/\""
+            buildConfigField "String", "API_BASE_URL",  "\"${envProperties['API_BASE_URL']}\""
+
         }
         debug {
             debuggable true
-            buildConfigField "String", "API_BASE_URL", "\"https://admin.adverial.net/\""
+            buildConfigField "String", "API_BASE_URL", "\"${envProperties['API_BASE_URL']}\""
         }
     }
     compileOptions {

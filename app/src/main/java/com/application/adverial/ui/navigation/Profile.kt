@@ -111,7 +111,9 @@ class Profile : AppCompatActivity() {
 //                getSharedPreferences("data", 0).edit().putString("type", "deactive").apply()
 //                startActivity(intent)
 //            }else{
-//                val intent= Intent(this, LoginWa::class.java)
+//                
+
+val intent= Intent(this, LoginWa::class.java)
 //                startActivity(intent)
 //            }
 //        }

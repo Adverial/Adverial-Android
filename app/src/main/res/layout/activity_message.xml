@@ -80,14 +80,14 @@
             android:id="@+id/buttonAddMedia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/baseline_attach_file_24"
             android:contentDescription="Add Media"/>
 
         <ImageButton
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_message"
+            android:src="@drawable/baseline_send_24"
             android:contentDescription="Send"/>
     </LinearLayout>
 

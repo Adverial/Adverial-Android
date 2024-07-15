@@ -89,7 +89,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     fun notifications(view: View) {
-        val intent = Intent(this, ChatActivity::class.java)
+        val intent = Intent(this, Notifications::class.java)
         startActivity(intent)
         overridePendingTransition(0, 0)
         finish()

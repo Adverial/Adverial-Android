@@ -1,11 +1,17 @@
-package com.application.adverial.ui.activity
+// File: MessageActivity.kt
 
+package com.application.adverial.ui.activity
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -13,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,42 +27,38 @@ import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.Message
 import com.application.adverial.remote.model.MessageResponse
-import com.application.adverial.service.Tools
 import com.application.adverial.ui.MessageAdapter
 import com.application.adverial.ui.MessageViewModel
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
-import com.pusher.client.channel.SubscriptionEventListener
 import com.pusher.client.connection.ConnectionEventListener
 import com.pusher.client.connection.ConnectionState
 import com.pusher.client.connection.ConnectionStateChange
-import kotlinx.android.synthetic.main.activity_message.*
-import kotlinx.android.synthetic.main.activity_my_account.countryCodePicker
-import kotlinx.android.synthetic.main.activity_my_account.myaccount_email
-import kotlinx.android.synthetic.main.activity_my_account.myaccount_firstname
-import kotlinx.android.synthetic.main.activity_my_account.myaccount_lastname
-import kotlinx.android.synthetic.main.activity_my_account.myaccount_phone
-import kotlinx.android.synthetic.main.activity_signup.lottie14
-import okhttp3.RequestBody
+import kotlinx.android.synthetic.main.activity_message.buttonAddMedia
+import kotlinx.android.synthetic.main.activity_message.buttonBack
+import kotlinx.android.synthetic.main.activity_message.buttonSend
+import kotlinx.android.synthetic.main.activity_message.editTextMessage
+import kotlinx.android.synthetic.main.activity_message.imageViewMediaPreview
+import kotlinx.android.synthetic.main.activity_message.recyclerViewMessages
+import kotlinx.android.synthetic.main.activity_message.textViewChatPartnerName
+import okhttp3.*
 import org.json.JSONObject
+import java.io.File
 
 class MessageActivity : AppCompatActivity() {
 
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageViewModel: MessageViewModel
-    private var selectedMediaUri: String? = null
+    private var selectedMediaData: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
+
         buttonAddMedia.setOnClickListener {
-            // Check for storage permissions and open media picker
-            if (checkStoragePermission()) {
-                openMediaPicker()
-            } else {
-                requestStoragePermission()
-            }
+            openMediaPicker()
         }
+
         val conversationId = intent.getIntExtra("conversation_id", -1)
         val chatPartnerName = intent.getStringExtra("chat_partner_name") ?: "Chat Partner"
         if (conversationId == -1) {
@@ -69,91 +72,78 @@ class MessageActivity : AppCompatActivity() {
             finish()
         }
 
-        // Set up RecyclerView
         messageAdapter = MessageAdapter()
 
-        val repo= Repository(this)
+        val repo = Repository(this)
         repo.user()
         repo.getUserData().observe(this) {
             if (it.status) {
-                it.data.id?.let { it1 -> messageAdapter.setCurrentUserId(it1) }
+                it.data.id?.let { userId -> messageAdapter.setCurrentUserId(userId) }
             }
         }
+
         recyclerViewMessages.layoutManager = LinearLayoutManager(this)
         recyclerViewMessages.adapter = messageAdapter
-        // Set up ViewModel
-        messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
 
-        // Observe LiveData from ViewModel
+        messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         messageViewModel.getMessagesResponse().observe(this, Observer { messages ->
             messageAdapter.setMessages(messages)
         })
 
-        // Load messages
         messageViewModel.loadMessagesByConversationId(conversationId)
 
-        // Handle send button click
         buttonSend.setOnClickListener {
             val message = editTextMessage.text.toString().trim()
-            if (message.isNotEmpty()) {
-                messageViewModel.sendMessage(conversationId, message, null)
+            val mediaUri = selectedMediaData?.toUri()
+
+            if (message.isNotEmpty() || mediaUri != null) {
+                val mediaRequestBody: RequestBody? = mediaUri?.let {
+                    val mediaPath = getPathFromUri(this, it)
+                    mediaPath?.let { path ->
+                        val mediaFile = File(path)
+                        RequestBody.create(MediaType.parse("image/jpeg"), mediaFile)
+                    }
+                }
+
+                messageViewModel.sendMessage(conversationId, message, mediaRequestBody)
                 editTextMessage.text.clear()
+                imageViewMediaPreview.visibility = View.GONE
+                selectedMediaData = null
             } else {
-                Toast.makeText(this, "Message is required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Message or media is required", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Observe send message response
         messageViewModel.getSendMessageResponse().observe(this, Observer { response ->
             handleSendMessageResponse(response)
         })
 
-        // Set up Pusher
         setupPusher(conversationId)
     }
 
     private fun handleSendMessageResponse(response: MessageResponse?) {
         if (response == null) {
             Toast.makeText(this, "Failed to send message. Please try again.", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Message sent successfully.", Toast.LENGTH_SHORT).show()
-            Log.i("Pusher", "Response: $response")
-//            response.message?.let { message as Message ->
-//                messageAdapter.addMessage(message)
-//                recyclerViewMessages.scrollToPosition(messageAdapter.itemCount - 1)
-//            }
         }
     }
 
-
     private fun setupPusher(conversationId: Int) {
-
-
         val options = PusherOptions().setCluster("us2")
         val pusher = Pusher("0f97d1f616126b909ce3", options)
 
         pusher.connect(object : ConnectionEventListener {
             override fun onConnectionStateChange(change: ConnectionStateChange) {
-
-             //   Log.i("Pusher", "State changed from ${change.previousState} to ${change.currentState}")
+                // Handle connection state changes if needed
             }
-            override fun onError(
-                message: String,
-                code: String,
-                e: Exception
-            ) {
-              //  Log.i("Pusher", "There was a problem connecting! code ($code), message ($message), exception($e)")
+
+            override fun onError(message: String, code: String, e: Exception) {
+                // Handle connection errors if needed
             }
         }, ConnectionState.ALL)
 
         val channel = pusher.subscribe("chat.$conversationId")
         channel.bind("message.sent") { event ->
-//            Log.i("Pusher","Received event with data: $event")
             val jsonObject = JSONObject(event.data)
-            //log jsonObject
-//            Log.i("Pusher", "Received event with data: $jsonObject")
-          //  2024-07-14 10:30:23.967 28738-28904 Pusher                  com.application.adverial             I  Received event with data: {"message":{"message":"Hello facebook","chat_room_id":"2","user_id":8,"updated_at":"2024-07-14T07:30:23.000000Z","created_at":"2024-07-14T07:30:23.000000Z","id":67,"user":{"id":8,"name":"ali","last_name":"","email":"9aeXYRBTFu@gmail.com","whatsapp_number":"+9647508961058","email_verified_at":null,"birth_date":null,"photo":"uploads\/user\/default.png","phone":null,"is_verified":1,"is_store":0,"status":0,"created_at":"2024-07-03T08:20:35.000000Z","updated_at":"2024-07-14T06:44:20.000000Z","type":null}},"user":{"id":8,"name":"ali","last_name":"","email":"9aeXYRBTFu@gmail.com","whatsapp_number":"+9647508961058","email_verified_at":null,"birth_date":null,"photo":"uploads\/user\/default.png","phone":null,"is_verified":1,"is_store":0,"status":0,"created_at":"2024-07-03T08:20:35.000000Z","updated_at":"2024-07-14T06:44:20.000000Z","type":null}}
-
             val message = jsonObject.getJSONObject("message").getString("message")
             val senderId = jsonObject.getJSONObject("user").getInt("id")
             val mediaUrl = jsonObject.getJSONObject("message").optString("media_url", null)
@@ -167,20 +157,102 @@ class MessageActivity : AppCompatActivity() {
                 createdAt = createdAt,
                 senderId = senderId
             )
-            // log newMessage
-//            Log.i("Pusher", "newMessage: $newMessage")
-            try{
+            try {
                 runOnUiThread {
-                messageAdapter.addMessage(newMessage)
-                recyclerViewMessages.scrollToPosition(messageAdapter.itemCount - 1)
-            }
-            }catch (e: Exception){
+                    messageAdapter.addMessage(newMessage)
+                    recyclerViewMessages.scrollToPosition(messageAdapter.itemCount - 1)
+                }
+            } catch (e: Exception) {
                 Log.i("Pusher", "Error: $e")
             }
         }
-
-
     }
+
+    private fun getPathFromUri(context: Context, uri: Uri): String? {
+        val isKitKat = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val type = split[0]
+
+                if ("primary".equals(type, ignoreCase = true)) {
+                    return context.getExternalFilesDir(null).toString() + "/" + split[1]
+                }
+
+                // TODO handle non-primary volumes
+            } else if (isDownloadsDocument(uri)) {
+                val id = DocumentsContract.getDocumentId(uri)
+                val contentUri = ContentUris.withAppendedId(
+                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
+
+                return getDataColumn(context, contentUri, null, null)
+            } else if (isMediaDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val type = split[0]
+
+                var contentUri: Uri? = null
+                when (type) {
+                    "image" -> contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    "video" -> contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                    "audio" -> contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                }
+
+                val selection = "_id=?"
+                val selectionArgs = arrayOf(split[1])
+
+                return getDataColumn(context, contentUri, selection, selectionArgs)
+            }
+        } else if ("content".equals(uri.scheme, ignoreCase = true)) {
+            // Return the remote address
+            return if (isGooglePhotosUri(uri)) uri.lastPathSegment else getDataColumn(context, uri, null, null)
+
+        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
+            return uri.path
+        }
+
+        return null
+    }
+
+    private fun getDataColumn(context: Context, uri: Uri?, selection: String?,
+                              selectionArgs: Array<String>?): String? {
+
+        var cursor: Cursor? = null
+        val column = "_data"
+        val projection = arrayOf(column)
+
+        try {
+            cursor = uri?.let { context.contentResolver.query(it, projection, selection, selectionArgs, null) }
+            if (cursor != null && cursor.moveToFirst()) {
+                val index = cursor.getColumnIndexOrThrow(column)
+                return cursor.getString(index)
+            }
+        } finally {
+            cursor?.close()
+        }
+        return null
+    }
+
+    private fun isExternalStorageDocument(uri: Uri): Boolean {
+        return "com.android.externalstorage.documents" == uri.authority
+    }
+
+    private fun isDownloadsDocument(uri: Uri): Boolean {
+        return "com.android.providers.downloads.documents" == uri.authority
+    }
+
+    private fun isMediaDocument(uri: Uri): Boolean {
+        return "com.android.providers.media.documents" == uri.authority
+    }
+
+    private fun isGooglePhotosUri(uri: Uri): Boolean {
+        return "com.google.android.apps.photos.content" == uri.authority
+    }
+
     private fun checkStoragePermission(): Boolean {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
     }
@@ -197,9 +269,9 @@ class MessageActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_MEDIA_PICK && resultCode == Activity.RESULT_OK) {
-//            selectedMediaUri = data?.data.toString()
-//            imageViewMediaPreview.setImageURI(selectedMediaUri)
-//            imageViewMediaPreview.visibility = View.VISIBLE
+            selectedMediaData = data?.data?.toString()
+            imageViewMediaPreview.setImageURI(selectedMediaData?.toUri())
+            imageViewMediaPreview.visibility = View.VISIBLE
         }
     }
 
@@ -207,5 +279,4 @@ class MessageActivity : AppCompatActivity() {
         private const val REQUEST_MEDIA_PICK = 1
         private const val REQUEST_STORAGE_PERMISSION = 2
     }
-
 }

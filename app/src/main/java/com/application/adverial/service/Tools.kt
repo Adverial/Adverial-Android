@@ -647,18 +647,30 @@ class Tools {
             notificationManager.createNotificationChannel(channel)
         }
     }
-    fun showNotificationMessage(context: Context, message: String, CHANNEL_ID: String, NOTIFICATION_ID: Int) {
+    fun showNotificationMessage(
+        context: Context,
+        message: String,
+        CHANNEL_ID: String,
+        NOTIFICATION_ID: Int,
+        conversation_id: Int,
+        user_name: String
+    ) {
         createNotificationChannel(context, CHANNEL_ID, "Message Channel")
-
         val intent = Intent(context, MessageActivity::class.java).apply {
-            putExtra("conversation_id", -1) // Replace with actual data if needed
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("conversation_id", conversation_id)
+            putExtra("chat_partner_name", user_name)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(R.string.new_message.toString())
+            .setContentTitle(context.getString(R.string.new_message))
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)

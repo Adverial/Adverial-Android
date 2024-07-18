@@ -7,14 +7,23 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import com.application.adverial.remote.model.Message
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.MessageActivity
 import com.application.adverial.ui.navigation.Home
 import com.application.adverial.utils.DialogUtils
 import com.application.adverial.utils.NetworkUtils
+import com.pusher.client.Pusher
+import com.pusher.client.PusherOptions
+import com.pusher.client.connection.ConnectionEventListener
+import com.pusher.client.connection.ConnectionState
+import com.pusher.client.connection.ConnectionStateChange
+import kotlinx.android.synthetic.main.activity_message.recyclerViewMessages
+import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         if (NetworkUtils.isNetworkAvailable(this)) {
                 Tools().goto(this, Home(), false)
-            setupPusher(this)
+            setupPusher()
         } else {
             DialogUtils.showNoInternetDialog(this)
             finish()
@@ -63,7 +72,33 @@ class MainActivity : AppCompatActivity() {
         const val CHANNEL_NAME :String= "Message Notifications"
         const val NOTIFICATION_ID :Int= 1
     }
-    fun setupPusher(context: Context) {
-           Tools().showNotificationMessage(context, " test message",  CHANNEL_ID , NOTIFICATION_ID )
+        private fun setupPusher() {
+            val options = PusherOptions().setCluster(BuildConfig.PUSHER_APP_CLUSTER)
+            val pusher = Pusher(BuildConfig.PUSHER_APP_KEY, options)
+
+            pusher.connect(object : ConnectionEventListener {
+                override fun onConnectionStateChange(change: ConnectionStateChange) {
+                    // Handle connection state changes if needed
+                }
+                override fun onError(message: String, code: String, e: Exception) {
+                    // Handle connection errors if needed
+                }
+            }, ConnectionState.ALL)
+
+            val channel = pusher.subscribe("user.2")
+            channel.bind("new.message") { event ->
+                val jsonObject = JSONObject(event.data)
+                  Log.e("newMessage",jsonObject.getString("message"))
+                val partnerName = jsonObject.getString("partnerName")
+                val conversationId = jsonObject.getInt("conversionId")
+
+
+
+                Tools().showNotificationMessage(this, " test message",  CHANNEL_ID , NOTIFICATION_ID ,conversationId, partnerName)
+
+
+            }
+        }
+
     }
-}
+

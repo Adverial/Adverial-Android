@@ -1,6 +1,9 @@
 package com.application.adverial
 
 import android.app.Activity
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
@@ -8,13 +11,13 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.application.adverial.service.Tools
+import com.application.adverial.ui.activity.MessageActivity
 import com.application.adverial.ui.navigation.Home
 import com.application.adverial.utils.DialogUtils
 import com.application.adverial.utils.NetworkUtils
 
 
 class MainActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,13 +49,21 @@ class MainActivity : AppCompatActivity() {
 //            SharedPrefManager(this)
 //        }
 
-
         if (NetworkUtils.isNetworkAvailable(this)) {
                 Tools().goto(this, Home(), false)
+            setupPusher(this)
         } else {
             DialogUtils.showNoInternetDialog(this)
             finish()
         }
+    }
 
+    companion object {
+        const val CHANNEL_ID:String = "message_notifications_channel"
+        const val CHANNEL_NAME :String= "Message Notifications"
+        const val NOTIFICATION_ID :Int= 1
+    }
+    fun setupPusher(context: Context) {
+           Tools().showNotificationMessage(context, " test message",  CHANNEL_ID , NOTIFICATION_ID )
     }
 }

@@ -28,8 +28,10 @@ import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.Message
 import com.application.adverial.remote.model.MessageResponse
+import com.application.adverial.service.Tools
 import com.application.adverial.ui.MessageAdapter
 import com.application.adverial.ui.MessageViewModel
+import com.bumptech.glide.Glide
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.connection.ConnectionEventListener
@@ -40,6 +42,10 @@ import kotlinx.android.synthetic.main.activity_message.buttonBack
 import kotlinx.android.synthetic.main.activity_message.buttonSend
 import kotlinx.android.synthetic.main.activity_message.editTextMessage
 import kotlinx.android.synthetic.main.activity_message.imageViewMediaPreview
+import kotlinx.android.synthetic.main.activity_message.itemContainer
+import kotlinx.android.synthetic.main.activity_message.itemPhoto
+import kotlinx.android.synthetic.main.activity_message.itemPrice
+import kotlinx.android.synthetic.main.activity_message.itemTitle
 import kotlinx.android.synthetic.main.activity_message.recyclerViewMessages
 import kotlinx.android.synthetic.main.activity_message.textViewChatPartnerName
 import okhttp3.*
@@ -94,8 +100,10 @@ class MessageActivity : AppCompatActivity() {
         messageViewModel.loadMessagesByConversationId(conversationId)
 
         buttonSend.setOnClickListener {
-            val message = editTextMessage.text.toString().trim()
+            var message = editTextMessage.text.toString().trim()
             val mediaUri = selectedMediaData?.toUri()
+
+            //check if media no null and message is empty then set message to media name
 
             if (message.isNotEmpty() || mediaUri != null) {
                 val mediaRequestBody: RequestBody? = mediaUri?.let {
@@ -105,7 +113,9 @@ class MessageActivity : AppCompatActivity() {
                         RequestBody.create(MediaType.parse("image/jpeg"), mediaFile)
                     }
                 }
-
+                if (mediaUri != null && message.isEmpty()) {
+                    message = "Media"
+                }
                 messageViewModel.sendMessage(conversationId, message, mediaRequestBody)
                 editTextMessage.text.clear()
                 imageViewMediaPreview.visibility = View.GONE
@@ -120,8 +130,33 @@ class MessageActivity : AppCompatActivity() {
         })
 
         setupPusher(conversationId)
+
+
+
+        addItem()
     }
 
+
+    // add item
+    private fun addItem() {
+        val showItem = intent.getBooleanExtra("show_item", false)
+        if (showItem) {
+
+            val photoUrl = intent.getStringExtra("item_photo")
+            val title = intent.getStringExtra("item_title")
+            val price = intent.getStringExtra("item_price")
+            Glide.with(this)
+                .load(Tools().getPath() + photoUrl)
+                .into(itemPhoto)
+            itemTitle.text = title
+            itemPrice.text = price
+            itemContainer.visibility = View.VISIBLE
+            itemContainer.setOnClickListener {
+                Toast.makeText(this, "Item clicked", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
     private fun handleSendMessageResponse(response: MessageResponse?) {
         if (response == null) {
             Toast.makeText(this, "Failed to send message. Please try again.", Toast.LENGTH_SHORT).show()

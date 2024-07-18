@@ -22,7 +22,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.BuildConfig
 import com.application.adverial.R
+import com.application.adverial.remote.ConversationRepository
 import com.application.adverial.remote.Repository
+import com.application.adverial.remote.model.Ad
 import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
@@ -64,6 +66,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     private var lon = 0.0
     private var type = ""
     private var actionBarMode = "closed"
+    private var ItemData: Ad? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,92 +92,6 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             supportFragmentManager.findFragmentById(R.id.post_map) as ScrollableMapFragment?
         mapFragment!!.getMapAsync(this)
         id = intent.getStringExtra("id")!!
-
-//        post_sideSlide.setOnTouchListener(object : OnSwipeTouchListener(this) {
-//            override fun onSwipeRight() {
-//                actionBarMode = "opened"
-//                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
-//                params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
-//                post_sideSlide.requestLayout()
-//                post_sideSlide.startAnimation(
-//                    AnimationUtils.loadAnimation(
-//                        this@Post,
-//                        R.anim.slide_right1
-//                    )
-//                )
-//            }
-//
-//            override fun onSwipeLeft() {
-//                actionBarMode = "closed"
-//                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
-//                params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
-//                post_sideSlide.requestLayout()
-//                post_sideSlide.startAnimation(
-//                    AnimationUtils.loadAnimation(
-//                        this@Post,
-//                        R.anim.slide_left1
-//                    )
-//                )
-//            }
-//        })
-
-//        post_sideBarAction.setOnTouchListener { view, motionEvent ->
-//            if (motionEvent.action == MotionEvent.ACTION_UP) {
-//                if (actionBarMode == "opened") {
-//                    actionBarMode = "closed"
-//                    val params: MarginLayoutParams =
-//                        post_sideSlide.layoutParams as MarginLayoutParams
-//                    params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
-//                    post_sideSlide.requestLayout()
-//                    post_sideSlide.startAnimation(
-//                        AnimationUtils.loadAnimation(
-//                            this@Post,
-//                            R.anim.slide_left1
-//                        )
-//                    )
-//                } else {
-//                    actionBarMode = "opened"
-//                    val params: MarginLayoutParams =
-//                        post_sideSlide.layoutParams as MarginLayoutParams
-//                    params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
-//                    post_sideSlide.requestLayout()
-//                    post_sideSlide.startAnimation(
-//                        AnimationUtils.loadAnimation(
-//                            this@Post,
-//                            R.anim.slide_right1
-//                        )
-//                    )
-//                }
-//            }
-//            true
-//        }
-
-//        post_sideBarAction.setOnClickListener {
-//            if (actionBarMode == "opened") {
-//                actionBarMode = "closed"
-//                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
-//                params.leftMargin = resources.getDimension(R.dimen._minus40sdp).toInt()
-//                post_sideSlide.requestLayout()
-//                post_sideSlide.startAnimation(
-//                    AnimationUtils.loadAnimation(
-//                        this@Post,
-//                        R.anim.slide_left1
-//                    )
-//                )
-//            } else {
-//                actionBarMode = "opened"
-//                val params: MarginLayoutParams = post_sideSlide.layoutParams as MarginLayoutParams
-//                params.leftMargin = resources.getDimension(R.dimen._minus1sdp).toInt()
-//                post_sideSlide.requestLayout()
-//                post_sideSlide.startAnimation(
-//                    AnimationUtils.loadAnimation(
-//                        this@Post,
-//                        R.anim.slide_right1
-//                    )
-//                )
-//            }
-//        }
-
         (mapFragment as ScrollableMapFragment).setListener {
             post_mapLayout.requestDisallowInterceptTouchEvent(
                 true
@@ -190,6 +107,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             post_page.layoutManager = LinearLayoutManager(this)
             post_page.adapter = PostPageAdapter(it.data!!, id)
             //post_page.scrollToPosition(0)
+            ItemData = it.data;
             post_title1.text = it.data!!.price_currency
             post_city1.text = it.data!!.title
             phoneNumber = it.data!!.phone ?: ""
@@ -322,35 +240,44 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun message(view: View) {
-        /*if(Tools().authCheck(this)){
-            val intent= Intent(this, Message::class.java)
-            startActivity(intent)
-        }else{
-            val intent= Intent(this, LoginWa::class.java)
-            startActivity(intent)
-        }*/
-        if (phoneNumber.isNotBlank() && (type == "1" || type == "3")) {
-            val message = ""
-            val phone = phoneNumber
-            val uri = Uri.parse("smsto:+$phone")
-            val intent = Intent(Intent.ACTION_SENDTO, uri)
-            with(intent) {
-                putExtra("address", "+$phone")
-                putExtra("sms_body", message)
-            }
-            when {
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT -> {
-                    val defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this)
-                    if (defaultSmsPackageName != null) intent.setPackage(defaultSmsPackageName)
-                    startActivity(intent)
-                }
-                else -> startActivity(intent)
-            }
-        } else {
-            Toast.makeText(this, getString(R.string.phoneNumberNotFound), Toast.LENGTH_SHORT).show()
-            /*val dialog= AlertDialog(getString(R.string.error), getString(R.string.phoneNumberNotFound))
-            dialog.show(supportFragmentManager, "AlertDialog")*/
+
+        var item_id = id;
+        // itemData is from Ad model
+        ItemData?.let {
+            item_id = it.id.toString()
         }
+        val partnerUserId = ItemData?.user_detail?.id ?: 0
+        val chatPartnerName = ItemData?.user_detail?.name ?: ""
+
+        // Open conversation with the partner user
+        val repo = ConversationRepository(this)
+        repo.initialConversation(partnerUserId)
+        repo.initialConversationLiveData.observe(this) { conversationResponse ->
+            val conversationId = conversationResponse.conversionId
+
+            if (conversationId != 0) {
+                // Start MessageActivity with the conversation ID
+                val intent = Intent(this, MessageActivity::class.java).apply {
+                    putExtra("conversation_id", conversationId)
+                    putExtra("chat_partner_name", chatPartnerName)
+                    putExtra("show_item", true)
+                    putExtra("item_photo", ItemData?.ad_images?.get(0)?.image)
+                    putExtra("item_title", ItemData?.title)
+                    putExtra("item_price", ItemData?.price_currency)
+
+                }
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT).show()
+            }
+
+//            val intent = Intent(Intent.ACTION_VIEW)
+//            intent.data = Uri.parse("adverial://conversation/$conversationId/$chatPartnerName/$item_id")
+//            startActivity(intent)
+        }
+
+
+
     }
 
     fun satellite(view: View) {

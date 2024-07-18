@@ -84,17 +84,20 @@ class MainActivity : AppCompatActivity() {
                     // Handle connection errors if needed
                 }
             }, ConnectionState.ALL)
-
-            val channel = pusher.subscribe("user.2")
+            val userId = getSharedPreferences("user", 0).getString("user_id", "")
+//            Log.d("userId", userId.toString())
+            val channel = pusher.subscribe("user.$userId")
             channel.bind("new.message") { event ->
                 val jsonObject = JSONObject(event.data)
-                  Log.e("newMessage",jsonObject.getString("message"))
                 val partnerName = jsonObject.getString("partnerName")
                 val conversationId = jsonObject.getInt("conversionId")
-
-
-
-                Tools().showNotificationMessage(this, " test message",  CHANNEL_ID , NOTIFICATION_ID ,conversationId, partnerName)
+                 // don't show notification if the user is in the MessageActivity active
+                if (MessageActivity.isActivityVisible && MessageActivity.conversationId == conversationId) {
+                    return@bind
+                }
+                Tools().showNotificationMessage(this,
+                    "New message from $partnerName",
+                      CHANNEL_ID , NOTIFICATION_ID ,conversationId, partnerName)
 
 
             }

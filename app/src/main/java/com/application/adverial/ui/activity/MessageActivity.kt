@@ -57,11 +57,14 @@ class MessageActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageViewModel: MessageViewModel
     private var selectedMediaData: String? = null
-    private  var conversationId=-1;
+
     companion object {
         private val itemCache = HashMap<Int, Bundle>()
         private const val REQUEST_MEDIA_PICK = 1
+        public  var conversationId=-1;
         private const val REQUEST_STORAGE_PERMISSION = 2
+        @JvmStatic var isActivityVisible: Boolean = false
+            private set
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +84,9 @@ class MessageActivity : AppCompatActivity() {
         textViewChatPartnerName.text = chatPartnerName
 
         buttonBack.setOnClickListener {
-            finish()
+           //don't finish the activity just go back
+
+            onBackPressed()
         }
 
         messageAdapter = MessageAdapter()
@@ -332,6 +337,16 @@ private fun setItemDataToViews(itemData: Bundle) {
             imageViewMediaPreview.visibility = View.VISIBLE
         }
     }
-
+    override fun onResume() {
+        super.onResume()
+        isActivityVisible = true
+    }
+    override fun onPause() {
+        super.onPause()
+        isActivityVisible = false
+        if (!checkStoragePermission()) {
+            requestStoragePermission()
+        }
+    }
 
 }

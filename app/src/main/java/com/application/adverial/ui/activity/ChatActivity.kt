@@ -109,5 +109,9 @@ class ChatActivity : AppCompatActivity() {
         window.decorView.layoutDirection =
             if (language == "" || language == "0" || language == "1") View.LAYOUT_DIRECTION_LTR
             else View.LAYOUT_DIRECTION_RTL
+
+        // load conversations
+        conversationViewModel.loadUserConversations()
+
     }
 }

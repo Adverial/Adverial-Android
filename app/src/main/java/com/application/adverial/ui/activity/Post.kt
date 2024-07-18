@@ -261,6 +261,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                     putExtra("conversation_id", conversationId)
                     putExtra("chat_partner_name", chatPartnerName)
                     putExtra("show_item", true)
+                    putExtra("item_id", item_id)
                     putExtra("item_photo", ItemData?.ad_images?.get(0)?.image)
                     putExtra("item_title", ItemData?.title)
                     putExtra("item_price", ItemData?.price_currency)

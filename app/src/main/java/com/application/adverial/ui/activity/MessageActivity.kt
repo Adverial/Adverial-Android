@@ -57,7 +57,12 @@ class MessageActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageViewModel: MessageViewModel
     private var selectedMediaData: String? = null
-
+    private  var conversationId=-1;
+    companion object {
+        private val itemCache = HashMap<Int, Bundle>()
+        private const val REQUEST_MEDIA_PICK = 1
+        private const val REQUEST_STORAGE_PERMISSION = 2
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
@@ -66,7 +71,7 @@ class MessageActivity : AppCompatActivity() {
             openMediaPicker()
         }
 
-        val conversationId = intent.getIntExtra("conversation_id", -1)
+         conversationId = intent.getIntExtra("conversation_id", -1)
         val chatPartnerName = intent.getStringExtra("chat_partner_name") ?: "Chat Partner"
         if (conversationId == -1) {
             finish()
@@ -138,25 +143,42 @@ class MessageActivity : AppCompatActivity() {
 
 
     // add item
-    private fun addItem() {
-        val showItem = intent.getBooleanExtra("show_item", false)
-        if (showItem) {
+  private fun addItem() {
+    val showItem = intent.getBooleanExtra("show_item", false)
+    if (showItem) {
+        // Cache item data
+        val itemData = Bundle().apply {
+            putString("item_photo", intent.getStringExtra("item_photo"))
+            putString("item_title", intent.getStringExtra("item_title"))
+            putString("item_price", intent.getStringExtra("item_price"))
+            putString("item_id", intent.getStringExtra("item_id"))
+        }
+        itemCache[conversationId] = itemData
 
-            val photoUrl = intent.getStringExtra("item_photo")
-            val title = intent.getStringExtra("item_title")
-            val price = intent.getStringExtra("item_price")
-            Glide.with(this)
-                .load(Tools().getPath() + photoUrl)
-                .into(itemPhoto)
-            itemTitle.text = title
-            itemPrice.text = price
-            itemContainer.visibility = View.VISIBLE
-            itemContainer.setOnClickListener {
-                Toast.makeText(this, "Item clicked", Toast.LENGTH_SHORT).show()
-            }
-
+        // Set item data to views
+        setItemDataToViews(itemData)
+    } else {
+        // Retrieve and set item data from cache if conversationId matches
+        itemCache[conversationId]?.let { cachedItemData ->
+            setItemDataToViews(cachedItemData)
         }
     }
+}
+
+private fun setItemDataToViews(itemData: Bundle) {
+    Glide.with(this)
+        .load(Tools().getPath() + itemData.getString("item_photo"))
+        .into(itemPhoto)
+    itemTitle.text = itemData.getString("item_title")
+    itemPrice.text = itemData.getString("item_price")
+    itemContainer.visibility = View.VISIBLE
+    itemContainer.setOnClickListener {
+        val PostIntent = Intent(this, Post::class.java).apply {
+            putExtra("id", itemData.getString("item_id"))
+        }
+        startActivity(PostIntent)
+    }
+}
     private fun handleSendMessageResponse(response: MessageResponse?) {
         if (response == null) {
             Toast.makeText(this, "Failed to send message. Please try again.", Toast.LENGTH_SHORT).show()
@@ -311,8 +333,5 @@ class MessageActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        private const val REQUEST_MEDIA_PICK = 1
-        private const val REQUEST_STORAGE_PERMISSION = 2
-    }
+
 }

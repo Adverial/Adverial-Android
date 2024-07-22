@@ -139,15 +139,15 @@
                     android:background="@drawable/rounded_full3"
                     android:orientation="vertical">
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/profile_message"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="@dimen/_30sdp"-->
-<!--                        android:fontFamily="@font/regular"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:paddingStart="@dimen/_15sdp"-->
-<!--                        android:text="@string/profile_notifications_messages"-->
-<!--                        android:textColor="@color/black" />-->
+                   <TextView 
+                       android:id="@+id/profile_message"
+                      android:layout_width="match_parent"
+                      android:layout_height="@dimen/_30sdp"
+                        android:fontFamily="@font/regular"
+                       android:gravity="center_vertical"
+                       android:paddingStart="@dimen/_15sdp"
+                        android:text="@string/profile_notifications_messages"
+                       android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/textView16_line"

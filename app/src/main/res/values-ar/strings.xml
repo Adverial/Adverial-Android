@@ -213,5 +213,6 @@
     <string name="login_phone_hint">أدخل رقم هاتفك</string>
     <string name="login_otp_hint">أدخل رمز التحقق</string>
     <string name="already_have_account">لديك حساب بالفعل؟</string>
+    <string name="new_message">New message</string>
 
 </resources>

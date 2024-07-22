@@ -8,6 +8,8 @@ import com.application.adverial.remote.model.Category
 import com.application.adverial.remote.model.CategoryAds
 import com.application.adverial.remote.model.CategoryOptions
 import com.application.adverial.remote.model.City
+import com.application.adverial.remote.model.Conversation
+import com.application.adverial.remote.model.ConversationResponse
 import com.application.adverial.remote.model.Currency
 import com.application.adverial.remote.model.Favorite
 import com.application.adverial.remote.model.Filter
@@ -16,6 +18,8 @@ import com.application.adverial.remote.model.GenericResponse
 import com.application.adverial.remote.model.ImageUpload
 import com.application.adverial.remote.model.LatestSearch
 import com.application.adverial.remote.model.MainCategory
+import com.application.adverial.remote.model.Message
+import com.application.adverial.remote.model.MessageResponse
 import com.application.adverial.remote.model.Notification
 import com.application.adverial.remote.model.PublishAd
 import com.application.adverial.remote.model.Response
@@ -37,6 +41,7 @@ import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Url
 
 interface APIService {
@@ -382,4 +387,38 @@ interface APIService {
         @Header("lang") lang: String,
         @Field("keyword") keyword: String,
     ) : Call<AutoComplete>
+
+    @POST("initial-conversation/{partner_user_id}")
+    fun initialConversation(
+        @Path("partner_user_id") partnerUserId: Int,
+        @Header("Authorization") authorization: String,
+        @Header("lang") lang: String
+    ): Call<ConversationResponse>
+
+    @GET("user-conversations")
+    fun getUserConversations(
+        @Header("Authorization") authorization: String,
+        @Header("content-type") contentType: String,
+        @Header("lang") lang: String
+    ): Call<List<Conversation>>
+
+    @POST("send-message/{conversionId}")
+    @Multipart
+    fun sendMessage(
+        @Path("conversionId") conversionId: Int,
+        @Header("Authorization") authorization: String,
+        @Header("content-type") contentType: String,
+        @Header("lang") lang: String,
+        @Part("message") message: RequestBody,
+        @Part("media") media: RequestBody?
+    ): Call<MessageResponse>
+
+
+    @GET("conversations/{conversionId}/messages")
+    fun getMessagesByConversationId(
+        @Path("conversionId") conversionId: Int,
+        @Header("Authorization") authorization: String,
+        @Header("content-type") contentType: String,
+        @Header("lang") lang: String
+    ): Call<List<Message>>
 }

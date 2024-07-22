@@ -10,5 +10,6 @@ data class VerifyOtpResponse(
 )
 
 data class VerifyOtpData(
-    val token: String
+    val token: String,
+    @SerializedName("user_id") val userId: String? = null
 )

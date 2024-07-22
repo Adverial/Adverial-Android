@@ -23,7 +23,8 @@
     <color name="dark_gray">#4C4C4C</color>
     <color name="filter_text">#FFFFFF</color>
     <color name="none">#00FFFFFF</color>
-
+    <color name="background_light">#80ADD8E6</color> <!-- Light blue with 50% transparency -->
+    <color name="border_light">#FFADD8E6</color> <!-- Light blue with full opacity -->
     <color name="textColor">#FFFFFF</color>
     <color name="ccpBackground">#FF000000</color>
     <color name="viewColor">#CB3C3A37</color>

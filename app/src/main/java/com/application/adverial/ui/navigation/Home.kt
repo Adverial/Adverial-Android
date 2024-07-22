@@ -20,6 +20,7 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.ShowRoomData
 import com.application.adverial.remote.model.SubCategory
 import com.application.adverial.service.Tools
+import com.application.adverial.ui.activity.ChatActivity
 import com.application.adverial.ui.activity.Login
 import com.application.adverial.ui.activity.LoginWa
 import com.application.adverial.ui.activity.SearchResult
@@ -332,7 +333,18 @@ swipeRefreshLayout.isRefreshing = false
         finish()
     }
 
-    fun notifications(view: View) {
+    fun chat(view: View) {
+        if (Tools().authCheck(this)) {
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+            finish()
+        } else {
+            val intent = Intent(this, LoginWa::class.java)
+            startActivity(intent)
+        }
+    }
+  fun   openNotifications(view: View) {
         if (Tools().authCheck(this)) {
             val intent = Intent(this, Notifications::class.java)
             startActivity(intent)

@@ -8,4 +8,5 @@ data class UserData(
     var email: String?,
     var phone: String?,
     @SerializedName("whatsapp_number") val whatsappNumber: String? ,
+    var id: Int?
 )

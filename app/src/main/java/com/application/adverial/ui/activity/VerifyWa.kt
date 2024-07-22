@@ -52,7 +52,8 @@ class VerifyWa : AppCompatActivity() {
                     when {
                         it.data?.token != null -> {
                             getSharedPreferences("user", 0).edit().putString("token", it.data.token).apply()
-                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                            //cache user_id
+                            getSharedPreferences("user", 0).edit().putString("user_id", it.data.userId).apply()
                             Tools().goto(this, Home(), false)
                         }
                         it.otp != null -> {

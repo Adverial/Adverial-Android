@@ -19,7 +19,7 @@ data class Conversation(
     val avatar: String,
     @SerializedName("ad_id") val adId: Int?,
     @SerializedName("ad_title") val adTitle: String?,
-    @SerializedName("ad_price") val adPrice: Double?,
+    @SerializedName("ad_price") val adPrice: String?,
     @SerializedName("ad_price_currency") val adPriceCurrency: String?,
     @SerializedName("ad_image") val adImage: String?
 ) : Parcelable {
@@ -33,7 +33,7 @@ data class Conversation(
         parcel.readString() ?: "",
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
-        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? String,
         parcel.readString(),
         parcel.readString()
     )

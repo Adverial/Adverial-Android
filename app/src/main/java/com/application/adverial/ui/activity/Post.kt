@@ -11,9 +11,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Telephony
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +24,7 @@ import com.application.adverial.R
 import com.application.adverial.remote.ConversationRepository
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.Ad
+import com.application.adverial.remote.model.Conversation
 import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
@@ -252,21 +252,30 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
         // Open conversation with the partner user
         val repo = ConversationRepository(this)
-        repo.initialConversation(partnerUserId)
+        repo.initialConversation(partnerUserId, item_id.toInt())
         repo.initialConversationLiveData.observe(this) { conversationResponse ->
             val conversationId = conversationResponse.conversionId
 
             if (conversationId != 0) {
                 // Start MessageActivity with the conversation ID
                 val intent = Intent(this, MessageActivity::class.java).apply {
-                    putExtra("conversation_id", conversationId)
-                    putExtra("chat_partner_name", chatPartnerName)
-                    putExtra("show_item", true)
-                    putExtra("item_id", item_id)
-                    putExtra("item_photo", ItemData?.ad_images?.get(0)?.image)
-                    putExtra("item_title", ItemData?.title)
-                    putExtra("item_price", ItemData?.price_currency)
 
+              var   conversationObject=  Conversation(
+                        chatPartnerId = partnerUserId,
+                        conversionId = conversationId,
+                        chatPartnerName = chatPartnerName,
+                        chatPartnerEmail = "",
+                        lastMessage = "",
+                        lastMessageAt = "",
+                        avatar = "",
+                        adId = ItemData?.id,
+                        adTitle = ItemData?.title,
+                        adPrice = ItemData?.price,
+                        adPriceCurrency = ItemData?.price_currency,
+                        adImage = ItemData?.ad_images?.get(0)?.image
+                    )
+                    putExtra("show_item", true)
+                    putExtra("conversation", conversationObject)
                 }
                 lottie13.visibility = View.GONE
                 Tools().viewEnable(this.window.decorView.rootView, true)

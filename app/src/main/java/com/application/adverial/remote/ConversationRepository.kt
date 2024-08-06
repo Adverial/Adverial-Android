@@ -32,20 +32,20 @@ class ConversationRepository(val context: Context) {
     val sendMessageLiveData = MutableLiveData<MessageResponse>()
     val messagesLiveData = MutableLiveData<List<Message>>()
 
-    fun initialConversation(partnerUserId: Int) {
-        val call = apiService.initialConversation(partnerUserId, token, lang)
-        call.enqueue(object : Callback<ConversationResponse> {
-            override fun onResponse(call: Call<ConversationResponse>, response: Response<ConversationResponse>) {
-                if (response.isSuccessful) {
-                    initialConversationLiveData.value = response.body()
-                }
+   fun initialConversation(partnerUserId: Int, adId: Int?) {
+    val call = apiService.initialConversation(partnerUserId, adId, token, lang)
+    call.enqueue(object : Callback<ConversationResponse> {
+        override fun onResponse(call: Call<ConversationResponse>, response: Response<ConversationResponse>) {
+            if (response.isSuccessful) {
+                initialConversationLiveData.value = response.body()
             }
+        }
 
-            override fun onFailure(call: Call<ConversationResponse>, t: Throwable) {
-                // Handle error
-            }
-        })
-    }
+        override fun onFailure(call: Call<ConversationResponse>, t: Throwable) {
+            // Handle error
+        }
+    })
+}
 
     fun getUserConversations() {
         val call = apiService.getUserConversations(token, "application/json", lang)

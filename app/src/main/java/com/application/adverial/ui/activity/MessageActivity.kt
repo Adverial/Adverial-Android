@@ -163,37 +163,22 @@ class MessageActivity : AppCompatActivity() {
 
     // add item
   private fun addItem() {
-    val showItem = intent.getBooleanExtra("show_item", false)
+    val showItem = intent.getBooleanExtra("show_item", true)
     if (showItem) {
-        // Cache item data
-        val itemData = Bundle().apply {
-            putString("item_photo", intent.getStringExtra("item_photo"))
-            putString("item_title", intent.getStringExtra("item_title"))
-            putString("item_price", intent.getStringExtra("item_price"))
-            putString("item_id", intent.getStringExtra("item_id"))
-        }
-        itemCache[conversationId] = itemData
-
-        // Set item data to views
-        setItemDataToViews(itemData)
-    } else {
-        // Retrieve and set item data from cache if conversationId matches
-        itemCache[conversationId]?.let { cachedItemData ->
-            setItemDataToViews(cachedItemData)
-        }
+        setItemDataToViews()
     }
 }
 
-private fun setItemDataToViews(itemData: Bundle) {
+private fun setItemDataToViews() {
     Glide.with(this)
-        .load(Tools().getPath() + itemData.getString("item_photo"))
+        .load(Tools().getPath() + conversation?.adImage)
         .into(itemPhoto)
-    itemTitle.text = itemData.getString("item_title")
-    itemPrice.text = itemData.getString("item_price")
+    itemTitle.text = conversation?.adTitle
+    itemPrice.text = conversation?.adPriceCurrency
     itemContainer.visibility = View.VISIBLE
     itemContainer.setOnClickListener {
         val PostIntent = Intent(this, Post::class.java).apply {
-            putExtra("id", itemData.getString("item_id"))
+            putExtra("id", conversation?.adId.toString())
         }
         startActivity(PostIntent)
     }

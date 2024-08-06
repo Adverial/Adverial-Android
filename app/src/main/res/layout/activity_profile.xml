@@ -147,7 +147,7 @@
                        android:gravity="center_vertical"
                        android:paddingStart="@dimen/_15sdp"
                         android:text="@string/profile_notifications_messages"
-                       android:textColor="@color/black" />
+                       android:textColor="@color/menu_text" />
 
                     <TextView
                         android:id="@+id/textView16_line"

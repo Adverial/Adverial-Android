@@ -47,6 +47,7 @@ import kotlinx.android.synthetic.main.activity_message.itemContainer
 import kotlinx.android.synthetic.main.activity_message.itemPhoto
 import kotlinx.android.synthetic.main.activity_message.itemPrice
 import kotlinx.android.synthetic.main.activity_message.itemTitle
+import kotlinx.android.synthetic.main.activity_message.loadingAnimation
 import kotlinx.android.synthetic.main.activity_message.recyclerViewMessages
 import kotlinx.android.synthetic.main.activity_message.textViewChatPartnerName
 import okhttp3.*
@@ -105,10 +106,14 @@ class MessageActivity : AppCompatActivity() {
         recyclerViewMessages.layoutManager = LinearLayoutManager(this)
         recyclerViewMessages.adapter = messageAdapter
 
+        loadingAnimation.visibility = View.VISIBLE
+        Tools().viewEnable(this.window.decorView.rootView, false)
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         messageViewModel.getMessagesResponse().observe(this, Observer { messages ->
             messageAdapter.setMessages(messages)
             recyclerViewMessages.scrollToPosition(messageAdapter.itemCount - 1)
+            loadingAnimation.visibility = View.GONE
+            Tools().viewEnable(this.window.decorView.rootView, true)
         })
 
         messageViewModel.loadMessagesByConversationId(conversationId)

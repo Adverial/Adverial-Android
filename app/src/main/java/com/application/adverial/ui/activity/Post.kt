@@ -341,24 +341,13 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         message_call_btn.visibility = View.GONE
         show_ad_details.visibility = View.VISIBLE
         location(view)
-
     }
 
     fun showAdDetails(view: View) {
-
-            //show call and message buttons
-////            post_sideBarAction.visibility = View.VISIBLE
-////            post_favorite.visibility = View.VISIBLE
-//            post_sideSlide.visibility = View.VISIBLE
-////            post_mapLayout.visibility = View.GONE
-
-
         location_btn.visibility = View.VISIBLE
         phone_call_btn.visibility = View.VISIBLE
         message_call_btn.visibility = View.VISIBLE
         show_ad_details.visibility = View.GONE
-
-            about(view)
-
+        about(view)
     }
 }

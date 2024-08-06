@@ -28,6 +28,7 @@ import com.application.adverial.remote.model.Conversation
 import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
+import com.application.adverial.ui.navigation.Notifications
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -80,8 +81,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
         // hide
         show_ad_details.visibility = View.GONE
-            // hide post_sideSlide
-//        post_sideSlide.visibility = View.GONE
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -108,6 +108,12 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             post_page.adapter = PostPageAdapter(it.data!!, id)
             //post_page.scrollToPosition(0)
             ItemData = it.data;
+            // if ad.used id is equal to the current user id, hide the call and message buttons
+            val userId = getSharedPreferences("user", 0).getString("user_id", "")
+            if (userId == ItemData?.user_id) {
+                phone_call_btn.visibility = View.GONE
+                message_call_btn.visibility = View.GONE
+            }
             post_title1.text = it.data!!.price_currency
             post_city1.text = it.data!!.title
             phoneNumber = it.data!!.phone ?: ""
@@ -131,6 +137,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             type = it.data!!.type ?: ""
             lottie13.visibility = View.GONE
             Tools().viewEnable(this.window.decorView.rootView, true)
+
         }
     }
 
@@ -202,16 +209,11 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun location(view: View) {
-//        location_indicator.visibility = View.VISIBLE
-//        about_indicator.visibility = View.INVISIBLE
         val regular = ResourcesCompat.getFont(this, R.font.regular)
         val bold = ResourcesCompat.getFont(this, R.font.bold)
-//        post_about.typeface = regular
-//        post_location.typeface = bold
-        /*post_location.typeface = Typeface.DEFAULT_BOLD
-        post_about.typeface = Typeface.DEFAULT*/
         post_mapLayout.visibility = View.VISIBLE
         post_page.visibility = View.GONE
+
     }
 
     fun about(view: View) {
@@ -225,6 +227,16 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 //        post_about.typeface = bold
         post_mapLayout.visibility = View.GONE
         post_page.visibility = View.VISIBLE
+        val userId = getSharedPreferences("user", 0).getString("user_id", "")
+        if (userId == ItemData?.user_id) {
+            phone_call_btn.visibility = View.GONE
+            message_call_btn.visibility = View.GONE
+        }
+        else
+        {
+            phone_call_btn.visibility = View.VISIBLE
+            message_call_btn.visibility = View.VISIBLE
+        }
     }
 
     fun call(view: View) {
@@ -240,10 +252,12 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun message(view: View) {
+
+        if (Tools().authCheck(this)) {
+
         lottie13.visibility = View.VISIBLE
         Tools().viewEnable(this.window.decorView.rootView, false)
         var item_id = id;
-        // itemData is from Ad model
         ItemData?.let {
             item_id = it.id.toString()
         }
@@ -286,10 +300,10 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT).show()
             }
         }
-//        lottie13.visibility = View.GONE
-//        Tools().viewEnable(this.window.decorView.rootView, true)
-
-
+        } else {
+            val intent = Intent(this, LoginWa::class.java)
+            startActivity(intent)
+        }
 
     }
 

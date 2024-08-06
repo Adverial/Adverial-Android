@@ -102,7 +102,7 @@
     <string name="favorite_my_ads_active">Yayınlanmiş ilanlar</string>
     <string name="favorite_my_ads_deactive">Kaldırılmiş ilanlar</string>
     //------------------------------------------------------------------------------login and signup
-    <string name="login_title">Uygulamayı Kullanmak İçin\nLütfen Giriş Yapın</string>
+    <string name="login_title">Uygulamaya erişmek için lütfen WhatsApp numaranızla giriş yapın</string>
     <string name="login_email_hint">E-Posta Adresi / Kullanıcı Adı</string>
     <string name="login_password_hint">Sifre</string>
     <string name="login">Giriş Yap</string>

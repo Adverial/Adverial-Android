@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
+import com.application.adverial.remote.model.Conversation
 import com.application.adverial.remote.model.Message
 import com.application.adverial.remote.model.MessageResponse
 import com.application.adverial.service.Tools
@@ -59,6 +60,7 @@ class MessageActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageViewModel: MessageViewModel
     private var selectedMediaData: String? = null
+    private  var conversation: Conversation? = null
 
     companion object {
         private val itemCache = HashMap<Int, Bundle>()
@@ -77,9 +79,9 @@ class MessageActivity : AppCompatActivity() {
         }
         //Tools().rotateLayout(this,buttonBack)
 
-
-        conversationId = intent.getIntExtra("conversation_id", -1)
-        val chatPartnerName = intent.getStringExtra("chat_partner_name") ?: "Chat Partner"
+         conversation  = intent.getParcelableExtra("conversation")
+         conversationId = conversation?.conversionId ?: -1
+        val chatPartnerName = conversation?.chatPartnerName ?: "Unknown"
         if (conversationId == -1) {
             finish()
             return

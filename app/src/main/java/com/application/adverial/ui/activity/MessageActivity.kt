@@ -108,6 +108,7 @@ class MessageActivity : AppCompatActivity() {
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         messageViewModel.getMessagesResponse().observe(this, Observer { messages ->
             messageAdapter.setMessages(messages)
+            recyclerViewMessages.scrollToPosition(messageAdapter.itemCount - 1)
         })
 
         messageViewModel.loadMessagesByConversationId(conversationId)
@@ -147,6 +148,9 @@ class MessageActivity : AppCompatActivity() {
 
 
         addItem()
+
+        //scroll to last message
+
     }
 
 

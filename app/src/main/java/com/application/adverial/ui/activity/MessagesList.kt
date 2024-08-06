@@ -14,9 +14,8 @@ class MessagesList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_masseges_list)
-        Tools().rotateLayout(this,newAdCategory_back8)
+        Tools().rotateLayout(this,messages_back_btn)
         Tools().changeViewFromTheme(this,messageListRoot)
-
         pageInit()
     }
 

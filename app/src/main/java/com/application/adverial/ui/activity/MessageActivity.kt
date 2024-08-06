@@ -37,6 +37,7 @@ import com.pusher.client.PusherOptions
 import com.pusher.client.connection.ConnectionEventListener
 import com.pusher.client.connection.ConnectionState
 import com.pusher.client.connection.ConnectionStateChange
+import kotlinx.android.synthetic.main.activity_masseges_list.messages_back_btn
 import kotlinx.android.synthetic.main.activity_message.buttonAddMedia
 import kotlinx.android.synthetic.main.activity_message.buttonBack
 import kotlinx.android.synthetic.main.activity_message.buttonSend
@@ -73,8 +74,10 @@ class MessageActivity : AppCompatActivity() {
         buttonAddMedia.setOnClickListener {
             openMediaPicker()
         }
+        //Tools().rotateLayout(this,buttonBack)
 
-         conversationId = intent.getIntExtra("conversation_id", -1)
+
+        conversationId = intent.getIntExtra("conversation_id", -1)
         val chatPartnerName = intent.getStringExtra("chat_partner_name") ?: "Chat Partner"
         if (conversationId == -1) {
             finish()

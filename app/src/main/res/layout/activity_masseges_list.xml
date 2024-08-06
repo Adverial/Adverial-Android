@@ -21,17 +21,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/newAdCategory_back8"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
+        android:id="@+id/messages_back_btn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:onClick="back"
         android:padding="@dimen/_3sdp"
-        android:src="@drawable/im_back"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:contentDescription="@string/new_ad_service_desc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        />
 
     <TextView
         android:id="@+id/textView3"

@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         if (NetworkUtils.isNetworkAvailable(this)) {
                 Tools().goto(this, Home(), false)
-            setupPusher()
+           // setupPusher()
         } else {
             DialogUtils.showNoInternetDialog(this)
             finish()

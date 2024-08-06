@@ -240,7 +240,8 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun message(view: View) {
-
+        lottie13.visibility = View.VISIBLE
+        Tools().viewEnable(this.window.decorView.rootView, false)
         var item_id = id;
         // itemData is from Ad model
         ItemData?.let {
@@ -267,15 +268,17 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                     putExtra("item_price", ItemData?.price_currency)
 
                 }
+                lottie13.visibility = View.GONE
+                Tools().viewEnable(this.window.decorView.rootView, true)
                 startActivity(intent)
             } else {
+                lottie13.visibility = View.GONE
+                Tools().viewEnable(this.window.decorView.rootView, true)
                 Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT).show()
             }
-
-//            val intent = Intent(Intent.ACTION_VIEW)
-//            intent.data = Uri.parse("adverial://conversation/$conversationId/$chatPartnerName/$item_id")
-//            startActivity(intent)
         }
+//        lottie13.visibility = View.GONE
+//        Tools().viewEnable(this.window.decorView.rootView, true)
 
 
 

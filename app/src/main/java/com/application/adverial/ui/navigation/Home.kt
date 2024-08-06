@@ -333,17 +333,6 @@ swipeRefreshLayout.isRefreshing = false
         finish()
     }
 
-    fun chat(view: View) {
-        if (Tools().authCheck(this)) {
-            val intent = Intent(this, ChatActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(0, 0)
-            finish()
-        } else {
-            val intent = Intent(this, LoginWa::class.java)
-            startActivity(intent)
-        }
-    }
   fun   openNotifications(view: View) {
         if (Tools().authCheck(this)) {
             val intent = Intent(this, Notifications::class.java)

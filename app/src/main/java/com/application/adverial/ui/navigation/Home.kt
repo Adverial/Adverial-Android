@@ -76,7 +76,7 @@ class Home : AppCompatActivity() {
         pageInit()
         Tools().setBasedLogo(this, R.id.home_logo)
 
-      //  Tools().setBarBackground(this, R.id.image_bg_bar)
+       Tools().setBarBackground(this, R.id.image_bg_bar)
 
         if(!NotificationUtils.areNotificationsEnabled(this))
             NotificationUtils.requestNotificationPermission(this)

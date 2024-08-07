@@ -72,7 +72,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
-        Tools().rotateLayout(this, back_icon)
+       // Tools().rotateLayout(this, back_icon)
         Tools().changeViewFromTheme(this, activityPostRoot)
 
         pageInit()

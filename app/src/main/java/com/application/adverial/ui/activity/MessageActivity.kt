@@ -135,7 +135,7 @@ class MessageActivity : AppCompatActivity() {
                     }
                 }
                 if (mediaUri != null && message.isEmpty()) {
-                    message = "Media"
+                    message = null.toString()
                 }
                 messageViewModel.sendMessage(conversationId, message, mediaRequestBody)
                 editTextMessage.text.clear()

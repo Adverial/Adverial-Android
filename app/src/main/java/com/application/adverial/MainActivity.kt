@@ -17,6 +17,7 @@ import com.application.adverial.ui.activity.MessageActivity
 import com.application.adverial.ui.navigation.Home
 import com.application.adverial.utils.DialogUtils
 import com.application.adverial.utils.NetworkUtils
+import com.application.adverial.utils.NotificationUtils
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.connection.ConnectionEventListener
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                     .permitNetwork().build()
             )
         }
+
 
     }
 

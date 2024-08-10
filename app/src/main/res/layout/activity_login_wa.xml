@@ -89,23 +89,24 @@
             app:layout_constraintTop_toTopOf="@+id/imageView67" />
 
         <EditText
-            android:id="@+id/login_phone"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:ems="10"
-            android:fontFamily="@font/regular"
-            android:hint="@string/login_phone_hint"
-            android:inputType="phone"
-            android:maxLength="15"
-            android:background="@color/none"
-            android:backgroundTint="@color/textColor"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/gray"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView67"
-            app:layout_constraintEnd_toStartOf="@+id/imageView68"
-            app:layout_constraintStart_toEndOf="@+id/countryCodePickerWaLogin"
-            app:layout_constraintTop_toTopOf="@+id/imageView67" />
+    android:id="@+id/login_phone"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:ems="10"
+    android:fontFamily="@font/regular"
+    android:hint="@string/login_phone_hint"
+    android:inputType="phone"
+    android:maxLength="15"
+    android:background="@color/none"
+    android:backgroundTint="@color/textColor"
+    android:textColor="@color/textColor"
+    android:textColorHint="@color/gray"
+    android:textSize="@dimen/_12ssp"
+    android:textDirection="locale"
+    app:layout_constraintBottom_toBottomOf="@+id/imageView67"
+    app:layout_constraintEnd_toStartOf="@+id/imageView68"
+    app:layout_constraintStart_toEndOf="@+id/countryCodePickerWaLogin"
+    app:layout_constraintTop_toTopOf="@+id/imageView67" />
 
         <ImageView
             android:id="@+id/imageView68"

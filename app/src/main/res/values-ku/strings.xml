@@ -102,7 +102,7 @@
     <string name="favorite_my_ads_active">چ شتێک هەیە</string>
     <string name="favorite_my_ads_deactive">چ شتێک نادیارە</string>
     //------------------------------------------------------------------------------login and signup
-    <string name="login_title">بۆ بەکارهێنانی ئەپەکە، \n تکایە بچۆرە ژوورەوە</string>
+    <string name="login_title">بو ب کارئینانا بەرنامەی هیڤییە ژمارەیا واتسئاپێ خو تومار بکە</string>
     <string name="login_email_hint">ناونیشانی ئیمەیڵ / ناوی بەکارهێنەر</string>
     <string name="login_password_hint">ژمارەی نهێنی</string>
     <string name="login">چونه‌ ژووره‌وه‌</string>

@@ -111,7 +111,7 @@ class ChatActivity : AppCompatActivity() {
             else View.LAYOUT_DIRECTION_RTL
 
         // load conversations
-        conversationViewModel.loadUserConversations()
+        //conversationViewModel.loadUserConversations()
 
     }
 }

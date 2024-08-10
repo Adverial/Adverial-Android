@@ -102,7 +102,7 @@
     <string name="favorite_my_ads_active">چ هە یە</string>
     <string name="favorite_my_ads_deactive">چ نەدیارە</string>
     //------------------------------------------------------------------------------login and signup
-    <string name="login_title">بو ب کارئینانا بەرنامەی  هیڤییە خو تومار بکە</string>
+<string name="login_title">بو ب کارئینانا بەرنامەی هیڤییە ژمارەیا واتسئاپێ خو تومار بکە</string>
     <string name="login_email_hint">ناڤونیشانێ ئیمەیلی / ناڤێ ب کارهێنەری</string>
     <string name="login_password_hint">ژمارا نهێنی</string>
     <string name="login">چوونا ژور</string>

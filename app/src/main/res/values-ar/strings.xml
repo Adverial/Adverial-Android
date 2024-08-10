@@ -100,7 +100,7 @@
     <string name="favorite_my_ads_active">ماذا يجري</string>
     <string name="favorite_my_ads_deactive">ليس على الهواء</string>
     //------------------------------------------------------------------------------login and signup
-    <string name="login_title">لاستخدام التطبيق ، \n الرجاء تسجيل الدخول</string>
+    <string name="login_title">لاستخدام التطبيق، يرجى تسجيل الدخول باستخدام رقم WhatsApp الخاص بك</string>
     <string name="login_email_hint">عنوان البريد الإلكتروني / اسم المستخدم</string>
     <string name="login_password_hint">كلمة المرور</string>
     <string name="login">تسجيل الدخول</string>

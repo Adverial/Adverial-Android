@@ -64,8 +64,8 @@ class ConversationAdapter : RecyclerView.Adapter<ConversationAdapter.Conversatio
             itemView.setOnClickListener {
 //                Toast.makeText(itemView.context, "Clicked on ${conversation.conversionId}", Toast.LENGTH_SHORT).show()
                 val intent = Intent(itemView.context, MessageActivity::class.java)
-                intent.putExtra("conversation_id", conversation.conversionId)
-                intent.putExtra("chat_partner_name", conversation.chatPartnerName)
+                intent.putExtra("conversation", conversation)
+
                 itemView.context.startActivity(intent)
             }
         }

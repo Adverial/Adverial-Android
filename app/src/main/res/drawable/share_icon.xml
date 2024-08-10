@@ -1,11 +1,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="1dp"
-    android:height="1dp"
-    android:autoMirrored="true"
-    android:tint="@color/menu_text"
+    android:width="@dimen/_40sdp"
+    android:height="@dimen/_40sdp"
     android:viewportWidth="24"
-    android:strokeWidth="1"
-    android:viewportHeight="24">
+    android:viewportHeight="24"
+    android:scaleType="center"
+    android:tint="@color/menu_text"
+    android:alpha="@integer/material_motion_duration_long_2"
+    >
 
     <path
         android:fillColor="@color/menu_text"

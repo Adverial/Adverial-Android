@@ -30,6 +30,8 @@ import com.application.adverial.ui.adapter.MenuCategoryAdapter
 import com.application.adverial.ui.dialog.DropList
 import com.application.adverial.ui.dialog.Language
 import com.application.adverial.ui.dialog.SearchDialog
+import com.application.adverial.utils.NewMessageNotification
+import com.application.adverial.utils.NotificationUtils
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_home.homeRoot
 import kotlinx.android.synthetic.main.activity_home.home_category
@@ -74,7 +76,14 @@ class Home : AppCompatActivity() {
         pageInit()
         Tools().setBasedLogo(this, R.id.home_logo)
 
-        Tools().setBarBackground(this, R.id.image_bg_bar)
+       Tools().setBarBackground(this, R.id.image_bg_bar)
+
+        if(!NotificationUtils.areNotificationsEnabled(this))
+            NotificationUtils.requestNotificationPermission(this)
+        else
+            NewMessageNotification.setupNewMessageNotification(this)
+
+
 
     }
 
@@ -333,17 +342,6 @@ swipeRefreshLayout.isRefreshing = false
         finish()
     }
 
-    fun chat(view: View) {
-        if (Tools().authCheck(this)) {
-            val intent = Intent(this, ChatActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(0, 0)
-            finish()
-        } else {
-            val intent = Intent(this, LoginWa::class.java)
-            startActivity(intent)
-        }
-    }
   fun   openNotifications(view: View) {
         if (Tools().authCheck(this)) {
             val intent = Intent(this, Notifications::class.java)

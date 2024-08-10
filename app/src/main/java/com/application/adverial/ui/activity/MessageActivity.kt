@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
+import com.application.adverial.remote.model.Conversation
 import com.application.adverial.remote.model.Message
 import com.application.adverial.remote.model.MessageResponse
 import com.application.adverial.service.Tools
@@ -37,6 +38,7 @@ import com.pusher.client.PusherOptions
 import com.pusher.client.connection.ConnectionEventListener
 import com.pusher.client.connection.ConnectionState
 import com.pusher.client.connection.ConnectionStateChange
+import kotlinx.android.synthetic.main.activity_masseges_list.messages_back_btn
 import kotlinx.android.synthetic.main.activity_message.buttonAddMedia
 import kotlinx.android.synthetic.main.activity_message.buttonBack
 import kotlinx.android.synthetic.main.activity_message.buttonSend
@@ -46,6 +48,7 @@ import kotlinx.android.synthetic.main.activity_message.itemContainer
 import kotlinx.android.synthetic.main.activity_message.itemPhoto
 import kotlinx.android.synthetic.main.activity_message.itemPrice
 import kotlinx.android.synthetic.main.activity_message.itemTitle
+import kotlinx.android.synthetic.main.activity_message.loadingAnimation
 import kotlinx.android.synthetic.main.activity_message.recyclerViewMessages
 import kotlinx.android.synthetic.main.activity_message.textViewChatPartnerName
 import okhttp3.*
@@ -57,6 +60,7 @@ class MessageActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageViewModel: MessageViewModel
     private var selectedMediaData: String? = null
+    private  var conversation: Conversation? = null
 
     companion object {
         private val itemCache = HashMap<Int, Bundle>()
@@ -69,13 +73,15 @@ class MessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
-
+        itemContainer.visibility = View.GONE
         buttonAddMedia.setOnClickListener {
             openMediaPicker()
         }
+        //Tools().rotateLayout(this,buttonBack)
 
-         conversationId = intent.getIntExtra("conversation_id", -1)
-        val chatPartnerName = intent.getStringExtra("chat_partner_name") ?: "Chat Partner"
+         conversation  = intent.getParcelableExtra("conversation")
+         conversationId = conversation?.conversionId ?: -1
+        val chatPartnerName = conversation?.chatPartnerName ?: "Unknown"
         if (conversationId == -1) {
             finish()
             return
@@ -102,9 +108,14 @@ class MessageActivity : AppCompatActivity() {
         recyclerViewMessages.layoutManager = LinearLayoutManager(this)
         recyclerViewMessages.adapter = messageAdapter
 
+        loadingAnimation.visibility = View.VISIBLE
+        Tools().viewEnable(this.window.decorView.rootView, false)
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         messageViewModel.getMessagesResponse().observe(this, Observer { messages ->
             messageAdapter.setMessages(messages)
+            recyclerViewMessages.scrollToPosition(messageAdapter.itemCount - 1)
+            loadingAnimation.visibility = View.GONE
+            Tools().viewEnable(this.window.decorView.rootView, true)
         })
 
         messageViewModel.loadMessagesByConversationId(conversationId)
@@ -124,7 +135,7 @@ class MessageActivity : AppCompatActivity() {
                     }
                 }
                 if (mediaUri != null && message.isEmpty()) {
-                    message = "Media"
+                    message = null.toString()
                 }
                 messageViewModel.sendMessage(conversationId, message, mediaRequestBody)
                 editTextMessage.text.clear()
@@ -144,42 +155,30 @@ class MessageActivity : AppCompatActivity() {
 
 
         addItem()
+
+        //scroll to last message
+
     }
 
 
     // add item
   private fun addItem() {
-    val showItem = intent.getBooleanExtra("show_item", false)
+    val showItem = intent.getBooleanExtra("show_item", true)
     if (showItem) {
-        // Cache item data
-        val itemData = Bundle().apply {
-            putString("item_photo", intent.getStringExtra("item_photo"))
-            putString("item_title", intent.getStringExtra("item_title"))
-            putString("item_price", intent.getStringExtra("item_price"))
-            putString("item_id", intent.getStringExtra("item_id"))
-        }
-        itemCache[conversationId] = itemData
-
-        // Set item data to views
-        setItemDataToViews(itemData)
-    } else {
-        // Retrieve and set item data from cache if conversationId matches
-        itemCache[conversationId]?.let { cachedItemData ->
-            setItemDataToViews(cachedItemData)
-        }
+        setItemDataToViews()
     }
 }
 
-private fun setItemDataToViews(itemData: Bundle) {
+private fun setItemDataToViews() {
     Glide.with(this)
-        .load(Tools().getPath() + itemData.getString("item_photo"))
+        .load(Tools().getPath() + conversation?.adImage)
         .into(itemPhoto)
-    itemTitle.text = itemData.getString("item_title")
-    itemPrice.text = itemData.getString("item_price")
+    itemTitle.text = conversation?.adTitle
+    itemPrice.text = conversation?.adPriceCurrency
     itemContainer.visibility = View.VISIBLE
     itemContainer.setOnClickListener {
         val PostIntent = Intent(this, Post::class.java).apply {
-            putExtra("id", itemData.getString("item_id"))
+            putExtra("id", conversation?.adId.toString())
         }
         startActivity(PostIntent)
     }

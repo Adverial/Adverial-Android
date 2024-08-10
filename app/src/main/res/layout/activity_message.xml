@@ -10,16 +10,16 @@
     <!-- Header layout -->
     <ImageView
         android:id="@+id/buttonBack"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:contentDescription="Back"
+        android:layout_width="32dp"
+        android:layout_height="40dp"
+        android:onClick="back"
         android:padding="@dimen/_3sdp"
         app:tint="@color/menu_text"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:contentDescription="@string/new_ad_service_desc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/im_back" />
+        />
 
     <TextView
         android:id="@+id/textViewChatPartnerName"
@@ -35,18 +35,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonBack"
         app:layout_constraintTop_toTopOf="@+id/buttonBack" />
-
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:background="@color/yellow"
+        android:fontFamily="@font/regular"
+        android:gravity="start|center_vertical"
+        android:paddingStart="@dimen/_15sdp"
+        android:text="@string/message_list_title"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChatPartnerName"
+        tools:layout_editor_absoluteX="6dp" />
     <!-- New item layout -->
     <!-- New item layout -->
     <LinearLayout
         android:id="@+id/itemContainer"
         android:layout_width="0dp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
-        android:visibility="gone"
+        android:padding="2dp"
+        android:paddingTop="@dimen/_100sdp"
         android:background="@drawable/item_background"
-        app:layout_constraintTop_toBottomOf="@+id/textViewChatPartnerName"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -151,6 +169,21 @@
             app:tint="@color/menu_text"
             android:src="@drawable/baseline_send_24" />
     </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/black_cover2"
+        android:elevation="@dimen/_4sdp"
+        android:padding="@dimen/_50sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/animation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

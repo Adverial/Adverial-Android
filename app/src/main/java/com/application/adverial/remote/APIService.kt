@@ -42,6 +42,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface APIService {
@@ -391,6 +392,7 @@ interface APIService {
     @POST("initial-conversation/{partner_user_id}")
     fun initialConversation(
         @Path("partner_user_id") partnerUserId: Int,
+        @Query("ad_id") adId: Int?,
         @Header("Authorization") authorization: String,
         @Header("lang") lang: String
     ): Call<ConversationResponse>

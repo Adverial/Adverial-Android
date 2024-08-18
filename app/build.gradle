@@ -21,7 +21,7 @@ android {
     ndkVersion '27.0.11718014 rc1'
 
     defaultConfig {
-        applicationId "com.application.adverial"
+        applicationId "com.adverial.huawei"
         minSdkVersion 24
         targetSdk 33
         versionCode 36 // Update the version code to a unique integer
@@ -61,7 +61,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             multiDexEnabled true
-            signingConfig signingConfigs.release
             ndk.debugSymbolLevel = 'FULL'
             buildConfigField "String", "API_BASE_URL",  "\"${envProperties['API_BASE_URL']}\""
 
@@ -129,4 +128,6 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'id.zelory:compressor:3.0.1'
     //implementation 'com.github.scrounger:countrycurrencypicker:1.1.1'
+    implementation 'com.huawei.hms:maps:5.2.0.301'
 }
+apply plugin: 'com.huawei.agconnect'

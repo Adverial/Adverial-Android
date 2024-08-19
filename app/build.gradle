@@ -129,5 +129,6 @@ dependencies {
     implementation 'id.zelory:compressor:3.0.1'
     //implementation 'com.github.scrounger:countrycurrencypicker:1.1.1'
     implementation 'com.huawei.hms:maps:5.2.0.301'
+    implementation 'com.huawei.hms:location:5.1.0.301'
 }
 apply plugin: 'com.huawei.agconnect'

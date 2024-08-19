@@ -18,6 +18,7 @@ import com.application.adverial.ui.navigation.Home
 import com.application.adverial.utils.DialogUtils
 import com.application.adverial.utils.NetworkUtils
 import com.application.adverial.utils.NotificationUtils
+import com.huawei.hms.maps.MapsInitializer
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.connection.ConnectionEventListener
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        MapsInitializer.setApiKey("AE71DF19A835CA200073F14CE5137F27B4A92A5B9722CE4A185BDF46F6084AE4");
         val inputMethodManager: InputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(this.window.decorView.rootView.windowToken, 0)

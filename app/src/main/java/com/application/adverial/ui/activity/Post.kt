@@ -1,3 +1,4 @@
+
 package com.application.adverial.ui.activity
 
 import android.annotation.SuppressLint
@@ -6,12 +7,15 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.adverial.huawei.SupportMapDemoActivity
 import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.remote.ConversationRepository
@@ -22,10 +26,10 @@ import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
+import com.huawei.hms.maps.HuaweiMapOptions
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
-import com.huawei.hms.maps.SupportMapFragment
 import com.huawei.hms.maps.model.BitmapDescriptorFactory
 import com.huawei.hms.maps.model.LatLng
 import com.huawei.hms.maps.model.LatLngBounds
@@ -33,8 +37,6 @@ import com.huawei.hms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_post.*
 
 class Post : AppCompatActivity(), OnMapReadyCallback {
-
-    private var mapFragment: SupportMapFragment? = null
     private lateinit var map: HuaweiMap
     private var id = ""
     private var phoneNumber = ""
@@ -47,19 +49,11 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapsInitializer.initialize(this);
         setContentView(R.layout.activity_post)
-        // MapsInitializer.setApiKey("DQEDACRuLE5ygNAVgf/C/jiDIULciSgrEQuOKKATQxwiZFYsqUFTLr4CJke4SudwvutlZqfvK5OWVYZ6B16ZeM/hojk/RC6ScXsgaw==");
-
-        mMapView = findViewById<MapView>(R.id.post_map)
-        var mapViewBundle: Bundle? = null
-        if (savedInstanceState != null) {
-            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
-        }
-        mMapView.onCreate(mapViewBundle)
-        mMapView.getMapAsync(this)
-
         val activityPostRoot = findViewById<View>(R.id.activityPostRoot)
         Tools().changeViewFromTheme(this, activityPostRoot)
 
@@ -69,20 +63,29 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
         // hide
         show_ad_details.visibility = View.GONE
+        //MapsInitializer.initialize(this);
+        val huaweiMapOptions = HuaweiMapOptions()
+        huaweiMapOptions.compassEnabled(false)
+        huaweiMapOptions.zoomControlsEnabled(false)
+        huaweiMapOptions.scrollGesturesEnabled(false)
+        huaweiMapOptions.zoomGesturesEnabled(false)
+
+        mMapView = findViewById(R.id.ad_map)
+
+
+        var mapViewBundle: Bundle? = null
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
+        }
+        mMapView.onCreate(mapViewBundle)
+        mMapView.getMapAsync(this)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun pageInit() {
         lottie13.visibility = View.VISIBLE
         Tools().viewEnable(this.window.decorView.rootView, false)
-        mapFragment =
-            supportFragmentManager.findFragmentById(R.id.post_map) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
-        id = intent.getStringExtra("id")!!
-        mapFragment!!.view?.setOnTouchListener { _, _ ->
-            post_mapLayout.requestDisallowInterceptTouchEvent(true)
-            false
-        }
+         id = intent.getStringExtra("id").toString()
     }
 
     @SuppressLint("SetTextI18n")
@@ -125,11 +128,22 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         }
     }
     fun gotoMyCountry(map: HuaweiMap) {
-        val one = LatLng(42.216071, 26.389816)
-        val two = LatLng(36.690183, 44.747969)
+        val iraq = LatLng(33.3152, 44.3661)
+        val iran = LatLng(32.4279, 53.6880)
+        val saudi = LatLng(23.8859, 45.0792)
+        val kuwait = LatLng(29.3759, 47.9774)
+        val qatar = LatLng(25.3548, 51.1839)
+        val turkey = LatLng(38.9637, 35.2433)
+        val syria = LatLng(34.8021, 38.9968)
         val builder = LatLngBounds.Builder()
-        builder.include(one)
-        builder.include(two)
+        builder.include(iraq)
+        builder.include(iran)
+        builder.include(saudi)
+        builder.include(kuwait)
+        builder.include(qatar)
+        builder.include(turkey)
+        builder.include(syria)
+
         val bounds = builder.build()
         val padding = 10
         map.setLatLngBoundsForCameraTarget(bounds)
@@ -164,6 +178,12 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                 map.addMarker(marker)
             }
         }
+//
+//        map.getUiSettings().setCompassEnabled(true)
+//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.893478, 2.334595), 14f))
+        map.setOnMapLongClickListener(HuaweiMap.OnMapLongClickListener {
+
+        })
     }
 
     fun favorite(view: View) {
@@ -351,10 +371,16 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         about(view)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mMapView?.onSaveInstanceState(outState)
+    }
+
     override fun onStart() {
         super.onStart()
         mMapView.onStart()
     }
+
 
     override fun onPause() {
         super.onPause()

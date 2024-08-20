@@ -120,41 +120,6 @@ override fun onMapReady(huaweiMap: HuaweiMap) {
 
     map.uiSettings.isMyLocationButtonEnabled = true
 
-    map.setOnMarkerClickListener { marker ->
-        Toast.makeText(applicationContext, "onMarkerClick:${marker.title}", Toast.LENGTH_SHORT).show()
-        false
-    }
-    map.setOnMyLocationButtonClickListener {
-
-        false
-    }
-    map.setOnMarkerDragListener(object : HuaweiMap.OnMarkerDragListener {
-        override fun onMarkerDragStart(marker: Marker) {
-            Log.i("TAG", "onMarkerDragStart: ${marker.position}")
-        }
-
-        override fun onMarkerDrag(marker: Marker) {
-            Log.i("TAG", "onMarkerDrag: ${marker.position}")
-        }
-
-        override fun onMarkerDragEnd(marker: Marker) {
-            Log.i("TAG", "onMarkerDragEnd: ${marker.position}")
-        }
-    })
-
-    map.setOnMarkerDragListener(object : HuaweiMap.OnMarkerDragListener {
-        override fun onMarkerDragStart(marker: Marker) {
-         //  Toast.makeText(applicationContext, "onMarkerDragStart:${marker.position}", Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onMarkerDrag(marker: Marker) {
-           // Toast.makeText(applicationContext, "onMarkerDrag:${marker.position}", Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onMarkerDragEnd(marker: Marker) {
-           // Toast.makeText(applicationContext, "onMarkerDragEnd:${marker.position}", Toast.LENGTH_SHORT).show()
-        }
-    })
     addMarker()
     // Set the initial camera position with iraq coordinates
     val latLng = LatLng(33.3152, 44.3661)

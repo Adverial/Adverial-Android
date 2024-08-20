@@ -66,16 +66,9 @@ class MainActivity : AppCompatActivity() {
 
         if (NetworkUtils.isNetworkAvailable(this)) {
             // START INTENT NewAdMap
-            val intent= Intent(this, NewAdMap::class.java)
-            //add extra data to intent
-            intent.putExtra("adId", 23)
-            intent.putExtra("country", "country")
-            intent.putExtra("city", "city")
-            intent.putExtra("district", "district")
 
-            startActivity(intent)
 
-            //Tools().goto(this, Home(), false)
+            Tools().goto(this, Home(), false)
         } else {
             DialogUtils.showNoInternetDialog(this)
             finish()

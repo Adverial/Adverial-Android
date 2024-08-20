@@ -31,6 +31,7 @@ import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.huawei.hms.maps.model.BitmapDescriptorFactory
+import com.huawei.hms.maps.model.CameraPosition
 import com.huawei.hms.maps.model.LatLng
 import com.huawei.hms.maps.model.LatLngBounds
 import com.huawei.hms.maps.model.MarkerOptions
@@ -157,34 +158,63 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         )
         map.setMinZoomPreference(map.cameraPosition.zoom)
     }
-    override fun onMapReady(huaweiMap: HuaweiMap) {
-        map = huaweiMap
-        gotoMyCountry(map)
-        val repo = Repository(this)
-        repo.adDetails(id)
-        repo.getAdDetailsData().observe(this) {
-            if (it.data != null && !it.data!!.lat.isNullOrBlank() && !it.data!!.lon.isNullOrBlank()) {
-                val latLng = LatLng(it.data!!.lat!!.toDouble(), it.data!!.lon!!.toDouble())
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                val smallMarker = Bitmap.createScaledBitmap(
-                    BitmapFactory.decodeResource(
-                        resources,
-                        R.drawable.im_geo
-                    ), 60, 60, false
-                )
-                val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
-                val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
-                map.addMarker(marker)
-            }
-        }
-//
-//        map.getUiSettings().setCompassEnabled(true)
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.893478, 2.334595), 14f))
-        map.setOnMapLongClickListener(HuaweiMap.OnMapLongClickListener {
+    private fun zoomToAddress(latLng: LatLng, targetZoom: Float) {
+        val currentZoom = map.cameraPosition.zoom
+        val zoomStep = 0.5f // Adjust zoom step as needed
 
-        })
+        // Use a loop to incrementally zoom in
+        var zoom = currentZoom
+        while (zoom < targetZoom) {
+            zoom += zoomStep
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, zoom)
+            map.animateCamera(cameraUpdate)
+
+            // Add a delay to allow the camera to animate
+            Thread.sleep(250) // Adjust delay as needed
+        }
     }
+    override fun onMapReady(huaweiMap: HuaweiMap) {
+    map = huaweiMap
+    gotoMyCountry(map)
+
+    // Define camera attributes
+    val target = LatLng(31.5, 118.9)
+    val zoom = 10.0f
+    val tilt = 2.2f
+    val bearing = 31.5f
+
+    // Create CameraPosition
+    val cameraPosition = CameraPosition(target, zoom, tilt, bearing)
+
+    // Create CameraUpdate object
+    val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+
+    // Move the camera
+    map.moveCamera(cameraUpdate)
+        map.uiSettings.isZoomControlsEnabled = true
+
+
+        // Fetch ad details and update the map
+    val repo = Repository(this)
+    repo.adDetails(id)
+    repo.getAdDetailsData().observe(this) {
+        if (it.data != null && !it.data!!.lat.isNullOrBlank() && !it.data!!.lon.isNullOrBlank()) {
+            val latLng = LatLng(it.data!!.lat!!.toDouble(), it.data!!.lon!!.toDouble())
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+            val smallMarker = Bitmap.createScaledBitmap(
+                BitmapFactory.decodeResource(
+                    resources,
+                    R.drawable.im_geo
+                ), 60, 60, false
+            )
+            val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
+            val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+            map.addMarker(marker)
+            zoomToAddress(latLng, 10f)
+        }
+    }
+}
 
     fun favorite(view: View) {
         if (Tools().authCheck(this)) {

@@ -162,19 +162,16 @@
                             xmlns:map="http://schemas.android.com/apk/res-auto"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
-                        <fragment
-                            android:id="@+id/post_map"
-                            class="com.huawei.hms.maps.SupportMapFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="500dp"
-                            map:cameraTargetLat="48"
-                            map:cameraTargetLng="2"
-                            map:cameraZoom="11"
-                            map:mapType="normal"
-                            map:uiCompass="true"
-                            map:uiZoomControls="true"
-                            map:zOrderOnTop="false" />
+                            android:orientation="vertical">'
+
+                            <com.huawei.hms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:map="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/post_map"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                map:cameraTargetLat="48.893478"
+                                map:cameraTargetLng="2.334595"
+                                map:cameraZoom="10"/>
                         </LinearLayout>
 
                         <LinearLayout

@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +22,8 @@ import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
+import com.huawei.hms.maps.MapView
+import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.huawei.hms.maps.SupportMapFragment
 import com.huawei.hms.maps.model.BitmapDescriptorFactory
@@ -42,10 +43,24 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     private var lon = 0.0
     private var type = ""
     private var ItemData: Ad? = null
-
+    private lateinit var mMapView: MapView
+    companion object {
+        private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
+        // MapsInitializer.setApiKey("DQEDACRuLE5ygNAVgf/C/jiDIULciSgrEQuOKKATQxwiZFYsqUFTLr4CJke4SudwvutlZqfvK5OWVYZ6B16ZeM/hojk/RC6ScXsgaw==");
+
+        mMapView = findViewById<MapView>(R.id.post_map)
+        var mapViewBundle: Bundle? = null
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
+        }
+        mMapView.onCreate(mapViewBundle)
+        mMapView.getMapAsync(this)
+
+        val activityPostRoot = findViewById<View>(R.id.activityPostRoot)
         Tools().changeViewFromTheme(this, activityPostRoot)
 
         pageInit()
@@ -130,25 +145,25 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     }
     override fun onMapReady(huaweiMap: HuaweiMap) {
         map = huaweiMap
-
-        // Example LatLng coordinates
-        val lat = 42.216071
-        val lon = 26.389816
-        val latLng = LatLng(lat, lon)
-
-        // Move camera to the location
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-
-        // Add a marker at the location
-        val markerOptions = MarkerOptions().position(latLng).title("Marker at Location")
-        map.addMarker(markerOptions)
-
-        // Set up camera bounds to ensure the location is visible
-        val boundsBuilder = LatLngBounds.Builder()
-        boundsBuilder.include(latLng)
-        val bounds = boundsBuilder.build()
-        val padding = 10 // Offset from edges of the map in pixels
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
+        gotoMyCountry(map)
+        val repo = Repository(this)
+        repo.adDetails(id)
+        repo.getAdDetailsData().observe(this) {
+            if (it.data != null && !it.data!!.lat.isNullOrBlank() && !it.data!!.lon.isNullOrBlank()) {
+                val latLng = LatLng(it.data!!.lat!!.toDouble(), it.data!!.lon!!.toDouble())
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                val smallMarker = Bitmap.createScaledBitmap(
+                    BitmapFactory.decodeResource(
+                        resources,
+                        R.drawable.im_geo
+                    ), 60, 60, false
+                )
+                val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
+                val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+                map.addMarker(marker)
+            }
+        }
     }
 
     fun favorite(view: View) {
@@ -277,59 +292,87 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
     fun satellite(view: View) {
         map.mapType = HuaweiMap.MAP_TYPE_SATELLITE
-}
-
-fun terrain(view: View) {
-    map.mapType = HuaweiMap.MAP_TYPE_TERRAIN
-}
-
-fun normal(view: View) {
-    map.mapType = HuaweiMap.MAP_TYPE_NORMAL
-}
-
-fun share(view: View) {
-    try {
-        val intent = Intent(Intent.ACTION_SEND)
-        val shareBody = "App advertisement\n" +
-                "Ad link: ${BuildConfig.API_BASE_URL}"
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, shareBody)
-        intent.putExtra(Intent.EXTRA_TEXT, shareBody)
-        startActivity(Intent.createChooser(intent, shareBody))
-    } catch (e: Exception) {
     }
-}
 
-fun back(view: View) {
-    finish()
-}
-
-override fun onResume() {
-    super.onResume()
-    Tools().getLocale(this)
-    val language = getSharedPreferences("user", 0).getString("languageId", "")
-    if (language == "" || language == "0" || language == "1") {
-        window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
-        post_la.layoutDirection = View.LAYOUT_DIRECTION_LTR
-    } else {
-        window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+    fun terrain(view: View) {
+        map.mapType = HuaweiMap.MAP_TYPE_TERRAIN
     }
-    post_layout.layoutDirection = View.LAYOUT_DIRECTION_LTR
-}
 
-fun showLocation(view: View) {
-    location_btn.visibility = View.GONE
-    phone_call_btn.visibility = View.GONE
-    message_call_btn.visibility = View.GONE
-    show_ad_details.visibility = View.VISIBLE
-    location(view)
-}
+    fun normal(view: View) {
+        map.mapType = HuaweiMap.MAP_TYPE_NORMAL
+    }
 
-fun showAdDetails(view: View) {
-    location_btn.visibility = View.VISIBLE
-    phone_call_btn.visibility = View.VISIBLE
-    message_call_btn.visibility = View.VISIBLE
-    show_ad_details.visibility = View.GONE
-    about(view)
-}
+    fun share(view: View) {
+        try {
+            val intent = Intent(Intent.ACTION_SEND)
+            val shareBody = "App advertisement\n" +
+                    "Ad link: ${BuildConfig.API_BASE_URL}"
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_SUBJECT, shareBody)
+            intent.putExtra(Intent.EXTRA_TEXT, shareBody)
+            startActivity(Intent.createChooser(intent, shareBody))
+        } catch (e: Exception) {
+        }
+    }
+
+    fun back(view: View) {
+        finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Tools().getLocale(this)
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        val postLa = findViewById<View>(R.id.post_la)
+        val postLayout = findViewById<View>(R.id.post_layout)
+        if (language == "" || language == "0" || language == "1") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+            postLa.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        }
+        postLayout.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        mMapView.onResume()
+    }
+
+    fun showLocation(view: View) {
+        location_btn.visibility = View.GONE
+        phone_call_btn.visibility = View.GONE
+        message_call_btn.visibility = View.GONE
+        show_ad_details.visibility = View.VISIBLE
+        location(view)
+    }
+
+    fun showAdDetails(view: View) {
+        location_btn.visibility = View.VISIBLE
+        phone_call_btn.visibility = View.VISIBLE
+        message_call_btn.visibility = View.VISIBLE
+        show_ad_details.visibility = View.GONE
+        about(view)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mMapView.onStart()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mMapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mMapView.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mMapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mMapView.onLowMemory()
+    }
 }

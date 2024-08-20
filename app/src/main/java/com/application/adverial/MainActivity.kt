@@ -32,8 +32,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapsInitializer.setApiKey("DQEDACRuLE5ygNAVgf/C/jiDIULciSgrEQuOKKATQxwiZFYsqUFTLr4CJke4SudwvutlZqfvK5OWVYZ6B16ZeM/hojk/RC6ScXsgaw==");
+
         setContentView(R.layout.activity_main)
-        MapsInitializer.setApiKey("AE71DF19A835CA200073F14CE5137F27B4A92A5B9722CE4A185BDF46F6084AE4");
         val inputMethodManager: InputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(this.window.decorView.rootView.windowToken, 0)

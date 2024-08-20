@@ -18,6 +18,8 @@ import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.huawei.hms.maps.model.LatLng
+import com.huawei.hms.maps.model.Marker
+import com.huawei.hms.maps.model.MarkerOptions
 import io.nlopez.smartlocation.SmartLocation
 import kotlinx.android.synthetic.main.activity_new_ad_map.*
 
@@ -35,6 +37,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
+    private var mMarker: Marker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +46,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         Tools().setBasedLogo(this, R.id.imageView47)
         pageInit()
         Tools().locationRequest(this)
-        myLocation()
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.i("TAG", "sdk >= 23 M")
             // Check whether your app has the specified  and whether the app operation corresponding to the permission is allowed.
@@ -63,7 +66,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
         }
-
+        myLocation()
         mMapView = findViewById(R.id.newAdMap_map)
         mMapView.onCreate(mapViewBundle)
         mMapView.getMapAsync(this)
@@ -91,7 +94,17 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         Thread.sleep(250) // Adjust delay as needed
     }
 }
-
+    fun addMarker() {
+        if (mMarker != null) {
+            mMarker?.remove()
+        }
+        val options = MarkerOptions()
+            .position(LatLng(33.3152, 44.3661))
+            .title("My Location")
+            .snippet("This is a snippet!")
+            .draggable(true)
+        mMarker = map.addMarker(options)
+    }
 // Call this method with the desired address coordinates and zoom level
 override fun onMapReady(huaweiMap: HuaweiMap) {
     map = huaweiMap
@@ -112,17 +125,43 @@ override fun onMapReady(huaweiMap: HuaweiMap) {
         false
     }
     map.setOnMyLocationButtonClickListener {
-        Toast.makeText(applicationContext, "MyLocation button clicked", Toast.LENGTH_SHORT).show()
 
         false
     }
+    map.setOnMarkerDragListener(object : HuaweiMap.OnMarkerDragListener {
+        override fun onMarkerDragStart(marker: Marker) {
+            Log.i("TAG", "onMarkerDragStart: ${marker.position}")
+        }
 
-    // Set the initial camera position
-    val latLng = LatLng(31.5, 118.9)
+        override fun onMarkerDrag(marker: Marker) {
+            Log.i("TAG", "onMarkerDrag: ${marker.position}")
+        }
+
+        override fun onMarkerDragEnd(marker: Marker) {
+            Log.i("TAG", "onMarkerDragEnd: ${marker.position}")
+        }
+    })
+
+    map.setOnMarkerDragListener(object : HuaweiMap.OnMarkerDragListener {
+        override fun onMarkerDragStart(marker: Marker) {
+         //  Toast.makeText(applicationContext, "onMarkerDragStart:${marker.position}", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onMarkerDrag(marker: Marker) {
+           // Toast.makeText(applicationContext, "onMarkerDrag:${marker.position}", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onMarkerDragEnd(marker: Marker) {
+           // Toast.makeText(applicationContext, "onMarkerDragEnd:${marker.position}", Toast.LENGTH_SHORT).show()
+        }
+    })
+    addMarker()
+    // Set the initial camera position with iraq coordinates
+    val latLng = LatLng(33.3152, 44.3661)
     val initialZoom = 5f
     val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, initialZoom)
     map.animateCamera(cameraUpdate)
-    map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.893478, 2.334595), 5f))
+    map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(33.3152, 44.3661), 5f))
 
 
     // Dynamically zoom to the address
@@ -142,7 +181,7 @@ override fun onMapReady(huaweiMap: HuaweiMap) {
     }
 
     fun next(view: View) {
-        Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
+       // Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
         if (lat.isNotBlank() && lon.isNotBlank()) {
             lottie12.visibility = View.VISIBLE
             Tools().viewEnable(this.window.decorView.rootView, false)

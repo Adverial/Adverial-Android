@@ -22,6 +22,6 @@ class GeoFenceBroadcastReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val ACTION_PROCESS_LOCATION = "com.huawei.hmssample.geofence.GeoFenceBroadcastReceiver.ACTION_PROCESS_LOCATION"
+        const val ACTION_PROCESS_LOCATION = "com.huawei.hms.location.Geofence.GeoFenceBroadcastReceiver.ACTION_PROCESS_LOCATION"
     }
 }

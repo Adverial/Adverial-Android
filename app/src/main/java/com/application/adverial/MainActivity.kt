@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.application.adverial.remote.model.Message
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.MessageActivity
+import com.application.adverial.ui.activity.NewAdMap
 import com.application.adverial.ui.navigation.Home
 import com.application.adverial.utils.DialogUtils
 import com.application.adverial.utils.NetworkUtils
@@ -64,8 +65,17 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         if (NetworkUtils.isNetworkAvailable(this)) {
-                Tools().goto(this, Home(), false)
-           // setupPusher()
+            // START INTENT NewAdMap
+            val intent= Intent(this, NewAdMap::class.java)
+            //add extra data to intent
+            intent.putExtra("adId", 23)
+            intent.putExtra("country", "country")
+            intent.putExtra("city", "city")
+            intent.putExtra("district", "district")
+
+            startActivity(intent)
+
+            //Tools().goto(this, Home(), false)
         } else {
             DialogUtils.showNoInternetDialog(this)
             finish()

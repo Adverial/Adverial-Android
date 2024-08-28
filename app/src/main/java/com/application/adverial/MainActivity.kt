@@ -14,6 +14,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.adverial.huawei.SupportMapDemoActivity
 import com.application.adverial.remote.model.Message
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.MessageActivity
@@ -71,10 +72,10 @@ class MainActivity : AppCompatActivity() {
 
         if (NetworkUtils.isNetworkAvailable(this)) {
             // START INTENT NewAdMap
-//        var intent = Intent(this, NewAdMap::class.java)
-//        startActivity(intent)
 
-           Tools().goto(this, Home(), false)
+//        var intent = Intent(this, SupportMapDemoActivity::class.java)
+//        startActivity(intent)
+            Tools().goto(this, Home(), false)
         } else {
             DialogUtils.showNoInternetDialog(this)
             finish()

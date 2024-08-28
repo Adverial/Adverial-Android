@@ -51,13 +51,17 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     private var ItemData: Ad? = null
 
     private lateinit var hMap: HuaweiMap
+    companion object {
+        private const val TAG = "MapFragmentCodeActivity"
+    }
+
+    private var mMapFragment: MapFragment? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MapsInitializer.initialize(this);
         //MapsInitializer.setApiKey("DQEDACRuLE5ygNAVgf/C/jiDIULciSgrEQuOKKATQxwiZFYsqUFTLr4CJke4SudwvutlZqfvK5OWVYZ6B16ZeM/hojk/RC6ScXsgaw==")
-
         setContentView(R.layout.activity_post)
         requestPermission()
         val activityPostRoot = findViewById<View>(R.id.activityPostRoot)
@@ -69,11 +73,10 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
         val mSupportMapFragment: SupportMapFragment? = supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
         mSupportMapFragment?.getMapAsync(this)
-//        val huaweiMapOptions = HuaweiMapOptions()
-//// Set a standard map.
-//        huaweiMapOptions.mapType(HuaweiMap.MAP_TYPE_NORMAL)
-//        MapFragment.newInstance(huaweiMapOptions)
-        // hide
+        val huaweiMapOptions = HuaweiMapOptions()
+        huaweiMapOptions.compassEnabled(true)
+        huaweiMapOptions.zoomGesturesEnabled(true)
+        mMapFragment = MapFragment.newInstance(huaweiMapOptions)
         show_ad_details.visibility = View.GONE
     }
     private fun requestPermission() {
@@ -143,59 +146,13 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             Tools().viewEnable(this.window.decorView.rootView, true)
         }
     }
-    fun gotoMyCountry(map: HuaweiMap) {
-        val iraq = LatLng(33.3152, 44.3661)
-        val iran = LatLng(32.4279, 53.6880)
-        val saudi = LatLng(23.8859, 45.0792)
-        val kuwait = LatLng(29.3759, 47.9774)
-        val qatar = LatLng(25.3548, 51.1839)
-        val turkey = LatLng(38.9637, 35.2433)
-        val syria = LatLng(34.8021, 38.9968)
-        val builder = LatLngBounds.Builder()
-        builder.include(iraq)
-        builder.include(iran)
-        builder.include(saudi)
-        builder.include(kuwait)
-        builder.include(qatar)
-        builder.include(turkey)
-        builder.include(syria)
-
-        val bounds = builder.build()
-        val padding = 10
-        map.setLatLngBoundsForCameraTarget(bounds)
-        map.moveCamera(
-            CameraUpdateFactory.newLatLngBounds(
-                bounds,
-                Tools().displayWidth(),
-                Tools().displayHeight(),
-                padding
-            )
-        )
-        map.setMinZoomPreference(map.cameraPosition.zoom)
-    }
-    private fun zoomToAddress(latLng: LatLng, targetZoom: Float) {
-//        val currentZoom = map.cameraPosition.zoom
-//        val zoomStep = 0.5f // Adjust zoom step as needed
-//
-//        // Use a loop to incrementally zoom in
-//        var zoom = currentZoom
-//        while (zoom < targetZoom) {
-//            zoom += zoomStep
-//            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, zoom)
-//            map.animateCamera(cameraUpdate)
-//
-//            // Add a delay to allow the camera to animate
-//            Thread.sleep(250) // Adjust delay as needed
-//        }
-    }
-
-
     override fun onMapReady(huaweiMap: HuaweiMap) {
         val hMap = huaweiMap
 /// gotoMyCountry(hMap)
         // Set the map type to normal
         hMap.mapType = HuaweiMap.MAP_TYPE_NORMAL
-
+        hMap.isBuildingsEnabled = true
+        hMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.893478, 2.334595), 10f))
         // Enable all required gestures and controls
 //        hMap.uiSettings.isZoomControlsEnabled = true
 //        hMap.uiSettings.isScrollGesturesEnabled = true
@@ -203,11 +160,11 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 //        hMap.uiSettings.isTiltGesturesEnabled = true
 //        hMap.uiSettings.isRotateGesturesEnabled = true
 //        hMap.uiSettings.isScrollGesturesEnabledDuringRotateOrZoom = true
-        // Load the map at a default location (Paris)
-//        val defaultLatLng = LatLng(48.8566, 2.3522)
+//       //  Load the map at a default location iraq
+//        val defaultLatLng = LatLng(33.3152, 44.3661)
 //        val defaultZoom = 10f
 //        hMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLatLng, defaultZoom))
-        // Set a callback to be notified when the map is fully loaded
+//        // Set a callback to be notified when the map is fully loaded
 //        hMap.setOnMapLoadedCallback {
 //            Log.d("MapStatus", "Map has loaded successfully.")
 //            val repo = Repository(this)

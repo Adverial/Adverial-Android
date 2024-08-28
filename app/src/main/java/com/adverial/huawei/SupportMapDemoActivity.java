@@ -65,6 +65,7 @@ public class SupportMapDemoActivity extends AppCompatActivity implements OnMapRe
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
        // MapsInitializer.setApiKey("AE71DF19A835CA200073F14CE5137F27B4A92A5B9722CE4A185BDF46F6084AE4");
+        MapsInitializer.initialize(this);
         setContentView(R.layout.activity_supportmapfragment_demo);
         mSupportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.supportMap);
         mSupportMapFragment.getMapAsync(this);

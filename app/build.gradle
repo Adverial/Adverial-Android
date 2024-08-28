@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.huawei.agconnect' // This line should be here, not applied later
+
 }
 apply plugin: "kotlin-android-extensions"
 def loadProperties() {

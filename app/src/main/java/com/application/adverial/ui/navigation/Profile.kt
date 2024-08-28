@@ -145,10 +145,10 @@ val intent= Intent(this, LoginWa::class.java)
             }
         }
         profile_about.setOnClickListener{
-            Tools().openBrowser(this, BuildConfig.API_BASE_URL)
+            Tools().openBrowser(this, BuildConfig.WEBSITE_URL)
         }
         profile_privacy_policy.setOnClickListener{
-            Tools().openBrowser(this, "https://adverial.net/"+"privacy.html")
+            Tools().openBrowser(this,BuildConfig.WEBSITE_URL+"privacy.html")
         }
         profile_myAccount.setOnClickListener{
             if(Tools().authCheck(this)){

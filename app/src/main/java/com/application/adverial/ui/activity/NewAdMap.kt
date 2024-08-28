@@ -17,6 +17,7 @@ import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.OnMapReadyCallback
+import com.huawei.hms.maps.model.CameraPosition
 import com.huawei.hms.maps.model.LatLng
 import com.huawei.hms.maps.model.Marker
 import com.huawei.hms.maps.model.MarkerOptions
@@ -27,17 +28,25 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map: HuaweiMap
     private lateinit var mMapView: MapView
-    private var lat= ""
-    private var lon= ""
-    private var adId= ""
-    private var country= ""
-    private var city= ""
-    private var district= ""
+    private var lat = ""
+    private var lon = ""
+    private var adId = ""
+    private var country = ""
+    private var city = ""
+    private var district = ""
 
     companion object {
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     }
+
     private var mMarker: Marker? = null
+
+    // Fixed values for camera settings
+    private val cameraLat = 33.3152
+    private val cameraLng = 44.3661
+    private val cameraZoom = 10f
+    private val cameraTilt = 2.5f
+    private val cameraBearing = 2.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,24 +58,20 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.i("TAG", "sdk >= 23 M")
-            // Check whether your app has the specified  and whether the app operation corresponding to the permission is allowed.
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // Request permissions for your app.
                 val strings = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-                // Request permissions.
                 ActivityCompat.requestPermissions(this, strings, 1)
             }
         }
 
-        // Initialize Huawei MapView
         var mapViewBundle: Bundle? = null
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
         }
-        myLocation()
+       // myLocation()
         mMapView = findViewById(R.id.newAdMap_map)
         mMapView.onCreate(mapViewBundle)
         mMapView.getMapAsync(this)
@@ -79,21 +84,19 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         district = intent.getStringExtra("district") ?: "default_district"
     }
 
-  private fun zoomToAddress(latLng: LatLng, targetZoom: Float) {
-    val currentZoom = map.cameraPosition.zoom
-    val zoomStep = 0.5f // Adjust zoom step as needed
+    private fun zoomToAddress(latLng: LatLng, targetZoom: Float) {
+        val currentZoom = map.cameraPosition.zoom
+        val zoomStep = 0.5f
 
-    // Use a loop to incrementally zoom in
-    var zoom = currentZoom
-    while (zoom < targetZoom) {
-        zoom += zoomStep
-        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, zoom)
-        map.animateCamera(cameraUpdate)
-
-        // Add a delay to allow the camera to animate
-        Thread.sleep(250) // Adjust delay as needed
+        var zoom = currentZoom
+        while (zoom < targetZoom) {
+            zoom += zoomStep
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, zoom)
+            map.animateCamera(cameraUpdate)
+            Thread.sleep(250)
+        }
     }
-}
+
     fun addMarker() {
         if (mMarker != null) {
             mMarker?.remove()
@@ -105,33 +108,58 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
             .draggable(true)
         mMarker = map.addMarker(options)
     }
-// Call this method with the desired address coordinates and zoom level
-override fun onMapReady(huaweiMap: HuaweiMap) {
+
+        override fun onMapReady(huaweiMap: HuaweiMap) {
     map = huaweiMap
-    Post().gotoMyCountry(map)
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        return
+
+    // Enable location if permission is granted
+    if (ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED ||
+        ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    ) {
+        map.isMyLocationEnabled = true
     }
-    map.isMyLocationEnabled = true
 
+    // Set default camera position and zoom level
+    val initialCameraPosition = CameraPosition.Builder()
+        .target(LatLng(0.0, 0.0)) // Center the map at the equator
+        .zoom(2f) // Set zoom level to show the entire world
+        .build()
 
-    // Enable the my-location layer.
-    map.isMyLocationEnabled = true
+    map.moveCamera(
+        com.huawei.hms.maps.CameraUpdateFactory.newCameraPosition(initialCameraPosition)
+    )
 
-    map.uiSettings.isMyLocationButtonEnabled = true
+    // Enable zoom controls and gestures
+    map.uiSettings.isZoomControlsEnabled = true
+    map.uiSettings.isZoomGesturesEnabled = true
 
-    addMarker()
-    // Set the initial camera position with iraq coordinates
-    val latLng = LatLng(33.3152, 44.3661)
-    val initialZoom = 5f
-    val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, initialZoom)
-    map.animateCamera(cameraUpdate)
-    map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(33.3152, 44.3661), 5f))
+    // Add listener to dynamically adjust tilt based on zoom level
+    map.setOnCameraMoveListener {
+        val currentZoom = map.cameraPosition.zoom
 
+        // Adjust tilt only when the zoom level changes significantly
+        if (currentZoom > 10) {
+            val newTilt = currentZoom + 1
+            if (map.cameraPosition.tilt != newTilt) {
+                val updatedCameraPosition = CameraPosition.Builder(map.cameraPosition)
+                    .tilt(newTilt)
+                    .build()
+                map.moveCamera(CameraUpdateFactory.newCameraPosition(updatedCameraPosition))
+            }
+        }
+    }
 
-    // Dynamically zoom to the address
-    val targetZoom = 5f
-    zoomToAddress(latLng, targetZoom)
+    // Add listener to handle actions when the camera stops moving
+    map.setOnCameraIdleListener {
+        // Ensure that the map is given time to load tiles at high zoom levels
+        // Avoid clearing the map or resetting the camera during idle state
+    }
 }
 
     private fun myLocation() {
@@ -145,23 +173,36 @@ override fun onMapReady(huaweiMap: HuaweiMap) {
         }
     }
 
+    private fun setCameraPosition() {
+        val latLng = LatLng(cameraLat, cameraLng)
+        val cameraPosition = CameraPosition.builder()
+            .target(latLng)
+            .zoom(cameraZoom)
+            .bearing(cameraBearing)
+            .tilt(cameraTilt)
+            .build()
+        val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+        map.moveCamera(cameraUpdate)
+    }
+
     fun next(view: View) {
-       // Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
-        if (lat.isNotBlank() && lon.isNotBlank()) {
-            lottie12.visibility = View.VISIBLE
-            Tools().viewEnable(this.window.decorView.rootView, false)
-            val repo = Repository(this)
-            repo.addAdLocation(adId, country, city, district, lat, lon)
-            repo.getAddAdLocationData().observe(this) {
-                lottie12.visibility = View.GONE
-                Tools().viewEnable(this.window.decorView.rootView, true)
-                if (it.status) {
-                    val intent = Intent(this, NewAdImages::class.java)
-                    intent.putExtra("adId", adId)
-                    startActivity(intent)
-                }
-            }
-        } else Toast.makeText(this, resources.getString(R.string.locationNotFound), Toast.LENGTH_SHORT).show()
+        // toast lat and lon
+        Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
+//        if (lat.isNotBlank() && lon.isNotBlank()) {
+//            lottie12.visibility = View.VISIBLE
+//            Tools().viewEnable(this.window.decorView.rootView, false)
+//            val repo = Repository(this)
+//            repo.addAdLocation(adId, country, city, district, lat, lon)
+//            repo.getAddAdLocationData().observe(this) {
+//                lottie12.visibility = View.GONE
+//                Tools().viewEnable(this.window.decorView.rootView, true)
+//                if (it.status) {
+//                    val intent = Intent(this, NewAdImages::class.java)
+//                    intent.putExtra("adId", adId)
+//                    startActivity(intent)
+//                }
+//            }
+//        } else Toast.makeText(this, resources.getString(R.string.locationNotFound), Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {
@@ -177,7 +218,6 @@ override fun onMapReady(huaweiMap: HuaweiMap) {
         finish()
     }
 
-    // MapView Lifecycle Methods
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         var mapViewBundle: Bundle? = outState.getBundle(MAPVIEW_BUNDLE_KEY)

@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -15,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adverial.huawei.SupportMapDemoActivity
 import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.remote.ConversationRepository
@@ -24,6 +22,7 @@ import com.application.adverial.remote.model.Ad
 import com.application.adverial.remote.model.Conversation
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
+import com.huawei.hms.maps.CameraUpdate
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.HuaweiMapOptions
@@ -34,11 +33,15 @@ import com.huawei.hms.maps.model.BitmapDescriptorFactory
 import com.huawei.hms.maps.model.CameraPosition
 import com.huawei.hms.maps.model.LatLng
 import com.huawei.hms.maps.model.LatLngBounds
+import com.huawei.hms.maps.model.Marker
 import com.huawei.hms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_post.*
 
 class Post : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var map: HuaweiMap
+    private lateinit var marker: Marker
+    private lateinit var cameraUpdate: CameraUpdate
+    private lateinit var cameraPosition: CameraPosition
     private var id = ""
     private var phoneNumber = ""
     private var favorite = false
@@ -64,21 +67,13 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
         // hide
         show_ad_details.visibility = View.GONE
-        //MapsInitializer.initialize(this);
-        val huaweiMapOptions = HuaweiMapOptions()
-        huaweiMapOptions.compassEnabled(false)
-        huaweiMapOptions.zoomControlsEnabled(false)
-        huaweiMapOptions.scrollGesturesEnabled(false)
-        huaweiMapOptions.zoomGesturesEnabled(false)
-
         mMapView = findViewById(R.id.ad_map)
-
-
         var mapViewBundle: Bundle? = null
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
         }
         mMapView.onCreate(mapViewBundle)
+
         mMapView.getMapAsync(this)
     }
 
@@ -174,47 +169,64 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         }
     }
     override fun onMapReady(huaweiMap: HuaweiMap) {
-    map = huaweiMap
-    gotoMyCountry(map)
 
-    // Define camera attributes
-    val target = LatLng(31.5, 118.9)
-    val zoom = 10.0f
-    val tilt = 2.2f
-    val bearing = 31.5f
+            // mapping
+            map = huaweiMap
 
-    // Create CameraPosition
-    val cameraPosition = CameraPosition(target, zoom, tilt, bearing)
+            // marker add
 
-    // Create CameraUpdate object
-    val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
 
-    // Move the camera
-    map.moveCamera(cameraUpdate)
+
+        map = huaweiMap
+
+        // Enable all UI controls and gestures
         map.uiSettings.isZoomControlsEnabled = true
+        map.uiSettings.isScrollGesturesEnabled = true
+        map.uiSettings.isZoomGesturesEnabled = true
+        map.uiSettings.isTiltGesturesEnabled = true
+        map.uiSettings.isRotateGesturesEnabled = true
+        map.uiSettings.isScrollGesturesEnabledDuringRotateOrZoom = true
 
 
-        // Fetch ad details and update the map
-    val repo = Repository(this)
-    repo.adDetails(id)
-    repo.getAdDetailsData().observe(this) {
-        if (it.data != null && !it.data!!.lat.isNullOrBlank() && !it.data!!.lon.isNullOrBlank()) {
-            val latLng = LatLng(it.data!!.lat!!.toDouble(), it.data!!.lon!!.toDouble())
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-            val smallMarker = Bitmap.createScaledBitmap(
-                BitmapFactory.decodeResource(
-                    resources,
-                    R.drawable.im_geo
-                ), 60, 60, false
-            )
-            val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
-            val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
-            map.addMarker(marker)
-            zoomToAddress(latLng, 10f)
+
+        // Fetch and display the ad details
+        val repo = Repository(this)
+        repo.adDetails(id)
+        repo.getAdDetailsData().observe(this) { adDetails ->
+            adDetails?.data?.let { data ->
+                // change the lat and lon values after . chat should be six digit only from double
+                val lat = data.lat?.toDoubleOrNull()?.let { (it * 1_000_000).toInt() / 1_000_000.0 }
+                val lon = data.lon?.toDoubleOrNull()?.let { (it * 1_000_000).toInt() / 1_000_000.0 }
+             //   Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
+                if (lat != null && lon != null) {
+                    val latLng = LatLng(lat, lon)
+                    marker = map.addMarker(
+                        MarkerOptions()
+                            .icon(BitmapDescriptorFactory.defaultMarker()) // default marker
+                            .title(data.title + " \n" + data.price_currency) // marker title
+                            .position(latLng) // marker position
+                    )
+                    // camera position settings
+                    cameraPosition = CameraPosition.builder()
+                        .target(LatLng(lat, lon))
+                        .zoom(15f)
+                        .bearing(0f)
+                        .tilt(0f).build()
+                    cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+                    map.moveCamera(cameraUpdate)
+                } else {
+                    Log.e("MapError", "Invalid latitude or longitude values.")
+                    Toast.makeText(this, "Invalid latitude or longitude values.", Toast.LENGTH_SHORT).show()
+                    // Allow the user to freely move the map even if no lat/lon is set
+                    map.uiSettings.isScrollGesturesEnabledDuringRotateOrZoom = true
+                }
+            } ?: run {
+                Log.e("MapError", "Ad details data is null.")
+
+                Toast.makeText(this, "Ad details data is null.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
-}
 
     fun favorite(view: View) {
         if (Tools().authCheck(this)) {
@@ -383,6 +395,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         }
         postLayout.layoutDirection = View.LAYOUT_DIRECTION_LTR
         mMapView.onResume()
+        mMapView.getMapAsync(this)
     }
 
     fun showLocation(view: View) {
@@ -403,8 +416,15 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mMapView?.onSaveInstanceState(outState)
+        var mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY)
+        if (mapViewBundle == null) {
+            mapViewBundle = Bundle()
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle)
+        }
+        mMapView.onSaveInstanceState(mapViewBundle)
     }
+
+
 
     override fun onStart() {
         super.onStart()
@@ -423,8 +443,9 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         mMapView.onDestroy()
+        super.onDestroy()
+
     }
 
     override fun onLowMemory() {

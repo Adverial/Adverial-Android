@@ -158,72 +158,74 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:map="http://schemas.android.com/apk/res-auto"
+                        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:tools="http://schemas.android.com/tools"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">'
+                            tools:context=".MainActivity">
 
-                            <com.huawei.hms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+                            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                                 xmlns:map="http://schemas.android.com/apk/res-auto"
-                                android:id="@+id/ad_map"
-                                map:uiCompass="true"
-                                map:uiZoomControls="true"
+                                android:id="@+id/map_fragment"
+                                class="com.huawei.hms.maps.SupportMapFragment"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                map:cameraTargetLat="48.893478"
+                                map:cameraTargetLng="2.334595"
+                                map:cameraZoom="10" />
+                        </RelativeLayout>
 
-                                />
-                        </LinearLayout>
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="end-->
+<!--"-->
+<!--                            android:layout_marginTop="@dimen/_10sdp"-->
+<!--                            android:layout_marginEnd="@dimen/_10sdp"-->
+<!--                            android:orientation="horizontal">-->
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end
-"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:orientation="horizontal">
+<!--                            <ImageView-->
+<!--                                android:id="@+id/post_satellite"-->
+<!--                                android:layout_width="@dimen/_20sdp"-->
+<!--                                android:layout_height="@dimen/_20sdp"-->
+<!--                                android:layout_marginEnd="@dimen/_3sdp"-->
+<!--                                android:background="@drawable/rounded_full7"-->
+<!--                                android:backgroundTint="@color/black"-->
+<!--                                android:onClick="satellite"-->
+<!--                                android:padding="@dimen/_3sdp"-->
+<!--                                android:src="@drawable/im_satellite"-->
+<!--                                android:text="Button"-->
+<!--                                app:tint="@color/white" />-->
 
-                            <ImageView
-                                android:id="@+id/post_satellite"
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_3sdp"
-                                android:background="@drawable/rounded_full7"
-                                android:backgroundTint="@color/black"
-                                android:onClick="satellite"
-                                android:padding="@dimen/_3sdp"
-                                android:src="@drawable/im_satellite"
-                                android:text="Button"
-                                app:tint="@color/white" />
+<!--                            <ImageView-->
+<!--                                android:id="@+id/post_terrain"-->
+<!--                                android:layout_width="@dimen/_20sdp"-->
+<!--                                android:layout_height="@dimen/_20sdp"-->
+<!--                                android:layout_marginEnd="@dimen/_3sdp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:background="@drawable/rounded_full7"-->
+<!--                                android:backgroundTint="@color/black"-->
+<!--                                android:onClick="terrain"-->
+<!--                                android:padding="@dimen/_3sdp"-->
+<!--                                android:src="@drawable/im_terrain"-->
+<!--                                android:text="Button"-->
+<!--                                app:tint="@color/white" />-->
 
-                            <ImageView
-                                android:id="@+id/post_terrain"
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_3sdp"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_full7"
-                                android:backgroundTint="@color/black"
-                                android:onClick="terrain"
-                                android:padding="@dimen/_3sdp"
-                                android:src="@drawable/im_terrain"
-                                android:text="Button"
-                                app:tint="@color/white" />
-
-                            <ImageView
-                                android:id="@+id/post_normal"
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_full7"
-                                android:backgroundTint="@color/black"
-                                android:onClick="normal"
-                                android:padding="@dimen/_3sdp"
-                                android:src="@drawable/im_normal"
-                                android:text="Button"
-                                app:tint="@color/white" />
-                        </LinearLayout>
+<!--                            <ImageView-->
+<!--                                android:id="@+id/post_normal"-->
+<!--                                android:layout_width="@dimen/_20sdp"-->
+<!--                                android:layout_height="@dimen/_20sdp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:background="@drawable/rounded_full7"-->
+<!--                                android:backgroundTint="@color/black"-->
+<!--                                android:onClick="normal"-->
+<!--                                android:padding="@dimen/_3sdp"-->
+<!--                                android:src="@drawable/im_normal"-->
+<!--                                android:text="Button"-->
+<!--                                app:tint="@color/white" />-->
+<!--                            -->
+<!--                            -->
+<!--                        </LinearLayout>-->
                     </FrameLayout>
 
                 </LinearLayout>

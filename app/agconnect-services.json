@@ -77,6 +77,9 @@
 	},
 	"region":"SG",
 	"configuration_version":"3.0",
+	"processing_location_policy":{
+		"map":"0"
+	},
 	"appInfos":[
 		{
 			"package_name":"com.adverial.huawei",

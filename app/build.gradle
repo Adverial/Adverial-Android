@@ -54,6 +54,12 @@ android {
             storePassword '123456'
             keyAlias 'key0'
             keyPassword '123456'
+            storeFile file('/Users/adverial/Documents/Adverial-projects/Adverial-Android/csr_file.csr')
+            storePassword '123456'
+            keyPassword '123456'
+        }
+        config {
+            keyAlias 'key0'
         }
     }
 
@@ -128,6 +134,8 @@ dependencies {
     implementation 'com.budiyev.android:code-scanner:2.1.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'id.zelory:compressor:3.0.1'
+    implementation 'com.huawei.agconnect:agconnect-core:1.5.2.300'
+
     //implementation 'com.github.scrounger:countrycurrencypicker:1.1.1'
     implementation 'com.huawei.hms:maps:5.2.0.301'
     implementation 'com.huawei.hms:location:5.1.0.301'

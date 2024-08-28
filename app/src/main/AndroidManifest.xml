@@ -11,8 +11,9 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
     <application android:allowBackup="true" android:icon="@mipmap/icon" android:label="@string/app_name" android:networkSecurityConfig="@xml/network_security_config" android:requestLegacyExternalStorage="true" android:roundIcon="@mipmap/icon" android:supportsRtl="true" android:theme="@style/Theme.Luuk" android:usesCleartextTraffic="true" tools:targetApi="n">
@@ -58,19 +59,15 @@
             </intent-filter>
         </activity>
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCvxKaE92HxvKvHCkm4cEJS_2SEfrUCffw" />
-        <meta-data android:name="com.huawei.hms.client.channel.androidMarket" android:value="false" />
+        <meta-data android:name="com.huawei.hms.maps.API_KEY" android:value="DQEDACRuLE5ygNAVgf/C/jiDIULciSgrEQuOKKATQxwiZFYsqUFTLr4CJke4SudwvutlZqfvK5OWVYZ6B16ZeM/hojk/RC6ScXsgaw==" />
         <activity android:name="com.adverial.huawei.SupportMapDemoActivity" />
+        <meta-data android:name="com.huawei.hms.client.channel.androidMarket" android:value="false" />
     </application>
     <queries>
         <intent>
             <action android:name="com.huawei.hms.core.aidlservice" />
         </intent>
     </queries>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-
-
-        <!-- Other elements -->
-
-
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 </manifest>
 

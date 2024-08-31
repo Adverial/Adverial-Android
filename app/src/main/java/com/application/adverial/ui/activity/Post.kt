@@ -1,17 +1,21 @@
 
 package com.application.adverial.ui.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,13 +33,15 @@ import com.huawei.hms.maps.HuaweiMapOptions
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
+import com.huawei.hms.maps.UiSettings
 import com.huawei.hms.maps.model.BitmapDescriptorFactory
 import com.huawei.hms.maps.model.LatLng
 import com.huawei.hms.maps.model.LatLngBounds
 import com.huawei.hms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_post.*
 
-class Post : AppCompatActivity(), OnMapReadyCallback {
+
+class Post : AppCompatActivity() {
     private lateinit var map: HuaweiMap
     private var id = ""
     private var phoneNumber = ""
@@ -51,7 +57,6 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapsInitializer.initialize(this);
         setContentView(R.layout.activity_post)
         val activityPostRoot = findViewById<View>(R.id.activityPostRoot)
         Tools().changeViewFromTheme(this, activityPostRoot)
@@ -59,25 +64,114 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         pageInit()
         fetchData()
         Tools().setBasedLogo(this, R.id.app_logo)
-
         // hide
         show_ad_details.visibility = View.GONE
-        //MapsInitializer.initialize(this);
-        val huaweiMapOptions = HuaweiMapOptions()
-        huaweiMapOptions.compassEnabled(false)
-        huaweiMapOptions.zoomControlsEnabled(false)
-        huaweiMapOptions.scrollGesturesEnabled(false)
-        huaweiMapOptions.zoomGesturesEnabled(false)
+        val mapOptions = HuaweiMapOptions()
+            .mapType(HuaweiMap.MAP_TYPE_NORMAL)
+            .zoomControlsEnabled(true)
+            .compassEnabled(true)
+            .rotateGesturesEnabled(true)
+            .tiltGesturesEnabled(true)
+            .scrollGesturesEnabled(true)
+            .zoomGesturesEnabled(true)
 
-        mMapView = findViewById(R.id.ad_map)
+        mMapView = MapView(this, mapOptions)
+        val layout = findViewById<FrameLayout>(R.id.post_map1)
+        layout.addView(mMapView)
+        mMapView.onCreate(savedInstanceState)
 
+        mMapView.getMapAsync { huaweiMap ->
+            val repo = Repository(this)
+            repo.adDetails(id)
+            repo.getAdDetailsData().observe(this) { adDetails ->
+                adDetails?.data?.let { data ->
+                    if (!data.lat.isNullOrBlank() && !data.lon.isNullOrBlank()) {
+                        val latLng = LatLng(data.lat!!.toDouble(), data.lon!!.toDouble())
+                        val smallMarker = Bitmap.createScaledBitmap(
+                            BitmapFactory.decodeResource(resources, R.drawable.im_geo),
+                            130, 130, false
+                        )
+                        val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
 
-        var mapViewBundle: Bundle? = null
-        if (savedInstanceState != null) {
-            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
+                        val marker = huaweiMap.addMarker(
+                            MarkerOptions()
+                                .position(latLng)
+                                .icon(smallMarkerIcon)
+                                .title(data.title)
+                        )
+                        huaweiMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                    }
+                }
+            }
+
+            huaweiMap.setOnCameraIdleListener {
+                val currentZoom = huaweiMap.cameraPosition.zoom
+                if (currentZoom < 10f) {
+                    huaweiMap.animateCamera(CameraUpdateFactory.zoomTo(10f))
+                }
+            }
+            huaweiMap.setOnMarkerClickListener { marker ->
+                // Zoom to the marker's position with animation
+                huaweiMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 18f))
+
+                // Return false to indicate that we have not consumed the event
+                // and that we wish for the default behavior to occur (e.g., show info window)
+                false
+            }
         }
-        mMapView.onCreate(mapViewBundle)
-        mMapView.getMapAsync(this)
+
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+           // Log.i(TAG, "sdk < 28 Q")
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                val strings = arrayOf<String>(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                ActivityCompat.requestPermissions(this, strings, 1)
+            }
+        } else {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    "android.permission.ACCESS_BACKGROUND_LOCATION"
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                val strings = arrayOf<String>(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    "android.permission.ACCESS_BACKGROUND_LOCATION"
+                )
+                ActivityCompat.requestPermissions(this, strings, 2)
+            }
+        }
+    }
+    fun prorateMap(huaweiMap: HuaweiMap, locations: List<LatLng>) {
+        if (locations.isEmpty()) return
+
+        val builder = LatLngBounds.Builder()
+        for (location in locations) {
+            builder.include(location)
+        }
+
+        val bounds = builder.build()
+        val padding = 100 // Offset from edges of the map in pixels
+        val cu = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+
+        huaweiMap.animateCamera(cu)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -156,33 +250,23 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         )
         map.setMinZoomPreference(map.cameraPosition.zoom)
     }
-    override fun onMapReady(huaweiMap: HuaweiMap) {
+     fun onMapReady(huaweiMap: HuaweiMap) {
         map = huaweiMap
-        gotoMyCountry(map)
-        val repo = Repository(this)
-        repo.adDetails(id)
-        repo.getAdDetailsData().observe(this) {
-            if (it.data != null && !it.data!!.lat.isNullOrBlank() && !it.data!!.lon.isNullOrBlank()) {
-                val latLng = LatLng(it.data!!.lat!!.toDouble(), it.data!!.lon!!.toDouble())
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                val smallMarker = Bitmap.createScaledBitmap(
-                    BitmapFactory.decodeResource(
-                        resources,
-                        R.drawable.im_geo
-                    ), 60, 60, false
-                )
-                val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
-                val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
-                map.addMarker(marker)
-            }
-        }
-//
-//        map.getUiSettings().setCompassEnabled(true)
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.893478, 2.334595), 14f))
-        map.setOnMapLongClickListener(HuaweiMap.OnMapLongClickListener {
 
-        })
+//        map.isTrafficEnabled = true;
+//        map.uiSettings.isCompassEnabled = true
+//        map.uiSettings.isZoomControlsEnabled = true
+//        map.uiSettings.isScrollGesturesEnabled = true
+//        map.uiSettings.isZoomGesturesEnabled = true
+//        map.uiSettings.isTiltGesturesEnabled = true
+//        map.uiSettings.isRotateGesturesEnabled = true
+////        mUiSettings = map.uiSettings
+//        map.mapType = HuaweiMap.MAP_TYPE_TERRAIN
+       // map.apply { setOnMapLoadedCallback { gotoMyCountry(map) } }
+
+
+       // mMapView.onResume()
+
     }
 
     fun favorite(view: View) {
@@ -372,7 +456,12 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mMapView?.onSaveInstanceState(outState)
+        var mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY)
+        if (mapViewBundle == null) {
+            mapViewBundle = Bundle()
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle)
+        }
+        mMapView.onSaveInstanceState(mapViewBundle)
     }
 
     override fun onStart() {

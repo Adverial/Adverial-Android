@@ -160,7 +160,7 @@
                         android:layout_height="match_parent">
 
                         <fragment
-                            android:id="@+id/post_map"
+                            android:id="@+id/map_fragment"
                             android:name="com.google.android.gms.maps.SupportMapFragment"
                             class="com.application.adverial.service.ScrollableMapFragment"
                             android:layout_width="match_parent"

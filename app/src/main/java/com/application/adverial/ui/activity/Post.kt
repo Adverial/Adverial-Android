@@ -1,11 +1,5 @@
 package com.application.adverial.ui.activity
 
-//import kotlinx.android.synthetic.main.activity_post.about_indicator
-//import kotlinx.android.synthetic.main.activity_post.location_indicator
-//import kotlinx.android.synthetic.main.activity_post.post_about
-//import kotlinx.android.synthetic.main.activity_post.post_location
-//import kotlinx.android.synthetic.main.activity_post.post_sideBarAction
-//import kotlinx.android.synthetic.main.activity_post.post_sideSlide
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
@@ -89,7 +83,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         lottie13.visibility = View.VISIBLE
         Tools().viewEnable(this.window.decorView.rootView, false)
         mapFragment =
-            supportFragmentManager.findFragmentById(R.id.post_map) as ScrollableMapFragment?
+            supportFragmentManager.findFragmentById(R.id.map_fragment) as ScrollableMapFragment?
         mapFragment!!.getMapAsync(this)
         id = intent.getStringExtra("id")!!
         (mapFragment as ScrollableMapFragment).setListener {
@@ -154,10 +148,10 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                     BitmapFactory.decodeResource(
                         resources,
                         R.drawable.im_geo
-                    ), 60, 60, false
+                    ), 100, 100, false
                 )
                 val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
-                val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
+                val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon).title(it.data!!.title)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
                 map.addMarker(marker)
 

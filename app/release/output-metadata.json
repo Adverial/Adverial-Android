@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.application.adverial",
+  "applicationId": "com.adverial.huawei",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 32,
-      "versionName": "1.0.32",
+      "versionCode": 36,
+      "versionName": "1.0.36",
       "outputFile": "app-release.apk"
     }
   ],

@@ -40,7 +40,7 @@ class ContactUs : AppCompatActivity() {
     }
 
     fun website(view: View){
-        Tools().openBrowser(this, BuildConfig.API_BASE_URL)
+        Tools().openBrowser(this, BuildConfig.WEBSITE_URL)
     }
 
     fun back(view: View){ finish() }

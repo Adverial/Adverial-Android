@@ -83,8 +83,6 @@ class Home : AppCompatActivity() {
         else
             NewMessageNotification.setupNewMessageNotification(this)
 
-
-
     }
 
     private fun fetchDataAds() {

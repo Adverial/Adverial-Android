@@ -112,7 +112,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
     fun next(view: View){
 
         // alert lon and lat
-        Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
+       // Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
         if(lat.isNotBlank() && lon.isNotBlank()){
             lottie12.visibility= View.VISIBLE
             Tools().viewEnable(this.window.decorView.rootView, false)

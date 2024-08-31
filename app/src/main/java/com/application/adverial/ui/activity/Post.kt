@@ -1,3 +1,4 @@
+
 package com.application.adverial.ui.activity
 
 import android.annotation.SuppressLint
@@ -6,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -19,78 +21,70 @@ import com.application.adverial.remote.ConversationRepository
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.Ad
 import com.application.adverial.remote.model.Conversation
-import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
-import com.application.adverial.ui.navigation.Notifications
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_post.activityPostRoot
-import kotlinx.android.synthetic.main.activity_post.back_icon
-import kotlinx.android.synthetic.main.activity_post.location_btn
-import kotlinx.android.synthetic.main.activity_post.lottie13
-import kotlinx.android.synthetic.main.activity_post.message_call_btn
-import kotlinx.android.synthetic.main.activity_post.phone_call_btn
-import kotlinx.android.synthetic.main.activity_post.post_city1
-import kotlinx.android.synthetic.main.activity_post.post_favorite
-import kotlinx.android.synthetic.main.activity_post.post_la
-import kotlinx.android.synthetic.main.activity_post.post_layout
-import kotlinx.android.synthetic.main.activity_post.post_mapLayout
-import kotlinx.android.synthetic.main.activity_post.post_page
-import kotlinx.android.synthetic.main.activity_post.post_title1
-import kotlinx.android.synthetic.main.activity_post.show_ad_details
-import kotlinx.android.synthetic.main.item_post_page.post_address
-import kotlinx.android.synthetic.main.item_post_page.post_city
-import kotlinx.android.synthetic.main.item_post_page.post_title
-
+import com.huawei.hms.maps.CameraUpdateFactory
+import com.huawei.hms.maps.HuaweiMap
+import com.huawei.hms.maps.HuaweiMapOptions
+import com.huawei.hms.maps.MapView
+import com.huawei.hms.maps.MapsInitializer
+import com.huawei.hms.maps.OnMapReadyCallback
+import com.huawei.hms.maps.model.BitmapDescriptorFactory
+import com.huawei.hms.maps.model.LatLng
+import com.huawei.hms.maps.model.LatLngBounds
+import com.huawei.hms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_post.*
 
 class Post : AppCompatActivity(), OnMapReadyCallback {
-
-    private var mapFragment: SupportMapFragment? = null
-    private lateinit var map: GoogleMap
+    private lateinit var map: HuaweiMap
     private var id = ""
     private var phoneNumber = ""
     private var favorite = false
-    private var lastX = 0F
     private var lat = 0.0
     private var lon = 0.0
     private var type = ""
-    private var actionBarMode = "closed"
     private var ItemData: Ad? = null
+    private lateinit var mMapView: MapView
+    companion object {
+        private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapsInitializer.initialize(this);
         setContentView(R.layout.activity_post)
-       // Tools().rotateLayout(this, back_icon)
+        val activityPostRoot = findViewById<View>(R.id.activityPostRoot)
         Tools().changeViewFromTheme(this, activityPostRoot)
 
         pageInit()
         fetchData()
-         Tools().setBasedLogo(this, R.id.app_logo)
+        Tools().setBasedLogo(this, R.id.app_logo)
 
         // hide
         show_ad_details.visibility = View.GONE
+        //MapsInitializer.initialize(this);
+        val huaweiMapOptions = HuaweiMapOptions()
+        huaweiMapOptions.compassEnabled(false)
+        huaweiMapOptions.zoomControlsEnabled(false)
+        huaweiMapOptions.scrollGesturesEnabled(false)
+        huaweiMapOptions.zoomGesturesEnabled(false)
 
+        mMapView = findViewById(R.id.ad_map)
+
+
+        var mapViewBundle: Bundle? = null
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
+        }
+        mMapView.onCreate(mapViewBundle)
+        mMapView.getMapAsync(this)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun pageInit() {
         lottie13.visibility = View.VISIBLE
         Tools().viewEnable(this.window.decorView.rootView, false)
-        mapFragment =
-            supportFragmentManager.findFragmentById(R.id.map_fragment) as ScrollableMapFragment?
-        mapFragment!!.getMapAsync(this)
-        id = intent.getStringExtra("id")!!
-        (mapFragment as ScrollableMapFragment).setListener {
-            post_mapLayout.requestDisallowInterceptTouchEvent(
-                true
-            )
-        }
+         id = intent.getStringExtra("id").toString()
     }
 
     @SuppressLint("SetTextI18n")
@@ -100,9 +94,8 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         repo.getAdDetailsData().observe(this) {
             post_page.layoutManager = LinearLayoutManager(this)
             post_page.adapter = PostPageAdapter(it.data!!, id)
-            //post_page.scrollToPosition(0)
-            ItemData = it.data;
-            // if ad.used id is equal to the current user id, hide the call and message buttons
+            ItemData = it.data
+
             val userId = getSharedPreferences("user", 0).getString("user_id", "")
             if (userId == ItemData?.user_id) {
                 phone_call_btn.visibility = View.GONE
@@ -131,13 +124,41 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             type = it.data!!.type ?: ""
             lottie13.visibility = View.GONE
             Tools().viewEnable(this.window.decorView.rootView, true)
-
         }
     }
+    fun gotoMyCountry(map: HuaweiMap) {
+        val iraq = LatLng(33.3152, 44.3661)
+        val iran = LatLng(32.4279, 53.6880)
+        val saudi = LatLng(23.8859, 45.0792)
+        val kuwait = LatLng(29.3759, 47.9774)
+        val qatar = LatLng(25.3548, 51.1839)
+        val turkey = LatLng(38.9637, 35.2433)
+        val syria = LatLng(34.8021, 38.9968)
+        val builder = LatLngBounds.Builder()
+        builder.include(iraq)
+        builder.include(iran)
+        builder.include(saudi)
+        builder.include(kuwait)
+        builder.include(qatar)
+        builder.include(turkey)
+        builder.include(syria)
 
-    override fun onMapReady(p0: GoogleMap) {
-        map = p0
-        Tools().gotoMyCountry(map)
+        val bounds = builder.build()
+        val padding = 10
+        map.setLatLngBoundsForCameraTarget(bounds)
+        map.moveCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds,
+                Tools().displayWidth(),
+                Tools().displayHeight(),
+                padding
+            )
+        )
+        map.setMinZoomPreference(map.cameraPosition.zoom)
+    }
+    override fun onMapReady(huaweiMap: HuaweiMap) {
+        map = huaweiMap
+        gotoMyCountry(map)
         val repo = Repository(this)
         repo.adDetails(id)
         repo.getAdDetailsData().observe(this) {
@@ -148,16 +169,20 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                     BitmapFactory.decodeResource(
                         resources,
                         R.drawable.im_geo
-                    ), 100, 100, false
+                    ), 60, 60, false
                 )
                 val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
-                val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon).title(it.data!!.title)
+                val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
                 map.addMarker(marker)
-
             }
-
         }
+//
+//        map.getUiSettings().setCompassEnabled(true)
+//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.893478, 2.334595), 14f))
+        map.setOnMapLongClickListener(HuaweiMap.OnMapLongClickListener {
+
+        })
     }
 
     fun favorite(view: View) {
@@ -167,7 +192,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             val repo = Repository(this)
             if (favorite) {
                 repo.removeFavorite(id)
-                repo.getRemoveFavoriteData().observe(this, {
+                repo.getRemoveFavoriteData().observe(this) {
                     lottie13.visibility = View.GONE
                     Tools().viewEnable(this.window.decorView.rootView, true)
                     if (it.status) {
@@ -179,10 +204,10 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                         )
                         favorite = false
                     }
-                })
+                }
             } else {
                 repo.addFavorite(id)
-                repo.getAddFavoriteData().observe(this, {
+                repo.getAddFavoriteData().observe(this) {
                     lottie13.visibility = View.GONE
                     Tools().viewEnable(this.window.decorView.rootView, true)
                     if (it.status) {
@@ -194,7 +219,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                         )
                         favorite = true
                     }
-                })
+                }
             }
         } else {
             val intent = Intent(this, LoginWa::class.java)
@@ -207,27 +232,18 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         val bold = ResourcesCompat.getFont(this, R.font.bold)
         post_mapLayout.visibility = View.VISIBLE
         post_page.visibility = View.GONE
-
     }
 
     fun about(view: View) {
-//        location_indicator.visibility = View.INVISIBLE
-//        about_indicator.visibility = View.VISIBLE
-        /*post_location.typeface = Typeface.DEFAULT
-        post_about.typeface = Typeface.DEFAULT_BOLD*/
         val regular = ResourcesCompat.getFont(this, R.font.regular)
         val bold = ResourcesCompat.getFont(this, R.font.bold)
-//        post_location.typeface = regular
-//        post_about.typeface = bold
         post_mapLayout.visibility = View.GONE
         post_page.visibility = View.VISIBLE
         val userId = getSharedPreferences("user", 0).getString("user_id", "")
         if (userId == ItemData?.user_id) {
             phone_call_btn.visibility = View.GONE
             message_call_btn.visibility = View.GONE
-        }
-        else
-        {
+        } else {
             phone_call_btn.visibility = View.VISIBLE
             message_call_btn.visibility = View.VISIBLE
         }
@@ -240,89 +256,75 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             startActivity(dialIntent)
         } else {
             Toast.makeText(this, getString(R.string.phoneNumberNotFound), Toast.LENGTH_SHORT).show()
-            /*val dialog= AlertDialog(getString(R.string.error), getString(R.string.phoneNumberNotFound))
-            dialog.show(supportFragmentManager, "AlertDialog")*/
         }
     }
 
     fun message(view: View) {
-
         if (Tools().authCheck(this)) {
-
-        lottie13.visibility = View.VISIBLE
-        Tools().viewEnable(this.window.decorView.rootView, false)
-        var item_id = id;
-        ItemData?.let {
-            item_id = it.id.toString()
-        }
-        val partnerUserId = ItemData?.user_detail?.id ?: 0
-        val chatPartnerName = ItemData?.user_detail?.name ?: ""
-
-        // Open conversation with the partner user
-        val repo = ConversationRepository(this)
-        repo.initialConversation(partnerUserId, item_id.toInt())
-        repo.initialConversationLiveData.observe(this) { conversationResponse ->
-            val conversationId = conversationResponse.conversionId
-
-            if (conversationId != 0) {
-                // Start MessageActivity with the conversation ID
-                val intent = Intent(this, MessageActivity::class.java).apply {
-
-              var   conversationObject=  Conversation(
-                        chatPartnerId = partnerUserId,
-                        conversionId = conversationId,
-                        chatPartnerName = chatPartnerName,
-                        chatPartnerEmail = "",
-                        lastMessage = "",
-                        lastMessageAt = "",
-                        avatar = "",
-                        adId = ItemData?.id,
-                        adTitle = ItemData?.title,
-                        adPrice = ItemData?.price,
-                        adPriceCurrency = ItemData?.price_currency,
-                        adImage = ItemData?.ad_images?.get(0)?.image
-                    )
-                    putExtra("show_item", true)
-                    putExtra("conversation", conversationObject)
-                }
-                lottie13.visibility = View.GONE
-                Tools().viewEnable(this.window.decorView.rootView, true)
-                startActivity(intent)
-            } else {
-                lottie13.visibility = View.GONE
-                Tools().viewEnable(this.window.decorView.rootView, true)
-                Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT).show()
+            lottie13.visibility = View.VISIBLE
+            Tools().viewEnable(this.window.decorView.rootView, false)
+            var item_id = id
+            ItemData?.let {
+                item_id = it.id.toString()
             }
-        }
+            val partnerUserId = ItemData?.user_detail?.id ?: 0
+            val chatPartnerName = ItemData?.user_detail?.name ?: ""
+
+            val repo = ConversationRepository(this)
+            repo.initialConversation(partnerUserId, item_id.toInt())
+            repo.initialConversationLiveData.observe(this) { conversationResponse ->
+                val conversationId = conversationResponse.conversionId
+
+                if (conversationId != 0) {
+                    val intent = Intent(this, MessageActivity::class.java).apply {
+                        val conversationObject = Conversation(
+                            chatPartnerId = partnerUserId,
+                            conversionId = conversationId,
+                            chatPartnerName = chatPartnerName,
+                            chatPartnerEmail = "",
+                            lastMessage = "",
+                            lastMessageAt = "",
+                            avatar = "",
+                            adId = ItemData?.id,
+                            adTitle = ItemData?.title,
+                            adPrice = ItemData?.price,
+                            adPriceCurrency = ItemData?.price_currency,
+                            adImage = ItemData?.ad_images?.get(0)?.image
+                        )
+                        putExtra("show_item", true)
+                        putExtra("conversation", conversationObject)
+                    }
+                    lottie13.visibility = View.GONE
+                    Tools().viewEnable(this.window.decorView.rootView, true)
+                    startActivity(intent)
+                } else {
+                    lottie13.visibility = View.GONE
+                    Tools().viewEnable(this.window.decorView.rootView, true)
+                    Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT).show()
+                }
+            }
         } else {
             val intent = Intent(this, LoginWa::class.java)
             startActivity(intent)
         }
-
     }
 
     fun satellite(view: View) {
-        map.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        map.mapType = HuaweiMap.MAP_TYPE_SATELLITE
     }
 
     fun terrain(view: View) {
-        map.mapType = GoogleMap.MAP_TYPE_TERRAIN
+        map.mapType = HuaweiMap.MAP_TYPE_TERRAIN
     }
 
     fun normal(view: View) {
-        map.mapType = GoogleMap.MAP_TYPE_NORMAL
+        map.mapType = HuaweiMap.MAP_TYPE_NORMAL
     }
 
     fun share(view: View) {
         try {
             val intent = Intent(Intent.ACTION_SEND)
             val shareBody = "App advertisement\n" +
-                    "Ad title: ${post_city.text}" +
-                    "\n" +
-                    "Ad price: ${post_title.text}" +
-                    "\n" +
-                    "Ad location: ${post_address.text}" +
-                    "\n" +
                     "Ad link: ${BuildConfig.API_BASE_URL}"
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_SUBJECT, shareBody)
@@ -340,20 +342,20 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         super.onResume()
         Tools().getLocale(this)
         val language = getSharedPreferences("user", 0).getString("languageId", "")
+        val postLa = findViewById<View>(R.id.post_la)
+        val postLayout = findViewById<View>(R.id.post_layout)
         if (language == "" || language == "0" || language == "1") {
             window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
-            post_la.layoutDirection = View.LAYOUT_DIRECTION_LTR
+            postLa.layoutDirection = View.LAYOUT_DIRECTION_LTR
         } else {
             window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
-            post_la.layoutDirection = View.LAYOUT_DIRECTION_RTL
         }
-        post_layout.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        postLayout.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        mMapView.onResume()
     }
 
     fun showLocation(view: View) {
-
-        //hide call and message buttons   location_btn phone_call_btn message_call_btn
-         location_btn.visibility = View.GONE
+        location_btn.visibility = View.GONE
         phone_call_btn.visibility = View.GONE
         message_call_btn.visibility = View.GONE
         show_ad_details.visibility = View.VISIBLE
@@ -366,5 +368,36 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         message_call_btn.visibility = View.VISIBLE
         show_ad_details.visibility = View.GONE
         about(view)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mMapView?.onSaveInstanceState(outState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mMapView.onStart()
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        mMapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mMapView.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mMapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mMapView.onLowMemory()
     }
 }

@@ -20,6 +20,7 @@
 
 package com.adverial.huawei;
 
+import com.application.adverial.R;
 import com.huawei.hms.maps.HuaweiMap;
 import com.huawei.hms.maps.OnMapReadyCallback;
 import com.huawei.hms.maps.SupportMapFragment;

@@ -20,6 +20,7 @@
 
 package com.adverial.huawei;
 
+import com.application.adverial.R;
 import com.huawei.hms.maps.CameraUpdate;
 import com.huawei.hms.maps.CameraUpdateFactory;
 import com.huawei.hms.maps.HuaweiMap;

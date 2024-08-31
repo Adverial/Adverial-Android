@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapsInitializer.setApiKey("DQEDACRuLE5ygNAVgf/C/jiDIULciSgrEQuOKKATQxwiZFYsqUFTLr4CJke4SudwvutlZqfvK5OWVYZ6B16ZeM/hojk/RC6ScXsgaw==");
+        //MapsInitializer.setApiKey("DQEDACRuLE5ygNAVgf/C/jiDIULciSgrEQuOKKATQxwiZFYsqUFTLr4CJke4SudwvutlZqfvK5OWVYZ6B16ZeM/hojk/RC6ScXsgaw==");
         setContentView(R.layout.activity_main)
         val inputMethodManager: InputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -65,9 +65,9 @@ class MainActivity : AppCompatActivity() {
 
         if (NetworkUtils.isNetworkAvailable(this)) {
 
-            var intent = Intent(this, NewAdMap::class.java)
-            startActivity(intent)
-               // Tools().goto(this, Home(), false)
+//            var intent = Intent(this, NewAdMap::class.java)
+//            startActivity(intent)
+              Tools().goto(this, Home(), false)
            // setupPusher()
         } else {
             DialogUtils.showNoInternetDialog(this)

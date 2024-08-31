@@ -57,7 +57,47 @@ class Post : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapsInitializer.initialize(this)
         setContentView(R.layout.activity_post)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            // Log.i(TAG, "sdk < 28 Q")
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                val permissions = arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                ActivityCompat.requestPermissions(this, permissions, 1)
+            }
+        } else {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                    this,
+                    "android.permission.ACCESS_BACKGROUND_LOCATION"
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                val permissions = arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    "android.permission.ACCESS_BACKGROUND_LOCATION"
+                )
+                ActivityCompat.requestPermissions(this, permissions, 2)
+            }
+        }
         val activityPostRoot = findViewById<View>(R.id.activityPostRoot)
         Tools().changeViewFromTheme(this, activityPostRoot)
 
@@ -118,46 +158,11 @@ class Post : AppCompatActivity() {
                 // and that we wish for the default behavior to occur (e.g., show info window)
                 false
             }
+            mMapView.onResume()
         }
 
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-           // Log.i(TAG, "sdk < 28 Q")
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                val strings = arrayOf<String>(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-                ActivityCompat.requestPermissions(this, strings, 1)
-            }
-        } else {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this,
-                    "android.permission.ACCESS_BACKGROUND_LOCATION"
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                val strings = arrayOf<String>(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    "android.permission.ACCESS_BACKGROUND_LOCATION"
-                )
-                ActivityCompat.requestPermissions(this, strings, 2)
-            }
-        }
+
     }
     fun prorateMap(huaweiMap: HuaweiMap, locations: List<LatLng>) {
         if (locations.isEmpty()) return

@@ -83,7 +83,7 @@ object NewMessageNotification {
     ) {
         createNotificationChannel(context, CHANNEL_ID, "Message Channel")
         val intent = Intent(context, MessageActivity::class.java).apply {
-         var   conversationRequest= Conversation(
+         val   conversationRequest= Conversation(
                 chatPartnerId = 0,
                 conversionId = conversation_id,
                 chatPartnerName = user_name,

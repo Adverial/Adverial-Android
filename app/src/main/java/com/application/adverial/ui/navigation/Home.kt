@@ -32,18 +32,18 @@ import com.application.adverial.ui.dialog.Language
 import com.application.adverial.ui.dialog.SearchDialog
 import com.application.adverial.utils.NewMessageNotification
 import com.application.adverial.utils.NotificationUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_home.homeRoot
 import kotlinx.android.synthetic.main.activity_home.home_category
 import kotlinx.android.synthetic.main.activity_home.home_drawerLayout
 import kotlinx.android.synthetic.main.activity_home.home_language
 import kotlinx.android.synthetic.main.activity_home.home_products
-//import kotlinx.android.synthetic.main.activity_home.lottie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import java.util.Objects
-
 
 class Home : AppCompatActivity() {
 
@@ -70,35 +70,30 @@ class Home : AppCompatActivity() {
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
         swipeRefreshLayout.setOnRefreshListener {
-            fetchDataAds();
+            fetchDataAds()
         }
         drawerInit()
         pageInit()
         Tools().setBasedLogo(this, R.id.home_logo)
+        Tools().setBarBackground(this, R.id.image_bg_bar)
 
-       Tools().setBarBackground(this, R.id.image_bg_bar)
-
-        if(!NotificationUtils.areNotificationsEnabled(this))
+        if (!NotificationUtils.areNotificationsEnabled(this))
             NotificationUtils.requestNotificationPermission(this)
         else
             NewMessageNotification.setupNewMessageNotification(this)
-
     }
 
     private fun fetchDataAds() {
-         //DELTEE ALL HOME PRODUCT
         posts.clear()
         homeAdsAdapter.notifyDataSetChanged()
         page = 0
         scrollPermission = true
         isFinished = false
         nextPage()
-swipeRefreshLayout.isRefreshing = false
-
+        swipeRefreshLayout.isRefreshing = false
     }
 
     private fun pageInit() {
-      //  lottie.visibility = View.VISIBLE
         Tools().viewEnable(window.decorView.rootView, true)
         home_category.layoutManager = LinearLayoutManager(this)
         home_products.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
@@ -116,52 +111,45 @@ swipeRefreshLayout.isRefreshing = false
                 repo.getMainCategoryData().observe(this@Home) {
                     if (it.status) {
                         val list = ArrayList<SubCategory>()
-                        for (i in it.data)  list.add(i)
+                        for (i in it.data) list.add(i)
                         menuCategoriesRecyclerView.adapter =
                             MenuCategoryAdapter(list as List<SubCategory>)
                         home_category.adapter = HomeCategoryAdapter(list as List<SubCategory>)
                     }
                     categoriesStatus = true
-                   // lottieHide()
                 }
             }
         }
 
         nextPage()
         updateLanguageUI()
-
     }
 
-   private fun nextPage() {
-    if (!isFinished) {
-        scrollPermission = false
-        page++
-        val coroutineScope1 = CoroutineScope(Dispatchers.IO)
-        coroutineScope1.async(Dispatchers.IO) {
-            val repo = Repository(this@Home)
-            repo.showRoom(showRoomType, page)
-            runOnUiThread {
-                repo.getShowRoomData().observe(this@Home) {
-                    if (it.data.isNullOrEmpty()) {
-                        isFinished = true
-                    } else {
-
-                        for (i in it.data ?: listOf()) {
-                            posts.add(i)
+    private fun nextPage() {
+        if (!isFinished) {
+            scrollPermission = false
+            page++
+            val coroutineScope1 = CoroutineScope(Dispatchers.IO)
+            coroutineScope1.async(Dispatchers.IO) {
+                val repo = Repository(this@Home)
+                repo.showRoom(showRoomType, page)
+                runOnUiThread {
+                    repo.getShowRoomData().observe(this@Home) {
+                        if (it.data.isNullOrEmpty()) {
+                            isFinished = true
+                        } else {
+                            for (i in it.data ?: listOf()) {
+                                posts.add(i)
+                            }
+                            homeAdsAdapter.notifyDataSetChanged()
+                            scrollPermission = true
+                            showRoomStatus = true
                         }
-                        homeAdsAdapter.notifyDataSetChanged()
-                        scrollPermission = true
-                        showRoomStatus = true
-                        //lottieHide()
-
                     }
                 }
             }
         }
-    } else {
-//        Log.e("nextPage", "isFinished is true. Not fetching new page.")
     }
-}
 
     @SuppressLint("SetTextI18n")
     private fun drawerInit() {
@@ -181,7 +169,6 @@ swipeRefreshLayout.isRefreshing = false
                     name.text = "Welcome " + it.data?.name + ","
                 }
             }
-
         } else {
             name.text = getString(R.string.menu_welcome)
         }
@@ -251,10 +238,9 @@ swipeRefreshLayout.isRefreshing = false
         )
         val dialog = DropList(sortItems, resources.getString(R.string.sort_title))
         dialog.show(supportFragmentManager, "DropList")
-        dialog.getStatus().observe(this) { itt ->
-            //lottie.visibility = View.VISIBLE
+        dialog.getStatus().observe(this) {
             Tools().viewEnable(view, false)
-            showRoomType = itt.id
+            showRoomType = it.id
             page = 0
             scrollPermission = true
             isFinished = false
@@ -309,7 +295,6 @@ swipeRefreshLayout.isRefreshing = false
 
     private fun lottieHide() {
         if (categoriesStatus && showRoomStatus) {
-           // lottie.visibility = View.GONE
             Tools().viewEnable(window.decorView.rootView, true)
         }
     }
@@ -340,7 +325,7 @@ swipeRefreshLayout.isRefreshing = false
         finish()
     }
 
-  fun   openNotifications(view: View) {
+    fun openNotifications(view: View) {
         if (Tools().authCheck(this)) {
             val intent = Intent(this, Notifications::class.java)
             startActivity(intent)
@@ -369,5 +354,4 @@ swipeRefreshLayout.isRefreshing = false
             View.LAYOUT_DIRECTION_LTR
         else window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
     }
-
 }

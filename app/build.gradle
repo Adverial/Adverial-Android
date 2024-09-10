@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.huawei.agconnect'
 }
 apply plugin: "kotlin-android-extensions"
 def loadProperties() {
@@ -55,6 +56,12 @@ android {
             keyAlias 'key0'
             keyPassword '123456'
         }
+        config {
+            storeFile rootProject.file('store_key.jks')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias 'key0'
+        }
     }
 
     buildTypes {
@@ -62,7 +69,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             multiDexEnabled true
-            signingConfig signingConfigs.release
             ndk.debugSymbolLevel = 'FULL'
             buildConfigField "String", "API_BASE_URL",  "\"${envProperties['API_BASE_URL']}\""
             //WEBSITE_URL
@@ -87,6 +93,7 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
@@ -132,7 +139,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'id.zelory:compressor:3.0.1'
     //implementation 'com.github.scrounger:countrycurrencypicker:1.1.1'
-    implementation 'com.huawei.hms:location:5.1.0.301'
-    implementation 'com.huawei.hms:maps:5.2.0.301'
+    implementation 'com.huawei.hms:location:6.8.0.302'
+    implementation 'com.huawei.hms:maps:6.11.2.301'
 }
+
 apply plugin: 'com.huawei.agconnect'

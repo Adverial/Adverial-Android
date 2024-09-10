@@ -11,8 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -29,11 +27,10 @@ import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
-import com.huawei.hms.maps.HuaweiMapOptions
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
-import com.huawei.hms.maps.UiSettings
+import com.huawei.hms.maps.SupportMapFragment
 import com.huawei.hms.maps.model.BitmapDescriptorFactory
 import com.huawei.hms.maps.model.LatLng
 import com.huawei.hms.maps.model.LatLngBounds
@@ -41,7 +38,7 @@ import com.huawei.hms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_post.*
 
 
-class Post : AppCompatActivity() {
+class Post : AppCompatActivity(),OnMapReadyCallback{
     private lateinit var map: HuaweiMap
     private var id = ""
     private var phoneNumber = ""
@@ -104,79 +101,14 @@ class Post : AppCompatActivity() {
         pageInit()
         fetchData()
         Tools().setBasedLogo(this, R.id.app_logo)
-        // hide
+
         show_ad_details.visibility = View.GONE
-        val mapOptions = HuaweiMapOptions()
-            .mapType(HuaweiMap.MAP_TYPE_NORMAL)
-            .zoomControlsEnabled(true)
-            .compassEnabled(true)
-            .rotateGesturesEnabled(true)
-            .tiltGesturesEnabled(true)
-            .scrollGesturesEnabled(true)
-            .zoomGesturesEnabled(true)
-
-        mMapView = MapView(this, mapOptions)
-        val layout = findViewById<FrameLayout>(R.id.post_map1)
-        layout.addView(mMapView)
-        mMapView.onCreate(savedInstanceState)
-
-        mMapView.getMapAsync { huaweiMap ->
-            val repo = Repository(this)
-            repo.adDetails(id)
-            repo.getAdDetailsData().observe(this) { adDetails ->
-                adDetails?.data?.let { data ->
-                    if (!data.lat.isNullOrBlank() && !data.lon.isNullOrBlank()) {
-                        val latLng = LatLng(data.lat!!.toDouble(), data.lon!!.toDouble())
-                        val smallMarker = Bitmap.createScaledBitmap(
-                            BitmapFactory.decodeResource(resources, R.drawable.im_geo),
-                            130, 130, false
-                        )
-                        val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
-
-                        val marker = huaweiMap.addMarker(
-                            MarkerOptions()
-                                .position(latLng)
-                                .icon(smallMarkerIcon)
-                                .title(data.title)
-                        )
-                        huaweiMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                    }
-                }
-            }
-
-            huaweiMap.setOnCameraIdleListener {
-                val currentZoom = huaweiMap.cameraPosition.zoom
-                if (currentZoom < 10f) {
-                    huaweiMap.animateCamera(CameraUpdateFactory.zoomTo(10f))
-                }
-            }
-            huaweiMap.setOnMarkerClickListener { marker ->
-                // Zoom to the marker's position with animation
-                huaweiMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 18f))
-
-                // Return false to indicate that we have not consumed the event
-                // and that we wish for the default behavior to occur (e.g., show info window)
-                false
-            }
-            mMapView.onResume()
-        }
+        val mSupportMapFragment: SupportMapFragment? = supportFragmentManager.findFragmentById(R.id.mapfragment_mapfragmentdemo) as SupportMapFragment?
+        mSupportMapFragment?.getMapAsync(this)
 
 
 
-    }
-    fun prorateMap(huaweiMap: HuaweiMap, locations: List<LatLng>) {
-        if (locations.isEmpty()) return
 
-        val builder = LatLngBounds.Builder()
-        for (location in locations) {
-            builder.include(location)
-        }
-
-        val bounds = builder.build()
-        val padding = 100 // Offset from edges of the map in pixels
-        val cu = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-
-        huaweiMap.animateCamera(cu)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -225,52 +157,36 @@ class Post : AppCompatActivity() {
             Tools().viewEnable(this.window.decorView.rootView, true)
         }
     }
-    fun gotoMyCountry(map: HuaweiMap) {
-        val iraq = LatLng(33.3152, 44.3661)
-        val iran = LatLng(32.4279, 53.6880)
-        val saudi = LatLng(23.8859, 45.0792)
-        val kuwait = LatLng(29.3759, 47.9774)
-        val qatar = LatLng(25.3548, 51.1839)
-        val turkey = LatLng(38.9637, 35.2433)
-        val syria = LatLng(34.8021, 38.9968)
-        val builder = LatLngBounds.Builder()
-        builder.include(iraq)
-        builder.include(iran)
-        builder.include(saudi)
-        builder.include(kuwait)
-        builder.include(qatar)
-        builder.include(turkey)
-        builder.include(syria)
 
-        val bounds = builder.build()
-        val padding = 10
-        map.setLatLngBoundsForCameraTarget(bounds)
-        map.moveCamera(
-            CameraUpdateFactory.newLatLngBounds(
-                bounds,
-                Tools().displayWidth(),
-                Tools().displayHeight(),
-                padding
-            )
-        )
-        map.setMinZoomPreference(map.cameraPosition.zoom)
-    }
-     fun onMapReady(huaweiMap: HuaweiMap) {
+   override  fun onMapReady(huaweiMap: HuaweiMap) {
         map = huaweiMap
 
-//        map.isTrafficEnabled = true;
-//        map.uiSettings.isCompassEnabled = true
-//        map.uiSettings.isZoomControlsEnabled = true
-//        map.uiSettings.isScrollGesturesEnabled = true
-//        map.uiSettings.isZoomGesturesEnabled = true
-//        map.uiSettings.isTiltGesturesEnabled = true
-//        map.uiSettings.isRotateGesturesEnabled = true
-////        mUiSettings = map.uiSettings
-//        map.mapType = HuaweiMap.MAP_TYPE_TERRAIN
-       // map.apply { setOnMapLoadedCallback { gotoMyCountry(map) } }
+       map.uiSettings.isZoomControlsEnabled = true
+       map.uiSettings.isScrollGesturesEnabled = true
+       map.uiSettings.isRotateGesturesEnabled = true
 
+       val repo = Repository(this)
+       repo.adDetails(id)
+       repo.getAdDetailsData().observe(this) { adDetails ->
+           adDetails?.data?.let { data ->
+               if (!data.lat.isNullOrBlank() && !data.lon.isNullOrBlank()) {
+                   val latLng = LatLng(data.lat!!.toDouble(), data.lon!!.toDouble())
+                   val smallMarker = Bitmap.createScaledBitmap(
+                       BitmapFactory.decodeResource(resources, R.drawable.im_geo),
+                       170, 170, false
+                   )
+                   val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
 
-       // mMapView.onResume()
+                   val marker = map.addMarker(
+                       MarkerOptions()
+                           .position(latLng)
+                           .icon(smallMarkerIcon)
+                           .title(data.title)
+                   )
+                   map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+               }
+           }
+       }
 
     }
 
@@ -440,7 +356,6 @@ class Post : AppCompatActivity() {
             window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
         }
         postLayout.layoutDirection = View.LAYOUT_DIRECTION_LTR
-        mMapView.onResume()
     }
 
     fun showLocation(view: View) {
@@ -461,37 +376,8 @@ class Post : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        var mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY)
-        if (mapViewBundle == null) {
-            mapViewBundle = Bundle()
-            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle)
-        }
-        mMapView.onSaveInstanceState(mapViewBundle)
-    }
 
-    override fun onStart() {
-        super.onStart()
-        mMapView.onStart()
     }
 
 
-    override fun onPause() {
-        super.onPause()
-        mMapView.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mMapView.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mMapView.onDestroy()
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mMapView.onLowMemory()
-    }
 }

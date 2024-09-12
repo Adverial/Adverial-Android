@@ -10,11 +10,27 @@ class CustomNestedScrollView @JvmOverloads constructor(
 ) : NestedScrollView(context, attrs) {
 
     private var isMapTouched = false
-    private var isMultiTouch = false
+    private var isSingleTouchActive = false
+    private var lastTouchY = 0f
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        // Allow the scroll view to intercept unless the map is being touched or there are multiple touch points
-        return if (isMapTouched || isMultiTouch) {
+        when (ev?.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                isSingleTouchActive = true
+                lastTouchY = ev.y
+            }
+            MotionEvent.ACTION_MOVE -> {
+                val yDiff = Math.abs(ev.y - lastTouchY)
+                if (isMapTouched || yDiff < 10) {
+                    // If map is touched or minimal scrolling has occurred, don't intercept the event
+                    return false
+                }
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                isSingleTouchActive = false
+            }
+        }
+        return if (isMapTouched || isSingleTouchActive) {
             false
         } else {
             super.onInterceptTouchEvent(ev)
@@ -22,16 +38,23 @@ class CustomNestedScrollView @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
-        // Handle multi-touch events separately (like zooming)
         when (ev?.actionMasked) {
-            MotionEvent.ACTION_DOWN -> isMultiTouch = false
-            MotionEvent.ACTION_POINTER_DOWN -> isMultiTouch = true
-            MotionEvent.ACTION_POINTER_UP -> isMultiTouch = false
-            MotionEvent.ACTION_UP -> isMapTouched = false
+            MotionEvent.ACTION_DOWN -> {
+                isSingleTouchActive = true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                val yDiff = Math.abs(ev.y - lastTouchY)
+                if (isMapTouched || yDiff < 10) {
+                    // Allow map interaction if it's being touched or scrolling is minimal
+                    return false
+                }
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                isSingleTouchActive = false
+            }
         }
 
-        return if (isMapTouched || isMultiTouch) {
-            // If map is being interacted with, don't handle the touch event here
+        return if (isMapTouched || isSingleTouchActive) {
             false
         } else {
             super.onTouchEvent(ev)

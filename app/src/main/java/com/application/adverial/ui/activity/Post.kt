@@ -1,19 +1,17 @@
 
 package com.application.adverial.ui.activity
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,15 +23,17 @@ import com.application.adverial.remote.model.Ad
 import com.application.adverial.remote.model.Conversation
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
+import com.application.adverial.ui.custom.CustomNestedScrollView
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
+import com.huawei.hms.maps.HuaweiMapOptions
+import com.huawei.hms.maps.MapFragment
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.huawei.hms.maps.SupportMapFragment
 import com.huawei.hms.maps.model.BitmapDescriptorFactory
 import com.huawei.hms.maps.model.LatLng
-import com.huawei.hms.maps.model.LatLngBounds
 import com.huawei.hms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_post.*
 
@@ -43,58 +43,11 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
     private var id = ""
     private var phoneNumber = ""
     private var favorite = false
-    private var lat = 0.0
-    private var lon = 0.0
     private var type = ""
     private var ItemData: Ad? = null
-    private lateinit var mMapView: MapView
-    companion object {
-        private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapsInitializer.initialize(this)
         setContentView(R.layout.activity_post)
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            // Log.i(TAG, "sdk < 28 Q")
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                val permissions = arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-                ActivityCompat.requestPermissions(this, permissions, 1)
-            }
-        } else {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                    this,
-                    "android.permission.ACCESS_BACKGROUND_LOCATION"
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                val permissions = arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    "android.permission.ACCESS_BACKGROUND_LOCATION"
-                )
-                ActivityCompat.requestPermissions(this, permissions, 2)
-            }
-        }
         val activityPostRoot = findViewById<View>(R.id.activityPostRoot)
         Tools().changeViewFromTheme(this, activityPostRoot)
 
@@ -103,22 +56,32 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
         Tools().setBasedLogo(this, R.id.app_logo)
 
         show_ad_details.visibility = View.GONE
-        val mSupportMapFragment: SupportMapFragment? = supportFragmentManager.findFragmentById(R.id.mapfragment_mapfragmentdemo) as SupportMapFragment?
+        val huaweiMapOptions = HuaweiMapOptions().zoomControlsEnabled(false)
+            .compassEnabled(true)
+            .zoomGesturesEnabled(true)
+            .scrollGesturesEnabled(true)
+            .rotateGesturesEnabled(false)
+            .tiltGesturesEnabled(true)
+            .zOrderOnTop(true)
+            .useViewLifecycleInFragment(true)
+            .liteMode(true)
+            .minZoomPreference(3f)
+            .maxZoomPreference(13f)
+// Set a standard map.
+        huaweiMapOptions.mapType(HuaweiMap.MAP_TYPE_NORMAL)
+        var mSupportMapFragment = SupportMapFragment.newInstance(huaweiMapOptions)
+        mSupportMapFragment = supportFragmentManager.findFragmentById(R.id.mapfragment_mapfragmentdemo) as SupportMapFragment?
         mSupportMapFragment?.getMapAsync(this)
-
-
 
 
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun pageInit() {
         lottie13.visibility = View.VISIBLE
         Tools().viewEnable(this.window.decorView.rootView, false)
          id = intent.getStringExtra("id").toString()
     }
 
-    @SuppressLint("SetTextI18n")
     private fun fetchData() {
         val repo = Repository(this)
         repo.adDetails(id)
@@ -132,6 +95,7 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
                 phone_call_btn.visibility = View.GONE
                 message_call_btn.visibility = View.GONE
             }
+
             post_title1.text = it.data!!.price_currency
             post_city1.text = it.data!!.title
             phoneNumber = it.data!!.phone ?: ""
@@ -160,11 +124,6 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
 
    override  fun onMapReady(huaweiMap: HuaweiMap) {
         map = huaweiMap
-
-       map.uiSettings.isZoomControlsEnabled = true
-       map.uiSettings.isScrollGesturesEnabled = true
-       map.uiSettings.isRotateGesturesEnabled = true
-
        val repo = Repository(this)
        repo.adDetails(id)
        repo.getAdDetailsData().observe(this) { adDetails ->
@@ -177,7 +136,7 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
                    )
                    val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
 
-                   val marker = map.addMarker(
+                map.addMarker(
                        MarkerOptions()
                            .position(latLng)
                            .icon(smallMarkerIcon)
@@ -186,6 +145,15 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                }
            }
+       }
+       map.setOnCameraMoveStartedListener {
+           // Notify the scroll view that the map is being touched
+           findViewById<CustomNestedScrollView>(R.id.post_mapLayout).setMapTouched(true)
+       }
+
+       map.setOnCameraIdleListener {
+           // Notify the scroll view that the map is no longer being touched
+           findViewById<CustomNestedScrollView>(R.id.post_mapLayout).setMapTouched(false)
        }
 
     }
@@ -233,10 +201,11 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
     }
 
     fun location(view: View) {
-        val regular = ResourcesCompat.getFont(this, R.font.regular)
-        val bold = ResourcesCompat.getFont(this, R.font.bold)
         post_mapLayout.visibility = View.VISIBLE
         post_page.visibility = View.GONE
+        //requestDisallowInterceptTouchEvent  for post page
+        post_page.requestDisallowInterceptTouchEvent(true)
+
     }
 
     fun about(view: View) {
@@ -364,6 +333,7 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
         message_call_btn.visibility = View.GONE
         show_ad_details.visibility = View.VISIBLE
         location(view)
+
     }
 
     fun showAdDetails(view: View) {
@@ -372,11 +342,6 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
         message_call_btn.visibility = View.VISIBLE
         show_ad_details.visibility = View.GONE
         about(view)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
     }
 
 

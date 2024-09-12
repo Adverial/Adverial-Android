@@ -112,7 +112,7 @@
             android:layout_marginTop="@dimen/_60sdp"
             android:layout_weight="1">
 
-            <androidx.core.widget.NestedScrollView
+            <com.application.adverial.ui.custom.CustomNestedScrollView
                 android:id="@+id/post_mapLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -222,7 +222,7 @@
                     </FrameLayout>
 
                 </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
+            </com.application.adverial.ui.custom.CustomNestedScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/post_page"

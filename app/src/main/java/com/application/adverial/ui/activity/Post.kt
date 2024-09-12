@@ -146,14 +146,25 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
                }
            }
        }
+       val mapLayout = findViewById<CustomNestedScrollView>(R.id.post_mapLayout)
+
        map.setOnCameraMoveStartedListener {
-           // Notify the scroll view that the map is being touched
-           findViewById<CustomNestedScrollView>(R.id.post_mapLayout).setMapTouched(true)
+           mapLayout.setMapTouched(true)
        }
 
+       // Detect when the camera stops moving, which usually indicates the user is done interacting
        map.setOnCameraIdleListener {
-           // Notify the scroll view that the map is no longer being touched
-           findViewById<CustomNestedScrollView>(R.id.post_mapLayout).setMapTouched(false)
+           mapLayout.setMapTouched(false)
+       }
+
+       // Optionally: Detect other interactions, such as zoom or scrolling with the map
+       map.setOnMapClickListener {
+           mapLayout.setMapTouched(true)
+       }
+
+       map.setOnMapLoadedCallback {
+           // Ensure the map is fully loaded before allowing interactions
+           mapLayout.setMapTouched(false)
        }
 
     }

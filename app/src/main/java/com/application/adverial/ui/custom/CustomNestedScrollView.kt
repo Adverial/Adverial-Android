@@ -10,10 +10,11 @@ class CustomNestedScrollView @JvmOverloads constructor(
 ) : NestedScrollView(context, attrs) {
 
     private var isMapTouched = false
+    private var isMultiTouch = false
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        // When the map is being touched, prevent the NestedScrollView from intercepting the touch events
-        return if (isMapTouched) {
+        // Allow the scroll view to intercept unless the map is being touched or there are multiple touch points
+        return if (isMapTouched || isMultiTouch) {
             false
         } else {
             super.onInterceptTouchEvent(ev)
@@ -21,8 +22,16 @@ class CustomNestedScrollView @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
-        // Allow touch events to be passed to the map
-        return if (isMapTouched) {
+        // Handle multi-touch events separately (like zooming)
+        when (ev?.actionMasked) {
+            MotionEvent.ACTION_DOWN -> isMultiTouch = false
+            MotionEvent.ACTION_POINTER_DOWN -> isMultiTouch = true
+            MotionEvent.ACTION_POINTER_UP -> isMultiTouch = false
+            MotionEvent.ACTION_UP -> isMapTouched = false
+        }
+
+        return if (isMapTouched || isMultiTouch) {
+            // If map is being interacted with, don't handle the touch event here
             false
         } else {
             super.onTouchEvent(ev)

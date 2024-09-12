@@ -140,12 +140,22 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
                        MarkerOptions()
                            .position(latLng)
                            .icon(smallMarkerIcon)
-                           .title(data.title)
+                           .title(data.title +" ("+data.price_currency+")")
                    )
-                   map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                   map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
                }
            }
        }
+
+       //set on marker
+         map.setOnMarkerClickListener {
+              val latLng = it.position
+              map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+              // show the info window
+                it.showInfoWindow()
+              true
+
+         }
        val mapLayout = findViewById<CustomNestedScrollView>(R.id.post_mapLayout)
 
        map.setOnCameraMoveStartedListener {

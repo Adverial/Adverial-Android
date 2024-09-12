@@ -15,6 +15,7 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
+import com.huawei.hms.maps.HuaweiMapOptions
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.huawei.hms.maps.SupportMapFragment
 import com.huawei.hms.maps.model.LatLng
@@ -49,8 +50,22 @@ city = intent.getStringExtra("city") ?: "defaultCity"
 district = intent.getStringExtra("district") ?: "defaultDistrict"
 
         // Initialize HuaweiMapFragment instead of Google Map's SupportMapFragment
-        mapFragment = supportFragmentManager.findFragmentById(R.id.newAdMap_map) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
+        val huaweiMapOptions = HuaweiMapOptions().zoomControlsEnabled(false)
+            .compassEnabled(true)
+            .zoomGesturesEnabled(true)
+            .scrollGesturesEnabled(true)
+            .rotateGesturesEnabled(false)
+            .tiltGesturesEnabled(true)
+            .zOrderOnTop(true)
+            .useViewLifecycleInFragment(true)
+            .liteMode(true)
+            .minZoomPreference(3f)
+            .maxZoomPreference(13f)
+// Set a standard map.
+        huaweiMapOptions.mapType(HuaweiMap.MAP_TYPE_NORMAL)
+        var mSupportMapFragment = SupportMapFragment.newInstance(huaweiMapOptions)
+        mSupportMapFragment = supportFragmentManager.findFragmentById(R.id.newAdMap_map) as SupportMapFragment?
+        mSupportMapFragment?.getMapAsync(this)
     }
 
     override fun onMapReady(huaweiMap: HuaweiMap) {

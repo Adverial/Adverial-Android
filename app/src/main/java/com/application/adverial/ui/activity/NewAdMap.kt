@@ -1,5 +1,6 @@
 package com.application.adverial.ui.activity
 
+// Import Huawei-specific classes instead of Google Maps
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,20 +15,16 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
-import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.OnMapReadyCallback
+import com.huawei.hms.maps.SupportMapFragment
 import com.huawei.hms.maps.model.LatLng
-import com.huawei.hms.location.LocationServices
-import com.huawei.hms.location.LocationCallback
-import com.huawei.hms.location.LocationRequest
-import com.huawei.hms.location.LocationResult
-import com.huawei.hms.maps.model.MarkerOptions
+import io.nlopez.smartlocation.SmartLocation
 import kotlinx.android.synthetic.main.activity_new_ad_map.lottie12
 
 class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mapView: MapView
-    private lateinit var huaweiMap: HuaweiMap
+    private var mapFragment: SupportMapFragment? = null
+    private lateinit var map: HuaweiMap
     private var lat= ""
     private var lon= ""
     private var adId= ""
@@ -40,93 +37,70 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_new_ad_map)
 
         Tools().setBasedLogo(this, R.id.imageView47)
-        mapView = findViewById(R.id.newAdMap_map)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
         pageInit()
         Tools().locationRequest(this)
         myLocation()
-
     }
 
-    private fun pageInit(){
-        adId = intent.getStringExtra("adId") ?: ""
-        country = intent.getStringExtra("country") ?: ""
-        city = intent.getStringExtra("city") ?: ""
-        district = intent.getStringExtra("district") ?: ""
+    private fun pageInit() {
+        adId = intent.getStringExtra("adId") ?: "defaultAdId"
+country = intent.getStringExtra("country") ?: "defaultCountry"
+city = intent.getStringExtra("city") ?: "defaultCity"
+district = intent.getStringExtra("district") ?: "defaultDistrict"
 
-
+        // Initialize HuaweiMapFragment instead of Google Map's SupportMapFragment
+        mapFragment = supportFragmentManager.findFragmentById(R.id.newAdMap_map) as SupportMapFragment?
+        mapFragment!!.getMapAsync(this)
     }
 
-    override fun onMapReady(map: HuaweiMap) {
-        huaweiMap = map
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+    override fun onMapReady(huaweiMap: HuaweiMap) {
+        map = huaweiMap
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
-
-        huaweiMap.isMyLocationEnabled = true
-        myLocation()
+        map.isMyLocationEnabled = true
+        map.setOnCameraIdleListener {
+            val target = map.cameraPosition.target
+            lat = target.latitude.toString()
+            lon = target.longitude.toString()
+        }
     }
+
 
     private fun myLocation() {
-        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        val locationRequest = LocationRequest().apply {
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 10000
-        }
+        // Using SmartLocation for retrieving the location
+        SmartLocation.with(this).location().start { location ->
+            if (lat.isBlank() && lon.isBlank()) {
+                lat = location.latitude.toString()
+                lon = location.longitude.toString()
+                val latLng = LatLng(location.latitude, location.longitude)
 
-        val locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult ?: return
-                for (location in locationResult.locations) {
-                    if (lat.isBlank() && lon.isBlank()) {
-                        lat = location.latitude.toString()
-                        lon = location.longitude.toString()
-                        val latLng = LatLng(location.latitude, location.longitude)
-
-                        // Add a marker on the user's current location
-                        val markerOptions = MarkerOptions().position(latLng).title("My Location")
-                        huaweiMap.addMarker(markerOptions)
-
-                        // Zoom the map to the user's location
-                        huaweiMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-
-                        // Optionally, you can stop location updates after getting the location
-                        fusedLocationProviderClient.removeLocationUpdates(this)
-                    }
-                }
+                // Move camera on Huawei Map
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
             }
         }
-
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
 
-    fun next(view: View){
+    fun next(view: View) {
 
-        // alert lon and lat
+        //toast the lan and lon
        // Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
-        if(lat.isNotBlank() && lon.isNotBlank()){
-            lottie12.visibility= View.VISIBLE
+        if (lat.isNotBlank() && lon.isNotBlank()) {
+            lottie12.visibility = View.VISIBLE
             Tools().viewEnable(this.window.decorView.rootView, false)
-            val repo= Repository(this)
+
+            val repo = Repository(this)
             repo.addAdLocation(adId, country, city, district, lat, lon)
-            repo.getAddAdLocationData().observe(this) { result ->
-                lottie12.visibility= View.GONE
+            repo.getAddAdLocationData().observe(this, {
+                lottie12.visibility = View.GONE
                 Tools().viewEnable(this.window.decorView.rootView, true)
-                if(result.status){
-                    val intent= Intent(this, NewAdImages::class.java)
+
+                if (it.status) {
+                    val intent = Intent(this, NewAdImages::class.java)
                     intent.putExtra("adId", adId)
                     startActivity(intent)
                 }
-            }
+            })
         } else {
             Toast.makeText(this, resources.getString(R.string.locationNotFound), Toast.LENGTH_SHORT).show()
         }
@@ -134,22 +108,16 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onResume() {
         super.onResume()
-        mapView.onResume()
         Tools().getLocale(this)
         val language = getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" || language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
+        if (language == "" || language == "0" || language == "1") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
-        mapView.onPause()
+    fun back(view: View) {
+        finish()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapView.onDestroy()
-    }
-
-    fun back(view: View){ finish() }
 }

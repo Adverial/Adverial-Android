@@ -10,8 +10,9 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.dialog.AlertDialog1
 import com.application.adverial.ui.navigation.Home
-import kotlinx.android.synthetic.main.activity_my_account.countryCodePicker
+import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.activity_my_account.deleteAccount
+import kotlinx.android.synthetic.main.activity_my_account.imageView62
 import kotlinx.android.synthetic.main.activity_my_account.myAccountRoot
 import kotlinx.android.synthetic.main.activity_my_account.myaccount_firstname
 import kotlinx.android.synthetic.main.activity_my_account.myaccount_phone
@@ -28,8 +29,10 @@ class MyAccount : AppCompatActivity() {
         Tools().setBasedLogo(this, R.id.imageView42)
         //disable the phone number field
         myaccount_phone.isEnabled= false
-
+        imageView62.visibility= View.GONE
         pageInit()
+
+
 
     }
 
@@ -44,8 +47,11 @@ class MyAccount : AppCompatActivity() {
             if (it.status) {
                 lastPhone = it.data.whatsappNumber ?: ""
                 myaccount_firstname.setText(it.data.name ?: "")
-                countryCodePicker.setCountryForPhoneCode(it.data.whatsappNumber?.substring(0, 4)?.toInt() ?: 0)
-                myaccount_phone.setText(it.data.whatsappNumber?.substring(4) ?: "")
+               // countryCodePicker.setCountryForPhoneCode(it.data.whatsappNumber?.substring(0, 4)?.toInt() ?: 0)
+                myaccount_phone.setText(it.data.whatsappNumber)
+                // make the phone number field not editable and disable color background
+                myaccount_phone.isEnabled= false
+
             }
         }
 
@@ -81,7 +87,7 @@ class MyAccount : AppCompatActivity() {
     }
 
     fun save(view: View) {
-        if (myaccount_phone.length() == 10) {
+        if (myaccount_phone.length() == 14) {
             lottie14.visibility = View.VISIBLE
             Tools().viewEnable(this.window.decorView.rootView, false)
 
@@ -94,16 +100,8 @@ class MyAccount : AppCompatActivity() {
                 if (updateResult.status) {
                     lottie14.visibility = View.GONE
                     Tools().viewEnable(this.window.decorView.rootView, true)
-                     var phone = countryCodePicker.selectedCountryCodeWithPlus+myaccount_phone.text.toString()
-                    if (phone == lastPhone) {
                         Toast.makeText(this, resources.getString(R.string.accountUpdateDone), Toast.LENGTH_SHORT).show()
                         finish()
-                    } else {
-                        // need to post is-verified
-                        val intent = Intent(this, PhoneAuth::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
                 }
             }
         } else {

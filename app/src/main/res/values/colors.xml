@@ -31,4 +31,6 @@
     <color name="viewColor">#FFFFFF</color>
     <color name="inputBgColor">#BFD3D3D3</color> <!-- Change the color code as per your requirement -->
     <color name="toolbarColor">#ece1d7</color>
+    // disable color for text edit
+    <color name="disable_color">#7C0B0B0B</color>
 </resources>

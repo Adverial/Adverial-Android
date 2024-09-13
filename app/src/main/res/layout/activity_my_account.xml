@@ -114,39 +114,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView344" />
 
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/countryCodePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_3sdp"
-            app:ccpDialog_backgroundColor="@color/viewColor"
-            app:ccpDialog_textColor="@color/white"
-            app:ccp_autoDetectCountry="true"
-            app:ccp_contentColor="@color/textColor"
-            app:ccp_showFlag="false"
-            app:ccp_showNameCode="false"
-            app:ccp_textSize="@dimen/_12ssp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-            app:layout_constraintStart_toStartOf="@+id/imageView8"
-            app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
 
         <EditText
             android:id="@+id/myaccount_phone"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/inputBgColor"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/textColor"
+            android:textColor="@color/disable_color"
             android:ems="10"
             android:fontFamily="@font/regular"
             android:hint="@string/my_account_phone"
             android:inputType="phone"
-            android:maxLength="10"
+            android:maxLength="14"
             android:textSize="@dimen/_12ssp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:layout_margin="@dimen/_2ssp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintEnd_toStartOf="@+id/imageView62"
-            app:layout_constraintStart_toEndOf="@+id/countryCodePicker"
+            app:layout_constraintStart_toStartOf="@+id/imageView8"
             app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
 
         <ImageView
             android:id="@+id/imageView62"

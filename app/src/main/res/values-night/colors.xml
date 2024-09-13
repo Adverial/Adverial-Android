@@ -30,4 +30,5 @@
     <color name="viewColor">#CB3C3A37</color>
     <color name="inputBgColor">#FF2F2F2F</color>
     <color name="toolbarColor">#30271c</color>
+    <color name="disable_color">#BFD3D3D3</color>
 </resources>

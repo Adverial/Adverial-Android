@@ -1,8 +1,11 @@
 package com.application.adverial.ui.activity
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,6 +13,7 @@ import com.application.adverial.R
 import com.application.adverial.remote.AuthRepository
 import com.application.adverial.service.Tools
 import com.application.adverial.utils.CustomPhoneNumberFormattingTextWatcher
+import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.activity_signup_wa.*
 
 class SignupWa : AppCompatActivity() {
@@ -19,6 +23,19 @@ class SignupWa : AppCompatActivity() {
         setContentView(R.layout.activity_signup_wa)
         Tools().changeViewFromTheme(this, signupWaRoot)
         signup_phone.addTextChangedListener(CustomPhoneNumberFormattingTextWatcher())
+        val countryCodePicker = findViewById<CountryCodePicker>(R.id.countryCodePickerWaSignup)
+        countryCodePicker.setDialogEventsListener(object : CountryCodePicker.DialogEventsListener {
+            override fun onCcpDialogOpen(dialog: Dialog) {
+                dialog.findViewById<TextView>(R.id.textView_title)?.text = getString(R.string.select_country_or_region)
+            }
+            override fun onCcpDialogDismiss(dialogInterface: DialogInterface) {
+            }
+            override fun onCcpDialogCancel(dialogInterface: DialogInterface) {
+            }
+        })
+        // remove a china country from the list
+        countryCodePicker.setExcludedCountries("CN")
+
     }
 
     fun register(view: View) {

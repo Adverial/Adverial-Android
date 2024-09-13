@@ -25,8 +25,8 @@ android {
         applicationId "com.adverial.huawei"
         minSdkVersion 24
         targetSdk 33
-        versionCode 36 // Update the version code to a unique integer
-        versionName "1.0.36" // Update the version name to a string that represents the version
+        versionCode 1// Update the version code to a unique integer
+        versionName "1.0" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {

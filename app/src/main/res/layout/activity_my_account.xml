@@ -93,6 +93,9 @@
             android:textColorHint="@color/textColor"
             android:fontFamily="@font/regular"
             android:textSize="@dimen/_12ssp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:layout_margin="@dimen/_2ssp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView344"
             app:layout_constraintEnd_toStartOf="@+id/imageView62"
             app:layout_constraintStart_toStartOf="@+id/imageView344"
@@ -106,6 +109,7 @@
             android:backgroundTint="@color/inputBgColor"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView344" />

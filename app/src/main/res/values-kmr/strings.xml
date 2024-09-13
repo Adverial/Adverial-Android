@@ -213,6 +213,7 @@
     <string name="login_phone_hint">ژمارەی تەلەفونەکەت داخڵ بکە</string>
     <string name="login_otp_hint">کۆدی دڵنیاکردنەوە داخڵ بکە</string>
     <string name="already_have_account">ھەژماری پێشترت هەیە؟</string>
+    <string name="select_country_or_region">دەوڵەت یا منطقە دیاربکە</string>
     <string name="new_message">New message</string>
 
 </resources>

@@ -1,24 +1,51 @@
 package com.application.adverial.ui.activity
 
+import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.application.adverial.R
 import com.application.adverial.remote.AuthRepository
 import com.application.adverial.service.Tools
 import com.application.adverial.utils.CustomPhoneNumberFormattingTextWatcher
+import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.activity_login_wa.*
 
 class LoginWa : AppCompatActivity() {
 
+    @SuppressLint("LongLogTag")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_wa)
         Tools().changeViewFromTheme(this, loginWaRoot)
         login_phone.addTextChangedListener(CustomPhoneNumberFormattingTextWatcher())
+        val countryCodePicker = findViewById<CountryCodePicker>(R.id.countryCodePickerWaLogin)
+        // remove
+// Set the custom dialog title when the dialog opens
+countryCodePicker.setDialogEventsListener(object : CountryCodePicker.DialogEventsListener {
+    override fun onCcpDialogOpen(dialog: Dialog) {
+        // Modify the dialog title here
+        dialog.findViewById<TextView>(R.id.textView_title)?.text = getString(R.string.select_country_or_region)
+    }
+
+    override fun onCcpDialogDismiss(dialogInterface: DialogInterface) {
+        // Handle dialog dismiss if needed
+    }
+
+    override fun onCcpDialogCancel(dialogInterface: DialogInterface) {
+        // Handle dialog cancel if needed
+    }
+})
+        // remove a china country from the list
+        countryCodePicker.setExcludedCountries("CN")
+
+
 
     }
 

@@ -215,4 +215,6 @@
     <string name="signup_phone_hint">7xx xxx xxxx</string>
     <string name="already_have_account">Already have account</string>
     <string name="new_message">New message</string>
+    <string name="select_country_or_region">Select a Country / Region</string>
+
 </resources>

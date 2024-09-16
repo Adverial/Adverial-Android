@@ -46,8 +46,8 @@
     <string name="new_ad_map_title">Mark the location</string>
     //------------------------------------------------------------------------------new ad images
     <string name="new_ad_images_title1">Contact information</string>
-    <string name="new_ad_images_name">Name Surname</string>
-    <string name="new_ad_images_phone">Phone Number</string>
+    <string name="new_ad_images_name">Name</string>
+    <string name="new_ad_images_phone">Contact No</string>
     <string name="new_ad_images_title2">Communication preferences</string>
     <string name="new_ad_images_option1">Phone and Message</string>
     <string name="new_ad_images_option2">Phone</string>

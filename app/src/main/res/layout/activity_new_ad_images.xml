@@ -165,7 +165,7 @@
                         android:layout_height="match_parent"
                         android:inputType="phone"
                         android:background="#00CCCCCC"
-                        android:maxLength="13"
+                        android:maxLength="14"
                         android:hint="0*** *** ****"
                         android:layout_marginStart="10dp"
                         android:layout_gravity="end"

@@ -47,7 +47,7 @@
     //------------------------------------------------------------------------------new ad images
     <string name="new_ad_images_title1">معلومات للتواصل</string>
     <string name="new_ad_images_name">اسم اللقب</string>
-    <string name="new_ad_images_phone">رقم الهاتف</string>
+    <string name="new_ad_images_phone">رقم التواصل</string>
     <string name="new_ad_images_title2">تفضيلات التواصل</string>
     <string name="new_ad_images_option1">الهاتف والرسالة</string>
     <string name="new_ad_images_option2">هاتف</string>

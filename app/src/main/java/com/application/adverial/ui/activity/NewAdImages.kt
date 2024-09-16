@@ -39,25 +39,6 @@ class NewAdImages : AppCompatActivity() {
         Tools().setBasedLogo(this, R.id.imageView32)
         permissions()
         setDefaultUserDetails()
-        publishPhone.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(publishPhone.text.toString().isNotEmpty()){
-                    publishPhone.removeTextChangedListener(this)
-                    if(publishPhone.text.toString().length > 1) publishPhone.setText("0"+ publishPhone.text.toString().substring(1))
-                    else publishPhone.setText("0")
-                    var phoneText= ""
-                    for((c, i) in (0 until publishPhone.text.toString().replace(" ", "").length).withIndex()){
-                        phoneText+= publishPhone.text.toString().replace(" ", "").substring(i, i+1)
-                        if((c == 3 || c == 6) && i != publishPhone.text.toString().replace(" ", "").length - 1) phoneText += " "
-                    }
-                    publishPhone.setText(phoneText)
-                    publishPhone.addTextChangedListener(this)
-                    publishPhone.setSelection(publishPhone.text.toString().length)
-                }
-            }
-            override fun afterTextChanged(p0: Editable?) {}
-        })
         pageInit()
     }
 
@@ -68,7 +49,7 @@ class NewAdImages : AppCompatActivity() {
 
           repo.getUserData().observe(this) { userData ->
               userData?.let {
-                  publishPhone.setText(userData.data.phone)
+                  publishPhone.setText(userData.data.whatsappNumber)
                   publishName.setText(userData.data.name)
 
               }
@@ -111,7 +92,7 @@ class NewAdImages : AppCompatActivity() {
     }
 
     fun next(view: View){
-        if(publishName.text.isNotBlank() && publishPhone.text.toString().replace(" ", "").length == 11){
+        if(publishName.text.isNotBlank() && publishPhone.text.toString().replace(" ", "").length <= 14){
             if(images.isNotEmpty()){
                 lottie10.visibility= View.VISIBLE
                 Tools().viewEnable(this.window.decorView.rootView, false)

@@ -65,7 +65,7 @@
     <string name="new_ad_completed_new_ad">رێکلامەکا دی  بەلاڤ بکە</string>
     //------------------------------------------------------------------------------address
     <string name="address_title">زانیاری ۆ ناڤۆنیشانان دانە</string>
-    <string name="address_country">دەوڵەت</string>
+    <string name="address_country">وڵات / هەرێم</string>
     <string name="address_province">باژێر</string>
     <string name="address_district">قەزا</string>
     <string name="address_neighbourhood">گوند</string>

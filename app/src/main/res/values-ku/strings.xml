@@ -65,7 +65,7 @@
     <string name="new_ad_completed_new_ad">ڕێکلامێکی تر دابنێ</string>
     //------------------------------------------------------------------------------address
     <string name="address_title">زانیاری ناونیشان دابنێ</string>
-    <string name="address_country">وڵات</string>
+    <string name="address_country">وڵات / هەرێم</string>
     <string name="address_province">شار</string>
     <string name="address_district">قەزا</string>
     <string name="address_neighbourhood">دۆخ</string>

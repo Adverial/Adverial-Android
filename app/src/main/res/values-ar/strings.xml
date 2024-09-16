@@ -63,8 +63,8 @@
     <string name="new_ad_completed_new_ad">ضع إعلانا آخر</string>
     //------------------------------------------------------------------------------address
     <string name="address_title">أدخل معلومات العنوان</string>
-    <string name="address_country">دولة</string>
-    <string name="address_province">مدينة</string>
+  <string name="address_country">دولة / منطقة</string>
+<string name="address_province">مدينة</string>
     <string name="address_district">قضاء</string>
     <string name="address_neighbourhood">منطقة</string>
     //------------------------------------------------------------------------------profile

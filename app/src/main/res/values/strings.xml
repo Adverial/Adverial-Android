@@ -63,7 +63,7 @@
     <string name="new_ad_completed_new_ad">Place another ad</string>
     //------------------------------------------------------------------------------address
     <string name="address_title">Enter address information</string>
-    <string name="address_country">Country</string>
+    <string name="address_country">Country/Region</string>
     <string name="address_province">City</string>
     <string name="address_district">District</string>
     <string name="address_neighbourhood">State</string>

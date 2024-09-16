@@ -65,7 +65,7 @@
     <string name="new_ad_completed_new_ad">Başka bir ilan ver</string>
     //------------------------------------------------------------------------------address
     <string name="address_title">Adres bilgilerini girin</string>
-    <string name="address_country">Ülke</string>
+    <string name="address_country">Ülke / Bölge</string>
     <string name="address_province">Şehir</string>
     <string name="address_district">Semt</string>
     <string name="address_neighbourhood">Mahhale</string>

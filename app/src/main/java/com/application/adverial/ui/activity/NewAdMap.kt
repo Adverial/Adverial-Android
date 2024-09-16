@@ -40,14 +40,13 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
         Tools().setBasedLogo(this, R.id.imageView47)
         pageInit()
         Tools().locationRequest(this)
-        myLocation()
     }
 
     private fun pageInit() {
-        adId = intent.getStringExtra("adId") ?: "defaultAdId"
-country = intent.getStringExtra("country") ?: "defaultCountry"
-city = intent.getStringExtra("city") ?: "defaultCity"
-district = intent.getStringExtra("district") ?: "defaultDistrict"
+        adId = intent.getStringExtra("adId")!!
+country = intent.getStringExtra("country")!!
+city = intent.getStringExtra("city")!!
+district = intent.getStringExtra("district")!!
 
         // Initialize HuaweiMapFragment instead of Google Map's SupportMapFragment
         val huaweiMapOptions = HuaweiMapOptions().zoomControlsEnabled(false)
@@ -79,6 +78,7 @@ district = intent.getStringExtra("district") ?: "defaultDistrict"
             lat = target.latitude.toString()
             lon = target.longitude.toString()
         }
+        myLocation()
     }
 
 

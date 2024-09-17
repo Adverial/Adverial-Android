@@ -246,7 +246,7 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
     }
 
     fun call(view: View) {
-        if (phoneNumber.isNotBlank() && (type == "1" || type == "2")) {
+        if (phoneNumber.isNotBlank()) {
             val dialIntent = Intent(Intent.ACTION_DIAL)
             dialIntent.data = Uri.parse("tel:$phoneNumber")
             startActivity(dialIntent)

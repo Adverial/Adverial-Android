@@ -16,11 +16,13 @@ import com.application.adverial.service.Tools
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.HuaweiMapOptions
+import com.huawei.hms.maps.MapsInitializer
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.huawei.hms.maps.SupportMapFragment
 import com.huawei.hms.maps.model.LatLng
 import io.nlopez.smartlocation.SmartLocation
 import kotlinx.android.synthetic.main.activity_new_ad_map.lottie12
+import androidx.core.content.ContextCompat
 
 class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 
@@ -35,6 +37,7 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapsInitializer.initialize(this)
         setContentView(R.layout.activity_new_ad_map)
 
         Tools().setBasedLogo(this, R.id.imageView47)
@@ -69,8 +72,14 @@ district = intent.getStringExtra("district")!!
 
     override fun onMapReady(huaweiMap: HuaweiMap) {
         map = huaweiMap
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ), 1)
+        } else {
+            enableMyLocation()
         }
         map.isMyLocationEnabled = true
         map.setOnCameraIdleListener {
@@ -89,15 +98,12 @@ district = intent.getStringExtra("district")!!
                 lat = location.latitude.toString()
                 lon = location.longitude.toString()
                 val latLng = LatLng(location.latitude, location.longitude)
-
-                // Move camera on Huawei Map
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
             }
         }
     }
 
     fun next(view: View) {
-
         //toast the lan and lon
        // Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
         if (lat.isNotBlank() && lon.isNotBlank()) {
@@ -135,4 +141,34 @@ district = intent.getStringExtra("district")!!
     fun back(view: View) {
         finish()
     }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults.any { it == PackageManager.PERMISSION_GRANTED }) {
+                enableMyLocation()
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.isMyLocationEnabled = true
+            map.setOnCameraIdleListener {
+                val target = map.cameraPosition.target
+                lat = target.latitude.toString()
+                lon = target.longitude.toString()
+            }
+            myLocation()
+        } else {
+            // Permissions are not granted, handle accordingly
+        }
+    }
+
+
 }

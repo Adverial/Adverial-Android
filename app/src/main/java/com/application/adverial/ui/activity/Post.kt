@@ -47,6 +47,7 @@ class Post : AppCompatActivity(),OnMapReadyCallback{
     private var ItemData: Ad? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapsInitializer.initialize(this)
         setContentView(R.layout.activity_post)
         val activityPostRoot = findViewById<View>(R.id.activityPostRoot)
         Tools().changeViewFromTheme(this, activityPostRoot)

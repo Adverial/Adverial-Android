@@ -1,36 +1,45 @@
 package com.application.adverial.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.application.adverial.R
+import com.application.adverial.databinding.ActivityMassegesListBinding
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.MessagesListAdapter
-import kotlinx.android.synthetic.main.activity_masseges_list.*
 
 class MessagesList : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMassegesListBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_masseges_list)
-        Tools().rotateLayout(this,messages_back_btn)
-        Tools().changeViewFromTheme(this,messageListRoot)
+        binding = ActivityMassegesListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        Tools().rotateLayout(this, binding.messagesBackBtn)
+        Tools().changeViewFromTheme(this, binding.messageListRoot)
         pageInit()
     }
 
-    private fun pageInit(){
-        messagesList_recyclerView.layoutManager = LinearLayoutManager(this)
-        messagesList_recyclerView.adapter = MessagesListAdapter()
+    private fun pageInit() {
+        binding.messagesListRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.messagesListRecyclerView.adapter = MessagesListAdapter()
     }
 
-    fun back(view: View){ finish() }
+    fun back(view: View) {
+        finish()
+    }
 
     override fun onResume() {
         super.onResume()
         Tools().getLocale(this)
-        val language =  getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        window.decorView.layoutDirection =
+            if (language.isNullOrEmpty() || language == "0" || language == "1") {
+                View.LAYOUT_DIRECTION_LTR
+            } else {
+                View.LAYOUT_DIRECTION_RTL
+            }
     }
 }

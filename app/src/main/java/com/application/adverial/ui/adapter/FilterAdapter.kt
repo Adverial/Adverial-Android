@@ -18,7 +18,6 @@ import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.CategoryOptionsData
 import com.application.adverial.ui.dialog.DropList
-import kotlinx.android.synthetic.main.activity_address.*
 
 class FilterAdapter(val type: String) : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
 

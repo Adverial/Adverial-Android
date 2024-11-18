@@ -1,71 +1,82 @@
 package com.application.adverial.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.application.adverial.R
+import com.application.adverial.databinding.ActivityPhoneBinding
 import com.application.adverial.service.Tools
-import kotlinx.android.synthetic.main.activity_phone.*
 
 class Phone : AppCompatActivity() {
 
-    private var type= ""
-    private var idArray= ""
+    private lateinit var binding: ActivityPhoneBinding
+    private var type = ""
+    private var idArray = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_phone)
-        Tools().changeViewFromTheme(this,phoneRoot)
+        binding = ActivityPhoneBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        Tools().changeViewFromTheme(this, binding.phoneRoot)
         pageInit()
     }
 
-    private fun pageInit(){
-        type= intent.getStringExtra("type")!!
-        idArray= intent.getStringExtra("idArray")!!
-        phoneAuth_phoneNumber.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(phoneAuth_phoneNumber.text.length == 10){
-                    phoneAuth_ok.backgroundTintList= ContextCompat.getColorStateList(this@Phone, R.color.red)
-                }else{
-                    phoneAuth_ok.backgroundTintList= ContextCompat.getColorStateList(this@Phone, R.color.red_cover)
+    private fun pageInit() {
+        type = intent.getStringExtra("type") ?: ""
+        idArray = intent.getStringExtra("idArray") ?: ""
+
+        // Add TextWatcher to monitor phone number input
+        binding.phoneAuthPhoneNumber.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (binding.phoneAuthPhoneNumber.text.length == 10) {
+                    binding.phoneAuthOk.backgroundTintList =
+                        ContextCompat.getColorStateList(this@Phone, R.color.red)
+                } else {
+                    binding.phoneAuthOk.backgroundTintList =
+                        ContextCompat.getColorStateList(this@Phone, R.color.red_cover)
                 }
             }
-            override fun afterTextChanged(p0: Editable?) {}
+
+            override fun afterTextChanged(s: Editable?) {}
         })
     }
 
-    fun ok(view: View){
-        if(phoneAuth_phoneNumber.text.length == 10){
-            val phone= countryCodePicker.fullNumber + phoneAuth_phoneNumber.text.toString()
-            val intent= Intent(this, NewAdInfo::class.java)
-            intent.putExtra("type", type)
-            intent.putExtra("idArray", idArray)
-            intent.putExtra("phone", phone)
+    fun ok(view: View) {
+        if (binding.phoneAuthPhoneNumber.text.length == 10) {
+            val phone = binding.countryCodePicker.fullNumber + binding.phoneAuthPhoneNumber.text.toString()
+            val intent = Intent(this, NewAdInfo::class.java).apply {
+                putExtra("type", type)
+                putExtra("idArray", idArray)
+                putExtra("phone", phone)
+            }
             startActivity(intent)
             finish()
         }
     }
 
-    fun clear(view: View){
-        phoneAuth_phoneNumber.setText("")
-        phoneAuth_ok.backgroundTintList= ContextCompat.getColorStateList(this@Phone, R.color.red_cover)
+    fun clear(view: View) {
+        binding.phoneAuthPhoneNumber.setText("")
+        binding.phoneAuthOk.backgroundTintList =
+            ContextCompat.getColorStateList(this@Phone, R.color.red_cover)
     }
 
-    fun back(view: View){
+    fun back(view: View) {
         finish()
     }
 
     override fun onResume() {
         super.onResume()
         Tools().getLocale(this)
-        val language =  getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        window.decorView.layoutDirection =
+            if (language.isNullOrEmpty() || language == "0" || language == "1") View.LAYOUT_DIRECTION_LTR
+            else View.LAYOUT_DIRECTION_RTL
     }
 }

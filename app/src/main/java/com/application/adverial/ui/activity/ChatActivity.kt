@@ -1,12 +1,14 @@
 package com.application.adverial.ui.activity
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.R
+import com.application.adverial.databinding.ActivityChatBinding
 import com.application.adverial.ui.ConversationViewModel
 import com.application.adverial.ui.adapter.ConversationAdapter
 import com.application.adverial.ui.navigation.Favorites
@@ -14,91 +16,74 @@ import com.application.adverial.ui.navigation.Home
 import com.application.adverial.ui.navigation.NewAd
 import com.application.adverial.ui.navigation.Notifications
 import com.application.adverial.ui.navigation.Profile
-import kotlinx.android.synthetic.main.activity_chat.*
-import android.view.Gravity
-import androidx.core.view.GravityCompat
-import com.google.android.material.navigation.NavigationView
-
 
 class ChatActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityChatBinding
     private lateinit var conversationAdapter: ConversationAdapter
     private lateinit var conversationViewModel: ConversationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+        binding = ActivityChatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Set up RecyclerView
         conversationAdapter = ConversationAdapter()
-        recyclerViewConversations.layoutManager = LinearLayoutManager(this)
-        recyclerViewConversations.adapter = conversationAdapter
+        binding.recyclerViewConversations.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewConversations.adapter = conversationAdapter
 
         // Set up ViewModel
-        conversationViewModel = ViewModelProvider(this).get(ConversationViewModel::class.java)
-
-        // Observe LiveData from ViewModel
-        conversationViewModel.userConversationsLiveData.observe(this, Observer { conversations ->
+        conversationViewModel = ViewModelProvider(this)[ConversationViewModel::class.java]
+        conversationViewModel.userConversationsLiveData.observe(this) { conversations ->
             conversationAdapter.setConversations(conversations)
-        })
+        }
 
         // Load conversations
         conversationViewModel.loadUserConversations()
 
-        // Set up navigation drawer
-        val navigationView = findViewById<NavigationView>(R.id.nav_menu)
-        val headerView = navigationView.getHeaderView(0)
+        // Set up click listeners for bottom navigation
+        setupBottomNavigation()
+    }
 
-        // Add click listeners for navigation drawer items
-        headerView.findViewById<View>(R.id.menu_newAd).setOnClickListener {
-            val intent = Intent(this, NewAd::class.java)
-            startActivity(intent)
-            finish()
-        }
-        headerView.findViewById<View>(R.id.menu_profile).setOnClickListener {
-            val intent = Intent(this, Profile::class.java)
-            startActivity(intent)
-            finish()
+    private fun setupBottomNavigation() {
+        binding.apply {
+            homeHome.setOnClickListener { navigateToHome() }
+            homeFavorite.setOnClickListener { navigateToFavorites() }
+            homeAdd.setOnClickListener { navigateToNewAd() }
+            homeNotification.setOnClickListener { openNotifications() }
+            homeProfile.setOnClickListener { navigateToProfile() }
         }
     }
 
-    // Methods to handle bottom navigation clicks
-    fun menu(view: View) {
-        chat_drawerLayout.openDrawer(GravityCompat.START)
-    }
-
-    fun home(view: View) {
+    // Navigation methods
+    private fun navigateToHome() {
         val intent = Intent(this, Home::class.java)
         startActivity(intent)
-        overridePendingTransition(0, 0)
         finish()
     }
 
-    fun favorites(view: View) {
+    private fun navigateToFavorites() {
         val intent = Intent(this, Favorites::class.java)
         startActivity(intent)
-        overridePendingTransition(0, 0)
         finish()
     }
 
-    fun newAd(view: View) {
+    private fun navigateToNewAd() {
         val intent = Intent(this, NewAd::class.java)
         startActivity(intent)
-        overridePendingTransition(0, 0)
         finish()
     }
 
-    fun notifications(view: View) {
+    private fun openNotifications() {
         val intent = Intent(this, Notifications::class.java)
         startActivity(intent)
-        overridePendingTransition(0, 0)
         finish()
     }
 
-    fun profile(view: View) {
+    private fun navigateToProfile() {
         val intent = Intent(this, Profile::class.java)
         startActivity(intent)
-        overridePendingTransition(0, 0)
         finish()
     }
 
@@ -109,9 +94,5 @@ class ChatActivity : AppCompatActivity() {
         window.decorView.layoutDirection =
             if (language == "" || language == "0" || language == "1") View.LAYOUT_DIRECTION_LTR
             else View.LAYOUT_DIRECTION_RTL
-
-        // load conversations
-        //conversationViewModel.loadUserConversations()
-
     }
 }

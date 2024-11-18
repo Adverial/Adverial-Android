@@ -8,132 +8,149 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.application.adverial.R
+import com.application.adverial.databinding.ActivityAddressBinding
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.dialog.DropList
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
-import kotlinx.android.synthetic.main.activity_address.addressRoot
-import kotlinx.android.synthetic.main.activity_address.arrow1
-import kotlinx.android.synthetic.main.activity_address.arrow2
-import kotlinx.android.synthetic.main.activity_address.arrow3
-import kotlinx.android.synthetic.main.activity_address.home_menu3
-import kotlinx.android.synthetic.main.activity_address.lottie9
-import kotlinx.android.synthetic.main.activity_address.newAdAddress_DistrictSelect
-import kotlinx.android.synthetic.main.activity_address.newAdAddress_city
-import kotlinx.android.synthetic.main.activity_address.newAdAddress_citySelect
-import kotlinx.android.synthetic.main.activity_address.newAdAddress_country
-import kotlinx.android.synthetic.main.activity_address.newAdAddress_countrySelect
-import kotlinx.android.synthetic.main.activity_address.newAdAddress_district
 
 class NewAdAddress : AppCompatActivity() {
 
-    private val itemList= ArrayList<com.application.adverial.ui.model.DropList>()
-    private var country= ""
-    private var city= ""
-    private var district= ""
-    private var adId= ""
-    private var nextPage= true
+    private lateinit var binding: ActivityAddressBinding
+    private val itemList = ArrayList<com.application.adverial.ui.model.DropList>()
+    private var country = ""
+    private var city = ""
+    private var district = ""
+    private var adId = ""
+    private var nextPage = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_address)
+        binding = ActivityAddressBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Tools().setBasedLogo(this, R.id.imageView32)
-
-        Tools().rotateLayout(this,home_menu3)
-        Tools().changeViewFromTheme(this,addressRoot)
+        Tools().rotateLayout(this, binding.homeMenu3)
+        Tools().changeViewFromTheme(this, binding.addressRoot)
 
         pageInit()
     }
 
-    private fun pageInit(){
-        Tools().rotateLayout(this,arrow1)
-        Tools().rotateLayout(this,arrow2)
-        Tools().rotateLayout(this,arrow3)
-        adId= intent.getStringExtra("adId")!!
-        newAdAddress_countrySelect.setOnClickListener{
-            lottie9.visibility= View.VISIBLE
-            Tools().viewEnable(this.window.decorView.rootView, false)
-            val repo= Repository(this)
-            repo.country()
-            repo.getCountryData().observe(this, {
-                lottie9.visibility= View.GONE
-                Tools().viewEnable(this.window.decorView.rootView, true)
-                itemList.clear()
-                for(i in it.data.indices){ itemList.add(com.application.adverial.ui.model.DropList(it.data[i].name, it.data[i].id.toString())) }
-                val dialog= DropList(itemList, resources.getString(R.string.address_country))
-                dialog.show(supportFragmentManager, "DropList")
-                dialog.getStatus().observe(this, { result ->
-                    newAdAddress_country.text= result.name
-                    country= result.id
-                    city= ""
-                    district= ""
-//                    Log.d("ddd", country)
-                    newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.gray))
-                    newAdAddress_city.setTextColor(ContextCompat.getColor(this, R.color.gray))
-                    newAdAddress_district.text= resources.getString(R.string.new_ad_info_select)
-                    newAdAddress_city.text= resources.getString(R.string.new_ad_info_select)
-                    newAdAddress_country.setTextColor(ContextCompat.getColor(this, R.color.gray))
-                })
-            })
+    private fun pageInit() {
+        Tools().rotateLayout(this, binding.arrow1)
+        Tools().rotateLayout(this, binding.arrow2)
+        Tools().rotateLayout(this, binding.arrow3)
+
+        adId = intent.getStringExtra("adId") ?: ""
+
+        binding.newAdAddressCountrySelect.setOnClickListener {
+            fetchCountryData()
         }
-        newAdAddress_citySelect.setOnClickListener{
-            val repo= Repository(this)
-            if(country.isNotBlank()){
-                lottie9.visibility= View.VISIBLE
-                Tools().viewEnable(this.window.decorView.rootView, false)
-                repo.city(country)
-                repo.getCityData().observe(this, {
-                    lottie9.visibility= View.GONE
-                    Tools().viewEnable(this.window.decorView.rootView, true)
-                    itemList.clear()
-                    for(i in it.data.indices){ itemList.add(com.application.adverial.ui.model.DropList(it.data[i].name, it.data[i].id.toString())) }
-                    val dialog= DropList(itemList, resources.getString(R.string.address_province))
-                    dialog.show(supportFragmentManager, "DropList")
-                    dialog.getStatus().observe(this, { result ->
-                        newAdAddress_city.text= result.name
-                        city= result.id
-                        district= ""
-//                        Log.d("ddd", city)
-                        newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.gray))
-                        newAdAddress_district.text= resources.getString(R.string.new_ad_info_select)
-                        newAdAddress_city.setTextColor(ContextCompat.getColor(this, R.color.gray))
-                    })
-                })
+
+        binding.newAdAddressCitySelect.setOnClickListener {
+            if (country.isNotBlank()) {
+                fetchCityData()
             }
         }
-        newAdAddress_DistrictSelect.setOnClickListener{
-            val repo= Repository(this)
-            if(city.isNotBlank()){
-                lottie9.visibility= View.VISIBLE
-                Tools().viewEnable(this.window.decorView.rootView, false)
-                repo.district(city)
-                repo.getDistrictData().observe(this, {
-                    lottie9.visibility= View.GONE
-                    Tools().viewEnable(this.window.decorView.rootView, true)
-                    itemList.clear()
-                    for(i in it.data.indices){ itemList.add(com.application.adverial.ui.model.DropList(it.data[i].name, it.data[i].id.toString())) }
-                    val dialog= DropList(itemList, resources.getString(R.string.address_district))
-                    dialog.show(supportFragmentManager, "DropList")
-                    dialog.getStatus().observe(this, { result ->
-                        newAdAddress_district.text= result.name
-                        district= result.id
-//                        Log.d("ddd", district)
-                        newAdAddress_district.setTextColor(ContextCompat.getColor(this, R.color.gray    ))
-                    })
-                })
+
+        binding.newAdAddressDistrictSelect.setOnClickListener {
+            if (city.isNotBlank()) {
+                fetchDistrictData()
             }
         }
     }
 
-    fun next(view: View){
-        if(country.isNotBlank() && city.isNotBlank() && district.isNotBlank()){
-            val permissionListener: PermissionListener = object : PermissionListener {
+    private fun fetchCountryData() {
+        binding.lottie9.visibility = View.VISIBLE
+        Tools().viewEnable(window.decorView.rootView, false)
+        val repo = Repository(this)
+        repo.country()
+        repo.getCountryData().observe(this) {
+            binding.lottie9.visibility = View.GONE
+            Tools().viewEnable(window.decorView.rootView, true)
+            itemList.clear()
+            it.data.forEach { country ->
+                itemList.add(com.application.adverial.ui.model.DropList(country.name, country.id.toString()))
+            }
+            val dialog = DropList(itemList, getString(R.string.address_country))
+            dialog.show(supportFragmentManager, "DropList")
+            dialog.getStatus().observe(this) { result ->
+                binding.newAdAddressCountry.text = result.name
+                country = result.id
+                city = ""
+                district = ""
+                resetFields()
+            }
+        }
+    }
+
+    private fun fetchCityData() {
+        val repo = Repository(this)
+        binding.lottie9.visibility = View.VISIBLE
+        Tools().viewEnable(window.decorView.rootView, false)
+        repo.city(country)
+        repo.getCityData().observe(this) {
+            binding.lottie9.visibility = View.GONE
+            Tools().viewEnable(window.decorView.rootView, true)
+            itemList.clear()
+            it.data.forEach { city ->
+                itemList.add(com.application.adverial.ui.model.DropList(city.name, city.id.toString()))
+            }
+            val dialog = DropList(itemList, getString(R.string.address_province))
+            dialog.show(supportFragmentManager, "DropList")
+            dialog.getStatus().observe(this) { result ->
+                binding.newAdAddressCity.text = result.name
+                city = result.id
+                district = ""
+                resetDistrictField()
+            }
+        }
+    }
+
+    private fun fetchDistrictData() {
+        val repo = Repository(this)
+        binding.lottie9.visibility = View.VISIBLE
+        Tools().viewEnable(window.decorView.rootView, false)
+        repo.district(city)
+        repo.getDistrictData().observe(this) {
+            binding.lottie9.visibility = View.GONE
+            Tools().viewEnable(window.decorView.rootView, true)
+            itemList.clear()
+            it.data.forEach { district ->
+                itemList.add(com.application.adverial.ui.model.DropList(district.name, district.id.toString()))
+            }
+            val dialog = DropList(itemList, getString(R.string.address_district))
+            dialog.show(supportFragmentManager, "DropList")
+            dialog.getStatus().observe(this) { result ->
+                binding.newAdAddressDistrict.text = result.name
+                district = result.id
+                binding.newAdAddressDistrict.setTextColor(ContextCompat.getColor(this, R.color.gray))
+            }
+        }
+    }
+
+    private fun resetFields() {
+        binding.newAdAddressDistrict.setTextColor(ContextCompat.getColor(this, R.color.gray))
+        binding.newAdAddressCity.setTextColor(ContextCompat.getColor(this, R.color.gray))
+        binding.newAdAddressDistrict.text = getString(R.string.new_ad_info_select)
+        binding.newAdAddressCity.text = getString(R.string.new_ad_info_select)
+        binding.newAdAddressCountry.setTextColor(ContextCompat.getColor(this, R.color.gray))
+    }
+
+    private fun resetDistrictField() {
+        binding.newAdAddressDistrict.setTextColor(ContextCompat.getColor(this, R.color.gray))
+        binding.newAdAddressDistrict.text = getString(R.string.new_ad_info_select)
+        binding.newAdAddressCity.setTextColor(ContextCompat.getColor(this, R.color.gray))
+    }
+
+    fun next(view: View) {
+        if (country.isNotBlank() && city.isNotBlank() && district.isNotBlank()) {
+            val permissionListener = object : PermissionListener {
                 override fun onPermissionGranted() {
-                    if(nextPage){
-                        nextPage= false
-                        val intent= Intent(this@NewAdAddress, NewAdMap::class.java)
+                    if (nextPage) {
+                        nextPage = false
+                        val intent = Intent(this@NewAdAddress, NewAdMap::class.java)
                         intent.putExtra("adId", adId)
                         intent.putExtra("country", country)
                         intent.putExtra("city", city)
@@ -141,24 +158,34 @@ class NewAdAddress : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
-                override fun onPermissionDenied(deniedPermissions: List<String?>) {
 
+                override fun onPermissionDenied(deniedPermissions: List<String?>) {
+                    Toast.makeText(this@NewAdAddress, "Permission Denied", Toast.LENGTH_SHORT).show()
                 }
             }
-            TedPermission.with(this).setPermissionListener(permissionListener).setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).check()
-        }else Toast.makeText(this, resources.getString(R.string.fieldsAreEmpty), Toast.LENGTH_SHORT).show()
+            TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+                .check()
+        } else {
+            Toast.makeText(this, getString(R.string.fieldsAreEmpty), Toast.LENGTH_SHORT).show()
+        }
     }
 
-    fun back(view: View){
+    fun back(view: View) {
         finish()
     }
 
     override fun onResume() {
         super.onResume()
-        nextPage= true
+        nextPage = true
         Tools().getLocale(this)
-        val language =  getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        window.decorView.layoutDirection =
+            if (language.isNullOrEmpty() || language == "0" || language == "1") {
+                View.LAYOUT_DIRECTION_LTR
+            } else {
+                View.LAYOUT_DIRECTION_RTL
+            }
     }
 }

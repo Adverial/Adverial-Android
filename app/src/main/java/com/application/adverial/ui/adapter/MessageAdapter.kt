@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.BuildConfig
-import com.application.adverial.R
+import com.application.adverial.databinding.ItemMessageLeftBinding
+import com.application.adverial.databinding.ItemMessageRightBinding
 import com.application.adverial.remote.model.Message
 import com.application.adverial.ui.activity.FullImageActivity
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_message_left.view.*
-import kotlinx.android.synthetic.main.item_message_right.view.*
 
 class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -27,11 +26,15 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_RIGHT) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_message_right, parent, false)
-            RightMessageViewHolder(view)
+            val binding = ItemMessageRightBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+            RightMessageViewHolder(binding)
         } else {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_message_left, parent, false)
-            LeftMessageViewHolder(view)
+            val binding = ItemMessageLeftBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+            LeftMessageViewHolder(binding)
         }
     }
 
@@ -60,23 +63,30 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyItemInserted(messages.size - 1)
     }
 
-    class RightMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(message: Message) {
-            if (message.message.isNullOrEmpty() || message.message == "null") {
-                itemView.textViewMessageRight.visibility = View.GONE
-            } else {
-                itemView.textViewMessageRight.visibility = View.VISIBLE
-                itemView.textViewMessageRight.text = message.message
-            }
+    class RightMessageViewHolder(private val binding: ItemMessageRightBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-            if (message.mediaUrl != null) {
-                itemView.imageViewMediaRight.visibility = View.VISIBLE
-                Glide.with(itemView.context).load(BuildConfig.API_BASE_URL + message.mediaUrl).into(itemView.imageViewMediaRight)
-                itemView.imageViewMediaRight.setOnClickListener {
-                    openFullImageView(itemView.context, message.mediaUrl)
+        fun bind(message: Message) {
+            binding.apply {
+                textViewMessageRight.visibility = if (message.message.isNullOrEmpty() || message.message == "null") {
+                    View.GONE
+                } else {
+                    View.VISIBLE
                 }
-            } else {
-                itemView.imageViewMediaRight.visibility = View.GONE
+                textViewMessageRight.text = message.message
+
+                if (message.mediaUrl != null) {
+                    imageViewMediaRight.visibility = View.VISIBLE
+                    Glide.with(root.context)
+                        .load(BuildConfig.API_BASE_URL + message.mediaUrl)
+                        .into(imageViewMediaRight)
+
+                    imageViewMediaRight.setOnClickListener {
+                        openFullImageView(root.context, message.mediaUrl)
+                    }
+                } else {
+                    imageViewMediaRight.visibility = View.GONE
+                }
             }
         }
 
@@ -87,23 +97,30 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class LeftMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(message: Message) {
-            if (message.message.isNullOrEmpty() || message.message == "null") {
-                itemView.textViewMessageLeft.visibility = View.GONE
-            } else {
-                itemView.textViewMessageLeft.visibility = View.VISIBLE
-                itemView.textViewMessageLeft.text = message.message
-            }
+    class LeftMessageViewHolder(private val binding: ItemMessageLeftBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-            if (message.mediaUrl != null) {
-                itemView.imageViewMediaLeft.visibility = View.VISIBLE
-                Glide.with(itemView.context).load(BuildConfig.API_BASE_URL + message.mediaUrl).into(itemView.imageViewMediaLeft)
-                itemView.imageViewMediaLeft.setOnClickListener {
-                    openFullImageView(itemView.context, message.mediaUrl)
+        fun bind(message: Message) {
+            binding.apply {
+                textViewMessageLeft.visibility = if (message.message.isNullOrEmpty() || message.message == "null") {
+                    View.GONE
+                } else {
+                    View.VISIBLE
                 }
-            } else {
-                itemView.imageViewMediaLeft.visibility = View.GONE
+                textViewMessageLeft.text = message.message
+
+                if (message.mediaUrl != null) {
+                    imageViewMediaLeft.visibility = View.VISIBLE
+                    Glide.with(root.context)
+                        .load(BuildConfig.API_BASE_URL + message.mediaUrl)
+                        .into(imageViewMediaLeft)
+
+                    imageViewMediaLeft.setOnClickListener {
+                        openFullImageView(root.context, message.mediaUrl)
+                    }
+                } else {
+                    imageViewMediaLeft.visibility = View.GONE
+                }
             }
         }
 

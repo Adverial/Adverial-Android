@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.ui.dialog.DropList
-import kotlinx.android.synthetic.main.activity_address.*
 
 class SearchFilterAdapter() : RecyclerView.Adapter<SearchFilterAdapter.ViewHolder>() {
 

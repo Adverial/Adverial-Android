@@ -7,98 +7,129 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.adverial.R
+import com.application.adverial.databinding.ActivityNewAdInfoBinding
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.CategoryOptionsData
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.NewAdInfoAdapter
-import kotlinx.android.synthetic.main.activity_new_ad_info.lottie11
-import kotlinx.android.synthetic.main.activity_new_ad_info.newAdCategory_back3
-import kotlinx.android.synthetic.main.activity_new_ad_info.newAdInfoRoot
-import kotlinx.android.synthetic.main.activity_new_ad_info.newAdInfo_recyclerView
 
 class NewAdInfo : AppCompatActivity() {
 
-    private var type= ""
-    private var idArray= ""
-    private var itemList= ArrayList<CategoryOptionsData>()
+    private lateinit var binding: ActivityNewAdInfoBinding
+    private var type = ""
+    private var idArray = ""
+    private var itemList = ArrayList<CategoryOptionsData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityNewAdInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_new_ad_info)
-        Tools().rotateLayout(this,newAdCategory_back3)
-        Tools().changeViewFromTheme(this,newAdInfoRoot)
-
-
+        Tools().rotateLayout(this, binding.newAdCategoryBack3)
+        Tools().changeViewFromTheme(this, binding.newAdInfoRoot)
         Tools().setBasedLogo(this, R.id.imageView24)
+
         pageInit()
     }
 
-    private fun pageInit(){
-        lottie11.visibility= View.VISIBLE
-        Tools().viewEnable(this.window.decorView.rootView, false)
+    private fun pageInit() {
+        binding.lottie11.visibility = View.VISIBLE
+        Tools().viewEnable(window.decorView.rootView, false)
+        clearPreviousData()
+
+        type = intent.getStringExtra("type") ?: ""
+        idArray = intent.getStringExtra("idArray") ?: ""
+
+        binding.newAdInfoRecyclerView.layoutManager = LinearLayoutManager(this)
+        val repo = Repository(this)
+
+        repo.categoryOptions(type)
+        repo.getCategoryOptionsData().observe(this) { response ->
+            itemList.add(CategoryOptionsData(1, "", getString(R.string.new_ad_info_title), "", listOf()))
+            itemList.add(CategoryOptionsData(1, "", getString(R.string.new_ad_info_price), "", listOf()))
+            itemList.add(CategoryOptionsData(1, "", getString(R.string.new_ad_info_currency), "", listOf()))
+            itemList.addAll(response.data)
+            itemList.add(CategoryOptionsData(1, "", getString(R.string.new_ad_info_description), "", listOf()))
+
+            val adapter = NewAdInfoAdapter(itemList)
+            binding.newAdInfoRecyclerView.adapter = adapter
+
+            adapter.getResult().observe(this) { result ->
+                handleAdapterResult(result)
+            }
+
+            binding.newAdInfoRecyclerView.setHasFixedSize(true)
+            binding.newAdInfoRecyclerView.setItemViewCacheSize(itemList.size)
+
+            binding.lottie11.visibility = View.GONE
+            Tools().viewEnable(window.decorView.rootView, true)
+        }
+    }
+
+    private fun clearPreviousData() {
         getSharedPreferences("newAdImages", 0).edit().clear().apply()
         getSharedPreferences("newAd", 0).edit().clear().apply()
         getSharedPreferences("newAdOptions", 0).edit().clear().apply()
-        type= intent.getStringExtra("type")!!
-        idArray= intent.getStringExtra("idArray")!!
-        newAdInfo_recyclerView.layoutManager= LinearLayoutManager(this)
-        val repo= Repository(this)
-        repo.categoryOptions(type)
-        repo.getCategoryOptionsData().observe(this, {
-            itemList.add(CategoryOptionsData(1,"", resources.getString(R.string.new_ad_info_title), "", listOf()))
-            itemList.add(CategoryOptionsData(1,"", resources.getString(R.string.new_ad_info_price), "", listOf()))
-            itemList.add(CategoryOptionsData(1,"", resources.getString(R.string.new_ad_info_currency), "", listOf()))
-            for(i in it.data.indices) itemList.add(it.data[i])
-            itemList.add(CategoryOptionsData(1,"", resources.getString(R.string.new_ad_info_description), "", listOf()))
-            val adapter= NewAdInfoAdapter(itemList)
-            newAdInfo_recyclerView.adapter= adapter
-            adapter.getResult().observe(this, {
-                if(it == "show"){
-                    lottie11.visibility= View.VISIBLE
-                    Tools().viewEnable(this.window.decorView.rootView, false)
-                }else if(it == "hide"){
-                    lottie11.visibility= View.GONE
-                    Tools().viewEnable(this.window.decorView.rootView, true)
+    }
+
+    private fun handleAdapterResult(result: String) {
+        when (result) {
+            "show" -> {
+                binding.lottie11.visibility = View.VISIBLE
+                Tools().viewEnable(window.decorView.rootView, false)
+            }
+            "hide" -> {
+                binding.lottie11.visibility = View.GONE
+                Tools().viewEnable(window.decorView.rootView, true)
+            }
+        }
+    }
+
+    fun next(view: View) {
+        val data = getSharedPreferences("newAd", 0)
+
+        val title = data.getString("title", "").orEmpty()
+        val price = data.getString("price", "").orEmpty()
+        val currency = data.getString("currency", "").orEmpty()
+
+        when {
+            title.isBlank() -> {
+                Toast.makeText(this, getString(R.string.enterTitle), Toast.LENGTH_SHORT).show()
+            }
+            price.isBlank() -> {
+                Toast.makeText(this, getString(R.string.enterPrice), Toast.LENGTH_SHORT).show()
+            }
+            currency.isBlank() -> {
+                Toast.makeText(this, getString(R.string.enterCurrency), Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                binding.lottie11.visibility = View.VISIBLE
+                Tools().viewEnable(window.decorView.rootView, false)
+                val repo = Repository(this)
+                repo.addAdInfo(title, price, data.getString("description", "").orEmpty(), idArray, currency)
+                repo.getAddAdInfoData().observe(this) { response ->
+                    binding.lottie11.visibility = View.GONE
+                    Tools().viewEnable(window.decorView.rootView, true)
+                    if (response.status) {
+                        val intent = Intent(this, NewAdAddress::class.java)
+                        intent.putExtra("adId", response.data.ad_id.toString())
+                        startActivity(intent)
+                    }
                 }
-            })
-            newAdInfo_recyclerView.setHasFixedSize(true)
-            newAdInfo_recyclerView.setItemViewCacheSize(itemList.size)
-            lottie11.visibility= View.GONE
-            Tools().viewEnable(this.window.decorView.rootView, true)
-        })
+            }
+        }
     }
 
-    fun next(view: View){
-        val data= getSharedPreferences("newAd", 0)
-        if(data.getString("title", "") != ""){
-            if(data.getString("price", "") != ""){
-                if(data.getString("currency", "") != ""){
-                    lottie11.visibility= View.VISIBLE
-                    Tools().viewEnable(this.window.decorView.rootView, false)
-                    val repo= Repository(this)
-                    repo.addAdInfo(data.getString("title", "")!!, data.getString("price", "")!!, data.getString("description", "")!!, idArray, data.getString("currency", "")!!)
-                    repo.getAddAdInfoData().observe(this, {
-                        lottie11.visibility= View.GONE
-                        Tools().viewEnable(this.window.decorView.rootView, true)
-                        if(it.status){
-                            val intent= Intent(this, NewAdAddress::class.java)
-                            intent.putExtra("adId", it.data.ad_id.toString())
-                            startActivity(intent)
-                        }
-                    })
-                }else Toast.makeText(this, resources.getString(R.string.enterCurrency), Toast.LENGTH_SHORT).show()
-            }else Toast.makeText(this, resources.getString(R.string.enterPrice), Toast.LENGTH_SHORT).show()
-        }else Toast.makeText(this, resources.getString(R.string.enterTitle), Toast.LENGTH_SHORT).show()
+    fun back(view: View) {
+        finish()
     }
-
-    fun back(view: View){ finish() }
 
     override fun onResume() {
         super.onResume()
         Tools().getLocale(this)
-        val language =  getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        window.decorView.layoutDirection =
+            if (language.isNullOrEmpty() || language == "0" || language == "1") View.LAYOUT_DIRECTION_LTR
+            else View.LAYOUT_DIRECTION_RTL
     }
 }

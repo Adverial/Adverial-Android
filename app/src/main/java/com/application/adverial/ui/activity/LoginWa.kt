@@ -2,78 +2,89 @@ package com.application.adverial.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.application.adverial.R
+import com.application.adverial.databinding.ActivityLoginWaBinding
 import com.application.adverial.remote.AuthRepository
+import com.application.adverial.remote.model.GenericResponse
 import com.application.adverial.service.Tools
+import com.application.adverial.ui.activity.VerifyWa
 import com.application.adverial.utils.CustomPhoneNumberFormattingTextWatcher
-import kotlinx.android.synthetic.main.activity_login_wa.*
 
 class LoginWa : AppCompatActivity() {
 
+    private lateinit var binding: ActivityLoginWaBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_wa)
-        Tools().changeViewFromTheme(this, loginWaRoot)
-        login_phone.addTextChangedListener(CustomPhoneNumberFormattingTextWatcher())
+        binding = ActivityLoginWaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        Tools().changeViewFromTheme(this, binding.loginWaRoot)
+
+        // Add text watcher for phone number formatting
+        binding.loginPhone.addTextChangedListener(CustomPhoneNumberFormattingTextWatcher())
     }
 
-   fun sendOTP(view: View) {
-    val phoneNumberWithOutCountryCode = login_phone.text.toString().removePrefix("0").replace(" ", "")
-    val phoneNumber = countryCodePickerWaLogin.selectedCountryCodeWithPlus + phoneNumberWithOutCountryCode
+    fun sendOTP(view: View) {
+        val phoneNumberWithoutCountryCode = binding.loginPhone.text.toString().removePrefix("0").replace(" ", "")
+        val phoneNumber = binding.countryCodePickerWaLogin.selectedCountryCodeWithPlus + phoneNumberWithoutCountryCode
 
-    if (phoneNumberWithOutCountryCode.length == 10) {
-        lottie7.visibility = View.VISIBLE
-        Tools().viewEnable(this.window.decorView.rootView, false)
-        val repo = AuthRepository(this)
-        repo.loginViaWa(phoneNumber)
-        repo.getLoginResponse().observe(this) { response ->
-            Tools().viewEnable(this.window.decorView.rootView, true)
-            response?.let {
-                if (it.message != null) {
-                    lottie7.visibility = View.GONE
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, VerifyWa::class.java)
-                    intent.putExtra("whatsapp_number", phoneNumber)
-                    startActivity(intent)
-                } else {
-                    lottie7.visibility = View.GONE
-                    Toast.makeText(this, it.error ?: "An error occurred. Please try again.", Toast.LENGTH_SHORT).show()
-                }
-            } ?: run {
-                Toast.makeText(this, "An error occurred. Please try again.", Toast.LENGTH_SHORT).show()
+        if (phoneNumberWithoutCountryCode.length == 10) {
+            binding.lottie7.visibility = View.VISIBLE
+            Tools().viewEnable(window.decorView.rootView, false)
+
+            val repo = AuthRepository(this)
+            repo.loginViaWa(phoneNumber)
+            repo.getLoginResponse().observe(this) { response ->
+                Tools().viewEnable(window.decorView.rootView, true)
+                handleLoginResponse( response, phoneNumber)
             }
+        } else {
+            Toast.makeText(this, "Please enter a valid phone number.", Toast.LENGTH_SHORT).show()
         }
-    } else {
-        Toast.makeText(this, "Please enter a valid phone number.", Toast.LENGTH_SHORT).show()
     }
-}
 
-
-
+    private fun handleLoginResponse(response: GenericResponse?, phoneNumber: String) {
+        binding.lottie7.visibility = View.GONE
+        response?.let {
+            if (it.message != null) {
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, VerifyWa::class.java)
+                intent.putExtra("whatsapp_number", phoneNumber)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, it.error ?: "An error occurred. Please try again.", Toast.LENGTH_SHORT).show()
+            }
+        } ?: run {
+            Toast.makeText(this, "An error occurred. Please try again.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     fun clear(view: View) {
-        login_phone.setText("")
+        binding.loginPhone.setText("")
     }
 
     fun back(view: View) {
         finish()
     }
-//signup
+
     fun gotoSignup(view: View) {
         val intent = Intent(this, SignupWa::class.java)
         startActivity(intent)
     }
+
     override fun onResume() {
         super.onResume()
         Tools().getLocale(this)
         val language = getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" || language == "0" || language == "1") window.decorView.layoutDirection =
-            View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        window.decorView.layoutDirection =
+            if (language.isNullOrEmpty() || language == "0" || language == "1") {
+                View.LAYOUT_DIRECTION_LTR
+            } else {
+                View.LAYOUT_DIRECTION_RTL
+            }
     }
 }

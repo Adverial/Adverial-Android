@@ -20,7 +20,7 @@ class ItemDecorations(var context: Context) {
     inner class images(private var count: Int): RecyclerView.ItemDecoration() {
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
             super.getItemOffsets(outRect, view, parent, state)
-            val space= context.resources.getDimension(R.dimen._5sdp).toInt()
+            val space= context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt()
             when {
                 parent.getChildLayoutPosition(view)==0 -> outRect.left= space
                 parent.getChildLayoutPosition(view)== count - 1 -> {

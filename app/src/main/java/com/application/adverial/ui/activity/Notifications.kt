@@ -1,54 +1,62 @@
 package com.application.adverial.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
+import com.application.adverial.databinding.ActivityNotificationsBinding
 import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.NotificationData
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.NotificationAdapter
-import kotlinx.android.synthetic.main.activity_my_ads.*
-import kotlinx.android.synthetic.main.activity_notifications.*
 
 class Notifications : AppCompatActivity() {
+
+    private lateinit var binding: ActivityNotificationsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notifications)
-        Tools().rotateLayout(this,home_menu4)
-        Tools().changeViewFromTheme(this,notificationRot)
-        Tools().setBasedLogo(this,R.id.imageView47)
+        binding = ActivityNotificationsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        Tools().rotateLayout(this, binding.homeMenu4)
+        Tools().changeViewFromTheme(this, binding.notificationRot)
+        Tools().setBasedLogo(this, R.id.imageView47)
 
         pageInit()
     }
 
-    private fun pageInit(){
-        Tools().viewEnable(this.window.decorView.rootView, false)
-        val recyclerView= findViewById<RecyclerView>(R.id.notification_recycelrView)
-        recyclerView.layoutManager= LinearLayoutManager(this)
+    private fun pageInit() {
+        Tools().viewEnable(window.decorView.rootView, false)
 
-        val repo= Repository(this)
+        // Setting up the RecyclerView with a LinearLayoutManager
+        binding.notificationRecycelrView.layoutManager = LinearLayoutManager(this)
+
+        val repo = Repository(this)
         repo.notification()
-        repo.getNotificationData().observe(this, {
-            if(it.status){
-                recyclerView.adapter= NotificationAdapter(it.data as ArrayList<NotificationData>)
-                if(it.data.isEmpty()) notification_empty.visibility= View.VISIBLE
-            }else notification_empty.visibility= View.VISIBLE
-            lottie18.visibility= View.GONE
-            Tools().viewEnable(this.window.decorView.rootView, true)
-        })
+        repo.getNotificationData().observe(this) { response ->
+            if (response.status) {
+                binding.notificationRecycelrView.adapter = NotificationAdapter(response.data as ArrayList<NotificationData>)
+                if (response.data.isEmpty()) binding.notificationEmpty.visibility = View.VISIBLE
+            } else {
+                binding.notificationEmpty.visibility = View.VISIBLE
+            }
+            binding.lottie18.visibility = View.GONE
+            Tools().viewEnable(window.decorView.rootView, true)
+        }
     }
 
-    fun back(view: View){ finish() }
+    fun back(view: View) {
+        finish()
+    }
 
     override fun onResume() {
         super.onResume()
         Tools().getLocale(this)
-        val language =  getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        window.decorView.layoutDirection =
+            if (language.isNullOrEmpty() || language == "0" || language == "1") View.LAYOUT_DIRECTION_LTR
+            else View.LAYOUT_DIRECTION_RTL
     }
 }

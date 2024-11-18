@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -13,100 +14,123 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.application.adverial.R
+import com.application.adverial.databinding.ActivityLoginBinding
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.navigation.Home
-import kotlinx.android.synthetic.main.activity_login.loginRoot
-import kotlinx.android.synthetic.main.activity_login.login_email
-import kotlinx.android.synthetic.main.activity_login.login_password
-import kotlinx.android.synthetic.main.activity_login.login_showPassword
-import kotlinx.android.synthetic.main.activity_login.lottie7
 import java.util.regex.Pattern
 
 class Login : AppCompatActivity() {
 
-    private var show= false
+    private lateinit var binding: ActivityLoginBinding
+    private var show = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        Tools().changeViewFromTheme(this,loginRoot)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        Tools().changeViewFromTheme(this, binding.loginRoot)
 
         pageInit()
     }
 
-    private fun pageInit(){
+    private fun pageInit() {
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, IntentFilter("login"))
-        login_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        val regular = ResourcesCompat.getFont(this, R.font.regular)
-        login_password.typeface = regular
-        login_showPassword.setOnClickListener {
-            if(show){
-                login_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                login_showPassword.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.im_invisible))
-                login_password.typeface = regular
-                show= false
-            }else{
-                login_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                login_showPassword.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.im_visible))
-                login_password.typeface = regular
-                show= true
-            }
+
+        val regularFont = ResourcesCompat.getFont(this, R.font.regular)
+        binding.loginPassword.apply {
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            typeface = regularFont
+        }
+
+        binding.loginShowPassword.setOnClickListener {
+            togglePasswordVisibility(regularFont)
         }
     }
 
-    fun login(view: View){
-        val emailPattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")
-        val emailMatcher = emailPattern.matcher(login_email.text.toString())
-        if(emailMatcher.find() && login_password.text.isNotBlank()){
-            lottie7.visibility= View.VISIBLE
-            Tools().viewEnable(this.window.decorView.rootView, false)
-            val repo= Repository(this)
-            repo.login(login_email.text.toString(), login_password.text.toString())
-            repo.getLoginData().observe(this) {
-                lottie7.visibility = View.GONE
-                Tools().viewEnable(this.window.decorView.rootView, true)
-                if (it.status) {
-                    if(it.data.status == 1 || it.data.token != null){
-                        getSharedPreferences("user", 0).edit().putString("token", it.data.token).apply()
-                        Toast.makeText(this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
-                        Tools().goto(this, Home(), false)
+    private fun togglePasswordVisibility(regularFont: Any?) {
+        if (show) {
+            binding.loginPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            binding.loginShowPassword.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.im_invisible)
+            )
+            binding.loginPassword.typeface = regularFont as Typeface?
+            show = false
+        } else {
+            binding.loginPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            binding.loginShowPassword.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.im_visible)
+            )
+           // binding.loginPassword.typeface = regularFont
+            show = true
+        }
+    }
 
-                    }else{
-                        val intent= Intent(this, PhoneAuth::class.java)
-                        intent.putExtra("email", login_email.text.toString())
-                        intent.putExtra("parent", "login")
-                        startActivity(intent)
-                    }
-                } else Toast.makeText(this, getString(R.string.login_unsuccessful), Toast.LENGTH_SHORT).show()
+    fun login(view: View) {
+        val emailPattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")
+        val emailInput = binding.loginEmail.text.toString()
+        val emailMatcher = emailPattern.matcher(emailInput)
+
+        if (emailMatcher.find() && binding.loginPassword.text.isNotBlank()) {
+            binding.lottie7.visibility = View.VISIBLE
+            Tools().viewEnable(window.decorView.rootView, false)
+            val repo = Repository(this)
+            repo.login(emailInput, binding.loginPassword.text.toString())
+            repo.getLoginData().observe(this) { response ->
+                binding.lottie7.visibility = View.GONE
+                Tools().viewEnable(window.decorView.rootView, true)
+                handleLoginResponse(response)
             }
-        }else Toast.makeText(this, getString(R.string.fieldsAreEmpty), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, getString(R.string.fieldsAreEmpty), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun handleLoginResponse(response: Any) {
+//        if (response.status) {
+//            if (response.data.status == 1 || response.data.token != null) {
+//                getSharedPreferences("user", 0).edit().putString("token", response.data.token).apply()
+//                Toast.makeText(this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
+//                Tools().goto(this, Home(), false)
+//            } else {
+//                val intent = Intent(this, PhoneAuth::class.java)
+//                intent.putExtra("email", binding.loginEmail.text.toString())
+//                intent.putExtra("parent", "login")
+//                startActivity(intent)
+//            }
+//        } else {
+//            Toast.makeText(this, getString(R.string.login_unsuccessful), Toast.LENGTH_SHORT).show()
+//        }
     }
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val action= intent.getStringExtra("action")
-            if(action == "finish") finish()
+            val action = intent.getStringExtra("action")
+            if (action == "finish") finish()
         }
     }
 
-    fun signup(view: View){
-        val intent= Intent(this, Signup::class.java)
-        startActivity(intent)
+    fun signup(view: View) {
+        startActivity(Intent(this, Signup::class.java))
     }
 
-    fun goToForgotPassword(view: View){
-        val intent= Intent(this, ForgotPassword::class.java)
-        startActivity(intent)
+    fun goToForgotPassword(view: View) {
+        startActivity(Intent(this, ForgotPassword::class.java))
     }
 
-    fun back(view: View){ finish() }
+    fun back(view: View) {
+        finish()
+    }
 
     override fun onResume() {
         super.onResume()
         Tools().getLocale(this)
-        val language =  getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        window.decorView.layoutDirection =
+            if (language.isNullOrEmpty() || language == "0" || language == "1") {
+                View.LAYOUT_DIRECTION_LTR
+            } else {
+                View.LAYOUT_DIRECTION_RTL
+            }
     }
 }

@@ -1,8 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    // id 'kotlin-android-extensions'
 }
-apply plugin: "kotlin-android-extensions"
+
 def loadProperties() {
     def propertiesFile = rootProject.file('env.properties')
     def properties = new Properties()
@@ -17,13 +18,14 @@ def envProperties = loadProperties()
 
 android {
     compileSdk 33
-    buildToolsVersion "30.0.3"
+    buildToolsVersion "33.0.0"
     ndkVersion '27.0.11718014 rc1'
+    namespace 'com.application.adverial'
 
     defaultConfig {
         applicationId "com.application.adverial"
-        minSdkVersion 24
-        targetSdk 33
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 36 // Update the version code to a unique integer
         versionName "1.0.36" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
@@ -36,15 +38,6 @@ android {
         buildConfigField "String", "PUSHER_APP_CLUSTER", "\"${envProperties['PUSHER_APP_CLUSTER']}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfigs {
-            release {
-                storeFile rootProject.file('store_key.jks')
-                storePassword '123456'
-                keyAlias 'key0'
-                keyPassword '123456'
-//                }
-            }
-        }
     }
 
     signingConfigs {
@@ -64,7 +57,6 @@ android {
             signingConfig signingConfigs.release
             ndk.debugSymbolLevel = 'FULL'
             buildConfigField "String", "API_BASE_URL",  "\"${envProperties['API_BASE_URL']}\""
-
         }
         debug {
             debuggable true
@@ -72,14 +64,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 }
 
@@ -100,7 +93,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.github.smarteist:autoimageslider:1.4.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -111,7 +103,6 @@ dependencies {
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     implementation 'androidx.browser:browser:1.4.0'
-    implementation 'jp.wasabeef:picasso-transformations:2.1.0'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'com.google.maps.android:android-maps-utils:2.2.3'
     implementation 'com.google.android.gms:play-services-location:19.0.1'
@@ -121,12 +112,12 @@ dependencies {
     implementation 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
     implementation 'com.hbb20:ccp:2.6.0'
     implementation 'io.nlopez.smartlocation:library:3.3.3'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
     implementation 'com.jsibbold:zoomage:1.3.1'
-    implementation 'com.budiyev.android:code-scanner:2.1.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'id.zelory:compressor:3.0.1'
-    //implementation 'com.github.scrounger:countrycurrencypicker:1.1.1'
+    implementation 'com.github.smarteist:Android-Image-Slider:1.4.0'
+    implementation 'com.github.wasabeef:glide-transformations:4.3.0'
+//    implementation 'com.budiyev.android:code-scanner:2.1.0'
+//    implementation 'com.github.Adverial:Adverial-Android'
 }

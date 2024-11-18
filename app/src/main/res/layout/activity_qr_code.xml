@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black_cover"
     tools:context=".ui.activity.QrCode">
-
+<!-- 
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/scanner_view"
         android:layout_width="match_parent"
@@ -26,6 +26,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:maskColor="#77000000" />
+        app:maskColor="#77000000" /> -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -125,6 +126,23 @@ class Home : AppCompatActivity() {
                 }
             }
         }
+    }
+    fun language(view: View) {
+        val dialog = Language()
+        dialog.show(supportFragmentManager, "Language")
+        dialog.getStatus().observe(this) { selectedLanguage ->
+            getSharedPreferences("user", 0).edit()
+                .putString("languageName", selectedLanguage.name)
+                .putString("languageId", selectedLanguage.id)
+                .putInt("languageFlag", selectedLanguage.flag)
+                .apply()
+            updateLanguageUI()
+        }
+    }
+
+    fun menu(view: View) {
+        // Open the navigation drawer
+        binding.homeDrawerLayout.openDrawer(GravityCompat.START)
     }
 
     private fun nextPage() {

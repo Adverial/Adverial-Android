@@ -47,7 +47,7 @@
     //------------------------------------------------------------------------------new ad images
     <string name="new_ad_images_title1">معلومات للتواصل</string>
     <string name="new_ad_images_name">اسم اللقب</string>
-    <string name="new_ad_images_phone">رقم الهاتف</string>
+    <string name="new_ad_images_phone">رقم التواصل</string>
     <string name="new_ad_images_title2">تفضيلات التواصل</string>
     <string name="new_ad_images_option1">الهاتف والرسالة</string>
     <string name="new_ad_images_option2">هاتف</string>
@@ -63,8 +63,8 @@
     <string name="new_ad_completed_new_ad">ضع إعلانا آخر</string>
     //------------------------------------------------------------------------------address
     <string name="address_title">أدخل معلومات العنوان</string>
-    <string name="address_country">دولة</string>
-    <string name="address_province">مدينة</string>
+  <string name="address_country">دولة / منطقة</string>
+<string name="address_province">مدينة</string>
     <string name="address_district">قضاء</string>
     <string name="address_neighbourhood">منطقة</string>
     //------------------------------------------------------------------------------profile
@@ -214,5 +214,6 @@
     <string name="login_otp_hint">أدخل رمز التحقق</string>
     <string name="already_have_account">لديك حساب بالفعل؟</string>
     <string name="new_message">New message</string>
+    <string name="select_country_or_region">اختر البلد أو المنطقة</string>
 
 </resources>

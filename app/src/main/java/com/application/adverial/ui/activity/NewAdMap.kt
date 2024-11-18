@@ -1,5 +1,6 @@
 package com.application.adverial.ui.activity
 
+// Import Huawei-specific classes instead of Google Maps
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,18 +13,21 @@ import androidx.core.app.ActivityCompat
 import com.application.adverial.R
 import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
+import com.huawei.hms.maps.CameraUpdateFactory
+import com.huawei.hms.maps.HuaweiMap
+import com.huawei.hms.maps.HuaweiMapOptions
+import com.huawei.hms.maps.MapsInitializer
+import com.huawei.hms.maps.OnMapReadyCallback
+import com.huawei.hms.maps.SupportMapFragment
+import com.huawei.hms.maps.model.LatLng
 import io.nlopez.smartlocation.SmartLocation
 import kotlinx.android.synthetic.main.activity_new_ad_map.lottie12
+import androidx.core.content.ContextCompat
 
 class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 
     private var mapFragment: SupportMapFragment? = null
-    private lateinit var map: GoogleMap
+    private lateinit var map: HuaweiMap
     private var lat= ""
     private var lon= ""
     private var adId= ""
@@ -33,77 +37,138 @@ class NewAdMap : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapsInitializer.initialize(this)
         setContentView(R.layout.activity_new_ad_map)
 
         Tools().setBasedLogo(this, R.id.imageView47)
         pageInit()
         Tools().locationRequest(this)
+    }
+
+    private fun pageInit() {
+        adId = intent.getStringExtra("adId")!!
+country = intent.getStringExtra("country")!!
+city = intent.getStringExtra("city")!!
+district = intent.getStringExtra("district")!!
+
+        // Initialize HuaweiMapFragment instead of Google Map's SupportMapFragment
+        val huaweiMapOptions = HuaweiMapOptions().zoomControlsEnabled(false)
+            .compassEnabled(true)
+            .zoomGesturesEnabled(true)
+            .scrollGesturesEnabled(true)
+            .rotateGesturesEnabled(false)
+            .tiltGesturesEnabled(true)
+            .zOrderOnTop(true)
+            .useViewLifecycleInFragment(true)
+            .liteMode(true)
+            .minZoomPreference(3f)
+            .maxZoomPreference(13f)
+// Set a standard map.
+        huaweiMapOptions.mapType(HuaweiMap.MAP_TYPE_NORMAL)
+        var mSupportMapFragment = SupportMapFragment.newInstance(huaweiMapOptions)
+        mSupportMapFragment = supportFragmentManager.findFragmentById(R.id.newAdMap_map) as SupportMapFragment?
+        mSupportMapFragment?.getMapAsync(this)
+    }
+
+    override fun onMapReady(huaweiMap: HuaweiMap) {
+        map = huaweiMap
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ), 1)
+        } else {
+            enableMyLocation()
+        }
+        map.isMyLocationEnabled = true
+        map.setOnCameraIdleListener {
+            val target = map.cameraPosition.target
+            lat = target.latitude.toString()
+            lon = target.longitude.toString()
+        }
         myLocation()
     }
 
-    private fun pageInit(){
-        adId= intent.getStringExtra("adId")!!
-        country= intent.getStringExtra("country")!!
-        city= intent.getStringExtra("city")!!
-        district= intent.getStringExtra("district")!!
-        mapFragment = supportFragmentManager.findFragmentById(R.id.newAdMap_map) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
-    }
 
-    override fun onMapReady(p0: GoogleMap) {
-        map= p0
-        Tools().gotoMyCountry(map)
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){return }
-        map.isMyLocationEnabled= true
-        val locationButton= (mapFragment?.view?.findViewById<View>(Integer.parseInt("1"))?.parent as View).findViewById<View>(Integer.parseInt("2"))
-        val rlp= locationButton.layoutParams as RelativeLayout.LayoutParams
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0)
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
-        rlp.setMargins(0,0,30,100)
-        map.setOnCameraChangeListener{
-            lat= it.target.latitude.toString()
-            lon= it.target.longitude.toString()
-//            Log.d("ddd", "lat:$lat   lon:$lon")
-        }
-    }
-
-    private fun myLocation(){
-        SmartLocation.with(this).location().start {
-            if(lat.isBlank() && lon.isBlank()) {
-                lat= it.latitude.toString()
-                lon= it.longitude.toString()
-                val latLng = LatLng(it.latitude, it.longitude)
+    private fun myLocation() {
+        // Using SmartLocation for retrieving the location
+        SmartLocation.with(this).location().start { location ->
+            if (lat.isBlank() && lon.isBlank()) {
+                lat = location.latitude.toString()
+                lon = location.longitude.toString()
+                val latLng = LatLng(location.latitude, location.longitude)
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-//                Log.d("ddd", "lat:$lat   lon:$lon")
             }
         }
     }
 
-    fun next(view: View){
-        if(lat.isNotBlank() && lon.isNotBlank()){
-            lottie12.visibility= View.VISIBLE
+    fun next(view: View) {
+        //toast the lan and lon
+       // Toast.makeText(this, "lat: $lat, lon: $lon", Toast.LENGTH_SHORT).show()
+        if (lat.isNotBlank() && lon.isNotBlank()) {
+            lottie12.visibility = View.VISIBLE
             Tools().viewEnable(this.window.decorView.rootView, false)
-            val repo= Repository(this)
+
+            val repo = Repository(this)
             repo.addAdLocation(adId, country, city, district, lat, lon)
             repo.getAddAdLocationData().observe(this, {
-                lottie12.visibility= View.GONE
+                lottie12.visibility = View.GONE
                 Tools().viewEnable(this.window.decorView.rootView, true)
-                if(it.status){
-                    val intent= Intent(this, NewAdImages::class.java)
+
+                if (it.status) {
+                    val intent = Intent(this, NewAdImages::class.java)
                     intent.putExtra("adId", adId)
                     startActivity(intent)
                 }
             })
-        }else Toast.makeText(this, resources.getString(R.string.locationNotFound), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, resources.getString(R.string.locationNotFound), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onResume() {
         super.onResume()
         Tools().getLocale(this)
-        val language =  getSharedPreferences("user", 0).getString("languageId", "")
-        if (language == "" ||language == "0" || language == "1") window.decorView.layoutDirection= View.LAYOUT_DIRECTION_LTR
-        else window.decorView.layoutDirection= View.LAYOUT_DIRECTION_RTL
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        if (language == "" || language == "0" || language == "1") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        }
     }
 
-    fun back(view: View){ finish() }
+    fun back(view: View) {
+        finish()
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults.any { it == PackageManager.PERMISSION_GRANTED }) {
+                enableMyLocation()
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.isMyLocationEnabled = true
+            map.setOnCameraIdleListener {
+                val target = map.cameraPosition.target
+                lat = target.latitude.toString()
+                lon = target.longitude.toString()
+            }
+            myLocation()
+        } else {
+            // Permissions are not granted, handle accordingly
+        }
+    }
+
+
 }

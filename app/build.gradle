@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.huawei.agconnect'
 }
 apply plugin: "kotlin-android-extensions"
 def loadProperties() {
@@ -21,11 +22,11 @@ android {
     ndkVersion '27.0.11718014 rc1'
 
     defaultConfig {
-        applicationId "com.application.adverial"
+        applicationId "com.adverial.huawei"
         minSdkVersion 24
         targetSdk 33
-        versionCode 36 // Update the version code to a unique integer
-        versionName "1.0.36" // Update the version name to a string that represents the version
+        versionCode 1// Update the version code to a unique integer
+        versionName "1.0" // Update the version name to a string that represents the version
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         ndk {
@@ -34,6 +35,7 @@ android {
         }
         buildConfigField "String", "PUSHER_APP_KEY", "\"${envProperties['PUSHER_APP_KEY']}\""
         buildConfigField "String", "PUSHER_APP_CLUSTER", "\"${envProperties['PUSHER_APP_CLUSTER']}\""
+        buildConfigField "String", "WEBSITE_URL",  "\"${envProperties['WEBSITE_URL']}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfigs {
@@ -54,6 +56,12 @@ android {
             keyAlias 'key0'
             keyPassword '123456'
         }
+        config {
+            storeFile rootProject.file('store_key.jks')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias 'key0'
+        }
     }
 
     buildTypes {
@@ -61,14 +69,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             multiDexEnabled true
-            signingConfig signingConfigs.release
             ndk.debugSymbolLevel = 'FULL'
             buildConfigField "String", "API_BASE_URL",  "\"${envProperties['API_BASE_URL']}\""
+            //WEBSITE_URL
 
         }
         debug {
             debuggable true
             buildConfigField "String", "API_BASE_URL", "\"${envProperties['API_BASE_URL']}\""
+
         }
     }
     compileOptions {
@@ -84,6 +93,7 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
@@ -129,4 +139,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'id.zelory:compressor:3.0.1'
     //implementation 'com.github.scrounger:countrycurrencypicker:1.1.1'
+    implementation 'com.huawei.hms:location:6.8.0.302'
+    implementation 'com.huawei.hms:maps:6.11.2.301'
 }
+
+apply plugin: 'com.huawei.agconnect'

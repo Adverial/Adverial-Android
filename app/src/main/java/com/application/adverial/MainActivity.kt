@@ -14,10 +14,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.application.adverial.remote.model.Message
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.MessageActivity
+import com.application.adverial.ui.activity.NewAdMap
 import com.application.adverial.ui.navigation.Home
 import com.application.adverial.utils.DialogUtils
 import com.application.adverial.utils.NetworkUtils
 import com.application.adverial.utils.NotificationUtils
+import com.huawei.hms.maps.MapsInitializer
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.connection.ConnectionEventListener
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+      MapsInitializer.initialize(this)
         setContentView(R.layout.activity_main)
         val inputMethodManager: InputMethodManager =
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -61,7 +64,10 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         if (NetworkUtils.isNetworkAvailable(this)) {
-                Tools().goto(this, Home(), false)
+
+//            var intent = Intent(this, NewAdMap::class.java)
+//            startActivity(intent)
+              Tools().goto(this, Home(), true)
            // setupPusher()
         } else {
             DialogUtils.showNoInternetDialog(this)

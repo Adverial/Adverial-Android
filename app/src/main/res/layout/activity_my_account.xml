@@ -34,25 +34,25 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-    android:id="@+id/imageView42"
-    android:layout_width="@dimen/_60sdp"
-    android:layout_height="@dimen/_20sdp"
-    android:layout_marginTop="@dimen/_15sdp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/imageView42"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-<ImageView
-    android:id="@+id/newAdCategory_back5"
-    android:layout_width="@dimen/_30sdp"
-    android:layout_height="@dimen/_22sdp"
-    android:layout_marginTop="@dimen/_15sdp"
-    android:layout_marginEnd="@dimen/_15sdp"
-    android:onClick="back"
-    android:src="@drawable/close_icon"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-  />
+        <ImageView
+            android:id="@+id/newAdCategory_back5"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:onClick="back"
+            android:src="@drawable/close_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:id="@+id/textView2"
@@ -71,29 +71,35 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView42"
             tools:layout_editor_absoluteX="6dp" />
 
-        <EditText
-            android:id="@+id/myaccount_email"
+        <!-- Removed Email, Last Name, and LinearLayout holding the name fields -->
+        <ImageView
+            android:id="@+id/imageView344"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/rounded_full2"
+            android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="@color/inputBgColor"
-
-            android:ems="10"
-            android:fontFamily="@font/regular"
-            android:hint="@string/signup_email_hint"
-            android:inputType="textEmailAddress"
-            android:paddingStart="@dimen/_12sdp"
-            android:paddingEnd="@dimen/_12sdp"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/textColor"
-            android:textSize="@dimen/_12ssp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
-
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        <EditText
+            android:id="@+id/myaccount_firstname"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/inputBgColor"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/textColor"
+            android:fontFamily="@font/regular"
+            android:textSize="@dimen/_12ssp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:layout_margin="@dimen/_2ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView344"
+            app:layout_constraintEnd_toStartOf="@+id/imageView62"
+            app:layout_constraintStart_toStartOf="@+id/imageView344"
+            app:layout_constraintTop_toTopOf="@+id/imageView344" />
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="0dp"
@@ -101,47 +107,37 @@
             android:background="@drawable/rounded_full2"
             android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="@color/inputBgColor"
-
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myaccount_email" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView344" />
 
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/countryCodePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_3sdp"
-            app:ccpDialog_backgroundColor="@color/viewColor"
-            app:ccpDialog_textColor="@color/white"
-            app:ccp_autoDetectCountry="true"
-            app:ccp_contentColor="@color/textColor"
-            app:ccp_showFlag="false"
-            app:ccp_showNameCode="false"
-            app:ccp_textSize="@dimen/_12ssp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-            app:layout_constraintStart_toStartOf="@+id/imageView8"
-            app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
 
         <EditText
             android:id="@+id/myaccount_phone"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/inputBgColor"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/textColor"
+            android:textColor="@color/disable_color"
             android:ems="10"
             android:fontFamily="@font/regular"
             android:hint="@string/my_account_phone"
             android:inputType="phone"
-            android:maxLength="10"
-
+            android:maxLength="14"
             android:textSize="@dimen/_12ssp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:layout_margin="@dimen/_2ssp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintEnd_toStartOf="@+id/imageView62"
-            app:layout_constraintStart_toEndOf="@+id/countryCodePicker"
+            app:layout_constraintStart_toStartOf="@+id/imageView8"
             app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
 
         <ImageView
             android:id="@+id/imageView62"
@@ -169,9 +165,9 @@
             android:textAllCaps="false"
             android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
-            app:layout_constraintEnd_toEndOf="@+id/myaccount_email"
+            app:layout_constraintEnd_toEndOf="@+id/myaccount_phone"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/myaccount_email"
+            app:layout_constraintStart_toStartOf="@+id/myaccount_phone"
             app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
         <LinearLayout
@@ -201,60 +197,6 @@
                 android:layout_marginStart="@dimen/_5sdp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout6"
-            android:layout_width="0dp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/myaccount_email"
-            app:layout_constraintStart_toStartOf="@+id/myaccount_email"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-            <EditText
-                android:id="@+id/myaccount_firstname"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_full2"
-                android:backgroundTint="@color/inputBgColor"
-
-                android:ems="10"
-                android:fontFamily="@font/regular"
-                android:hint="@string/signup_name_hint"
-                android:inputType="text"
-                android:paddingStart="@dimen/_12sdp"
-                android:paddingEnd="@dimen/_12sdp"
-                android:textColor="@color/textColor"
-                android:textColorHint="@color/textColor"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="@+id/textView22"
-                app:layout_constraintStart_toStartOf="@+id/textView22"
-                app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
-            <EditText
-                android:id="@+id/myaccount_lastname"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_full2"
-                android:backgroundTint="@color/inputBgColor"
-
-                android:ems="10"
-                android:fontFamily="@font/regular"
-                android:hint="@string/signup_lastname_hint"
-                android:inputType="text"
-                android:paddingStart="@dimen/_12sdp"
-                android:paddingEnd="@dimen/_12sdp"
-                android:textColor="@color/textColor"
-                android:textColorHint="@color/textColor"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="@+id/textView22"
-                app:layout_constraintStart_toStartOf="@+id/textView22"
-                app:layout_constraintTop_toBottomOf="@+id/textView22" />
-        </LinearLayout>
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie14"
             android:layout_width="match_parent"
@@ -269,6 +211,5 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/animation" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

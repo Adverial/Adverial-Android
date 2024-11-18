@@ -65,7 +65,7 @@
     <string name="new_ad_completed_new_ad">ڕێکلامێکی تر دابنێ</string>
     //------------------------------------------------------------------------------address
     <string name="address_title">زانیاری ناونیشان دابنێ</string>
-    <string name="address_country">وڵات</string>
+    <string name="address_country">وڵات / هەرێم</string>
     <string name="address_province">شار</string>
     <string name="address_district">قەزا</string>
     <string name="address_neighbourhood">دۆخ</string>
@@ -213,6 +213,7 @@
     <string name="login_phone_hint">ژمارەی تەلەفونەکەت داخل بکە</string>
     <string name="login_otp_hint">کۆدی دڵنیاکردنەوە داخل بکە</string>
     <string name="already_have_account">تۆ ھەژمارێکی پێشترت هەیە؟</string>
+    <string name="select_country_or_region">وڵات یان ناوچە دیاری بکە</string>
     <string name="new_message">New message</string>
 
 </resources>

@@ -10,12 +10,11 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.dialog.AlertDialog1
 import com.application.adverial.ui.navigation.Home
-import kotlinx.android.synthetic.main.activity_my_account.countryCodePicker
+import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.activity_my_account.deleteAccount
+import kotlinx.android.synthetic.main.activity_my_account.imageView62
 import kotlinx.android.synthetic.main.activity_my_account.myAccountRoot
-import kotlinx.android.synthetic.main.activity_my_account.myaccount_email
 import kotlinx.android.synthetic.main.activity_my_account.myaccount_firstname
-import kotlinx.android.synthetic.main.activity_my_account.myaccount_lastname
 import kotlinx.android.synthetic.main.activity_my_account.myaccount_phone
 import kotlinx.android.synthetic.main.activity_signup.lottie14
 import java.util.regex.Pattern
@@ -30,7 +29,11 @@ class MyAccount : AppCompatActivity() {
         Tools().setBasedLogo(this, R.id.imageView42)
         //disable the phone number field
         myaccount_phone.isEnabled= false
+        imageView62.visibility= View.GONE
         pageInit()
+
+
+
     }
 
     private fun pageInit(){
@@ -42,13 +45,13 @@ class MyAccount : AppCompatActivity() {
             lottie14.visibility = View.GONE
             Tools().viewEnable(this.window.decorView.rootView, true)
             if (it.status) {
-                lastPhone = it.data.phone ?: ""
+                lastPhone = it.data.whatsappNumber ?: ""
                 myaccount_firstname.setText(it.data.name ?: "")
-                myaccount_lastname.setText(it.data.last_name ?: "")
-                myaccount_email.setText(it.data.email ?: "")
-   // update countryCodePicker to be first four digits of it.data.whatsappNumber and other 11 digits to be in login_phone
-                countryCodePicker.setCountryForPhoneCode(it.data.whatsappNumber?.substring(0, 4)?.toInt() ?: 0)
-                myaccount_phone.setText(it.data.whatsappNumber?.substring(4) ?: "")
+               // countryCodePicker.setCountryForPhoneCode(it.data.whatsappNumber?.substring(0, 4)?.toInt() ?: 0)
+                myaccount_phone.setText(it.data.whatsappNumber)
+                // make the phone number field not editable and disable color background
+                myaccount_phone.isEnabled= false
+
             }
         }
 
@@ -83,31 +86,27 @@ class MyAccount : AppCompatActivity() {
         }
     }
 
-    fun save(view: View){
-        val emailPattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")
-        val emailMatcher = emailPattern.matcher(myaccount_email.text.toString())
-        if(myaccount_firstname.text.isNotBlank() && myaccount_lastname.text.isNotBlank() && emailMatcher.find() && myaccount_phone.length() == 10){
-            lottie14.visibility= View.VISIBLE
+    fun save(view: View) {
+        if (myaccount_phone.length() == 14) {
+            lottie14.visibility = View.VISIBLE
             Tools().viewEnable(this.window.decorView.rootView, false)
-            val repo= Repository(this)
-            repo.userUpdate(myaccount_firstname.text.toString(), myaccount_lastname.text.toString(), myaccount_email.text.toString(), myaccount_phone.text.toString())
-            repo.getUserUpdateData().observe(this, {
-                if(it.status){
-                    lottie14.visibility= View.GONE
+
+            val repo = Repository(this)
+            // Updated to remove name and email from userUpdate call
+            repo.userUpdate(phone = myaccount_phone.text.toString(),name = myaccount_firstname.text.toString(),
+                email = "", last_name = "")
+
+            repo.getUserUpdateData().observe(this) { updateResult ->
+                if (updateResult.status) {
+                    lottie14.visibility = View.GONE
                     Tools().viewEnable(this.window.decorView.rootView, true)
-                    if(myaccount_phone.text.toString() == lastPhone){
                         Toast.makeText(this, resources.getString(R.string.accountUpdateDone), Toast.LENGTH_SHORT).show()
                         finish()
-                    }
-                    else{
-                        // need to post is-verified
-                        val intent= Intent(this, PhoneAuth::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
                 }
-            })
-        }else Toast.makeText(this, resources.getString(R.string.fieldsAreEmpty), Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, resources.getString(R.string.fieldsAreEmpty), Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun clear(view: View){

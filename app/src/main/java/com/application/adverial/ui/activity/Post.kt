@@ -22,9 +22,11 @@ import com.application.adverial.remote.model.Conversation
 import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
+import com.application.adverial.ui.navigation.Notifications
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -32,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 class Post : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityPostBinding
+    private var mapFragment: SupportMapFragment? = null
     private lateinit var map: GoogleMap
     private var id = ""
     private var phoneNumber = ""
@@ -39,7 +42,8 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     private var lat = 0.0
     private var lon = 0.0
     private var type = ""
-    private var ItemData: Ad? = null
+    private var actionBarMode = "closed"
+    private var itemData: Ad? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,21 +51,23 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         Tools().changeViewFromTheme(this, binding.activityPostRoot)
-        Tools().setBasedLogo(this, binding.appLogo.id)
-
         pageInit()
         fetchData()
+        Tools().setBasedLogo(this, R.id.app_logo)
+
+        // Hide ad details by default
         binding.showAdDetails.visibility = View.GONE
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun pageInit() {
         binding.lottie13.visibility = View.VISIBLE
-        Tools().viewEnable(window.decorView.rootView, false)
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.post_map) as ScrollableMapFragment
-        mapFragment.getMapAsync(this)
-        id = intent.getStringExtra("id") ?: ""
-        mapFragment.setListener {
+        Tools().viewEnable(this.window.decorView.rootView, false)
+        mapFragment =
+            supportFragmentManager.findFragmentById(R.id.post_map) as ScrollableMapFragment?
+        mapFragment!!.getMapAsync(this)
+        id = intent.getStringExtra("id")!!
+        (mapFragment as ScrollableMapFragment).setListener {
             binding.postMapLayout.requestDisallowInterceptTouchEvent(true)
         }
     }
@@ -71,49 +77,58 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         val repo = Repository(this)
         repo.adDetails(id)
         repo.getAdDetailsData().observe(this) {
-            val adData = it.data ?: return@observe
             binding.postPage.layoutManager = LinearLayoutManager(this)
-            binding.postPage.adapter = PostPageAdapter(adData, id)
+            binding.postPage.adapter = PostPageAdapter(it.data!!, id)
+            itemData = it.data
 
-            ItemData = adData
             val userId = getSharedPreferences("user", 0).getString("user_id", "")
-            if (userId == ItemData?.user_id) {
+            if (userId == itemData?.user_id) {
                 binding.phoneCallBtn.visibility = View.GONE
                 binding.messageCallBtn.visibility = View.GONE
             }
-            binding.postTitle1.text = adData.price_currency
-            binding.postCity1.text = adData.title
-            phoneNumber = adData.phone ?: ""
-            favorite = adData.is_favorite == 1
+            binding.postTitle1.text = it.data!!.price_currency
+            binding.postCity1.text = it.data!!.title
+            phoneNumber = it.data!!.phone ?: ""
 
-            updateFavoriteIcon()
-            type = adData.type ?: ""
+            if (it.data!!.is_favorite == 1) {
+                binding.postFavorite.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_favorite
+                    )
+                )
+                favorite = true
+            } else {
+                binding.postFavorite.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_favorite_empty
+                    )
+                )
+                favorite = false
+            }
+            type = it.data!!.type ?: ""
             binding.lottie13.visibility = View.GONE
-            Tools().viewEnable(window.decorView.rootView, true)
+            Tools().viewEnable(this.window.decorView.rootView, true)
         }
     }
 
-    private fun updateFavoriteIcon() {
-        if (favorite) {
-            binding.postFavorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite))
-        } else {
-            binding.postFavorite.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_empty))
-        }
-    }
-
-    override fun onMapReady(p0: GoogleMap) {
-        map = p0
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
         Tools().gotoMyCountry(map)
-
         val repo = Repository(this)
         repo.adDetails(id)
         repo.getAdDetailsData().observe(this) {
-            val adData = it.data ?: return@observe
-            if (!adData.lat.isNullOrBlank() && !adData.lon.isNullOrBlank()) {
-                val latLng = LatLng(adData.lat!!.toDouble(), adData.lon!!.toDouble())
+            if (it.data != null && !it.data!!.lat.isNullOrBlank() && !it.data!!.lon.isNullOrBlank()) {
+                val latLng = LatLng(it.data!!.lat!!.toDouble(), it.data!!.lon!!.toDouble())
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                val smallMarker = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.im_geo), 60, 60, false)
-                val marker = MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+                val smallMarker = Bitmap.createScaledBitmap(
+                    BitmapFactory.decodeResource(resources, R.drawable.im_geo),
+                    60, 60, false
+                )
+                val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
+                val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
                 map.addMarker(marker)
             }
         }
@@ -122,37 +137,61 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     fun favorite(view: View) {
         if (Tools().authCheck(this)) {
             binding.lottie13.visibility = View.VISIBLE
-            Tools().viewEnable(window.decorView.rootView, false)
+            Tools().viewEnable(this.window.decorView.rootView, false)
             val repo = Repository(this)
             if (favorite) {
                 repo.removeFavorite(id)
                 repo.getRemoveFavoriteData().observe(this) {
                     binding.lottie13.visibility = View.GONE
-                    Tools().viewEnable(window.decorView.rootView, true)
+                    Tools().viewEnable(this.window.decorView.rootView, true)
                     if (it.status) {
+                        binding.postFavorite.setImageDrawable(
+                            ContextCompat.getDrawable(this, R.drawable.ic_favorite_empty)
+                        )
                         favorite = false
-                        updateFavoriteIcon()
                     }
                 }
             } else {
                 repo.addFavorite(id)
                 repo.getAddFavoriteData().observe(this) {
                     binding.lottie13.visibility = View.GONE
-                    Tools().viewEnable(window.decorView.rootView, true)
+                    Tools().viewEnable(this.window.decorView.rootView, true)
                     if (it.status) {
+                        binding.postFavorite.setImageDrawable(
+                            ContextCompat.getDrawable(this, R.drawable.ic_favorite)
+                        )
                         favorite = true
-                        updateFavoriteIcon()
                     }
                 }
             }
         } else {
-            startActivity(Intent(this, LoginWa::class.java))
+            val intent = Intent(this, LoginWa::class.java)
+            startActivity(intent)
+        }
+    }
+
+    fun location(view: View) {
+        binding.postMapLayout.visibility = View.VISIBLE
+        binding.postPage.visibility = View.GONE
+    }
+
+    fun about(view: View) {
+        binding.postMapLayout.visibility = View.GONE
+        binding.postPage.visibility = View.VISIBLE
+        val userId = getSharedPreferences("user", 0).getString("user_id", "")
+        if (userId == itemData?.user_id) {
+            binding.phoneCallBtn.visibility = View.GONE
+            binding.messageCallBtn.visibility = View.GONE
+        } else {
+            binding.phoneCallBtn.visibility = View.VISIBLE
+            binding.messageCallBtn.visibility = View.VISIBLE
         }
     }
 
     fun call(view: View) {
         if (phoneNumber.isNotBlank() && (type == "1" || type == "2")) {
-            val dialIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+            val dialIntent = Intent(Intent.ACTION_DIAL)
+            dialIntent.data = Uri.parse("tel:$phoneNumber")
             startActivity(dialIntent)
         } else {
             Toast.makeText(this, getString(R.string.phoneNumberNotFound), Toast.LENGTH_SHORT).show()
@@ -162,40 +201,78 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     fun message(view: View) {
         if (Tools().authCheck(this)) {
             binding.lottie13.visibility = View.VISIBLE
-            Tools().viewEnable(window.decorView.rootView, false)
-            val partnerUserId = ItemData?.user_detail?.id ?: 0
-            val chatPartnerName = ItemData?.user_detail?.name ?: ""
+            Tools().viewEnable(this.window.decorView.rootView, false)
+            val partnerUserId = itemData?.user_detail?.id ?: 0
+            val chatPartnerName = itemData?.user_detail?.name ?: ""
             val repo = ConversationRepository(this)
             repo.initialConversation(partnerUserId, id.toInt())
-            repo.initialConversationLiveData.observe(this) {
-                binding.lottie13.visibility = View.GONE
-                Tools().viewEnable(window.decorView.rootView, true)
-                if (it.conversionId != 0) {
+            repo.initialConversationLiveData.observe(this) { conversationResponse ->
+                val conversationId = conversationResponse.conversionId
+                if (conversationId != 0) {
                     val intent = Intent(this, MessageActivity::class.java).apply {
-//                        putExtra("conversation", Conversation(
-//                            chatPartnerId = partnerUserId,
-//                            conversionId = it.conversionId,
-//                            chatPartnerName = chatPartnerName,
-//                            adId = ItemData?.id,
-//                            adTitle = ItemData?.title,
-//                            adPrice = ItemData?.price,
-//                            adPriceCurrency = ItemData?.price_currency,
-//                            adImage = ItemData?.ad_images?.getOrNull(0)?.image
-//                        ))
-//                        putExtra("show_item", true)
+                        val conversationObject = Conversation(
+                            chatPartnerId = partnerUserId,
+                            conversionId = conversationId,
+                            chatPartnerName = chatPartnerName,
+                            chatPartnerEmail = "",
+                            lastMessage = "",
+                            lastMessageAt = "",
+                            avatar = "",
+                            adId = itemData?.id,
+                            adTitle = itemData?.title,
+                            adPrice = itemData?.price,
+                            adPriceCurrency = itemData?.price_currency,
+                            adImage = itemData?.ad_images?.get(0)?.image
+                        )
+                        putExtra("show_item", true)
+                        putExtra("conversation", conversationObject)
                     }
-//                    startActivity(intent)
-                    Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT).show()
+                    binding.lottie13.visibility = View.GONE
+                    Tools().viewEnable(this.window.decorView.rootView, true)
+                    startActivity(intent)
                 } else {
+                    binding.lottie13.visibility = View.GONE
+                    Tools().viewEnable(this.window.decorView.rootView, true)
                     Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT).show()
                 }
             }
         } else {
-            startActivity(Intent(this, LoginWa::class.java))
+            val intent = Intent(this, LoginWa::class.java)
+            startActivity(intent)
         }
     }
 
     fun back(view: View) {
         finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Tools().getLocale(this)
+        val language = getSharedPreferences("user", 0).getString("languageId", "")
+        if (language == "" || language == "0" || language == "1") {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+            binding.postLa.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        } else {
+            window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+            binding.postLa.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        }
+        binding.postLayout.layoutDirection = View.LAYOUT_DIRECTION_LTR
+    }
+
+    fun showLocation(view: View) {
+        binding.locationBtn.visibility = View.GONE
+        binding.phoneCallBtn.visibility = View.GONE
+        binding.messageCallBtn.visibility = View.GONE
+        binding.showAdDetails.visibility = View.VISIBLE
+        location(view)
+    }
+
+    fun showAdDetails(view: View) {
+        binding.locationBtn.visibility = View.VISIBLE
+        binding.phoneCallBtn.visibility = View.VISIBLE
+        binding.messageCallBtn.visibility = View.VISIBLE
+        binding.showAdDetails.visibility = View.GONE
+        about(view)
     }
 }

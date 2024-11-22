@@ -22,6 +22,7 @@ import com.application.adverial.remote.model.Message
 import com.application.adverial.remote.model.MessageResponse
 import com.application.adverial.remote.model.Notification
 import com.application.adverial.remote.model.PublishAd
+import com.application.adverial.remote.model.PublishAdRequest
 import com.application.adverial.remote.model.Response
 import com.application.adverial.remote.model.Search
 import com.application.adverial.remote.model.ShowRoom
@@ -295,15 +296,11 @@ interface APIService {
         @Field("image_id") image_id: String
     ): Call<Response>
 
-    @FormUrlEncoded
     @POST("publish-ad")
     fun publishAd(
         @Header("Authorization") token: String,
         @Header("lang") lang: String,
-        @Field("ad_id") ad_id: String,
-        @Field("phone") phone: String,
-        @Field("name") name: String,
-        @Field("type") type: String
+        @Body request: PublishAdRequest
     ): Call<PublishAd>
 
     @GET("user-detail")

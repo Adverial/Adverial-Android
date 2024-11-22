@@ -19,6 +19,7 @@ import com.application.adverial.remote.model.LatestSearch
 import com.application.adverial.remote.model.MainCategory
 import com.application.adverial.remote.model.Notification
 import com.application.adverial.remote.model.PublishAd
+import com.application.adverial.remote.model.PublishAdRequest
 import com.application.adverial.remote.model.Search
 import com.application.adverial.remote.model.ShowRoom
 import com.application.adverial.remote.model.Signup
@@ -344,9 +345,19 @@ class Repository(val context: Context) {
         })
     }
 
-    fun publishAd(ad_id: String, phone: String, name: String, type: String){
+//    fun publishAd(ad_id: String, phone: String, name: String, type: String){
+//        val service: APIService = RetroClass().apiService()
+//        val call = service.publishAd("Bearer $token",currentLang, ad_id, phone, name, type)
+//        call.enqueue(object : retrofit2.Callback<PublishAd> {
+//            override fun onResponse(call: Call<PublishAd>, response: Response<PublishAd>) { publishAd.value = response.body() }
+//            override fun onFailure(call: Call<PublishAd>, t: Throwable) {}
+//        })
+//    }
+
+    fun publishAd(ad_id: String, phone: String, name: String, type: String, filePaths: ArrayList<String>) {
         val service: APIService = RetroClass().apiService()
-        val call = service.publishAd("Bearer $token",currentLang, ad_id, phone, name, type)
+        val request = PublishAdRequest(ad_id, phone, name, type, filePaths)
+        val call = service.publishAd("Bearer $token", currentLang, request)
         call.enqueue(object : retrofit2.Callback<PublishAd> {
             override fun onResponse(call: Call<PublishAd>, response: Response<PublishAd>) { publishAd.value = response.body() }
             override fun onFailure(call: Call<PublishAd>, t: Throwable) {}

@@ -36,7 +36,12 @@ android {
         }
         buildConfigField "String", "PUSHER_APP_KEY", "\"${envProperties['PUSHER_APP_KEY']}\""
         buildConfigField "String", "PUSHER_APP_CLUSTER", "\"${envProperties['PUSHER_APP_CLUSTER']}\""
-
+        buildConfigField "String", "DO_SPACES_KEY", "\"${envProperties['DO_SPACES_KEY']}\""
+        buildConfigField "String", "DO_SPACES_SECRET", "\"${envProperties['DO_SPACES_SECRET']}\""
+        buildConfigField "String", "DO_SPACES_REGION", "\"${envProperties['DO_SPACES_REGION']}\""
+        buildConfigField "String", "DO_SPACES_BUCKET", "\"${envProperties['DO_SPACES_BUCKET']}\""
+        buildConfigField "String", "DO_SPACES_ENDPOINT", "\"${envProperties['DO_SPACES_ENDPOINT']}\""
+        buildConfigField "String", "DO_SPACES_URL", "\"${envProperties['DO_SPACES_URL']}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -120,4 +125,7 @@ dependencies {
     implementation 'com.github.wasabeef:glide-transformations:4.3.0'
 //    implementation 'com.budiyev.android:code-scanner:2.1.0'
 //    implementation 'com.github.Adverial:Adverial-Android'
+ implementation 'com.amazonaws:aws-android-sdk-s3:2.22.0'
+    implementation 'com.amazonaws:aws-android-sdk-core:2.22.0'
+
 }

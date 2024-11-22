@@ -125,7 +125,9 @@ class NewAdImages : AppCompatActivity() {
                 Tools().viewEnable(window.decorView.rootView, false)
                 val type = if (binding.publishRadio1.isChecked) "1" else "3"
                 val repo = Repository(this)
-                repo.publishAd(adId, binding.publishPhone.text.toString().replace(" ", ""), binding.publishName.text.toString(), type)
+                val adapter = binding.newAdImagesRecyclerView.adapter as NewAdImagesAdapter
+                val filePaths = adapter.getFilePaths()
+                repo.publishAd(adId, binding.publishPhone.text.toString().replace(" ", ""), binding.publishName.text.toString(), type, filePaths)
                 repo.getPublishAdData().observe(this) { response ->
                     binding.lottie10.visibility = View.GONE
                     Tools().viewEnable(window.decorView.rootView, true)

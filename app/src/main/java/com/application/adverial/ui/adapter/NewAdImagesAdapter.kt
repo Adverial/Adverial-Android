@@ -21,11 +21,21 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.ui.dialog.ChooseImageResource
 import com.application.adverial.ui.dialog.SinglePhotoViewer
 import java.io.File
+import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
+import com.amazonaws.services.s3.AmazonS3Client
+import com.amazonaws.ClientConfiguration
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferNetworkLossHandler
+import com.amazonaws.services.s3.model.CannedAccessControlList
+import com.application.adverial.BuildConfig
 
 class NewAdImagesAdapter(var itemList: ArrayList<com.application.adverial.ui.model.Image>, var adId: String) : RecyclerView.Adapter<NewAdImagesAdapter.ViewHolder>() {
 
     private lateinit var context: Context
-    private val result= MutableLiveData<String>()
+    private val result = MutableLiveData<String>()
+    private val filePaths = ArrayList<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewAdImagesAdapter.ViewHolder {
         val view= LayoutInflater.from(parent.context).inflate(R.layout.item_new_ad_image, parent, false)
@@ -35,7 +45,7 @@ class NewAdImagesAdapter(var itemList: ArrayList<com.application.adverial.ui.mod
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: NewAdImagesAdapter.ViewHolder, position: Int) {
-        if(position == itemList.size){
+        if (position == itemList.size) {
             val params: ViewGroup.MarginLayoutParams = holder.item.layoutParams as ViewGroup.MarginLayoutParams
             params.rightMargin = context.resources.getDimension(com.intuit.sdp.R.dimen._5sdp).toInt()
             holder.item.setOnClickListener {
@@ -45,14 +55,7 @@ class NewAdImagesAdapter(var itemList: ArrayList<com.application.adverial.ui.mod
                     result.value = "loading"
                     val imgFile = File(it[0])
                     if (imgFile.exists()) {
-                        val repo = Repository(context)
-                        repo.image(it[0], adId)
-                        repo.getImageData().observe(context as LifecycleOwner) { itt ->
-                            if (itt.status) {
-                                context.getSharedPreferences("newAdImages", 0).edit().putString(itt.data.image_id.toString(), it[0]).apply()
-                                result.value = "refresh"
-                            }
-                        }
+                        uploadToDigitalOcean(it[0])
                     }
                 }
             }
@@ -79,6 +82,58 @@ class NewAdImagesAdapter(var itemList: ArrayList<com.application.adverial.ui.mod
                 })
             }
         }
+    }
+
+        private fun uploadToDigitalOcean(filePath: String) {
+        val credentials = BasicAWSCredentials(BuildConfig.DO_SPACES_KEY, BuildConfig.DO_SPACES_SECRET)
+        val endpoint = BuildConfig.DO_SPACES_ENDPOINT
+        val clientConfiguration = ClientConfiguration().apply {
+            maxErrorRetry = 3
+            connectionTimeout = 50000
+            socketTimeout = 50000
+        }
+        val s3Client = AmazonS3Client(credentials, clientConfiguration).apply {
+            setEndpoint(endpoint)
+        }
+        TransferNetworkLossHandler.getInstance(context)
+        val transferUtility = TransferUtility.builder()
+            .context(context)
+            .s3Client(s3Client)
+            .defaultBucket(BuildConfig.DO_SPACES_BUCKET)
+            .build()
+    
+        val file = File(filePath)
+        val fileName = "uploads/ad/${file.name}"
+    
+        val uploadObserver = transferUtility.upload(
+            BuildConfig.DO_SPACES_BUCKET, // bucket name
+            fileName, // key
+            file, // file
+            CannedAccessControlList.PublicRead // set ACL to public-read
+        )
+    
+        uploadObserver.setTransferListener(object : TransferListener {
+            override fun onStateChanged(id: Int, state: TransferState) {
+                if (state == TransferState.COMPLETED) {
+                    filePaths.add(fileName)
+                    result.value = "refresh"
+                } else if (state == TransferState.FAILED) {
+                    result.value = "error"
+                }
+            }
+    
+            override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
+                // You can add progress update logic here if needed
+            }
+    
+            override fun onError(id: Int, ex: Exception) {
+                result.value = "error"
+            }
+        })
+    }
+
+    fun getFilePaths(): ArrayList<String> {
+        return filePaths
     }
 
     override fun getItemCount(): Int { return itemList.size + 1 }

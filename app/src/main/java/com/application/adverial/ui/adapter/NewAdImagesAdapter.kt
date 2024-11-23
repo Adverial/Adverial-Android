@@ -167,8 +167,7 @@ class NewAdImagesAdapter(
             uploadObserver.setTransferListener(object : TransferListener {
                 override fun onStateChanged(id: Int, state: TransferState) {
                     if (state == TransferState.COMPLETED) {
-                        val fileUrl = "https://${BuildConfig.DO_SPACES_BUCKET}." +
-                                "${BuildConfig.DO_SPACES_ENDPOINT}/$fileName"
+                        val fileUrl = "${BuildConfig.DO_SPACES_ENDPOINT}/$fileName"
                         filePaths.add(fileUrl)
                         filesUploaded++
                         if (filesUploaded == fileUris.size) {

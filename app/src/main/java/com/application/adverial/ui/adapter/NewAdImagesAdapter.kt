@@ -53,21 +53,25 @@ class NewAdImagesAdapter(
         holder: ViewHolder, position: Int
     ) {
         if (position == itemList.size) {
-            holder.layout.visibility = View.VISIBLE
-            holder.delete.visibility = View.GONE
-            holder.image.setImageResource(R.drawable.ic_add)
-            holder.item.setOnClickListener {
-                if (context is AppCompatActivity) {
-                    (context as AppCompatActivity).let { activity ->
-                        (activity as NewAdImages).openGalleryForMedia()
-                    }
-                }
+             holder.layout.visibility = View.VISIBLE
+        holder.delete.visibility = View.GONE
+        holder.image.setImageResource(0) // Clear any existing image
+        holder.item.setOnClickListener {
+            if (context is AppCompatActivity) {
+                (context as NewAdImages).openGalleryForMedia()
             }
+        }
         } else {
             holder.layout.visibility = View.GONE
-            holder.delete.visibility = View.VISIBLE
-            val imageItem = itemList[position]
-            val uri = imageItem.uri
+        holder.delete.visibility = View.VISIBLE
+        val imageItem = itemList[position]
+        val uri = imageItem.uri
+        holder.image.setImageURI(uri)
+        holder.delete.setOnClickListener {
+            itemList.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemList.size + 1)
+        }
             val mimeType = context.contentResolver.getType(uri)
 
             if (mimeType != null) {

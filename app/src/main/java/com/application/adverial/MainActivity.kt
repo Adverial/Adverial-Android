@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.application.adverial.databinding.ActivityMainBinding
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.MessageActivity
+import com.application.adverial.ui.activity.NewAdImages
 import com.application.adverial.ui.navigation.Home
 import com.application.adverial.utils.DialogUtils
 import com.application.adverial.utils.NetworkUtils
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (NetworkUtils.isNetworkAvailable(this)) {
-            Tools().goto(this, Home(), false)
+            Tools().goto(this, NewAdImages(), false)
         } else {
             DialogUtils.showNoInternetDialog(this)
             finish()

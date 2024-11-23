@@ -17,19 +17,18 @@ def loadProperties() {
 def envProperties = loadProperties()
 
 android {
-    compileSdk 33
+    compileSdk 34
     buildToolsVersion "33.0.0"
     ndkVersion '27.0.11718014 rc1'
     namespace 'com.application.adverial'
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.application.adverial"
         minSdkVersion 21
-        targetSdkVersion 35
+        targetSdkVersion 34
         versionCode 36 // Update the version code to a unique integer
         versionName "1.0.36" // Update the version name to a string that represents the version
-        renderscriptTargetApi 22
-        renderscriptSupportModeEnabled true
         ndk {
             debugSymbolLevel 'FULL'
             // change to SYMBOL_TABLE to enable file and line number info
@@ -127,5 +126,13 @@ dependencies {
 //    implementation 'com.github.Adverial:Adverial-Android'
  implementation 'com.amazonaws:aws-android-sdk-s3:2.22.0'
     implementation 'com.amazonaws:aws-android-sdk-core:2.22.0'
+    implementation 'com.github.bumptech.glide:glide:4.15.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
+
+    // Optional: Glide Transformations for fallback blur
+//    implementation 'com.eightbitlab:blurview:1.6.6'
+
+
+
 
 }

@@ -11,7 +11,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.view.PixelCopy
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
@@ -70,38 +69,43 @@ class NewAdCompletedDialog : DialogFragment() {
 
     private fun applyBlurEffect() {
         val activityWindow = requireActivity().window
-        val bitmap = captureWindowBitmap(activityWindow)
+        val bitmap = captureWindowBitmap(activityWindow) ?: return
 
-        if (bitmap != null) {
-            val blurredBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                applyRenderEffectBlur(bitmap, 10f)
-            } else {
-                applyGlideBlur(bitmap)
-            }
-            dialog?.window?.setBackgroundDrawable(BitmapDrawable(resources, blurredBitmap))
+        val blurredBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            applyRenderEffectBlur(bitmap, 10f)
+        } else {
+            applyGlideBlur(bitmap)
         }
+
+        dialog?.window?.setBackgroundDrawable(BitmapDrawable(resources, blurredBitmap))
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun captureWindowBitmap(window: Window): Bitmap? {
-        val rootView = window.decorView
-        val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            try {
+                val rootView = window.decorView
+                val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
 
-        val location = IntArray(2)
-        rootView.getLocationOnScreen(location)
+                val location = IntArray(2)
+                rootView.getLocationOnScreen(location)
 
-        val rect = android.graphics.Rect(location[0], location[1], location[0] + rootView.width, location[1] + rootView.height)
-        val handler = android.os.Handler()
-
-        return try {
-            PixelCopy.request(window, rect, bitmap, { copyResult ->
-                if (copyResult != PixelCopy.SUCCESS) {
-                    Toast.makeText(requireContext(), "Failed to capture background", Toast.LENGTH_SHORT).show()
-                }
-            }, handler)
-            bitmap
-        } catch (e: Exception) {
-            null
+                val rect = android.graphics.Rect(
+                    location[0],
+                    location[1],
+                    location[0] + rootView.width,
+                    location[1] + rootView.height
+                )
+                PixelCopy.request(window, rect, bitmap, { result ->
+                    if (result != PixelCopy.SUCCESS) {
+                        Toast.makeText(requireContext(), "Failed to capture background", Toast.LENGTH_SHORT).show()
+                    }
+                }, android.os.Handler())
+                bitmap
+            } catch (e: Exception) {
+                null
+            }
+        } else {
+            null // PixelCopy requires API 26+
         }
     }
 
@@ -133,7 +137,7 @@ class NewAdCompletedDialog : DialogFragment() {
     }
 
     private fun setupUI() {
-        binding.newAdCompletedNumber.text = "getString(R.string.new_ad_completed_new_ad, code)"
+        binding.newAdCompletedNumber.text = getString(R.string.new_ad_completed_new_ad, code)
 
         binding.newAdCompletedHome.setOnClickListener {
             val intent = Intent(requireContext(), Home::class.java)

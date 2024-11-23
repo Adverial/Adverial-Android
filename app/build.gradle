@@ -121,14 +121,18 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'id.zelory:compressor:3.0.1'
     implementation 'com.github.smarteist:Android-Image-Slider:1.4.0'
-    implementation 'com.github.wasabeef:glide-transformations:4.3.0'
+   // implementation 'com.github.wasabeef:glide-transformations:4.3.0'
 //    implementation 'com.budiyev.android:code-scanner:2.1.0'
 //    implementation 'com.github.Adverial:Adverial-Android'
  implementation 'com.amazonaws:aws-android-sdk-s3:2.22.0'
     implementation 'com.amazonaws:aws-android-sdk-core:2.22.0'
+
+    // Glide
     implementation 'com.github.bumptech.glide:glide:4.15.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
 
+    // Glide Transformations for blur
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
     // Optional: Glide Transformations for fallback blur
 //    implementation 'com.eightbitlab:blurview:1.6.6'
 

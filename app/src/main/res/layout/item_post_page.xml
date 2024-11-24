@@ -152,7 +152,8 @@
                 android:text="@string/post_details_view_video"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

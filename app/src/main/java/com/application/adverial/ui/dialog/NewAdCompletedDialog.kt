@@ -1,9 +1,8 @@
 package com.application.adverial.ui.dialog
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.PixelFormat
+import android.graphics.Canvas
 import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
@@ -23,18 +22,17 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 
 class NewAdCompletedDialog : DialogFragment() {
 
-    private var code: String? = null
     private var _binding: DialogNewAdCompletedBinding? = null
     private val binding get() = _binding!!
 
     companion object {
         const val ARG_CODE = "code"
 
-        // Factory method to create a new instance of the dialog with arguments
         fun newInstance(code: String): NewAdCompletedDialog {
             val dialog = NewAdCompletedDialog()
-            val args = Bundle()
-            args.putString(ARG_CODE, code)
+            val args = Bundle().apply {
+                putString(ARG_CODE, code)
+            }
             dialog.arguments = args
             return dialog
         }
@@ -42,113 +40,37 @@ class NewAdCompletedDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        code = arguments?.getString(ARG_CODE)
+        setStyle(STYLE_NORMAL, R.style.Theme_Luuk_Dark)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = DialogNewAdCompletedBinding.inflate(inflater, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        setupDialogWindow()
-        applyBlurEffect()
+        val code = arguments?.getString(ARG_CODE)
 
-        setupUI()
+        binding.newAdCompletedNumber.text = "getString(R.string.new_ad_completed_new_ad, code)"
+
+//        binding.newAdCompletedHome.setOnClickListener {
+//            dismiss()
+//            navigateToHome()
+//        }
+//
+//        binding.newAdCompletedRepeat.setOnClickListener {
+//            dismiss()
+//            Toast.makeText(requireContext(), "Repeat Action", Toast.LENGTH_SHORT).show()
+//        }
+
         return binding.root
     }
 
-    private fun setupDialogWindow() {
-        dialog?.window?.let { window ->
-            val params = window.attributes
-            params.gravity = Gravity.TOP
-            window.attributes = params
-        }
-    }
-
-    private fun applyBlurEffect() {
-        val activityWindow = requireActivity().window
-        val bitmap = captureWindowBitmap(activityWindow) ?: return
-
-        val blurredBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            applyRenderEffectBlur(bitmap, 10f)
-        } else {
-            applyGlideBlur(bitmap)
-        }
-
-        dialog?.window?.setBackgroundDrawable(BitmapDrawable(resources, blurredBitmap))
-    }
-
-    private fun captureWindowBitmap(window: Window): Bitmap? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            try {
-                val rootView = window.decorView
-                val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
-
-                val location = IntArray(2)
-                rootView.getLocationOnScreen(location)
-
-                val rect = android.graphics.Rect(
-                    location[0],
-                    location[1],
-                    location[0] + rootView.width,
-                    location[1] + rootView.height
-                )
-                PixelCopy.request(window, rect, bitmap, { result ->
-                    if (result != PixelCopy.SUCCESS) {
-                        Toast.makeText(requireContext(), "Failed to capture background", Toast.LENGTH_SHORT).show()
-                    }
-                }, android.os.Handler())
-                bitmap
-            } catch (e: Exception) {
-                null
-            }
-        } else {
-            null // PixelCopy requires API 26+
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun applyRenderEffectBlur(bitmap: Bitmap, radius: Float): Bitmap {
-        val renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP)
-        val outputBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
-        val canvas = android.graphics.Canvas(outputBitmap)
-        val paint = android.graphics.Paint().apply {
-            setRenderEffect(renderEffect)
-        }
-        canvas.drawBitmap(bitmap, 0f, 0f, paint)
-        return outputBitmap
-    }
-
-    private fun setRenderEffect(renderEffect: RenderEffect) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            binding.root.setRenderEffect(renderEffect)
-        }
-    }
-
-    private fun applyGlideBlur(bitmap: Bitmap): Bitmap {
-        return Glide.with(requireContext())
-            .asBitmap()
-            .load(bitmap)
-            .transform(BlurTransformation(10))
-            .submit(bitmap.width, bitmap.height)
-            .get()
-    }
-
-    private fun setupUI() {
-        binding.newAdCompletedNumber.text = getString(R.string.new_ad_completed_new_ad, code)
-
-        binding.newAdCompletedHome.setOnClickListener {
-            val intent = Intent(requireContext(), Home::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            requireContext().startActivity(intent)
-            dismiss()
-        }
-
-        binding.newAdCompletedRepeat.setOnClickListener {
-            Toast.makeText(requireContext(), "Repeat Action", Toast.LENGTH_SHORT).show()
-        }
+    private fun navigateToHome() {
+        val intent = Intent(requireContext(), Home::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

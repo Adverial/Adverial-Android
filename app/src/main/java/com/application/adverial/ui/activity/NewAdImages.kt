@@ -202,12 +202,9 @@ class NewAdImages : AppCompatActivity() {
             binding.lottie10.visibility = View.GONE
             Tools().viewEnable(window.decorView.rootView, true)
             if (response.status) {
-                val dialog = NewAdCompletedDialog()
-                 //how to append the code to the dialog
-                dialog.arguments = Bundle().apply {
-                    putString(NewAdCompletedDialog.ARG_CODE, response.data.ad_no.toString())
-                }
+                val dialog = NewAdCompletedDialog.newInstance(response.data.ad_no.toString())
                 dialog.show(supportFragmentManager, "NewAdCompletedDialog")
+
             } else {
                 Toast.makeText(this," getString(R.string.failed_to_publish_ad)", Toast.LENGTH_SHORT).show()
             }

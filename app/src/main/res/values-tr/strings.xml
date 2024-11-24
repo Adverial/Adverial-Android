@@ -213,6 +213,6 @@
     <string name="login_phone_hint">Telefon numaranızı girin</string>
     <string name="login_otp_hint">Doğrulama kodunu girin</string>
     <string name="already_have_account">Zaten bir hesabınız var mı?</string>
-    <string name="new_message">New message</string>
+    <string name="new_message">New message</string>z
 
 </resources>

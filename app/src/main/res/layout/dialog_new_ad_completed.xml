@@ -1,58 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:textColor="@color/menu_background"
-    android:layout_height="match_parent">
-
-    <Button
-        android:id="@+id/newAdCompleted_home"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_35sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/rounded_full2"
-        android:backgroundTint="@color/red"
-        android:fontFamily="@font/regular"
-        android:text="@string/new_ad_completed_home"
-        android:textAllCaps="false"
-        android:textColor="@color/menu_text"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintBottom_toTopOf="@+id/newAdCompleted_repeat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/newAdCompleted_repeat"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_35sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@drawable/rounded_full5"
-        android:backgroundTint="@color/red"
-        android:fontFamily="@font/regular"
-        android:text="@string/new_ad_completed_new_ad"
-        android:textAllCaps="false"
-        android:textColor="@color/menu_text"
-        android:textSize="@dimen/_12ssp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="470dp"
+        android:layout_width="400dp"
+        android:layout_height="722dp"
         android:gravity="center"
-        android:layout_marginTop="@dimen/_50sdp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/newAdCompleted_home"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -68,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/regular"
             android:gravity="center"
             android:text="@string/new_ad_completed_title"
             android:textColor="@color/menu_text"
@@ -79,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/regular"
             android:gravity="center"
             android:text="@string/new_ad_completed_desc"
             android:textColor="@color/menu_text"
@@ -90,9 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/regular"
             android:gravity="center"
-            android:text="@string/new_ad_completed_number"
             android:textColor="@color/yellow"
             android:textSize="@dimen/_15ssp" />
     </LinearLayout>

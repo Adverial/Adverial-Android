@@ -50,5 +50,25 @@
             android:gravity="center"
             android:textColor="@color/yellow"
             android:textSize="@dimen/_15ssp" />
+        <Button
+            android:id="@+id/newAdCompleted_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/rounded_full2"
+            android:backgroundTint="@color/red"
+            android:fontFamily="@font/regular"
+            android:text="@string/new_ad_completed_home"
+            android:textAllCaps="false"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toTopOf="@+id/newAdCompleted_repeat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

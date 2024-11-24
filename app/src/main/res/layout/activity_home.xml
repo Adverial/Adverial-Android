@@ -124,7 +124,7 @@
             app:layout_constraintStart_toStartOf="@+id/home_menu"
             app:layout_constraintTop_toBottomOf="@+id/home_logo">
 
-            <FrameLayoutz
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
@@ -170,7 +170,7 @@
                     android:onClick="voice"
                     android:visibility="invisible"
                     android:src="@drawable/im_mic" />
-            </FrameLayoutz>
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/home_sort"

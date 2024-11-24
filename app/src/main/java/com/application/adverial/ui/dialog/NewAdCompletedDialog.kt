@@ -54,10 +54,10 @@ class NewAdCompletedDialog : DialogFragment() {
 
         binding.newAdCompletedNumber.text = "getString(R.string.new_ad_completed_new_ad, code)"
 
-//        binding.newAdCompletedHome.setOnClickListener {
-//            dismiss()
-//            navigateToHome()
-//        }
+        binding.newAdCompletedHome.setOnClickListener {
+            dismiss()
+            navigateToHome()
+        }
 //
 //        binding.newAdCompletedRepeat.setOnClickListener {
 //            dismiss()

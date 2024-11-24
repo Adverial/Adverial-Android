@@ -38,7 +38,7 @@ class MyAdsAdapter(var itemList: ArrayList<Ad>) : RecyclerView.Adapter<MyAdsAdap
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: MyAdsAdapter.ViewHolder, position: Int) {
         if(itemList[position].ad_images!!.isNotEmpty()){
-            Glide.with(context).load(Tools().getPath() + (itemList[position].ad_images?.get(0)?.image ?: "")).into(holder.image)
+            Glide.with(context).load((itemList[position].ad_images?.get(0)?.image ?: "")).into(holder.image)
         }
         if(itemList[position].visibility == "1"){
             holder.status.text= context.resources.getString(R.string.post_active)

@@ -28,7 +28,7 @@ class SearchResultsAdapter(var itemList: ArrayList<Ad>) : RecyclerView.Adapter<S
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onBindViewHolder(holder: SearchResultsAdapter.ViewHolder, position: Int) {
-        if(!itemList[position].ad_images.isNullOrEmpty()) Glide.with(context).load(Tools().getPath() + (itemList[position].ad_images?.get(0)?.image ?: "")).into(holder.image)
+        if(!itemList[position].ad_images.isNullOrEmpty()) Glide.with(context).load( (itemList[position].ad_images?.get(0)?.image ?: "")).into(holder.image)
         holder.name.text= itemList[position].title
         holder.date.text= itemList[position].city_detail?.name + ", " + itemList[position].country_detail?.name + "\n" + itemList[position].created_at!!.split("T")[0]
         holder.price.text= "${itemList[position].price_currency}"

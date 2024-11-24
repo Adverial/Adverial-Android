@@ -29,7 +29,7 @@ class PostSliderZoomAdapter(var itemList: Ad) : SliderViewAdapter<PostSliderZoom
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
         viewHolder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.im_image))
-        Glide.with(context).load(Tools().getPath() + itemList.ad_images?.get(position)?.image).into(viewHolder.image)
+        Glide.with(context).load(itemList.ad_images?.get(position)?.image).into(viewHolder.image)
     }
 
     override fun getCount(): Int {

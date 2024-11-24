@@ -3,6 +3,7 @@ package com.application.adverial.ui.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,8 @@ class HomePostsAdapter(var itemList: ArrayList<ShowRoomData>) : RecyclerView.Ada
         holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.im_image))
 //        Log.d("image", Tools().getPublicPath() + (itemList[position].ad_images?.get(0)?.image ?: ""))
         holder.price.text= itemList[position].price_currency
-        if(itemList[position].ad_images!!.isNotEmpty()) Glide.with(context).load(Tools().getPath() + (itemList[position].ad_images?.get(0)?.image ?: "")).into(holder.image)
+        Log.d("image", itemList[position].ad_images?.get(0)?.image ?: "")
+        if(itemList[position].ad_images!!.isNotEmpty()) Glide.with(context).load( (itemList[position].ad_images?.get(0)?.image ?: "")).into(holder.image)
         holder.name.text= itemList[position].title
         holder.item.setOnClickListener {
             val intent= Intent(context, Post::class.java)

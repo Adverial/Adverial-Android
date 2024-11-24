@@ -41,7 +41,7 @@ class FavoriteAdapter(var itemList: ArrayList<FavoriteData>) :
 
         val adImages = itemList[position].ad_detail!!.ad_images
         if (adImages != null && adImages.isNotEmpty()) {
-            Glide.with(context).load(Tools().getPath() + adImages[0].image).into(holder.image)
+            Glide.with(context).load( adImages[0].image).into(holder.image)
         } else {
             holder.image.setImageDrawable(
                 ContextCompat.getDrawable(

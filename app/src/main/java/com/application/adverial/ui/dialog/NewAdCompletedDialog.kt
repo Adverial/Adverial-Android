@@ -1,5 +1,6 @@
 package com.application.adverial.ui.dialog
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -43,6 +44,7 @@ class NewAdCompletedDialog : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.Theme_Luuk_Dark)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,18 +54,12 @@ class NewAdCompletedDialog : DialogFragment() {
 
         val code = arguments?.getString(ARG_CODE)
 
-        binding.newAdCompletedNumber.text = "getString(R.string.new_ad_completed_new_ad, code)"
+        binding.newAdCompletedNumber.text = getString(R.string.new_ad_completed_number) + ": $code"
 
         binding.newAdCompletedHome.setOnClickListener {
-            dismiss()
             navigateToHome()
+            dismiss()
         }
-//
-//        binding.newAdCompletedRepeat.setOnClickListener {
-//            dismiss()
-//            Toast.makeText(requireContext(), "Repeat Action", Toast.LENGTH_SHORT).show()
-//        }
-
         return binding.root
     }
 

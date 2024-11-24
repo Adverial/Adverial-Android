@@ -125,6 +125,7 @@
     <string name="post_details_message">Send a Message</string>
     <string name="post_details_info">Ad Information</string>
     <string name="post_details_desc">Description</string>
+    <string name="post_details_view_video">View Video</string>
     <string name="post_details_about">About Offers</string>
     <string name="post_details_location">Location</string>
     //------------------------------------------------------------------------------choose image resource

@@ -140,6 +140,19 @@
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp" />
+            <Button
+                android:id="@+id/viewVideo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:background="@color/light_gray"
+                android:fontFamily="@font/regular"
+                android:gravity="center"
+                android:text="@string/post_details_view_video"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -213,6 +213,8 @@
     <string name="login_phone_hint">ژمارەی تەلەفونەکەت داخل بکە</string>
     <string name="login_otp_hint">کۆدی دڵنیاکردنەوە داخل بکە</string>
     <string name="already_have_account">تۆ ھەژمارێکی پێشترت هەیە؟</string>
+    <string name="post_details_view_video">ڤیدیۆی بینین</string>
+
     <string name="new_message">New message</string>
 
 </resources>

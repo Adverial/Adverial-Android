@@ -1,11 +1,12 @@
-// NewAdImagesAdapter.kt
 package com.application.adverial.ui.adapter
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +17,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.shape.CornerFamily
-import com.google.android.material.shape.ShapeAppearanceModel
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.mobileconnectors.s3.transferutility.*
 import com.amazonaws.services.s3.AmazonS3Client
@@ -27,7 +25,14 @@ import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.application.adverial.BuildConfig
 import com.application.adverial.remote.model.ImageItem
 import com.application.adverial.ui.activity.NewAdImages
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.ShapeAppearanceModel
+import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.ReturnCode
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.util.UUID
 
 class NewAdImagesAdapter(
@@ -40,38 +45,29 @@ class NewAdImagesAdapter(
     private val filePaths = ArrayList<String>()
     private val fileUris = ArrayList<Uri>()
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup, viewType: Int
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_new_ad_image, parent, false)
         context = parent.context
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolder, position: Int
-    ) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (position == itemList.size) {
-             holder.layout.visibility = View.VISIBLE
-        holder.delete.visibility = View.GONE
-        holder.image.setImageResource(0) // Clear any existing image
-        holder.item.setOnClickListener {
-            if (context is AppCompatActivity) {
-                (context as NewAdImages).openGalleryForMedia()
+            holder.layout.visibility = View.VISIBLE
+            holder.delete.visibility = View.GONE
+            holder.image.setImageResource(0)
+            holder.item.setOnClickListener {
+                if (context is AppCompatActivity) {
+                    (context as NewAdImages).openGalleryForMedia()
+                }
             }
-        }
         } else {
             holder.layout.visibility = View.GONE
-        holder.delete.visibility = View.VISIBLE
-        val imageItem = itemList[position]
-        val uri = imageItem.uri
-        holder.image.setImageURI(uri)
-        holder.delete.setOnClickListener {
-            itemList.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, itemList.size + 1)
-        }
+            holder.delete.visibility = View.VISIBLE
+            val imageItem = itemList[position]
+            val uri = imageItem.uri
+            holder.image.setImageURI(uri)
             val mimeType = context.contentResolver.getType(uri)
 
             if (mimeType != null) {
@@ -82,18 +78,14 @@ class NewAdImagesAdapter(
                         holder.image.setImageBitmap(bitmap)
                     }
                     mimeType.startsWith("video") -> {
-                        val bitmap = ThumbnailUtils.createVideoThumbnail(
+                        val thumbnail = ThumbnailUtils.createVideoThumbnail(
                             getRealPathFromURI(uri),
                             MediaStore.Images.Thumbnails.MINI_KIND
                         )
-                        holder.image.setImageBitmap(bitmap)
+                        holder.image.setImageBitmap(thumbnail ?: BitmapFactory.decodeResource(context.resources, R.drawable.im_image))
                     }
                     else -> holder.image.setImageResource(R.drawable.ic_add)
                 }
-            }
-
-            holder.image.setOnClickListener {
-                // Implement preview functionality if needed
             }
 
             holder.delete.setOnClickListener {
@@ -135,7 +127,48 @@ class NewAdImagesAdapter(
         return path
     }
 
-    fun uploadToDigitalOcean() {
+    private fun compressImage(file: File): File {
+        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+        val compressedFile = File(context.cacheDir, "compressed_${file.name}")
+        var outputStream: FileOutputStream? = null
+        try {
+            outputStream = FileOutputStream(compressedFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, outputStream)
+        } catch (e: IOException) {
+            throw e // Re-throw the exception to handle it upstream
+        } finally {
+            outputStream?.close() // Safely close the stream
+            bitmap.recycle() // Free memory used by the bitmap
+        }
+        return compressedFile
+    }
+
+    private fun compressVideo(uri: Uri): File {
+        val inputPath = getRealPathFromURI(uri)
+        val outputFile = File(context.cacheDir, "compressed_${File(inputPath).name}")
+        val outputPath = outputFile.absolutePath
+
+        val command = arrayOf(
+            "-i", inputPath,
+            "-vf", "scale=640:-1",
+            "-c:v", "mpeg4", // Fallback to a codec like mpeg4 if libx264 is unavailable
+            "-preset", "ultrafast",
+            "-crf", "28",
+            outputPath
+        )
+
+        val session = FFmpegKit.execute(command.joinToString(" "))
+
+        if (ReturnCode.isSuccess(session.returnCode)) {
+            Log.i("FFmpegKit", "Video compression successful")
+            return outputFile
+        } else {
+            Log.e("FFmpegKit", "Video compression failed: ${session.returnCode}")
+            return File(inputPath)
+        }
+    }
+
+    fun uploadToServer() {
         val credentials = BasicAWSCredentials(
             BuildConfig.DO_SPACES_KEY, BuildConfig.DO_SPACES_SECRET
         )
@@ -155,16 +188,24 @@ class NewAdImagesAdapter(
             .defaultBucket(BuildConfig.DO_SPACES_BUCKET)
             .build()
 
-        var filesUploaded = 0
-        for (uri in fileUris) {
-            val filePath = getRealPathFromURI(uri)
-            val file = File(filePath)
-            val fileName = "uploads/ad/${file.name}"
+        fileUris.forEach { uri ->
+            val originalFile = File(getRealPathFromURI(uri))
+            if (!originalFile.exists()) {
+                Log.e("Upload", "File does not exist: ${originalFile.absolutePath}")
+                return@forEach
+            }
 
+            val compressedFile = when {
+                context.contentResolver.getType(uri)?.startsWith("image") == true -> compressImage(originalFile)
+                context.contentResolver.getType(uri)?.startsWith("video") == true -> compressVideo(uri)
+                else -> originalFile
+            }
+
+            val fileName = "uploads/ad/${compressedFile.name}"
             val uploadObserver = transferUtility.upload(
                 BuildConfig.DO_SPACES_BUCKET,
                 fileName,
-                file,
+                compressedFile,
                 CannedAccessControlList.PublicRead
             )
 
@@ -173,8 +214,7 @@ class NewAdImagesAdapter(
                     if (state == TransferState.COMPLETED) {
                         val fileUrl = "${BuildConfig.DO_SPACES_ENDPOINT}/$fileName"
                         filePaths.add(fileUrl)
-                        filesUploaded++
-                        if (filesUploaded == fileUris.size) {
+                        if (filePaths.size == fileUris.size) {
                             result.value = "refresh"
                         }
                     } else if (state == TransferState.FAILED) {
@@ -182,29 +222,16 @@ class NewAdImagesAdapter(
                     }
                 }
 
-                override fun onProgressChanged(
-                    id: Int, bytesCurrent: Long, bytesTotal: Long
-                ) {
-                    // Update progress if needed
+                override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
+                    // Log progress
                 }
 
                 override fun onError(id: Int, ex: Exception) {
+                    Log.e("Upload", "Error uploading file: ${ex.message}")
                     result.value = "error"
                 }
             })
         }
-    }
-
-    fun getFilePaths(): ArrayList<String> {
-        return filePaths
-    }
-
-    fun getResult(): MutableLiveData<String> {
-        return result
-    }
-
-    fun getFileUris(): ArrayList<Uri> {
-        return fileUris
     }
 
     fun addImages(uris: List<Uri>) {
@@ -215,4 +242,8 @@ class NewAdImagesAdapter(
         }
         notifyDataSetChanged()
     }
+
+    fun getFilePaths(): ArrayList<String> = filePaths
+    fun getResult(): MutableLiveData<String> = result
+    fun getFileUris(): ArrayList<Uri> = fileUris
 }

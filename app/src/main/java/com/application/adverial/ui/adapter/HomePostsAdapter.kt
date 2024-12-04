@@ -33,7 +33,11 @@ class HomePostsAdapter(var itemList: ArrayList<ShowRoomData>) : RecyclerView.Ada
         holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.im_image))
 //        Log.d("image", Tools().getPublicPath() + (itemList[position].ad_images?.get(0)?.image ?: ""))
         holder.price.text= itemList[position].price_currency
-        Log.d("image", itemList[position].ad_images?.get(0)?.image ?: "")
+       //print log all images
+        for (i in itemList[position].ad_images!!){
+            i.image?.let { Log.d("image", it) }
+        }
+
         if(itemList[position].ad_images!!.isNotEmpty()) Glide.with(context).load( (itemList[position].ad_images?.get(0)?.image ?: "")).into(holder.image)
         holder.name.text= itemList[position].title
         holder.item.setOnClickListener {

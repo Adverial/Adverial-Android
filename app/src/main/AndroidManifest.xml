@@ -3,36 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.application.adverial">
 
-    <uses-sdk
-        android:minSdkVersion="22"
-        android:targetSdkVersion="33"
-        tools:ignore="GradleOverrides" />
+    <!-- Library compatibility -->
+    <uses-sdk tools:overrideLibrary="com.arthenica.ffmpegkit" />
+
+    <!-- Hardware and features -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
-   <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <!-- Required only if your app needs to access images or photos
-     that other apps created. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
-
-
-
-    <!-- Required only if your app needs to access audio files
-         that other apps created. -->
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
 
-    <!-- If your app doesn't need to access media files that other apps created,
-         set the "maxSdkVersion" attribute to "28" instead. -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon"
@@ -42,185 +35,48 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Luuk"
-        android:usesCleartextTraffic="true"
-        tools:targetApi="n"
-        >
+        android:usesCleartextTraffic="true">
 
-
-        <activity
-            android:name="com.application.adverial.ui.activity.ForgotPassword"
-            android:exported="false" />
-        <activity
-            android:name="com.application.adverial.ui.navigation.NewAd"
-            android:windowSoftInputMode="adjustNothing"
-            android:exported="false"
-            android:screenOrientation="fullSensor"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name="com.application.adverial.ui.navigation.Profile"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.application.adverial.ui.navigation.Notifications"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.application.adverial.ui.navigation.Favorites"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.application.adverial.ui.navigation.Home"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.application.adverial.ui.activity.QrCode"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.application.adverial.ui.activity.ContactUs"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Message"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.MessagesList"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.application.adverial.ui.activity.PhoneAuth"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity
-            android:name="com.application.adverial.ui.activity.MyAccount"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Special"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Category"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.NewAdCategory"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.SearchResult"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Post"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Notifications"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Signup"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Login"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.LoginWa"
-            android:exported="true" />
-        <activity
-            android:name="com.application.adverial.ui.activity.VerifyWa"
-            android:exported="true" />
-        <activity
-            android:name="com.application.adverial.ui.activity.SignupWa"
-            android:exported="true" />
-
-        <activity
-            android:name="com.application.adverial.ui.activity.ChatActivity"
-            android:exported="true" />
-        <activity
-            android:name="com.application.adverial.ui.activity.MessageActivity"
-            android:exported="true" />
-        <activity
-            android:name="com.application.adverial.ui.activity.FullImageActivity"
-            android:exported="true" />
-
-
-        <activity
-            android:name="com.application.adverial.ui.activity.MyAds"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Favorite"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.NewAdImages"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.NewAdMap"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.NewAdAddress"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.NewAdInfo"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Phone"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.CategoryResult"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.application.adverial.ui.activity.Host"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity
-            android:name="com.application.adverial.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+        <!-- Activities -->
+        <activity android:name="com.application.adverial.ui.activity.ForgotPassword" android:exported="false" />
+        <activity android:name="com.application.adverial.ui.navigation.NewAd" android:windowSoftInputMode="adjustNothing" android:exported="false" android:screenOrientation="fullSensor" />
+        <activity android:name="com.application.adverial.ui.navigation.Profile" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name="com.application.adverial.ui.navigation.Notifications" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name="com.application.adverial.ui.navigation.Favorites" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name="com.application.adverial.ui.navigation.Home" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name="com.application.adverial.ui.activity.QrCode" android:exported="true" android:screenOrientation="portrait" />
+        <activity android:name="com.application.adverial.ui.activity.ContactUs" android:exported="true" android:screenOrientation="portrait" />
+        <activity android:name="com.application.adverial.ui.activity.Message" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.MessagesList" android:exported="true" android:screenOrientation="portrait" />
+        <activity android:name="com.application.adverial.ui.activity.PhoneAuth" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustNothing" />
+        <activity android:name="com.application.adverial.ui.activity.MyAccount" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustNothing" />
+        <activity android:name="com.application.adverial.ui.activity.Special" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.Category" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.NewAdCategory" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.SearchResult" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.Post" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.Signup" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.Login" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.ChatActivity" android:exported="true" />
+        <activity android:name="com.application.adverial.ui.activity.MessageActivity" android:exported="true" />
+        <activity android:name="com.application.adverial.ui.activity.FullImageActivity" android:exported="true" />
+        <activity android:name="com.application.adverial.ui.activity.MyAds" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.Favorite" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.NewAdImages" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.NewAdMap" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.NewAdAddress" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.ui.activity.NewAdInfo" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.application.adverial.MainActivity" android:exported="true" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.activity.VideoPlayerActivity" />
 
+        <!-- API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCvxKaE92HxvKvHCkm4cEJS_2SEfrUCffw" />
     </application>
-
 </manifest>

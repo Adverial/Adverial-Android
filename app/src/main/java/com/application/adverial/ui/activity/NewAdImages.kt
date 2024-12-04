@@ -172,7 +172,7 @@ class NewAdImages : AppCompatActivity() {
                 binding.lottie10.visibility = View.VISIBLE
                 Tools().viewEnable(window.decorView.rootView, false)
 
-                adapter.uploadToDigitalOcean()
+                adapter.uploadToServer()
                 adapter.getResult().observe(this) { result ->
                     when (result) {
                         "refresh" -> {

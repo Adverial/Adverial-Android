@@ -22,16 +22,22 @@ android {
     ndkVersion '27.0.11718014 rc1'
     namespace 'com.application.adverial'
     compileSdkVersion 34
-
+    packagingOptions {
+        pickFirst "lib/arm64-v8a/libavcodec.so"
+        pickFirst "lib/arm64-v8a/libavutil.so"
+        pickFirst "lib/arm64-v8a/libswresample.so"
+        pickFirst "lib/arm64-v8a/libswscale.so"
+        pickFirst "lib/arm64-v8a/libffmpegkit.so"
+    }
     defaultConfig {
         applicationId "com.application.adverial"
-        minSdkVersion 21
-        targetSdkVersion 34
+        minSdk 21
+        targetSdk 34
         versionCode 36 // Update the version code to a unique integer
         versionName "1.0.36" // Update the version name to a string that represents the version
         ndk {
             debugSymbolLevel 'FULL'
-            // change to SYMBOL_TABLE to enable file and line number info
+            abiFilters "arm64-v8a", "armeabi-v7a"
         }
         buildConfigField "String", "PUSHER_APP_KEY", "\"${envProperties['PUSHER_APP_KEY']}\""
         buildConfigField "String", "PUSHER_APP_CLUSTER", "\"${envProperties['PUSHER_APP_CLUSTER']}\""
@@ -136,9 +142,11 @@ dependencies {
     implementation "androidx.compose.ui:ui:1.5.0"
     implementation "androidx.compose.material3:material3:1.0.0"
     implementation "androidx.activity:activity-compose:1.7.0"
+//    implementation 'com.arthenica:mobile-ffmpeg-full:4.4'
+    implementation 'com.arthenica:ffmpeg-kit-full:4.5'
+
     // Optional: Glide Transformations for fallback blur
 //    implementation 'com.eightbitlab:blurview:1.6.6'
-
 
 
 

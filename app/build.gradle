@@ -33,8 +33,8 @@ android {
         applicationId "com.application.adverial"
         minSdk 21
         targetSdk 34
-        versionCode 36 // Update the version code to a unique integer
-        versionName "1.0.36" // Update the version name to a string that represents the version
+        versionCode 37 // Update the version code to a unique integer
+        versionName "1.0.37" // Update the version name to a string that represents the version
         ndk {
             debugSymbolLevel 'FULL'
             abiFilters "arm64-v8a", "armeabi-v7a"

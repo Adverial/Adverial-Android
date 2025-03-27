@@ -143,7 +143,7 @@ dependencies {
     implementation "androidx.compose.material3:material3:1.0.0"
     implementation "androidx.activity:activity-compose:1.7.0"
 //    implementation 'com.arthenica:mobile-ffmpeg-full:4.4'
-    implementation 'com.arthenica:ffmpeg-kit-full:4.5'
+    implementation 'com.arthenica:ffmpeg-kit-full:6.0-2'
 
     // Optional: Glide Transformations for fallback blur
 //    implementation 'com.eightbitlab:blurview:1.6.6'

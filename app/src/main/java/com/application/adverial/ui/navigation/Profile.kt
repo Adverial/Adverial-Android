@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,6 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.activity.*
 import com.application.adverial.ui.adapter.MenuCategoryAdapter
-import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -68,6 +68,38 @@ class Profile : AppCompatActivity() {
                 }
             }
         }
+
+        val homeButton: ImageView = findViewById(R.id.home_home)
+        homeButton.setOnClickListener {
+            val intent = Intent(this, Home::class.java)
+            startActivity(intent)
+        }
+        val favoriteButton: ImageView = findViewById(R.id.home_favorite)
+        favoriteButton.setOnClickListener {
+            val intent = Intent(this, Favorites::class.java)
+            startActivity(intent)
+        }
+
+        //home_add
+        val addButton: ImageView = findViewById(R.id.home_add)
+        addButton.setOnClickListener {
+            val intent = Intent(this, NewAd::class.java)
+            startActivity(intent)
+        }
+
+        //home_notification
+        val notificationButton: ImageView = findViewById(R.id.home_notification)
+        notificationButton.setOnClickListener {
+            val intent = Intent(this, Notifications::class.java)
+            startActivity(intent)
+        }
+
+        //home_profile
+//        val profileButton: ImageView = findViewById(R.id.home_profile)
+//        profileButton.setOnClickListener {
+//            val intent = Intent(this, Profile::class.java)
+//            startActivity(intent)
+//        }
     }
 
     private fun setupButtons() {
@@ -169,6 +201,10 @@ class Profile : AppCompatActivity() {
 
     private fun navigateToLoginWa() {
         startActivity(Intent(this, LoginWa::class.java))
+    }
+
+    fun profile(view: View) {
+        // Since we're already in the Profile activity, no need to navigate
     }
 
     override fun onResume() {

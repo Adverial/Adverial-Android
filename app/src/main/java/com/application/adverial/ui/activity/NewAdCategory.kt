@@ -12,6 +12,10 @@ import com.application.adverial.remote.Repository
 import com.application.adverial.remote.model.SubCategory
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.NewAdCategoryAdapter
+import com.application.adverial.ui.navigation.Favorites
+import com.application.adverial.ui.navigation.Home
+import com.application.adverial.ui.navigation.Notifications
+import com.application.adverial.ui.navigation.Profile
 
 class NewAdCategory : AppCompatActivity() {
 
@@ -157,5 +161,28 @@ class NewAdCategory : AppCompatActivity() {
         window.decorView.layoutDirection =
             if (language.isNullOrEmpty() || language == "0" || language == "1") View.LAYOUT_DIRECTION_LTR
             else View.LAYOUT_DIRECTION_RTL
+    }
+    fun home(view: View) {
+        startActivity(Intent(this, Home::class.java))
+        finish()
+    }
+
+    fun favorites(view: View) {
+        startActivity(Intent(this, Favorites::class.java))
+        finish()
+    }
+
+    fun newAd(view: View) {
+        // Already in NewAd activity, no need to navigate
+    }
+
+    fun notifications(view: View) {
+        startActivity(Intent(this, Notifications::class.java))
+        finish()
+    }
+
+    fun profile(view: View) {
+        startActivity(Intent(this, Profile::class.java))
+        finish()
     }
 }

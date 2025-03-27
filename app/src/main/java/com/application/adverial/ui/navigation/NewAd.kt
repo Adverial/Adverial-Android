@@ -167,8 +167,32 @@ class NewAd : AppCompatActivity() {
     }
 
     @SuppressLint("WrongConstant")
-    fun menu(view: View) {
+    public fun menu(view: View) {
         binding.newAdDrawerLayout.openDrawer(Gravity.START)
+    }
+
+    public fun home(view: View) {
+        startActivity(Intent(this, Home::class.java))
+        finish()
+    }
+
+    public fun favorites(view: View) {
+        startActivity(Intent(this, Favorites::class.java))
+        finish()
+    }
+
+    public fun newAd(view: View) {
+        // Already in NewAd activity, no need to navigate
+    }
+
+    public fun notifications(view: View) {
+        startActivity(Intent(this, Notifications::class.java))
+        finish()
+    }
+
+    public fun profile(view: View) {
+        startActivity(Intent(this, Profile::class.java))
+        finish()
     }
 
     override fun onResume() {

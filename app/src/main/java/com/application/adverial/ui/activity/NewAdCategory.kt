@@ -23,7 +23,7 @@ class NewAdCategory : AppCompatActivity() {
     private var id = ""
     private var name = ""
     private var position = 0
-    private var type = ""
+    private var type = "0"
     private var data = ArrayList<SubCategory>()
     private var subData = ArrayList<SubCategory>()
     private var nameArray = ArrayList<String>()
@@ -55,9 +55,16 @@ class NewAdCategory : AppCompatActivity() {
     private fun pageInit() {
         binding.lottie4.visibility = View.VISIBLE
         Tools().viewEnable(window.decorView.rootView, false)
+
         id = intent.getStringExtra("id") ?: ""
         name = intent.getStringExtra("name") ?: ""
         position = intent.getIntExtra("position", 0)
+
+        if (intent.hasExtra("type")) {
+            type = intent.getStringExtra("type") ?: "0"
+           // android.util.Log.d("TypeDebug", "Received type in NewAdCategory: $type")
+        }
+
         binding.subCategoryName.text = name
         binding.newAdCategoryRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = NewAdCategoryAdapter(subData)
@@ -70,6 +77,18 @@ class NewAdCategory : AppCompatActivity() {
             idArray.add(id)
             nameArray.add(name)
             positionArray.add(position)
+
+//            android.util.Log.d(
+//                    "TypeDebug",
+//                    """
+//                Current State:
+//                Type: $type
+//                ID: $id
+//                Name: $name
+//                Position: $position
+//            """.trimIndent()
+//            )
+
             updateCheck()
         }
     }
@@ -84,12 +103,69 @@ class NewAdCategory : AppCompatActivity() {
             2 -> loadSubData(positionArray[0], positionArray[1])
             3 -> loadSubData(positionArray[0], positionArray[1], positionArray[2])
             4 -> loadSubData(positionArray[0], positionArray[1], positionArray[2], positionArray[3])
-            5 -> loadSubData(positionArray[0], positionArray[1], positionArray[2], positionArray[3], positionArray[4])
-            6 -> loadSubData(positionArray[0], positionArray[1], positionArray[2], positionArray[3], positionArray[4], positionArray[5])
-            7 -> loadSubData(positionArray[0], positionArray[1], positionArray[2], positionArray[3], positionArray[4], positionArray[5], positionArray[6])
-            8 -> loadSubData(positionArray[0], positionArray[1], positionArray[2], positionArray[3], positionArray[4], positionArray[5], positionArray[6], positionArray[7])
-            9 -> loadSubData(positionArray[0], positionArray[1], positionArray[2], positionArray[3], positionArray[4], positionArray[5], positionArray[6], positionArray[7], positionArray[8])
-            10 -> loadSubData(positionArray[0], positionArray[1], positionArray[2], positionArray[3], positionArray[4], positionArray[5], positionArray[6], positionArray[7], positionArray[8], positionArray[9])
+            5 ->
+                    loadSubData(
+                            positionArray[0],
+                            positionArray[1],
+                            positionArray[2],
+                            positionArray[3],
+                            positionArray[4]
+                    )
+            6 ->
+                    loadSubData(
+                            positionArray[0],
+                            positionArray[1],
+                            positionArray[2],
+                            positionArray[3],
+                            positionArray[4],
+                            positionArray[5]
+                    )
+            7 ->
+                    loadSubData(
+                            positionArray[0],
+                            positionArray[1],
+                            positionArray[2],
+                            positionArray[3],
+                            positionArray[4],
+                            positionArray[5],
+                            positionArray[6]
+                    )
+            8 ->
+                    loadSubData(
+                            positionArray[0],
+                            positionArray[1],
+                            positionArray[2],
+                            positionArray[3],
+                            positionArray[4],
+                            positionArray[5],
+                            positionArray[6],
+                            positionArray[7]
+                    )
+            9 ->
+                    loadSubData(
+                            positionArray[0],
+                            positionArray[1],
+                            positionArray[2],
+                            positionArray[3],
+                            positionArray[4],
+                            positionArray[5],
+                            positionArray[6],
+                            positionArray[7],
+                            positionArray[8]
+                    )
+            10 ->
+                    loadSubData(
+                            positionArray[0],
+                            positionArray[1],
+                            positionArray[2],
+                            positionArray[3],
+                            positionArray[4],
+                            positionArray[5],
+                            positionArray[6],
+                            positionArray[7],
+                            positionArray[8],
+                            positionArray[9]
+                    )
         }
     }
 
@@ -113,10 +189,21 @@ class NewAdCategory : AppCompatActivity() {
     private fun nextPage() {
         if (Tools().authCheck(this)) {
             val idString = idArray.joinToString(",")
-            val intent = Intent(this, NewAdInfo()::class.java).apply {
-                putExtra("type", type)
-                putExtra("idArray", idString)
-            }
+
+            // Debug log before creating intent
+           // android.util.Log.d("TypeDebug", "Preparing to start NewAdInfo with type: $type")
+
+            val intent = Intent(this, NewAdInfo::class.java)
+            // Explicitly set the type
+            intent.putExtra("type", type)
+            intent.putExtra("idArray", idString)
+
+            // Verify the intent extras
+            android.util.Log.d(
+                    "TypeDebug",
+                    "Verifying intent extras - type: ${intent.getStringExtra("type")}"
+            )
+
             startActivity(intent)
         } else {
             startActivity(Intent(this, LoginWa::class.java))
@@ -138,7 +225,6 @@ class NewAdCategory : AppCompatActivity() {
             nameArray.add(it.name)
             idArray.add(it.id)
             positionArray.add(it.position)
-            type = it.type
             updateCheck()
         }
     }
@@ -159,8 +245,9 @@ class NewAdCategory : AppCompatActivity() {
         Tools().getLocale(this)
         val language = getSharedPreferences("user", 0).getString("languageId", "")
         window.decorView.layoutDirection =
-            if (language.isNullOrEmpty() || language == "0" || language == "1") View.LAYOUT_DIRECTION_LTR
-            else View.LAYOUT_DIRECTION_RTL
+                if (language.isNullOrEmpty() || language == "0" || language == "1")
+                        View.LAYOUT_DIRECTION_LTR
+                else View.LAYOUT_DIRECTION_RTL
     }
     fun home(view: View) {
         startActivity(Intent(this, Home::class.java))

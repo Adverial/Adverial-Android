@@ -38,25 +38,53 @@ class NewAdInfo : AppCompatActivity() {
         clearPreviousData()
 
         type = intent.getStringExtra("type") ?: ""
+       // android.util.Log.d("TypeDebug", "Type in new ad info: $type")
+
+//        if (type.isEmpty()) {
+//           // android.util.Log.e("TypeDebug", "Error: No type received in NewAdInfo")
+//        }
+
         idArray = intent.getStringExtra("idArray") ?: ""
 
         binding.newAdInfoRecyclerView.layoutManager = LinearLayoutManager(this)
         val repo = Repository(this)
 
+        //android.util.Log.d("TypeDebug", "Making categoryOptions call with type: $type")
+
         repo.categoryOptions(type)
         repo.getCategoryOptionsData().observe(this) { response ->
-            itemList.add(CategoryOptionsData(1, "", getString(R.string.new_ad_info_title), "", listOf()))
-            itemList.add(CategoryOptionsData(1, "", getString(R.string.new_ad_info_price), "", listOf()))
-            itemList.add(CategoryOptionsData(1, "", getString(R.string.new_ad_info_currency), "", listOf()))
+           // android.util.Log.d("TypeDebug", "Received categoryOptions response for type: $type")
+
+            itemList.add(
+                    CategoryOptionsData(1, "", getString(R.string.new_ad_info_title), "", listOf())
+            )
+            itemList.add(
+                    CategoryOptionsData(1, "", getString(R.string.new_ad_info_price), "", listOf())
+            )
+            itemList.add(
+                    CategoryOptionsData(
+                            1,
+                            "",
+                            getString(R.string.new_ad_info_currency),
+                            "",
+                            listOf()
+                    )
+            )
             itemList.addAll(response.data)
-            itemList.add(CategoryOptionsData(1, "", getString(R.string.new_ad_info_description), "", listOf()))
+            itemList.add(
+                    CategoryOptionsData(
+                            1,
+                            "",
+                            getString(R.string.new_ad_info_description),
+                            "",
+                            listOf()
+                    )
+            )
 
             val adapter = NewAdInfoAdapter(itemList)
             binding.newAdInfoRecyclerView.adapter = adapter
 
-            adapter.getResult().observe(this) { result ->
-                handleAdapterResult(result)
-            }
+            adapter.getResult().observe(this) { result -> handleAdapterResult(result) }
 
             binding.newAdInfoRecyclerView.setHasFixedSize(true)
             binding.newAdInfoRecyclerView.setItemViewCacheSize(itemList.size)
@@ -106,7 +134,13 @@ class NewAdInfo : AppCompatActivity() {
                 binding.lottie11.visibility = View.VISIBLE
                 Tools().viewEnable(window.decorView.rootView, false)
                 val repo = Repository(this)
-                repo.addAdInfo(title, price, data.getString("description", "").orEmpty(), idArray, currency)
+                repo.addAdInfo(
+                        title,
+                        price,
+                        data.getString("description", "").orEmpty(),
+                        idArray,
+                        currency
+                )
                 repo.getAddAdInfoData().observe(this) { response ->
                     binding.lottie11.visibility = View.GONE
                     Tools().viewEnable(window.decorView.rootView, true)
@@ -129,7 +163,8 @@ class NewAdInfo : AppCompatActivity() {
         Tools().getLocale(this)
         val language = getSharedPreferences("user", 0).getString("languageId", "")
         window.decorView.layoutDirection =
-            if (language.isNullOrEmpty() || language == "0" || language == "1") View.LAYOUT_DIRECTION_LTR
-            else View.LAYOUT_DIRECTION_RTL
+                if (language.isNullOrEmpty() || language == "0" || language == "1")
+                        View.LAYOUT_DIRECTION_LTR
+                else View.LAYOUT_DIRECTION_RTL
     }
 }

@@ -38,46 +38,66 @@ class NewAdInfo : AppCompatActivity() {
         clearPreviousData()
 
         type = intent.getStringExtra("type") ?: ""
-       // android.util.Log.d("TypeDebug", "Type in new ad info: $type")
+        // android.util.Log.d("TypeDebug", "Type in new ad info: $type")
 
-//        if (type.isEmpty()) {
-//           // android.util.Log.e("TypeDebug", "Error: No type received in NewAdInfo")
-//        }
+        //        if (type.isEmpty()) {
+        //           // android.util.Log.e("TypeDebug", "Error: No type received in NewAdInfo")
+        //        }
 
         idArray = intent.getStringExtra("idArray") ?: ""
 
         binding.newAdInfoRecyclerView.layoutManager = LinearLayoutManager(this)
         val repo = Repository(this)
 
-        //android.util.Log.d("TypeDebug", "Making categoryOptions call with type: $type")
+        // android.util.Log.d("TypeDebug", "Making categoryOptions call with type: $type")
 
-        repo.categoryOptions(type)
+        repo.categoryOptions(type.toIntOrNull()?.toString() ?: "0")
         repo.getCategoryOptionsData().observe(this) { response ->
-           // android.util.Log.d("TypeDebug", "Received categoryOptions response for type: $type")
+            // android.util.Log.d("TypeDebug", "Received categoryOptions response for type: $type")
 
             itemList.add(
-                    CategoryOptionsData(1, "", getString(R.string.new_ad_info_title), "", listOf())
-            )
-            itemList.add(
-                    CategoryOptionsData(1, "", getString(R.string.new_ad_info_price), "", listOf())
+                    CategoryOptionsData(
+                            id = 1,
+                            ad_type = 0,
+                            type = "text",
+                            unit = null,
+                            title = getString(R.string.new_ad_info_title),
+                            form_type = 1,
+                            values = null
+                    )
             )
             itemList.add(
                     CategoryOptionsData(
-                            1,
-                            "",
-                            getString(R.string.new_ad_info_currency),
-                            "",
-                            listOf()
+                            id = 1,
+                            ad_type = 0,
+                            type = "text",
+                            unit = null,
+                            title = getString(R.string.new_ad_info_price),
+                            form_type = 1,
+                            values = null
+                    )
+            )
+            itemList.add(
+                    CategoryOptionsData(
+                            id = 1,
+                            ad_type = 0,
+                            type = "select",
+                            unit = null,
+                            title = getString(R.string.new_ad_info_currency),
+                            form_type = 1,
+                            values = null
                     )
             )
             itemList.addAll(response.data)
             itemList.add(
                     CategoryOptionsData(
-                            1,
-                            "",
-                            getString(R.string.new_ad_info_description),
-                            "",
-                            listOf()
+                            id = 1,
+                            ad_type = 0,
+                            type = "text",
+                            unit = null,
+                            title = getString(R.string.new_ad_info_description),
+                            form_type = 1,
+                            values = null
                     )
             )
 

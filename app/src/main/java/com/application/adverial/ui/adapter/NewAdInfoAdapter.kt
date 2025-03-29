@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +19,8 @@ import com.application.adverial.remote.model.CategoryOptionsData
 import com.application.adverial.ui.dialog.DropList
 import com.application.adverial.ui.model.DropList as DropListItem
 
-class NewAdInfoAdapter(
-    private var itemList: ArrayList<CategoryOptionsData>
-) : RecyclerView.Adapter<NewAdInfoAdapter.ViewHolder>() {
+class NewAdInfoAdapter(private var itemList: ArrayList<CategoryOptionsData>) :
+        RecyclerView.Adapter<NewAdInfoAdapter.ViewHolder>() {
 
     private val result = MutableLiveData<String>()
     private val currencyList = ArrayList<DropListItem>()
@@ -44,7 +41,7 @@ class NewAdInfoAdapter(
     override fun getItemCount(): Int = itemList.size
 
     inner class ViewHolder(private val binding: ItemNewAdInfoBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+            RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("CommitPrefEdits")
         fun bind(item: CategoryOptionsData, position: Int) {
@@ -62,24 +59,42 @@ class NewAdInfoAdapter(
         private fun setupTitleField() {
             with(binding) {
                 itemNewAdInfoEnter.visibility = View.VISIBLE
-                itemNewAdInfoEnter.addTextChangedListener(object : SimpleTextWatcher() {
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        context.getSharedPreferences("newAd", 0)
-                            .edit().putString("title", s.toString()).apply()
-                    }
-                })
+                itemNewAdInfoEnter.addTextChangedListener(
+                        object : SimpleTextWatcher() {
+                            override fun onTextChanged(
+                                    s: CharSequence?,
+                                    start: Int,
+                                    before: Int,
+                                    count: Int
+                            ) {
+                                context.getSharedPreferences("newAd", 0)
+                                        .edit()
+                                        .putString("title", s.toString())
+                                        .apply()
+                            }
+                        }
+                )
             }
         }
 
         private fun setupPriceField() {
             with(binding) {
                 itemNewAdInfoPriceA.visibility = View.VISIBLE
-                itemNewAdInfoPriceA.addTextChangedListener(object : SimpleTextWatcher() {
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        context.getSharedPreferences("newAd", 0)
-                            .edit().putString("price", s.toString()).apply()
-                    }
-                })
+                itemNewAdInfoPriceA.addTextChangedListener(
+                        object : SimpleTextWatcher() {
+                            override fun onTextChanged(
+                                    s: CharSequence?,
+                                    start: Int,
+                                    before: Int,
+                                    count: Int
+                            ) {
+                                context.getSharedPreferences("newAd", 0)
+                                        .edit()
+                                        .putString("price", s.toString())
+                                        .apply()
+                            }
+                        }
+                )
             }
         }
 
@@ -100,12 +115,15 @@ class NewAdInfoAdapter(
                 response.data?.forEach {
                     currencyList.add(DropListItem("${it.country}   ${it.code}", it.id.toString()))
                 }
-                val dialog = DropList(currencyList, context.getString(R.string.new_ad_info_currency))
+                val dialog =
+                        DropList(currencyList, context.getString(R.string.new_ad_info_currency))
                 dialog.show((context as AppCompatActivity).supportFragmentManager, "DropList")
                 dialog.getStatus().observe(context as LifecycleOwner) { selection ->
                     binding.itemNewAdInfoValue.text = selection.name.split("   ")[1]
                     context.getSharedPreferences("newAd", 0)
-                        .edit().putString("currency", selection.name.split("   ")[1]).apply()
+                            .edit()
+                            .putString("currency", selection.name.split("   ")[1])
+                            .apply()
                 }
                 result.value = "hide"
             }
@@ -114,21 +132,33 @@ class NewAdInfoAdapter(
         private fun setupDescriptionField() {
             with(binding) {
                 itemNewAdInfoEnter.visibility = View.VISIBLE
-                itemNewAdInfoEnter.layoutParams.height = context.resources.getDimension(com.intuit.sdp.R.dimen._100sdp).toInt()
+                itemNewAdInfoEnter.layoutParams.height =
+                        context.resources.getDimension(com.intuit.sdp.R.dimen._100sdp).toInt()
                 itemNewAdInfoEnter.imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
-                itemNewAdInfoEnter.addTextChangedListener(object : SimpleTextWatcher() {
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        context.getSharedPreferences("newAd", 0)
-                            .edit().putString("description", s.toString()).apply()
-                    }
-                })
+                itemNewAdInfoEnter.addTextChangedListener(
+                        object : SimpleTextWatcher() {
+                            override fun onTextChanged(
+                                    s: CharSequence?,
+                                    start: Int,
+                                    before: Int,
+                                    count: Int
+                            ) {
+                                context.getSharedPreferences("newAd", 0)
+                                        .edit()
+                                        .putString("description", s.toString())
+                                        .apply()
+                            }
+                        }
+                )
             }
         }
 
         private fun setupOtherOptions(item: CategoryOptionsData) {
             with(binding) {
-                itemNewAdInfoEnter.visibility = if (item.values.isNullOrEmpty()) View.VISIBLE else View.GONE
-                itemNewAdInfoDropList.visibility = if (item.values.isNullOrEmpty()) View.GONE else View.VISIBLE
+                itemNewAdInfoEnter.visibility =
+                        if (item.values.isNullOrEmpty()) View.VISIBLE else View.GONE
+                itemNewAdInfoDropList.visibility =
+                        if (item.values.isNullOrEmpty()) View.GONE else View.VISIBLE
 
                 itemNewAdInfoDropList.setOnClickListener { showOptionsDialog(item) }
                 itemNewAdInfoValue.setOnClickListener { showOptionsDialog(item) }
@@ -136,13 +166,28 @@ class NewAdInfoAdapter(
         }
 
         private fun showOptionsDialog(item: CategoryOptionsData) {
-            val data = item.values?.map { DropListItem(it.title, it.id.toString()) } ?: emptyList()
-            val dialog = DropList(ArrayList(data), item.title)
+            val data = ArrayList<DropListItem>()
+
+            when (item.type) {
+                "checkbox" -> {
+                    data.add(DropListItem("Yes", "1"))
+                    data.add(DropListItem("No", "0"))
+                }
+                "select" -> {
+                    item.values?.split(",")?.forEach { value ->
+                        data.add(DropListItem(value.trim(), value.trim()))
+                    }
+                }
+            }
+
+            val dialog = DropList(data, item.title)
             dialog.show((context as AppCompatActivity).supportFragmentManager, "DropList")
             dialog.getStatus().observe(context as LifecycleOwner) { selection ->
                 binding.itemNewAdInfoValue.text = selection.name
                 context.getSharedPreferences("newAdOptions", 0)
-                    .edit().putString(item.id.toString(), selection.id).apply()
+                        .edit()
+                        .putString(item.id.toString(), selection.id)
+                        .apply()
             }
         }
     }

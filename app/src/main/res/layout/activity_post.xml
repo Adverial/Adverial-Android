@@ -425,16 +425,16 @@
                 <Button
                     android:id="@+id/btn_write_review"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/rounded_full7"
                     android:backgroundTint="@color/yellow"
                     android:fontFamily="@font/medium"
-                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:paddingHorizontal="@dimen/_8sdp"
                     android:text="@string/write_a_review"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_10ssp" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

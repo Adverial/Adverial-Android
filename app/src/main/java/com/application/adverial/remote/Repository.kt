@@ -20,6 +20,7 @@ import com.application.adverial.remote.model.MainCategory
 import com.application.adverial.remote.model.Notification
 import com.application.adverial.remote.model.PublishAd
 import com.application.adverial.remote.model.PublishAdRequest
+import com.application.adverial.remote.model.RecommendedAds
 import com.application.adverial.remote.model.Search
 import com.application.adverial.remote.model.ShowRoom
 import com.application.adverial.remote.model.Signup
@@ -74,6 +75,7 @@ class Repository(val context: Context) {
     val sendCode = MutableLiveData<com.application.adverial.remote.model.Response>()
     val forgotPassword = MutableLiveData<com.application.adverial.remote.model.Response>()
     val autoComplete = MutableLiveData<AutoComplete>()
+    val recommendedAds = MutableLiveData<RecommendedAds>()
 
     var currentLang = Tools().getCurrentLanguage(context)
 
@@ -815,6 +817,22 @@ class Repository(val context: Context) {
         )
     }
 
+    fun recommendedAds(categoryId: String) {
+        val service: APIService = RetroClass().apiService()
+        val call = service.recommendedAds(categoryId, "Bearer $token", currentLang)
+        call.enqueue(
+                object : retrofit2.Callback<RecommendedAds> {
+                    override fun onResponse(
+                            call: Call<RecommendedAds>,
+                            response: Response<RecommendedAds>
+                    ) {
+                        recommendedAds.value = response.body()
+                    }
+                    override fun onFailure(call: Call<RecommendedAds>, t: Throwable) {}
+                }
+        )
+    }
+
     fun getMainCategoryData(): MutableLiveData<MainCategory> {
         return mainCategory
     }
@@ -910,5 +928,8 @@ class Repository(val context: Context) {
     }
     fun getAdFeedbackData(): MutableLiveData<com.application.adverial.remote.model.Response> {
         return adFeedback
+    }
+    fun getRecommendedAdsData(): MutableLiveData<RecommendedAds> {
+        return recommendedAds
     }
 }

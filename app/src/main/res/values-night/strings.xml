@@ -4,4 +4,5 @@
     <string name="login_otp_hint">Login Otp</string>
     <string name="already_have_account">Already have account</string>
     <string name="new_message">New message</string>
+    <string name="recommended_ads">Recommended Ads</string>
 </resources>

@@ -69,7 +69,7 @@
     <string name="address_neighbourhood">State</string>
     //------------------------------------------------------------------------------profile
     <string name="profile_listing">Listing Management and reports</string>
-    <string name="profile_listing_whats_on">What’s on</string>
+    <string name="profile_listing_whats_on">What\'s on</string>
     <string name="profile_listing_air">Not on air</string>
     <string name="profile_notifications">Store Notifications</string>
     <string name="profile_notifications_messages">Ad messages</string>
@@ -216,4 +216,5 @@
     <string name="signup_phone_hint">7xx xxx xxxx</string>
     <string name="already_have_account">Already have account</string>
     <string name="new_message">New message</string>
+    <string name="recommended_ads">Recommended Ads</string>
 </resources>

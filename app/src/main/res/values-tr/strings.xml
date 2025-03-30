@@ -71,7 +71,7 @@
     <string name="address_neighbourhood">Mahhale</string>
     //------------------------------------------------------------------------------profile
     <string name="profile_listing">Listeleme Yönetimi ve raporlar</string>
-    <string name="profile_listing_whats_on">Yayınlanmiş ilanlar</string>
+    <string name="profile_listing_whats_on">Yayında Olanlar</string>
     <string name="profile_listing_air">Kaldırılmış ilanlar</string>
     <string name="profile_notifications">Mağaza Bildirimleri</string>
     <string name="profile_notifications_messages">Reklam mesajları</string>
@@ -99,7 +99,7 @@
     //------------------------------------------------------------------------------special
     <string name="special_title">Size özel reklamlar</string>
     //------------------------------------------------------------------------------my ads
-    <string name="favorite_my_ads_active">Yayınlanmiş ilanlar</string>
+    <string name="favorite_my_ads_active">Yayında Olanlar</string>
     <string name="favorite_my_ads_deactive">Kaldırılmiş ilanlar</string>
     //------------------------------------------------------------------------------login and signup
     <string name="login_title">Uygulamaya erişmek için lütfen WhatsApp numaranızla giriş yapın</string>
@@ -164,7 +164,7 @@
     <string name="filter_enter">Buraya girin</string>
     //------------------------------------------------------------------------------toasts
     <string name="fieldsAreEmpty">Gerekli bilgiler doğru girilmedi.</string>
-    <string name="termsAreNotAccepted">Şartlarımızı ve sözleşmelerimizi henüz kabul etmediniz.</string>
+    <string name="termsAreNotAccepted">Şartlarımızı ve anlaşmalarımızı henüz kabul etmediniz.</string>
     <string name="passwordMustBeMoreThan6">Şifre 6 veya daha fazla karakter olmalıdır.</string>
     <string name="EmailAddressIsWrong">E-posta adresi yanlış.</string>
     <string name="nameIsNotEntered">Lütfen adınızı ve soyadınızı giriniz.</string>
@@ -215,6 +215,7 @@
     <string name="already_have_account">Zaten bir hesabınız var mı?</string>
     <string name="post_details_view_video">Videoyu izle</string>
 
-    <string name="new_message">New message</string>z
+    <string name="new_message">New message</string>
+    <string name="recommended_ads">Önerilen İlanlar</string>
 
 </resources>

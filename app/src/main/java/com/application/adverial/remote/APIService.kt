@@ -23,6 +23,7 @@ import com.application.adverial.remote.model.MessageResponse
 import com.application.adverial.remote.model.Notification
 import com.application.adverial.remote.model.PublishAd
 import com.application.adverial.remote.model.PublishAdRequest
+import com.application.adverial.remote.model.RecommendedAds
 import com.application.adverial.remote.model.Response
 import com.application.adverial.remote.model.Search
 import com.application.adverial.remote.model.ShowRoom
@@ -51,373 +52,347 @@ interface APIService {
     @FormUrlEncoded
     @POST("register-via-wa")
     fun registerViaWa(
-        @Header("lang") lang: String,
-        @Header("Accept") accept: String,
-        @Field("name") name: String,
-        @Field("whatsapp_number") whatsappNumber: String
+            @Header("lang") lang: String,
+            @Header("Accept") accept: String,
+            @Field("name") name: String,
+            @Field("whatsapp_number") whatsappNumber: String
     ): Call<GenericResponse>
 
     @FormUrlEncoded
     @POST("login-via-wa")
     fun loginViaWa(
-        @Header("lang") lang: String,
-        @Header("Accept") accept: String,
-        @Field("whatsapp_number") whatsappNumber: String
+            @Header("lang") lang: String,
+            @Header("Accept") accept: String,
+            @Field("whatsapp_number") whatsappNumber: String
     ): Call<GenericResponse>
 
     @FormUrlEncoded
     @POST("resend-otp-wa")
     fun resendOtpWa(
-        @Header("Accept") accept: String,
-        @Field("whatsapp_number") whatsappNumber: String
+            @Header("Accept") accept: String,
+            @Field("whatsapp_number") whatsappNumber: String
     ): Call<GenericResponse>
 
     @FormUrlEncoded
     @POST("verify-otp-wa")
     fun verifyOtpWa(
-        @Header("lang") lang: String,
-        @Header("Accept") accept: String,
-        @Field("whatsapp_number") whatsappNumber: String,
-        @Field("otp") otp: Int
+            @Header("lang") lang: String,
+            @Header("Accept") accept: String,
+            @Field("whatsapp_number") whatsappNumber: String,
+            @Field("otp") otp: Int
     ): Call<VerifyOtpResponse>
 
-
-
-    @GET("main-categories")
-    fun mainCategory(
-        @Header("lang") lang: String
-    ): Call<MainCategory>
+    @GET("main-categories") fun mainCategory(@Header("lang") lang: String): Call<MainCategory>
 
     @FormUrlEncoded
     @POST
     fun categoryAds(
-        @Header("lang") lang: String,
-        @Url url: String,
-        @Field("type") type: String
+            @Header("lang") lang: String,
+            @Url url: String,
+            @Field("type") type: String
     ): Call<CategoryAds>
 
     @FormUrlEncoded
     @POST("register")
     fun signup(
-        @Header("Accept") accept: String,
-        @Header("lang") lang: String,
-        @Field("email") email: String,
-        @Field("password") password: String,
-        @Field("name") name: String,
-        @Field("last_name") last_name: String,
-        @Field("phone") phone: String
+            @Header("Accept") accept: String,
+            @Header("lang") lang: String,
+            @Field("email") email: String,
+            @Field("password") password: String,
+            @Field("name") name: String,
+            @Field("last_name") last_name: String,
+            @Field("phone") phone: String
     ): Call<Signup>
 
     @FormUrlEncoded
     @POST("login")
     fun login(
-        @Header("Accept") accept: String,
-        @Header("lang") lang: String,
-        @Field("email") email: String,
-        @Field("password") password: String
+            @Header("Accept") accept: String,
+            @Header("lang") lang: String,
+            @Field("email") email: String,
+            @Field("password") password: String
     ): Call<Signup>
 
     @FormUrlEncoded
     @POST("verify-code")
     fun verifyCode(
-        @Header("Accept") accept: String,
-        @Header("lang") lang: String,
-        @Field("email") email: String,
-        @Field("code") code: String
+            @Header("Accept") accept: String,
+            @Header("lang") lang: String,
+            @Field("email") email: String,
+            @Field("code") code: String
     ): Call<VerifyCode>
 
     @FormUrlEncoded
     @POST("resend-code")
     fun sendCode(
-        @Header("Accept") accept: String,
-        @Header("lang") lang: String,
-        @Field("email") email: String,
+            @Header("Accept") accept: String,
+            @Header("lang") lang: String,
+            @Field("email") email: String,
     ): Call<Response>
 
-    @GET
-    fun category(
-        @Header("lang") lang: String,
-        @Url url: String
-    ): Call<Category>
+    @GET fun category(@Header("lang") lang: String, @Url url: String): Call<Category>
 
     @GET
     fun adDetails(
-        @Header("lang") lang: String,
-        @Url url: String,
-        @Header("Authorization") token: String
+            @Header("lang") lang: String,
+            @Url url: String,
+            @Header("Authorization") token: String
     ): Call<AdDetails>
 
     @FormUrlEncoded
     @POST
     fun showRoom(
-        @Header("lang") lang: String,
-        @Field("type") type: String,
-        @Url url: String
+            @Header("lang") lang: String,
+            @Field("type") type: String,
+            @Url url: String
     ): Call<ShowRoom>
 
     @FormUrlEncoded
     @POST("ad-search")
     fun search(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("keyword") keyword: String,
-        @Field("type") type: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("keyword") keyword: String,
+            @Field("type") type: String
     ): Call<Search>
 
     @DELETE("all-latest-search-delete")
     fun clearSearch(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
     ): Call<Response>
 
     @GET("latest-search-keyword")
     fun latestSearch(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String
-        ): Call<LatestSearch>
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String
+    ): Call<LatestSearch>
 
     @GET("favorite-ads")
     fun favorite(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String
     ): Call<Favorite>
 
     @FormUrlEncoded
     @POST("remove-favorite")
     fun removeFavorite(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("ad_id") ad_id: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("ad_id") ad_id: String
     ): Call<Response>
 
     @FormUrlEncoded
     @POST("add-favorite")
     fun addFavorite(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("ad_id") ad_id: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("ad_id") ad_id: String
     ): Call<Response>
 
     @GET("active-ads")
     fun activeAds(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String
-        ): Call<Search>
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String
+    ): Call<Search>
 
     @GET("deactive-ads")
     fun deactiveAds(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String
     ): Call<Search>
 
     @DELETE
     fun removeAd(
-        @Url url: String,
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String
+            @Url url: String,
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String
     ): Call<Response>
 
     @FormUrlEncoded
     @POST("ad-create")
     fun addAdInfo(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("title") title: String,
-        @Field("price") price: String,
-        @Field("description") description: String,
-        @Field("categories") categories: String,
-        @Field("currency") currency: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("title") title: String,
+            @Field("price") price: String,
+            @Field("description") description: String,
+            @Field("categories") categories: String,
+            @Field("currency") currency: String
     ): Call<AddAdInfo>
 
     @FormUrlEncoded
     @POST("ad-create")
     fun addAdInfoOptions(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("title") title: String,
-        @Field("price") price: String,
-        @Field("description") description: String,
-        @Field("categories") categories: String,
-        @Field("options") options: String,
-        @Field("currency") currency: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("title") title: String,
+            @Field("price") price: String,
+            @Field("description") description: String,
+            @Field("categories") categories: String,
+            @Field("options") options: String,
+            @Field("currency") currency: String
     ): Call<AddAdInfo>
 
-    @GET
-    fun categoryOptions(
-        @Header("lang") lang: String,
-        @Url url: String
-    ): Call<CategoryOptions>
+    @GET fun categoryOptions(@Header("lang") lang: String, @Url url: String): Call<CategoryOptions>
 
-    @GET
-    fun country(
-        @Header("lang") lang: String,
-        @Url url: String
-    ): Call<City>
+    @GET fun country(@Header("lang") lang: String, @Url url: String): Call<City>
 
-    @GET
-    fun city(
-        @Header("lang") lang: String,
-        @Url url: String
-    ): Call<City>
+    @GET fun city(@Header("lang") lang: String, @Url url: String): Call<City>
 
-    @GET
-    fun district(
-        @Header("lang") lang: String,
-        @Url url: String
-    ): Call<City>
+    @GET fun district(@Header("lang") lang: String, @Url url: String): Call<City>
 
     @FormUrlEncoded
     @POST("ad-create-2")
     fun addAdLocation(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("ad_id") ad_id: String,
-        @Field("country_id") country_id: String,
-        @Field("city_id") city_id: String,
-        @Field("district_id") district_id: String,
-        @Field("lat") lat: String,
-        @Field("lon") lon: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("ad_id") ad_id: String,
+            @Field("country_id") country_id: String,
+            @Field("city_id") city_id: String,
+            @Field("district_id") district_id: String,
+            @Field("lat") lat: String,
+            @Field("lon") lon: String
     ): Call<Response>
 
     @Multipart
     @POST("ad-create-3")
     fun image(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Part("ad_id") ad_id: RequestBody,
-        @Part() image: MultipartBody.Part
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Part("ad_id") ad_id: RequestBody,
+            @Part() image: MultipartBody.Part
     ): Call<ImageUpload>
 
     @FormUrlEncoded
     @POST("image-delete")
     fun deleteImage(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("image_id") image_id: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("image_id") image_id: String
     ): Call<Response>
 
     @POST("publish-ad")
     fun publishAd(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Body request: PublishAdRequest
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Body request: PublishAdRequest
     ): Call<PublishAd>
 
     @GET("user-detail")
     fun user(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
     ): Call<User>
 
     @FormUrlEncoded
     @POST("user-detail")
     fun userUpdate(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("name") name: String,
-        @Field("last_name") last_name: String,
-        @Field("email") email: String,
-        @Field("phone") phone: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("name") name: String,
+            @Field("last_name") last_name: String,
+            @Field("email") email: String,
+            @Field("phone") phone: String
     ): Call<Response>
 
     @GET("notifications")
     fun notification(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
     ): Call<Notification>
 
     @FormUrlEncoded
     @POST("send-contact-message")
     fun contactUs(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("message") name: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("message") name: String
     ): Call<Response>
 
-    @GET("get-currencies")
-    fun currency(
-        @Header("lang") lang: String
-        ): Call<Currency>
+    @GET("get-currencies") fun currency(@Header("lang") lang: String): Call<Currency>
 
     @FormUrlEncoded
     @POST
     fun filterCategory(
-        @Header("lang") lang: String,
-        @Url url: String,
-        @Field("filter") filter: String
+            @Header("lang") lang: String,
+            @Url url: String,
+            @Field("filter") filter: String
     ): Call<Filter>
 
     @FormUrlEncoded
     @POST("ad-feedback")
     fun adFeedback(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("ad_id") ad_id: String,
-        @Field("message") message: String
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("ad_id") ad_id: String,
+            @Field("message") message: String
     ): Call<Response>
 
     @DELETE("delete-account")
     fun deleteAccount(
-        @Header("Authorization") token: String,
+            @Header("Authorization") token: String,
     ): Call<Response>
 
-
     @POST("forgot-password")
-    fun forgotPassword(
-        @Body requestModel: ForgotPasswordRequestModel
-    ) : Call<Response>
+    fun forgotPassword(@Body requestModel: ForgotPasswordRequestModel): Call<Response>
 
-    @GET("backgrounds")
-    fun background() : Call<BackgroundResponseModel>
+    @GET("backgrounds") fun background(): Call<BackgroundResponseModel>
 
     @FormUrlEncoded
     @POST("ad-search-autocomplete")
     fun adAutoComplete(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("keyword") keyword: String,
-    ) : Call<AutoComplete>
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("keyword") keyword: String,
+    ): Call<AutoComplete>
 
     @FormUrlEncoded
     @POST("category-search-autocomplete")
     fun categoryAutoComplete(
-        @Header("Authorization") token: String,
-        @Header("lang") lang: String,
-        @Field("keyword") keyword: String,
-    ) : Call<AutoComplete>
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String,
+            @Field("keyword") keyword: String,
+    ): Call<AutoComplete>
 
     @POST("initial-conversation/{partner_user_id}")
     fun initialConversation(
-        @Path("partner_user_id") partnerUserId: Int,
-        @Query("ad_id") adId: Int?,
-        @Header("Authorization") authorization: String,
-        @Header("lang") lang: String
+            @Path("partner_user_id") partnerUserId: Int,
+            @Query("ad_id") adId: Int?,
+            @Header("Authorization") authorization: String,
+            @Header("lang") lang: String
     ): Call<ConversationResponse>
 
     @GET("user-conversations")
     fun getUserConversations(
-        @Header("Authorization") authorization: String,
-        @Header("content-type") contentType: String,
-        @Header("lang") lang: String
+            @Header("Authorization") authorization: String,
+            @Header("content-type") contentType: String,
+            @Header("lang") lang: String
     ): Call<List<Conversation>>
 
     @POST("send-message/{conversionId}")
     @Multipart
     fun sendMessage(
-        @Path("conversionId") conversionId: Int,
-        @Header("Authorization") authorization: String,
-        @Header("content-type") contentType: String,
-        @Header("lang") lang: String,
-        @Part("message") message: RequestBody,
-        @Part("media") media: RequestBody?
+            @Path("conversionId") conversionId: Int,
+            @Header("Authorization") authorization: String,
+            @Header("content-type") contentType: String,
+            @Header("lang") lang: String,
+            @Part("message") message: RequestBody,
+            @Part("media") media: RequestBody?
     ): Call<MessageResponse>
-
 
     @GET("conversations/{conversionId}/messages")
     fun getMessagesByConversationId(
-        @Path("conversionId") conversionId: Int,
-        @Header("Authorization") authorization: String,
-        @Header("content-type") contentType: String,
-        @Header("lang") lang: String
+            @Path("conversionId") conversionId: Int,
+            @Header("Authorization") authorization: String,
+            @Header("content-type") contentType: String,
+            @Header("lang") lang: String
     ): Call<List<Message>>
+
+    @GET("recommended-ads/{category_id}")
+    fun recommendedAds(
+            @Path("category_id") categoryId: String,
+            @Header("Authorization") token: String,
+            @Header("lang") lang: String
+    ): Call<RecommendedAds>
 }

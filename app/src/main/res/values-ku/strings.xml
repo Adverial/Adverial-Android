@@ -71,7 +71,7 @@
     <string name="address_neighbourhood">دۆخ</string>
     //------------------------------------------------------------------------------profile
     <string name="profile_listing">بەڕێوەبردنی لیستکردن و ڕاپۆرتەکان</string>
-    <string name="profile_listing_whats_on">چ شتێک هەیە</string>
+    <string name="profile_listing_whats_on">Yên li ser avayê</string>
     <string name="profile_listing_air">چ شتێک نادیارە</string>
     <string name="profile_notifications">ئاگادارکردنەوەکانی فرۆشگا</string>
     <string name="profile_notifications_messages">پەیامی ڕێکلام</string>
@@ -99,7 +99,7 @@
     //------------------------------------------------------------------------------special
     <string name="special_title">ڕیکلامی تایبەت بۆ تۆ</string>
     //------------------------------------------------------------------------------my ads
-    <string name="favorite_my_ads_active">چ شتێک هەیە</string>
+    <string name="favorite_my_ads_active">Yên li ser avayê</string>
     <string name="favorite_my_ads_deactive">چ شتێک نادیارە</string>
     //------------------------------------------------------------------------------login and signup
     <string name="login_title">بو ب کارئینانا بەرنامەی هیڤییە ژمارەیا واتسئاپێ خو تومار بکە</string>
@@ -163,8 +163,8 @@
     <string name="filter_max">زۆرترین</string>
     <string name="filter_enter">لێرە بچۆرە ژوورەوە</string>
     //------------------------------------------------------------------------------toasts
-    <string name="fieldsAreEmpty">زانیارییە پێویستەکان بە دروستی هاتنە ژوورەوە.</string>
-    <string name="termsAreNotAccepted">هێشتا مەرج و ڕێکەوتنەکانمان قبوڵ نەکردووە.</string>
+    <string name="fieldsAreEmpty">Agahiya hewce rast nehat têketin.</string>
+    <string name="termsAreNotAccepted">We hîn mercên me û peymanan qebûl nekir.</string>
     <string name="passwordMustBeMoreThan6">وشەی نهێنی دەبێت ٦ پیت یان زیاتر بێت.</string>
     <string name="EmailAddressIsWrong">ناونیشانی ئیمەیڵ هەڵەیە</string>
     <string name="nameIsNotEntered">تکایە ناو و پاشناوی خۆت بنووسە</string>
@@ -216,5 +216,6 @@
     <string name="post_details_view_video">ڤیدیۆی بینین</string>
 
     <string name="new_message">New message</string>
+    <string name="recommended_ads">ڕیکلامە پێشنیارکراوەکان</string>
 
 </resources>

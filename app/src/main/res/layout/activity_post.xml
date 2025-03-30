@@ -8,7 +8,7 @@
     android:background="@color/menu_background"
     tools:context=".ui.activity.Post">
 
-
+    <!-- Top Header Bar -->
     <LinearLayout
         android:id="@+id/linearLayout26"
         android:layout_width="match_parent"
@@ -27,26 +27,18 @@
             android:padding="@dimen/_3sdp"
             app:tint="@color/menu_text"
             android:src="@drawable/baseline_arrow_back_24"
-            android:contentDescription="@string/new_ad_service_desc"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            android:contentDescription="@string/new_ad_service_desc"/>
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1.4" />
 
-
         <ImageView
             android:id="@+id/app_logo"
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="@id/post_favorite"
-            app:layout_constraintStart_toStartOf="@id/back_icon"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:layout_marginTop="@dimen/_5sdp" />
 
         <View
             android:layout_width="0dp"
@@ -72,258 +64,287 @@
             android:padding="@dimen/_3sdp"
             app:srcCompat="@drawable/share_icon"
             android:layout_gravity="center" />
-
     </LinearLayout>
 
-
-
-    <ImageView
-        android:id="@+id/imageView54"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:foreground="@color/black_cover"
-        android:scaleType="centerCrop"
-        android:src="@drawable/wallpaper"
-        android:visibility="invisible"
+    <!-- Bottom Action Buttons (Sticky) -->
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_13sdp"
+        android:layout_marginEnd="@dimen/_13sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:orientation="horizontal"
+        android:background="@color/menu_background"
+        android:elevation="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
+        <Button
+            android:id="@+id/show_ad_details"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_full2"
+            android:backgroundTint="@color/red"
+            android:fontFamily="@font/regular"
+            android:onClick="showAdDetails"
+            android:text="@string/post_details_about"
+            android:textAllCaps="false"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_10ssp" />
 
-    <LinearLayout
-        android:id="@+id/post_layout"
-        android:layout_width="0dp"
+        <Button
+            android:id="@+id/location_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_full2"
+            android:backgroundTint="@color/red"
+            android:fontFamily="@font/regular"
+            android:onClick="showLocation"
+            android:text="@string/post_details_location"
+            android:textAllCaps="false"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_10ssp" />
+
+        <Button
+            android:id="@+id/phone_call_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_full2"
+            android:backgroundTint="@color/red"
+            android:fontFamily="@font/regular"
+            android:onClick="call"
+            android:text="@string/post_details_call"
+            android:textAllCaps="false"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_10ssp" />
+
+        <Button
+            android:id="@+id/message_call_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_full2"
+            android:backgroundTint="@color/red"
+            android:fontFamily="@font/regular"
+            android:onClick="message"
+            android:text="@string/post_details_message"
+            android:textAllCaps="false"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_10ssp" />
+    </LinearLayout>
+
+    <!-- Main Scrollable Content Area -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/content_scroll_view"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         android:clipToPadding="false"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView54"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toTopOf="@+id/buttons_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout26"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout26">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/post_la"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_marginTop="@dimen/_60sdp"
-            android:layout_weight="1">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/post_mapLayout"
+            <!-- Main Content Area (AD Details) -->
+            <LinearLayout
+                android:id="@+id/post_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:fillViewport="true"
-                android:overScrollMode="never"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                    android:id="@+id/layout_map"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/post_la"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="@dimen/_10sdp">
 
-                    <TextView
-                        android:id="@+id/post_city1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:fontFamily="@font/regular"
-                        android:text="Istanbul"
-                        android:textColor="@color/menu_text"
-                        android:textSize="@dimen/_15ssp" />
-
-                    <TextView
-                        android:id="@+id/post_title1"
+                    <!-- Map Layout -->
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/post_mapLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:fontFamily="@font/regular"
-                        android:text="Rental Rubicon"
-                        android:textColor="@color/yellow"
-                        android:textSize="@dimen/_15ssp" />
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <fragment
-                            android:id="@+id/post_map"
-                            android:name="com.google.android.gms.maps.SupportMapFragment"
-                            class="com.application.adverial.service.ScrollableMapFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginEnd="@dimen/_5sdp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
+                        android:clipToPadding="false"
+                        android:fillViewport="true"
+                        android:overScrollMode="never"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:id="@+id/layout_map"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end
-"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
-                            <ImageView
-                                android:id="@+id/post_satellite"
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_3sdp"
-                                android:background="@drawable/rounded_full7"
-                                android:backgroundTint="@color/black"
-                                android:onClick="satellite"
-                                android:padding="@dimen/_3sdp"
-                                android:src="@drawable/im_satellite"
-                                android:text="Button"
-                                app:tint="@color/white" />
+                            <TextView
+                                android:id="@+id/post_city1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:fontFamily="@font/regular"
+                                android:text="Istanbul"
+                                android:textColor="@color/menu_text"
+                                android:textSize="@dimen/_15ssp" />
 
-                            <ImageView
-                                android:id="@+id/post_terrain"
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_3sdp"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_full7"
-                                android:backgroundTint="@color/black"
-                                android:onClick="terrain"
-                                android:padding="@dimen/_3sdp"
-                                android:src="@drawable/im_terrain"
-                                android:text="Button"
-                                app:tint="@color/white" />
+                            <TextView
+                                android:id="@+id/post_title1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:fontFamily="@font/regular"
+                                android:text="Rental Rubicon"
+                                android:textColor="@color/yellow"
+                                android:textSize="@dimen/_15ssp" />
 
-                            <ImageView
-                                android:id="@+id/post_normal"
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_full7"
-                                android:backgroundTint="@color/black"
-                                android:onClick="normal"
-                                android:padding="@dimen/_3sdp"
-                                android:src="@drawable/im_normal"
-                                android:text="Button"
-                                app:tint="@color/white" />
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="300dp">
+
+                                <fragment
+                                    android:id="@+id/post_map"
+                                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                                    class="com.application.adverial.service.ScrollableMapFragment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginEnd="@dimen/_5sdp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_marginEnd="@dimen/_10sdp"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:id="@+id/post_satellite"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_marginEnd="@dimen/_3sdp"
+                                        android:background="@drawable/rounded_full7"
+                                        android:backgroundTint="@color/black"
+                                        android:onClick="satellite"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/im_satellite"
+                                        app:tint="@color/white" />
+
+                                    <ImageView
+                                        android:id="@+id/post_terrain"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_marginEnd="@dimen/_3sdp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/rounded_full7"
+                                        android:backgroundTint="@color/black"
+                                        android:onClick="terrain"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/im_terrain"
+                                        app:tint="@color/white" />
+
+                                    <ImageView
+                                        android:id="@+id/post_normal"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/rounded_full7"
+                                        android:backgroundTint="@color/black"
+                                        android:onClick="normal"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/im_normal"
+                                        app:tint="@color/white" />
+                                </LinearLayout>
+                            </FrameLayout>
                         </LinearLayout>
-                    </FrameLayout>
+                    </androidx.core.widget.NestedScrollView>
 
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
+                    <!-- Ad Details Content -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/post_page"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/post_page"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:paddingBottom="@dimen/_50sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_13sdp"
-                android:layout_marginEnd="@dimen/_13sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <Button
-                    android:id="@+id/show_ad_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_full2"
-                    android:backgroundTint="@color/red"
-                    android:fontFamily="@font/regular"
-                    android:onClick="showAdDetails"
-                    android:text="@string/post_details_about"
-                    android:textAllCaps="false"
-                    android:textColor="@color/menu_text"
-                    android:textSize="@dimen/_10ssp" />
-
-                <Button
-                    android:id="@+id/location_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_full2"
-                    android:backgroundTint="@color/red"
-                    android:fontFamily="@font/regular"
-                    android:onClick="showLocation"
-                    android:text="@string/post_details_location"
-                    android:textAllCaps="false"
-                    android:textColor="@color/menu_text"
-                    android:textSize="@dimen/_10ssp" />
-
-                <Button
-                    android:id="@+id/phone_call_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_full2"
-                    android:backgroundTint="@color/red"
-                    android:fontFamily="@font/regular"
-                    android:onClick="call"
-                    android:text="@string/post_details_call"
-                    android:textAllCaps="false"
-                    android:textColor="@color/menu_text"
-                    android:textSize="@dimen/_10ssp" />
-
-                <Button
-                    android:id="@+id/message_call_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_full2"
-                    android:backgroundTint="@color/red"
-                    android:fontFamily="@font/regular"
-                    android:onClick="message"
-                    android:text="@string/post_details_message"
-                    android:textAllCaps="false"
-                    android:textColor="@color/menu_text"
-                    android:textSize="@dimen/_10ssp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
+            <!-- Recommended Ads Section -->
+            <TextView
+                android:id="@+id/recommended_ads_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/regular"
+                android:text="@string/recommended_ads"
+                android:textColor="@color/menu_text"
+                android:textSize="@dimen/_15ssp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/post_layout" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recommended_ads_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recommended_ads_title" />
+
+            <!-- Space for future content like reviews -->
+            <Space
+                android:id="@+id/future_content_space"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recommended_ads_recyclerview" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-
+    <!-- Loading Animation (on top of everything) -->
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie13"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/black_cover2"
-        android:elevation="@dimen/_4sdp"
+        android:elevation="@dimen/_10sdp"
         android:padding="@dimen/_50sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

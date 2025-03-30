@@ -6,13 +6,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.databinding.ActivityPostBinding
 import com.application.adverial.remote.ConversationRepository
@@ -22,7 +21,7 @@ import com.application.adverial.remote.model.Conversation
 import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
-import com.application.adverial.ui.navigation.Notifications
+import com.application.adverial.ui.adapter.RecommendedAdsAdapter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -54,6 +53,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         pageInit()
         fetchData()
         Tools().setBasedLogo(this, R.id.app_logo)
+        
 
         // Hide ad details by default
         binding.showAdDetails.visibility = View.GONE
@@ -64,12 +64,16 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         binding.lottie13.visibility = View.VISIBLE
         Tools().viewEnable(this.window.decorView.rootView, false)
         mapFragment =
-            supportFragmentManager.findFragmentById(R.id.post_map) as ScrollableMapFragment?
+                supportFragmentManager.findFragmentById(R.id.post_map) as ScrollableMapFragment?
         mapFragment!!.getMapAsync(this)
         id = intent.getStringExtra("id")!!
         (mapFragment as ScrollableMapFragment).setListener {
             binding.postMapLayout.requestDisallowInterceptTouchEvent(true)
         }
+
+        // Setup recommended ads RecyclerView with horizontal orientation
+        binding.recommendedAdsRecyclerview.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     @SuppressLint("SetTextI18n")
@@ -92,24 +96,99 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
 
             if (it.data!!.is_favorite == 1) {
                 binding.postFavorite.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_favorite
-                    )
+                        ContextCompat.getDrawable(this, R.drawable.ic_favorite)
                 )
                 favorite = true
             } else {
                 binding.postFavorite.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_favorite_empty
-                    )
+                        ContextCompat.getDrawable(this, R.drawable.ic_favorite_empty)
                 )
                 favorite = false
             }
             type = it.data!!.type ?: ""
             binding.lottie13.visibility = View.GONE
             Tools().viewEnable(this.window.decorView.rootView, true)
+
+            // Now that we've added category_id to the Ad model, use it directly
+            val categoryId = it.data!!.category_id?.toString()
+            if (!categoryId.isNullOrEmpty()) {
+                Log.d("RecommendedAdsDebug", "Using ad's category ID: $categoryId")
+                fetchRecommendedAds(categoryId)
+            } else {
+                Log.d("RecommendedAdsDebug", "Category ID is null or empty")
+            }
+        }
+    }
+
+    private fun fetchMainCategories() {
+        // This method is no longer used
+    }
+
+    private fun getCategoryIdFromAd(ad: Ad?): String? {
+        if (ad == null) return null
+
+        // Try different possible property names for category ID
+        return try {
+            // Using reflection to check all possibilities
+            ad.javaClass.declaredFields.forEach { field ->
+                field.isAccessible = true
+                val fieldName = field.name.lowercase()
+                if (fieldName.contains("category") && fieldName.contains("id")) {
+                    val value = field.get(ad)
+                    if (value != null) {
+                        return value.toString()
+                    }
+                }
+            }
+
+            // If reflection doesn't work, try some common property names
+            ad.javaClass.getDeclaredField("category_id")?.let {
+                it.isAccessible = true
+                return it.get(ad)?.toString()
+            }
+
+            ad.javaClass.getDeclaredField("categoryId")?.let {
+                it.isAccessible = true
+                return it.get(ad)?.toString()
+            }
+
+            // If we can't find a category ID, return null
+            null
+        } catch (e: Exception) {
+            Log.e("RecommendedAdsDebug", "Error getting category ID: ${e.message}")
+            null
+        }
+    }
+
+    private fun fetchRecommendedAds(categoryId: String) {
+        if (categoryId.isEmpty()) return
+
+        val repo = Repository(this)
+        repo.recommendedAds(categoryId)
+        repo.getRecommendedAdsData().observe(this) { recommendedAds ->
+            if (recommendedAds != null && recommendedAds.status && recommendedAds.data.isNotEmpty()
+            ) {
+                // Filter out the current ad from recommended ads
+                val filteredAds = recommendedAds.data.filter { it.id.toString() != id }
+
+                if (filteredAds.isNotEmpty()) {
+                    Log.d(
+                            "RecommendedAdsDebug",
+                            "Setting recommended ads visible with ${filteredAds.size} items"
+                    )
+                    binding.recommendedAdsTitle.visibility = View.VISIBLE
+                    binding.recommendedAdsRecyclerview.visibility = View.VISIBLE
+                    binding.recommendedAdsRecyclerview.adapter =
+                            RecommendedAdsAdapter(this, filteredAds)
+
+                    // Make sure the recommended ads section is properly visible by scrolling to it
+                    binding.recommendedAdsTitle.post { binding.recommendedAdsTitle.requestFocus() }
+                } else {
+                    Log.d("RecommendedAdsDebug", "No filtered ads remaining")
+                }
+            } else {
+                Log.d("RecommendedAdsDebug", "No recommended ads found or invalid response")
+            }
         }
     }
 
@@ -119,13 +198,17 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         val repo = Repository(this)
         repo.adDetails(id)
         repo.getAdDetailsData().observe(this) {
-            if (it.data != null && !it.data!!.lat.isNullOrBlank() && !it.data!!.lon.isNullOrBlank()) {
+            if (it.data != null && !it.data!!.lat.isNullOrBlank() && !it.data!!.lon.isNullOrBlank()
+            ) {
                 val latLng = LatLng(it.data!!.lat!!.toDouble(), it.data!!.lon!!.toDouble())
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                val smallMarker = Bitmap.createScaledBitmap(
-                    BitmapFactory.decodeResource(resources, R.drawable.im_geo),
-                    60, 60, false
-                )
+                val smallMarker =
+                        Bitmap.createScaledBitmap(
+                                BitmapFactory.decodeResource(resources, R.drawable.im_geo),
+                                60,
+                                60,
+                                false
+                        )
                 val smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker)
                 val marker = MarkerOptions().position(latLng).icon(smallMarkerIcon)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
@@ -146,7 +229,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                     Tools().viewEnable(this.window.decorView.rootView, true)
                     if (it.status) {
                         binding.postFavorite.setImageDrawable(
-                            ContextCompat.getDrawable(this, R.drawable.ic_favorite_empty)
+                                ContextCompat.getDrawable(this, R.drawable.ic_favorite_empty)
                         )
                         favorite = false
                     }
@@ -158,7 +241,7 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
                     Tools().viewEnable(this.window.decorView.rootView, true)
                     if (it.status) {
                         binding.postFavorite.setImageDrawable(
-                            ContextCompat.getDrawable(this, R.drawable.ic_favorite)
+                                ContextCompat.getDrawable(this, R.drawable.ic_favorite)
                         )
                         favorite = true
                     }
@@ -209,31 +292,34 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             repo.initialConversationLiveData.observe(this) { conversationResponse ->
                 val conversationId = conversationResponse.conversionId
                 if (conversationId != 0) {
-                    val intent = Intent(this, MessageActivity::class.java).apply {
-                        val conversationObject = Conversation(
-                            chatPartnerId = partnerUserId,
-                            conversionId = conversationId,
-                            chatPartnerName = chatPartnerName,
-                            chatPartnerEmail = "",
-                            lastMessage = "",
-                            lastMessageAt = "",
-                            avatar = "",
-                            adId = itemData?.id,
-                            adTitle = itemData?.title,
-                            adPrice = itemData?.price,
-                            adPriceCurrency = itemData?.price_currency,
-                            adImage = itemData?.ad_images?.get(0)?.image
-                        )
-                        putExtra("show_item", true)
-                        putExtra("conversation", conversationObject)
-                    }
+                    val intent =
+                            Intent(this, MessageActivity::class.java).apply {
+                                val conversationObject =
+                                        Conversation(
+                                                chatPartnerId = partnerUserId,
+                                                conversionId = conversationId,
+                                                chatPartnerName = chatPartnerName,
+                                                chatPartnerEmail = "",
+                                                lastMessage = "",
+                                                lastMessageAt = "",
+                                                avatar = "",
+                                                adId = itemData?.id,
+                                                adTitle = itemData?.title,
+                                                adPrice = itemData?.price,
+                                                adPriceCurrency = itemData?.price_currency,
+                                                adImage = itemData?.ad_images?.get(0)?.image
+                                        )
+                                putExtra("show_item", true)
+                                putExtra("conversation", conversationObject)
+                            }
                     binding.lottie13.visibility = View.GONE
                     Tools().viewEnable(this.window.decorView.rootView, true)
                     startActivity(intent)
                 } else {
                     binding.lottie13.visibility = View.GONE
                     Tools().viewEnable(this.window.decorView.rootView, true)
-                    Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Failed to initiate conversation", Toast.LENGTH_SHORT)
+                            .show()
                 }
             }
         } else {

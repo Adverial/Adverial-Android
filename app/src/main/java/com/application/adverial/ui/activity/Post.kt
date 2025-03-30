@@ -1,6 +1,7 @@
 package com.application.adverial.ui.activity
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,6 +9,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -22,6 +28,7 @@ import com.application.adverial.service.ScrollableMapFragment
 import com.application.adverial.service.Tools
 import com.application.adverial.ui.adapter.PostPageAdapter
 import com.application.adverial.ui.adapter.RecommendedAdsAdapter
+import com.application.adverial.ui.adapter.ReviewAdapter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -43,6 +50,11 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
     private var type = ""
     private var actionBarMode = "closed"
     private var itemData: Ad? = null
+    private var currentReviewPage = 1
+    private var hasMoreReviews = false
+    private var userHasReviewed = false
+    private var reviewAdapter: ReviewAdapter? = null
+    private var currentRating = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +65,6 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         pageInit()
         fetchData()
         Tools().setBasedLogo(this, R.id.app_logo)
-        
 
         // Hide ad details by default
         binding.showAdDetails.visibility = View.GONE
@@ -74,6 +85,26 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         // Setup recommended ads RecyclerView with horizontal orientation
         binding.recommendedAdsRecyclerview.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        // Setup reviews RecyclerView
+        binding.reviewsRecyclerview.layoutManager = LinearLayoutManager(this)
+
+        // Setup click listener for the write review button
+        binding.btnWriteReview.setOnClickListener {
+            if (userHasReviewed) {
+                Toast.makeText(this, getString(R.string.already_reviewed), Toast.LENGTH_SHORT)
+                        .show()
+            } else {
+                showReviewDialog()
+            }
+        }
+
+        // Setup click listener for load more reviews button
+        binding.btnLoadMoreReviews.setOnClickListener {
+            if (hasMoreReviews) {
+                loadMoreReviews()
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -117,6 +148,9 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
             } else {
                 Log.d("RecommendedAdsDebug", "Category ID is null or empty")
             }
+
+            // Fetch reviews for this ad
+            fetchReviews()
         }
     }
 
@@ -360,5 +394,177 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         binding.messageCallBtn.visibility = View.VISIBLE
         binding.showAdDetails.visibility = View.GONE
         about(view)
+    }
+
+    private fun fetchReviews() {
+        val repo = Repository(this)
+        repo.getAdReviews(id, currentReviewPage)
+        repo.getAdReviewsData().observe(this) { response ->
+            if (response != null && response.status) {
+                val reviewData = response.data
+
+                // Show the reviews section
+                binding.reviewsTitle.visibility = View.VISIBLE
+                binding.reviewsSummary.visibility = View.VISIBLE
+
+                // Set average rating display
+                val averageRating = reviewData.average_rating
+                binding.reviewsAverageRating.text = String.format("%.1f", averageRating)
+                binding.reviewsCount.text =
+                        getString(R.string.reviews_count, reviewData.reviews_count)
+
+                // Set the stars for average rating
+                setAverageRatingStars(averageRating)
+
+                // Check if there are reviews to display
+                if (reviewData.reviews.data.isNotEmpty()) {
+                    binding.reviewsRecyclerview.visibility = View.VISIBLE
+
+                    // If this is the first page, create the adapter
+                    if (currentReviewPage == 1) {
+                        reviewAdapter = ReviewAdapter(this, reviewData.reviews.data)
+                        binding.reviewsRecyclerview.adapter = reviewAdapter
+                    } else {
+                        // Otherwise add to the existing adapter
+                        reviewAdapter?.addMoreReviews(reviewData.reviews.data)
+                    }
+
+                    // Check if there are more reviews to load
+                    hasMoreReviews =
+                            reviewData.reviews.total >
+                                    (currentReviewPage * reviewData.reviews.per_page)
+                    binding.btnLoadMoreReviews.visibility =
+                            if (hasMoreReviews) View.VISIBLE else View.GONE
+
+                    // Check if user has already submitted a review (naive approach - should use
+                    // API)
+                    val userId = getSharedPreferences("user", 0).getString("user_id", "")
+                    userHasReviewed =
+                            reviewData.reviews.data.any { it.user_id.toString() == userId }
+                }
+            }
+        }
+    }
+
+    private fun loadMoreReviews() {
+        currentReviewPage++
+        fetchReviews()
+    }
+
+    private fun setAverageRatingStars(rating: Float) {
+        val stars =
+                listOf(
+                        binding.averageStar1,
+                        binding.averageStar2,
+                        binding.averageStar3,
+                        binding.averageStar4,
+                        binding.averageStar5
+                )
+
+        // Set filled and empty stars based on rating
+        for (i in stars.indices) {
+            if (i < rating.toInt()) {
+                stars[i].setImageResource(R.drawable.ic_star_filled)
+            } else if (i == rating.toInt() && rating % 1 != 0f) {
+                // This would be for half-stars if we had that icon
+                stars[i].setImageResource(R.drawable.ic_star_filled)
+            } else {
+                stars[i].setImageResource(R.drawable.ic_star_empty)
+            }
+        }
+    }
+
+    private fun showReviewDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_write_review)
+        dialog.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        val starViews =
+                listOf<ImageView>(
+                        dialog.findViewById(R.id.review_star1),
+                        dialog.findViewById(R.id.review_star2),
+                        dialog.findViewById(R.id.review_star3),
+                        dialog.findViewById(R.id.review_star4),
+                        dialog.findViewById(R.id.review_star5)
+                )
+
+        // Setup star click listeners
+        for (i in starViews.indices) {
+            starViews[i].setOnClickListener {
+                currentRating = i + 1
+                updateStarRating(starViews, currentRating)
+            }
+        }
+
+        // Setup button listeners
+        dialog.findViewById<Button>(R.id.btn_cancel_review).setOnClickListener { dialog.dismiss() }
+
+        dialog.findViewById<Button>(R.id.btn_submit_review).setOnClickListener {
+            val reviewText = dialog.findViewById<EditText>(R.id.review_text).text.toString()
+
+            if (currentRating == 0) {
+                Toast.makeText(this, getString(R.string.select_rating), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (reviewText.trim().isEmpty()) {
+                Toast.makeText(this, getString(R.string.enter_review), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            submitReview(currentRating, reviewText)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun updateStarRating(stars: List<ImageView>, rating: Int) {
+        for (i in stars.indices) {
+            if (i < rating) {
+                stars[i].setImageResource(R.drawable.ic_star_filled)
+            } else {
+                stars[i].setImageResource(R.drawable.ic_star_empty)
+            }
+        }
+    }
+
+    private fun submitReview(rating: Int, review: String) {
+        val repo = Repository(this)
+
+        // Log the actual user input
+        android.util.Log.d(
+                "REVIEW_DEBUG",
+                "Submitting user review - rating: $rating, review: $review"
+        )
+
+        // Only submit the actual user input values, not hardcoded test values
+        repo.submitAdReview(id, rating, review, 1)
+
+        repo.getSubmitReviewData().observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Toast.makeText(this, getString(R.string.review_submitted), Toast.LENGTH_SHORT)
+                            .show()
+
+                    // Reset to first page and refresh reviews
+                    currentReviewPage = 1
+                    fetchReviews()
+
+                    // Mark that user has reviewed
+                    userHasReviewed = true
+                } else {
+                    android.util.Log.e("REVIEW_DEBUG", "Error response: ${response.message}")
+                    Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                android.util.Log.e("REVIEW_DEBUG", "Null response received")
+                Toast.makeText(this, "Error submitting review", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

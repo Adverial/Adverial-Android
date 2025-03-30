@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_16sdp"
+    app:cardCornerRadius="@dimen/_12sdp"
+    app:cardElevation="@dimen/_4sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_12sdp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:text="@string/write_a_review"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_16ssp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/regular"
+            android:text="@string/rating"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:id="@+id/review_rating_stars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/review_star1"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/ic_star_empty"
+                app:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/review_star2"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/ic_star_empty"
+                app:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/review_star3"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/ic_star_empty"
+                app:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/review_star4"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/ic_star_empty"
+                app:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/review_star5"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/ic_star_empty"
+                app:tint="@color/yellow" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/regular"
+            android:text="@string/review"
+            android:textColor="@color/menu_text"
+            android:textSize="@dimen/_12ssp" />
+
+        <EditText
+            android:id="@+id/review_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@drawable/rounded_full7"
+            android:backgroundTint="@color/light_gray"
+            android:fontFamily="@font/regular"
+            android:gravity="top|start"
+            android:hint="@string/review_hint"
+            android:inputType="textMultiLine"
+            android:minHeight="@dimen/_80sdp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/menu_text"
+            android:textColorHint="@color/menu_text_light"
+            android:textSize="@dimen/_11ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel_review"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_full7"
+                android:backgroundTint="@color/light_gray"
+                android:fontFamily="@font/regular"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/menu_text"
+                android:textSize="@dimen/_12ssp" />
+
+            <Button
+                android:id="@+id/btn_submit_review"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_full7"
+                android:backgroundTint="@color/yellow"
+                android:fontFamily="@font/medium"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView> 

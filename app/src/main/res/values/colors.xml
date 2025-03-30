@@ -32,4 +32,5 @@
     <color name="inputBgColor">#BFD3D3D3</color> <!-- Change the color code as per your requirement -->
     <color name="toolbarColor">#ece1d7</color>
     <color name="text_light">#8E8E8E</color>
+    <color name="menu_text_light">#8E8E8E</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.application.adverial.remote
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.application.adverial.remote.model.AdDetails
 import com.application.adverial.remote.model.AddAdInfo
@@ -76,6 +77,8 @@ class Repository(val context: Context) {
     val forgotPassword = MutableLiveData<com.application.adverial.remote.model.Response>()
     val autoComplete = MutableLiveData<AutoComplete>()
     val recommendedAds = MutableLiveData<RecommendedAds>()
+    val adReviews = MutableLiveData<com.application.adverial.remote.model.ReviewResponse>()
+    val submitReview = MutableLiveData<com.application.adverial.remote.model.ReviewSubmitResponse>()
 
     var currentLang = Tools().getCurrentLanguage(context)
 
@@ -833,6 +836,150 @@ class Repository(val context: Context) {
         )
     }
 
+    fun getAdReviews(adId: String, page: Int) {
+        val service: APIService = RetroClass().apiService()
+        val call =
+                service.getAdReviews(adId, page, "Bearer $token", "application/json", currentLang)
+        call.enqueue(
+                object : retrofit2.Callback<com.application.adverial.remote.model.ReviewResponse> {
+                    override fun onResponse(
+                            call: Call<com.application.adverial.remote.model.ReviewResponse>,
+                            response: Response<com.application.adverial.remote.model.ReviewResponse>
+                    ) {
+                        adReviews.value = response.body()
+                    }
+                    override fun onFailure(
+                            call: Call<com.application.adverial.remote.model.ReviewResponse>,
+                            t: Throwable
+                    ) {}
+                }
+        )
+    }
+
+    fun submitAdReview(adId: String, rating: Int, review: String, page: Int) {
+        val service: APIService = RetroClass().apiService()
+        Log.d(
+                "REVIEW_DEBUG",
+                "Submitting review - adId: $adId, rating: $rating, review: $review, page: $page"
+        )
+
+        // Convert integer to string for debugging
+        val ratingStr = rating.toString()
+        Log.d("REVIEW_DEBUG", "Rating as string: $ratingStr")
+
+        val call =
+                service.submitAdReview(
+                        adId,
+                        rating, // This is the rating as Int
+                        review,
+                        page,
+                        "Bearer $token",
+                        "application/x-www-form-urlencoded", // Use correct content type for forms
+                        currentLang
+                )
+
+        call.enqueue(
+                object :
+                        retrofit2.Callback<
+                                com.application.adverial.remote.model.ReviewSubmitResponse> {
+                    override fun onResponse(
+                            call: Call<com.application.adverial.remote.model.ReviewSubmitResponse>,
+                            response:
+                                    Response<
+                                            com.application.adverial.remote.model.ReviewSubmitResponse>
+                    ) {
+                        Log.d("REVIEW_DEBUG", "Response code: ${response.code()}")
+                        Log.d("REVIEW_DEBUG", "Request URL: ${call.request().url()}")
+                        Log.d("REVIEW_DEBUG", "Request method: ${call.request().method()}")
+                        Log.d("REVIEW_DEBUG", "Request body: ${call.request().body()}")
+
+                        if (!response.isSuccessful) {
+                            try {
+                                val errorBody = response.errorBody()?.string()
+                                Log.e("REVIEW_DEBUG", "Error response: $errorBody")
+                            } catch (e: Exception) {
+                                Log.e("REVIEW_DEBUG", "Error reading error body", e)
+                            }
+                        } else {
+                            Log.d(
+                                    "REVIEW_DEBUG",
+                                    "Success response: ${response.body()?.status}, message: ${response.body()?.message}"
+                            )
+                        }
+                        submitReview.value = response.body()
+                    }
+                    override fun onFailure(
+                            call: Call<com.application.adverial.remote.model.ReviewSubmitResponse>,
+                            t: Throwable
+                    ) {
+                        Log.e("REVIEW_DEBUG", "Failed to submit review", t)
+                    }
+                }
+        )
+    }
+
+    fun testSubmitAdReview(adId: String) {
+        val service: APIService = RetroClass().apiService()
+        // Use hardcoded values for testing
+        val hardcodedRating = 5
+        val hardcodedReview = "This is a test review"
+        val page = 1
+
+        Log.d(
+                "REVIEW_DEBUG",
+                "TEST - Submitting review with hardcoded values - adId: $adId, rating: $hardcodedRating, review: $hardcodedReview"
+        )
+
+        val call =
+                service.submitAdReview(
+                        adId,
+                        hardcodedRating,
+                        hardcodedReview,
+                        page,
+                        "Bearer $token",
+                        "application/x-www-form-urlencoded",
+                        currentLang
+                )
+
+        call.enqueue(
+                object :
+                        retrofit2.Callback<
+                                com.application.adverial.remote.model.ReviewSubmitResponse> {
+                    override fun onResponse(
+                            call: Call<com.application.adverial.remote.model.ReviewSubmitResponse>,
+                            response:
+                                    Response<
+                                            com.application.adverial.remote.model.ReviewSubmitResponse>
+                    ) {
+                        Log.d("REVIEW_DEBUG", "TEST - Response code: ${response.code()}")
+                        Log.d("REVIEW_DEBUG", "TEST - Request URL: ${call.request().url()}")
+                        Log.d("REVIEW_DEBUG", "TEST - Request method: ${call.request().method()}")
+
+                        if (!response.isSuccessful) {
+                            try {
+                                val errorBody = response.errorBody()?.string()
+                                Log.e("REVIEW_DEBUG", "TEST - Error response: $errorBody")
+                            } catch (e: Exception) {
+                                Log.e("REVIEW_DEBUG", "TEST - Error reading error body", e)
+                            }
+                        } else {
+                            Log.d(
+                                    "REVIEW_DEBUG",
+                                    "TEST - Success response: ${response.body()?.status}, message: ${response.body()?.message}"
+                            )
+                        }
+                        submitReview.value = response.body()
+                    }
+                    override fun onFailure(
+                            call: Call<com.application.adverial.remote.model.ReviewSubmitResponse>,
+                            t: Throwable
+                    ) {
+                        Log.e("REVIEW_DEBUG", "TEST - Failed to submit review", t)
+                    }
+                }
+        )
+    }
+
     fun getMainCategoryData(): MutableLiveData<MainCategory> {
         return mainCategory
     }
@@ -931,5 +1078,12 @@ class Repository(val context: Context) {
     }
     fun getRecommendedAdsData(): MutableLiveData<RecommendedAds> {
         return recommendedAds
+    }
+    fun getAdReviewsData(): MutableLiveData<com.application.adverial.remote.model.ReviewResponse> {
+        return adReviews
+    }
+    fun getSubmitReviewData():
+            MutableLiveData<com.application.adverial.remote.model.ReviewSubmitResponse> {
+        return submitReview
     }
 }

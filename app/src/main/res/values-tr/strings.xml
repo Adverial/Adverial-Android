@@ -217,5 +217,18 @@
 
     <string name="new_message">New message</string>
     <string name="recommended_ads">Önerilen İlanlar</string>
+    <string name="reviews_title">Değerlendirmeler</string>
+    <string name="reviews_count">%d değerlendirmeye dayanarak</string>
+    <string name="write_a_review">Bir Değerlendirme Yazın</string>
+    <string name="load_more">Daha Fazla Yükle</string>
+    <string name="review_submitted">Değerlendirme başarıyla gönderildi</string>
+    <string name="already_reviewed">Bu ilanı zaten değerlendirdiniz</string>
+    <string name="select_rating">Lütfen bir derecelendirme seçin</string>
+    <string name="enter_review">Lütfen bir değerlendirme girin</string>
+    <string name="cancel">İptal</string>
+    <string name="submit">Gönder</string>
+    <string name="rating">Puanlama</string>
+    <string name="review">Değerlendirme</string>
+    <string name="review_hint">Bu ürünle ilgili deneyiminizi paylaşın...</string>
 
 </resources>

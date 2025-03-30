@@ -217,5 +217,18 @@
 
     <string name="new_message">New message</string>
     <string name="recommended_ads">ڕیکلامێن پێشنیارکری</string>
+    <string name="reviews_title">هەڵسەنگاندن</string>
+    <string name="reviews_count">ل سەر بنیاتێ %d هەڵسەنگاندنا</string>
+    <string name="write_a_review">هەڵسەنگاندنەکێ بنڤیسە</string>
+    <string name="load_more">پتر بارکە</string>
+    <string name="review_submitted">هەڵسەنگاندن ب سەرکەفتی هاتە شاندن</string>
+    <string name="already_reviewed">تە بەرێ ئەڤ ڕیکلامە هەڵسەنگاندییە</string>
+    <string name="select_rating">تکایە هەڵسەنگاندنەکێ هەلبژێرە</string>
+    <string name="enter_review">تکایە هەڵسەنگاندنەکێ بنڤیسە</string>
+    <string name="cancel">بەتاڵکرن</string>
+    <string name="submit">شاندن</string>
+    <string name="rating">هەڵسەنگاندن</string>
+    <string name="review">نێرین</string>
+    <string name="review_hint">ئەزموونا خوە ب ڤێ بەرهەمێ رە پارڤەکە...</string>
 
 </resources>

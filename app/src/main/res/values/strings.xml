@@ -217,4 +217,17 @@
     <string name="already_have_account">Already have account</string>
     <string name="new_message">New message</string>
     <string name="recommended_ads">Recommended Ads</string>
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_count">Based on %d reviews</string>
+    <string name="write_a_review">Write a Review</string>
+    <string name="load_more">Load More</string>
+    <string name="review_submitted">Review submitted successfully</string>
+    <string name="already_reviewed">You have already reviewed this ad</string>
+    <string name="select_rating">Please select a rating</string>
+    <string name="enter_review">Please enter a review</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="rating">Rating</string>
+    <string name="review">Review</string>
+    <string name="review_hint">Share your experience with this product…</string>
 </resources>

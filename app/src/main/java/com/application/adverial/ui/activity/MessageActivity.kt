@@ -370,6 +370,7 @@ class MessageActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         isActivityVisible = true
+        updateVoiceButtonState()
     }
 
     override fun onPause() {
@@ -531,6 +532,9 @@ class MessageActivity : AppCompatActivity() {
     }
 
     private fun setupVoiceRecording() {
+        // Check if permission is already granted and update UI accordingly
+        updateVoiceButtonState()
+
         binding.buttonVoiceRecord.setOnClickListener {
             if (checkRecordAudioPermission()) {
                 if (isRecording) {
@@ -541,6 +545,15 @@ class MessageActivity : AppCompatActivity() {
             } else {
                 requestRecordAudioPermission()
             }
+        }
+    }
+
+    private fun updateVoiceButtonState() {
+        // Visual indication of permission status
+        if (checkRecordAudioPermission()) {
+            binding.buttonVoiceRecord.alpha = 1.0f
+        } else {
+            binding.buttonVoiceRecord.alpha = 0.7f
         }
     }
 
@@ -665,11 +678,34 @@ class MessageActivity : AppCompatActivity() {
     }
 
     private fun requestRecordAudioPermission() {
-        ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.RECORD_AUDIO),
-                REQUEST_RECORD_AUDIO_PERMISSION
-        )
+        // Show explanation dialog first
+        showPermissionExplanationDialog()
+    }
+
+    private fun showPermissionExplanationDialog() {
+        androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Voice Messages")
+                .setMessage(
+                        "To send voice messages, we need permission to access your microphone. This permission is only used when you press and hold the record button."
+                )
+                .setPositiveButton("Allow") { _, _ ->
+                    ActivityCompat.requestPermissions(
+                            this,
+                            arrayOf(Manifest.permission.RECORD_AUDIO),
+                            REQUEST_RECORD_AUDIO_PERMISSION
+                    )
+                }
+                .setNegativeButton("Not Now") { dialog, _ ->
+                    dialog.dismiss()
+                    Toast.makeText(
+                                    this,
+                                    "Voice messaging is disabled without microphone permission",
+                                    Toast.LENGTH_SHORT
+                            )
+                            .show()
+                }
+                .setCancelable(false)
+                .show()
     }
 
     override fun onRequestPermissionsResult(
@@ -680,12 +716,13 @@ class MessageActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, start recording
+                // Permission granted, update UI and start recording
+                updateVoiceButtonState()
                 startRecording()
             } else {
                 Toast.makeText(
                                 this,
-                                "Audio recording permission is required to send voice messages",
+                                "Voice messages require microphone permission. You can still send text and images.",
                                 Toast.LENGTH_SHORT
                         )
                         .show()

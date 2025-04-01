@@ -23,4 +23,33 @@
         android:visibility="gone"
         android:scaleType="centerCrop"
         android:contentDescription="Media Image"/>
+        
+    <LinearLayout
+        android:id="@+id/voiceMessageLayoutLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/message_background_left"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/playButtonLeft"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Play voice message"
+            android:src="@android:drawable/ic_media_play" />
+
+        <ProgressBar
+            android:id="@+id/progressBarLeft"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="100dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </LinearLayout>
 </LinearLayout>

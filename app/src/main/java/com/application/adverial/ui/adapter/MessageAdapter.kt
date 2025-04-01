@@ -2,6 +2,7 @@ package com.application.adverial.ui
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.application.adverial.databinding.ItemMessageRightBinding
 import com.application.adverial.remote.model.Message
 import com.application.adverial.ui.activity.FullImageActivity
 import com.bumptech.glide.Glide
+import java.io.IOException
 
 class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -19,6 +21,7 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_LEFT = 1
     private val VIEW_TYPE_RIGHT = 2
     private var currentUserId = 8
+    private var mediaPlayer: MediaPlayer? = null
 
     fun setCurrentUserId(id: Int) {
         currentUserId = id
@@ -26,14 +29,20 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_RIGHT) {
-            val binding = ItemMessageRightBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
+            val binding =
+                    ItemMessageRightBinding.inflate(
+                            LayoutInflater.from(parent.context),
+                            parent,
+                            false
+                    )
             RightMessageViewHolder(binding)
         } else {
-            val binding = ItemMessageLeftBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
+            val binding =
+                    ItemMessageLeftBinding.inflate(
+                            LayoutInflater.from(parent.context),
+                            parent,
+                            false
+                    )
             LeftMessageViewHolder(binding)
         }
     }
@@ -63,71 +72,190 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyItemInserted(messages.size - 1)
     }
 
-    class RightMessageViewHolder(private val binding: ItemMessageRightBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    private fun releaseMediaPlayer() {
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    inner class RightMessageViewHolder(private val binding: ItemMessageRightBinding) :
+            RecyclerView.ViewHolder(binding.root) {
+
+        private var mediaPlayer: MediaPlayer? = null
+        private var isPlaying = false
 
         fun bind(message: Message) {
-            binding.apply {
-                textViewMessageRight.visibility = if (message.message.isNullOrEmpty() || message.message == "null") {
-                    View.GONE
-                } else {
-                    View.VISIBLE
-                }
-                textViewMessageRight.text = message.message
-
-                if (message.mediaUrl != null) {
-                    imageViewMediaRight.visibility = View.VISIBLE
-                    Glide.with(root.context)
-                        .load(BuildConfig.API_BASE_URL + message.mediaUrl)
-                        .into(imageViewMediaRight)
-
-                    imageViewMediaRight.setOnClickListener {
-                        openFullImageView(root.context, message.mediaUrl)
+            // Handle text message
+            binding.textViewMessageRight.visibility =
+                    if (message.message.isNullOrEmpty() || message.message == "null") {
+                        View.GONE
+                    } else {
+                        View.VISIBLE
                     }
-                } else {
-                    imageViewMediaRight.visibility = View.GONE
-                }
-            }
+            binding.textViewMessageRight.text = message.message
+
+            // Handle image message
+            binding.imageViewMediaRight.visibility =
+                    if (message.mediaUrl != null) {
+                        Glide.with(binding.root.context)
+                                .load(BuildConfig.API_BASE_URL + message.mediaUrl)
+                                .into(binding.imageViewMediaRight)
+
+                        binding.imageViewMediaRight.setOnClickListener {
+                            openFullImageView(binding.root.context, message.mediaUrl)
+                        }
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+
+            // Handle voice message
+            binding.voiceMessageLayoutRight.visibility =
+                    if (message.voiceUrl != null) {
+                        binding.playButtonRight.setOnClickListener {
+                            if (isPlaying) {
+                                stopPlayback()
+                            } else {
+                                startPlayback(message.voiceUrl)
+                            }
+                        }
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
         }
 
         private fun openFullImageView(context: Context, mediaUrl: String) {
             val intent = Intent(context, FullImageActivity::class.java)
             intent.putExtra("mediaUrl", mediaUrl)
             context.startActivity(intent)
+        }
+
+        private fun startPlayback(audioUrl: String) {
+            stopPlayback()
+
+            try {
+                val player = MediaPlayer()
+                player.setDataSource(BuildConfig.API_BASE_URL + audioUrl)
+                player.setOnPreparedListener {
+                    player.start()
+                    binding.playButtonRight.setImageResource(android.R.drawable.ic_media_pause)
+                    binding.progressBarRight.visibility = View.VISIBLE
+                    isPlaying = true
+                }
+                player.setOnCompletionListener {
+                    binding.playButtonRight.setImageResource(android.R.drawable.ic_media_play)
+                    binding.progressBarRight.visibility = View.GONE
+                    isPlaying = false
+                }
+                player.prepareAsync()
+                mediaPlayer = player
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+
+        private fun stopPlayback() {
+            mediaPlayer?.apply {
+                if (this@RightMessageViewHolder.isPlaying) {
+                    stop()
+                }
+                release()
+            }
+            mediaPlayer = null
+            isPlaying = false
+            binding.playButtonRight.setImageResource(android.R.drawable.ic_media_play)
+            binding.progressBarRight.visibility = View.GONE
         }
     }
 
-    class LeftMessageViewHolder(private val binding: ItemMessageLeftBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class LeftMessageViewHolder(private val binding: ItemMessageLeftBinding) :
+            RecyclerView.ViewHolder(binding.root) {
+
+        private var mediaPlayer: MediaPlayer? = null
+        private var isPlaying = false
 
         fun bind(message: Message) {
-            binding.apply {
-                textViewMessageLeft.visibility = if (message.message.isNullOrEmpty() || message.message == "null") {
-                    View.GONE
-                } else {
-                    View.VISIBLE
-                }
-                textViewMessageLeft.text = message.message
-
-                if (message.mediaUrl != null) {
-                    imageViewMediaLeft.visibility = View.VISIBLE
-                    Glide.with(root.context)
-                        .load(BuildConfig.API_BASE_URL + message.mediaUrl)
-                        .into(imageViewMediaLeft)
-
-                    imageViewMediaLeft.setOnClickListener {
-                        openFullImageView(root.context, message.mediaUrl)
+            // Handle text message
+            binding.textViewMessageLeft.visibility =
+                    if (message.message.isNullOrEmpty() || message.message == "null") {
+                        View.GONE
+                    } else {
+                        View.VISIBLE
                     }
-                } else {
-                    imageViewMediaLeft.visibility = View.GONE
-                }
-            }
+            binding.textViewMessageLeft.text = message.message
+
+            // Handle image message
+            binding.imageViewMediaLeft.visibility =
+                    if (message.mediaUrl != null) {
+                        Glide.with(binding.root.context)
+                                .load(BuildConfig.API_BASE_URL + message.mediaUrl)
+                                .into(binding.imageViewMediaLeft)
+
+                        binding.imageViewMediaLeft.setOnClickListener {
+                            openFullImageView(binding.root.context, message.mediaUrl)
+                        }
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+
+            // Handle voice message
+            binding.voiceMessageLayoutLeft.visibility =
+                    if (message.voiceUrl != null) {
+                        binding.playButtonLeft.setOnClickListener {
+                            if (isPlaying) {
+                                stopPlayback()
+                            } else {
+                                startPlayback(message.voiceUrl)
+                            }
+                        }
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
         }
 
         private fun openFullImageView(context: Context, mediaUrl: String) {
             val intent = Intent(context, FullImageActivity::class.java)
             intent.putExtra("mediaUrl", mediaUrl)
             context.startActivity(intent)
+        }
+
+        private fun startPlayback(audioUrl: String) {
+            stopPlayback()
+
+            try {
+                val player = MediaPlayer()
+                player.setDataSource(BuildConfig.API_BASE_URL + audioUrl)
+                player.setOnPreparedListener {
+                    player.start()
+                    binding.playButtonLeft.setImageResource(android.R.drawable.ic_media_pause)
+                    binding.progressBarLeft.visibility = View.VISIBLE
+                    isPlaying = true
+                }
+                player.setOnCompletionListener {
+                    binding.playButtonLeft.setImageResource(android.R.drawable.ic_media_play)
+                    binding.progressBarLeft.visibility = View.GONE
+                    isPlaying = false
+                }
+                player.prepareAsync()
+                mediaPlayer = player
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+
+        private fun stopPlayback() {
+            mediaPlayer?.apply {
+                if (this@LeftMessageViewHolder.isPlaying) {
+                    stop()
+                }
+                release()
+            }
+            mediaPlayer = null
+            isPlaying = false
+            binding.playButtonLeft.setImageResource(android.R.drawable.ic_media_play)
+            binding.progressBarLeft.visibility = View.GONE
         }
     }
 }

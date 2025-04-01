@@ -379,7 +379,8 @@ interface APIService {
                 @Header("content-type") contentType: String,
                 @Header("lang") lang: String,
                 @Part("message") message: RequestBody,
-                @Part("media") media: RequestBody?
+                @Part("media") media: RequestBody?,
+                @Part("voice") voice: RequestBody?
         ): Call<MessageResponse>
 
         @GET("conversations/{conversionId}/messages")

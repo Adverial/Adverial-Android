@@ -141,6 +141,16 @@
             android:scaleType="centerCrop"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/voiceRecordIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recording..."
+            android:textColor="@android:color/holo_red_light"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp" />
+
         <EditText
             android:id="@+id/editTextMessage"
             android:layout_width="0dp"
@@ -151,11 +161,19 @@
             android:hint="Type a message" />
 
         <ImageButton
+            android:id="@+id/buttonVoiceRecord"
+            android:layout_width="34dp"
+            android:layout_height="39dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Record voice message"
+            android:src="@android:drawable/ic_btn_speak_now"
+            app:tint="@color/menu_text" />
+
+        <ImageButton
             android:id="@+id/buttonAddMedia"
             android:layout_width="34dp"
             android:layout_height="39dp"
             android:background="@android:color/transparent"
-
             android:contentDescription="Add Media"
             android:src="@drawable/baseline_attach_file_24"
             app:tint="@color/menu_text" />

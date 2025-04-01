@@ -1,7 +1,6 @@
 package com.application.adverial.ui
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.application.adverial.remote.ConversationRepository
@@ -21,7 +20,12 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         repository.getMessagesByConversationId(conversationId)
     }
 
-    fun sendMessage(conversationId: Int, message: String, media: RequestBody?) {
-        repository.sendMessage(conversationId, message, media)
+    fun sendMessage(
+            conversationId: Int,
+            message: String,
+            media: RequestBody? = null,
+            voice: RequestBody? = null
+    ) {
+        repository.sendMessage(conversationId, message, media, voice)
     }
 }

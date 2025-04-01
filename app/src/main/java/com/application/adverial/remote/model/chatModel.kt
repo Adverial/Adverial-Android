@@ -1,41 +1,43 @@
 package com.application.adverial.remote.model
 
-import com.google.gson.annotations.SerializedName
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 
 data class ConversationResponse(
-    @SerializedName("conversion_id") val conversionId: Int,
-    val name: String
+        @SerializedName("conversion_id") val conversionId: Int,
+        val name: String
 )
 
 data class Conversation(
-    @SerializedName("chat_partner_id") val chatPartnerId: Int,
-    @SerializedName("conversion_id") val conversionId: Int,
-    @SerializedName("chat_partner_name") val chatPartnerName: String,
-    @SerializedName("chat_partner_email") val chatPartnerEmail: String,
-    @SerializedName("last_message") val lastMessage: String,
-    @SerializedName("last_message_time") val lastMessageAt: String,
-    val avatar: String,
-    @SerializedName("ad_id") val adId: Int?,
-    @SerializedName("ad_title") val adTitle: String?,
-    @SerializedName("ad_price") val adPrice: String?,
-    @SerializedName("ad_price_currency") val adPriceCurrency: String?,
-    @SerializedName("ad_image") val adImage: String?
+        @SerializedName("chat_partner_id") val chatPartnerId: Int,
+        @SerializedName("conversion_id") val conversionId: Int,
+        @SerializedName("chat_partner_name") val chatPartnerName: String,
+        @SerializedName("chat_partner_email") val chatPartnerEmail: String,
+        @SerializedName("last_message") val lastMessage: String,
+        @SerializedName("last_message_time") val lastMessageAt: String,
+        val avatar: String,
+        @SerializedName("ad_id") val adId: Int?,
+        @SerializedName("ad_title") val adTitle: String?,
+        @SerializedName("ad_price") val adPrice: String?,
+        @SerializedName("ad_price_currency") val adPriceCurrency: String?,
+        @SerializedName("ad_image") val adImage: String?
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readValue(Double::class.java.classLoader) as? String,
-        parcel.readString(),
-        parcel.readString()
+    constructor(
+            parcel: Parcel
+    ) : this(
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readString() ?: "",
+            parcel.readString() ?: "",
+            parcel.readString() ?: "",
+            parcel.readString() ?: "",
+            parcel.readString() ?: "",
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString(),
+            parcel.readValue(Double::class.java.classLoader) as? String,
+            parcel.readString(),
+            parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -69,18 +71,20 @@ data class Conversation(
 }
 
 data class MessageResponse(
-    val id: Int,
-    @SerializedName("conversion_id") val conversionId: Int,
-    val message: String,
-    @SerializedName("media") val mediaUrl: String?,
-    @SerializedName("created_at") val createdAt: String
+        val id: Int,
+        @SerializedName("conversion_id") val conversionId: Int,
+        val message: String,
+        @SerializedName("media") val mediaUrl: String?,
+        @SerializedName("voice_url") val voiceUrl: String?,
+        @SerializedName("created_at") val createdAt: String
 )
 
 data class Message(
-    @SerializedName("message_id") val messageId: Int,
-    @SerializedName("conversion_id") val conversionId: Int,
-    val message: String,
-    @SerializedName("media_url") val mediaUrl: String?,
-    @SerializedName("created_at") val createdAt: String,
-    @SerializedName("sender_id") val senderId: Int
+        @SerializedName("message_id") val messageId: Int,
+        @SerializedName("conversion_id") val conversionId: Int,
+        val message: String,
+        @SerializedName("media_url") val mediaUrl: String?,
+        @SerializedName("voice_url") val voiceUrl: String?,
+        @SerializedName("created_at") val createdAt: String,
+        @SerializedName("sender_id") val senderId: Int
 )

@@ -93,10 +93,22 @@ class ConversationRepository(val context: Context) {
             // Add media file if present
             if (media != null) {
                 try {
+                    // Try to get more details about the media RequestBody
+                    val mediaDetails =
+                            if (media is okhttp3.RequestBody) {
+                                "Media RequestBody is valid"
+                            } else {
+                                "Media RequestBody type: ${media.javaClass.name}"
+                            }
+                    Log.d("MediaDebug", mediaDetails)
+
+                    // Add media with a proper filename
                     builder.addFormDataPart("media", "image.jpg", media)
                     parts.add("media=true")
+                    Log.d("MediaDebug", "Media part added as image.jpg")
                 } catch (e: Exception) {
-                    Log.e("ConversationRepository", "Error adding media: ${e.message}")
+                    Log.e("MediaDebug", "Error adding media: ${e.message}")
+                    e.printStackTrace()
                 }
             }
 

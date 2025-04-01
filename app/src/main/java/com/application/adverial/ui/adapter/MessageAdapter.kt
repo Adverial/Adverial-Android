@@ -96,12 +96,23 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             // Handle image message
             binding.imageViewMediaRight.visibility =
                     if (message.mediaUrl != null) {
+                        // Check if the URL is already a complete URL or if it needs the base URL
+                        val fullMediaUrl =
+                                if (message.mediaUrl.startsWith("http")) {
+                                    message.mediaUrl
+                                } else {
+                                    BuildConfig.API_BASE_URL + message.mediaUrl
+                                }
+
+                        android.util.Log.d("MediaDebug", "Loading media URL: $fullMediaUrl")
+
                         Glide.with(binding.root.context)
-                                .load(BuildConfig.API_BASE_URL + message.mediaUrl)
+                                .load(fullMediaUrl)
                                 .into(binding.imageViewMediaRight)
 
                         binding.imageViewMediaRight.setOnClickListener {
-                            openFullImageView(binding.root.context, message.mediaUrl)
+                            // Pass the already processed full URL to the activity
+                            openFullImageView(binding.root.context, fullMediaUrl)
                         }
                         View.VISIBLE
                     } else {
@@ -125,6 +136,8 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         private fun openFullImageView(context: Context, mediaUrl: String) {
+            // The URL should already be fully formatted by the caller
+            android.util.Log.d("MediaDebug", "Opening full image view: $mediaUrl")
             val intent = Intent(context, FullImageActivity::class.java)
             intent.putExtra("mediaUrl", mediaUrl)
             context.startActivity(intent)
@@ -135,7 +148,15 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             try {
                 val player = MediaPlayer()
-                player.setDataSource(BuildConfig.API_BASE_URL + audioUrl)
+                // Check if the URL is already a complete URL or if it needs the base URL
+                val fullUrl =
+                        if (audioUrl.startsWith("http")) {
+                            audioUrl
+                        } else {
+                            BuildConfig.API_BASE_URL + audioUrl
+                        }
+                android.util.Log.d("VoiceDebug", "Playing voice URL: $fullUrl")
+                player.setDataSource(fullUrl)
                 player.setOnPreparedListener {
                     player.start()
                     binding.playButtonRight.setImageResource(android.R.drawable.ic_media_pause)
@@ -150,6 +171,7 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 player.prepareAsync()
                 mediaPlayer = player
             } catch (e: IOException) {
+                android.util.Log.e("VoiceDebug", "Error playing voice: ${e.message}")
                 e.printStackTrace()
             }
         }
@@ -187,12 +209,23 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             // Handle image message
             binding.imageViewMediaLeft.visibility =
                     if (message.mediaUrl != null) {
+                        // Check if the URL is already a complete URL or if it needs the base URL
+                        val fullMediaUrl =
+                                if (message.mediaUrl.startsWith("http")) {
+                                    message.mediaUrl
+                                } else {
+                                    BuildConfig.API_BASE_URL + message.mediaUrl
+                                }
+
+                        android.util.Log.d("MediaDebug", "Loading media URL: $fullMediaUrl")
+
                         Glide.with(binding.root.context)
-                                .load(BuildConfig.API_BASE_URL + message.mediaUrl)
+                                .load(fullMediaUrl)
                                 .into(binding.imageViewMediaLeft)
 
                         binding.imageViewMediaLeft.setOnClickListener {
-                            openFullImageView(binding.root.context, message.mediaUrl)
+                            // Pass the already processed full URL to the activity
+                            openFullImageView(binding.root.context, fullMediaUrl)
                         }
                         View.VISIBLE
                     } else {
@@ -216,6 +249,8 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         private fun openFullImageView(context: Context, mediaUrl: String) {
+            // The URL should already be fully formatted by the caller
+            android.util.Log.d("MediaDebug", "Opening full image view: $mediaUrl")
             val intent = Intent(context, FullImageActivity::class.java)
             intent.putExtra("mediaUrl", mediaUrl)
             context.startActivity(intent)
@@ -226,7 +261,15 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             try {
                 val player = MediaPlayer()
-                player.setDataSource(BuildConfig.API_BASE_URL + audioUrl)
+                // Check if the URL is already a complete URL or if it needs the base URL
+                val fullUrl =
+                        if (audioUrl.startsWith("http")) {
+                            audioUrl
+                        } else {
+                            BuildConfig.API_BASE_URL + audioUrl
+                        }
+                android.util.Log.d("VoiceDebug", "Playing voice URL: $fullUrl")
+                player.setDataSource(fullUrl)
                 player.setOnPreparedListener {
                     player.start()
                     binding.playButtonLeft.setImageResource(android.R.drawable.ic_media_pause)
@@ -241,6 +284,7 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 player.prepareAsync()
                 mediaPlayer = player
             } catch (e: IOException) {
+                android.util.Log.e("VoiceDebug", "Error playing voice: ${e.message}")
                 e.printStackTrace()
             }
         }

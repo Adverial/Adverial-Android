@@ -140,9 +140,30 @@ class MessageActivity : AppCompatActivity() {
                                 mediaPath?.let { path ->
                                     val mediaFile = File(path)
                                     if (mediaFile.exists() && mediaFile.length() > 0) {
-                                        RequestBody.create(MediaType.get("image/jpeg"), mediaFile)
+                                        Log.d(
+                                                "MediaDebug",
+                                                "Preparing media file: ${mediaFile.absolutePath}, size: ${mediaFile.length()} bytes"
+                                        )
+                                        // Ensure we're creating a proper image file RequestBody
+                                        val mediaType =
+                                                when {
+                                                    path.toLowerCase().endsWith(".jpg") ||
+                                                            path.toLowerCase().endsWith(".jpeg") ->
+                                                            "image/jpeg"
+                                                    path.toLowerCase().endsWith(".png") ->
+                                                            "image/png"
+                                                    else -> "image/jpeg" // default to jpeg
+                                                }
+                                        Log.d(
+                                                "MediaDebug",
+                                                "Using media type: $mediaType for file: $path"
+                                        )
+                                        RequestBody.create(MediaType.get(mediaType), mediaFile)
                                     } else {
-                                        Log.e("MessageActivity", "Media file invalid: $path")
+                                        Log.e(
+                                                "MediaDebug",
+                                                "Media file invalid or empty: $path, exists: ${mediaFile.exists()}, size: ${mediaFile.length()}"
+                                        )
                                         Toast.makeText(
                                                         this,
                                                         "Media file is invalid or empty",
@@ -153,7 +174,8 @@ class MessageActivity : AppCompatActivity() {
                                     }
                                 }
                             } catch (e: Exception) {
-                                Log.e("MessageActivity", "Error processing media: ${e.message}")
+                                Log.e("MediaDebug", "Error processing media: ${e.message}")
+                                e.printStackTrace()
                                 Toast.makeText(
                                                 this,
                                                 "Error processing media file",
@@ -372,9 +394,13 @@ class MessageActivity : AppCompatActivity() {
     }
 
     private fun getPathFromUri(context: Context, uri: Uri): String? {
+        Log.d("MediaDebug", "Getting path from URI: $uri")
+
         // Direct file path
         if ("file".equals(uri.scheme, ignoreCase = true)) {
-            return uri.path
+            val path = uri.path
+            Log.d("MediaDebug", "File URI path: $path")
+            return path
         }
 
         // MediaStore content
@@ -385,21 +411,57 @@ class MessageActivity : AppCompatActivity() {
                 context.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
                     if (cursor.moveToFirst()) {
                         val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                        return cursor.getString(columnIndex)
+                        val path = cursor.getString(columnIndex)
+                        Log.d("MediaDebug", "Content resolver path: $path")
+
+                        // Verify the file exists and has content
+                        val file = File(path)
+                        if (file.exists() && file.length() > 0) {
+                            return path
+                        } else {
+                            Log.e(
+                                    "MediaDebug",
+                                    "File exists: ${file.exists()}, size: ${file.length()}"
+                            )
+                        }
                     }
                 }
 
-                // If cannot get path, create a temporary file
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    val tempFile =
-                            File(context.cacheDir, "temp_media_${System.currentTimeMillis()}.jpg")
-                    context.contentResolver.openInputStream(uri)?.use { input ->
-                        tempFile.outputStream().use { output -> input.copyTo(output) }
+                // If cannot get path or file is empty, create a temporary file
+                Log.d("MediaDebug", "Creating temporary file from content URI")
+                val mimeType = context.contentResolver.getType(uri)
+                val extension =
+                        when {
+                            mimeType?.contains("jpeg") == true ||
+                                    mimeType?.contains("jpg") == true -> ".jpg"
+                            mimeType?.contains("png") == true -> ".png"
+                            else -> ".jpg"
+                        }
+
+                val tempFile =
+                        File(context.cacheDir, "temp_media_${System.currentTimeMillis()}$extension")
+                context.contentResolver.openInputStream(uri)?.use { input ->
+                    tempFile.outputStream().use { output ->
+                        val bytesCopied = input.copyTo(output)
+                        Log.d("MediaDebug", "Copied $bytesCopied bytes to ${tempFile.absolutePath}")
                     }
+                }
+
+                if (tempFile.exists() && tempFile.length() > 0) {
+                    Log.d(
+                            "MediaDebug",
+                            "Temp file created: ${tempFile.absolutePath}, size: ${tempFile.length()}"
+                    )
                     return tempFile.absolutePath
+                } else {
+                    Log.e(
+                            "MediaDebug",
+                            "Failed to create valid temp file, exists: ${tempFile.exists()}, size: ${tempFile.length()}"
+                    )
+                    return null
                 }
             } catch (e: Exception) {
-                Log.e("MessageActivity", "Error handling content URI: ${e.message}")
+                Log.e("MediaDebug", "Error handling content URI: ${e.message}")
                 e.printStackTrace()
             }
         }
@@ -407,29 +469,64 @@ class MessageActivity : AppCompatActivity() {
         // Document provider
         else if (DocumentsContract.isDocumentUri(context, uri)) {
             try {
+                Log.d("MediaDebug", "Handling document URI")
                 val tempFile = File(context.cacheDir, "temp_doc_${System.currentTimeMillis()}.jpg")
                 context.contentResolver.openInputStream(uri)?.use { input ->
-                    tempFile.outputStream().use { output -> input.copyTo(output) }
+                    tempFile.outputStream().use { output ->
+                        val bytesCopied = input.copyTo(output)
+                        Log.d("MediaDebug", "Copied $bytesCopied bytes to ${tempFile.absolutePath}")
+                    }
                 }
-                return tempFile.absolutePath
+
+                if (tempFile.exists() && tempFile.length() > 0) {
+                    Log.d(
+                            "MediaDebug",
+                            "Document temp file created: ${tempFile.absolutePath}, size: ${tempFile.length()}"
+                    )
+                    return tempFile.absolutePath
+                } else {
+                    Log.e(
+                            "MediaDebug",
+                            "Failed to create valid doc temp file, exists: ${tempFile.exists()}, size: ${tempFile.length()}"
+                    )
+                    return null
+                }
             } catch (e: Exception) {
-                Log.e("MessageActivity", "Error handling document URI: ${e.message}")
+                Log.e("MediaDebug", "Error handling document URI: ${e.message}")
                 e.printStackTrace()
             }
         }
 
         // Fallback: create a temporary file
         try {
+            Log.d("MediaDebug", "Using fallback method for URI")
             val tempFile = File(context.cacheDir, "temp_file_${System.currentTimeMillis()}.jpg")
             context.contentResolver.openInputStream(uri)?.use { input ->
-                tempFile.outputStream().use { output -> input.copyTo(output) }
+                tempFile.outputStream().use { output ->
+                    val bytesCopied = input.copyTo(output)
+                    Log.d("MediaDebug", "Copied $bytesCopied bytes to ${tempFile.absolutePath}")
+                }
             }
-            return tempFile.absolutePath
+
+            if (tempFile.exists() && tempFile.length() > 0) {
+                Log.d(
+                        "MediaDebug",
+                        "Fallback temp file created: ${tempFile.absolutePath}, size: ${tempFile.length()}"
+                )
+                return tempFile.absolutePath
+            } else {
+                Log.e(
+                        "MediaDebug",
+                        "Failed to create valid fallback temp file, exists: ${tempFile.exists()}, size: ${tempFile.length()}"
+                )
+                return null
+            }
         } catch (e: Exception) {
-            Log.e("MessageActivity", "Error creating temp file: ${e.message}")
+            Log.e("MediaDebug", "Error creating fallback temp file: ${e.message}")
             e.printStackTrace()
         }
 
+        Log.e("MediaDebug", "Could not get path for URI: $uri")
         return null
     }
 

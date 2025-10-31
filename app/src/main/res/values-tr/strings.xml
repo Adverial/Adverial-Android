@@ -230,5 +230,12 @@
     <string name="rating">Puanlama</string>
     <string name="review">Değerlendirme</string>
     <string name="review_hint">Bu ürünle ilgili deneyiminizi paylaşın...</string>
+    <string name="share_via">Şununla paylaş</string>
+    <string name="share_message_intro">%1$s uygulamasındaki bu ilana göz atın.</string>
+    <string name="share_message_title">Başlık: %1$s</string>
+    <string name="share_message_price">Fiyat: %1$s</string>
+    <string name="share_message_id">İlan No: %1$s</string>
+    <string name="share_message_default">%1$s uygulamasındaki bu ilana göz atın.</string>
+    <string name="signup_phone_hint">Telefon numaranızı girin</string>
 
 </resources>

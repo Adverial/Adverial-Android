@@ -355,7 +355,8 @@ class Tools {
     }
 
     fun fastBlur(sentBitmap: Bitmap, radius: Int): Bitmap? {
-        val bitmap = sentBitmap.copy(sentBitmap.config, true)
+        val safeConfig = sentBitmap.config ?: Bitmap.Config.ARGB_8888
+        val bitmap = sentBitmap.copy(safeConfig, true)
         if (radius < 1) {
             return null
         }
@@ -674,8 +675,19 @@ class Tools {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        with(NotificationManagerCompat.from(context)) {
-            notify(NOTIFICATION_ID, builder.build())
+        val notificationManager = NotificationManagerCompat.from(context)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                        ContextCompat.checkSelfPermission(
+                                context,
+                                android.Manifest.permission.POST_NOTIFICATIONS
+                        ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        ) {
+            notificationManager.notify(NOTIFICATION_ID, builder.build())
+        } else {
+            android.util.Log.w(
+                    "Tools",
+                    "Missing POST_NOTIFICATIONS permission; notification suppressed."
+            )
         }
     }
 

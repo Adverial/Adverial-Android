@@ -28,8 +28,6 @@ import com.application.adverial.ui.activity.NewAdImages
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.arthenica.ffmpegkit.FFmpegKit
-import com.arthenica.ffmpegkit.ReturnCode
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -145,34 +143,15 @@ class NewAdImagesAdapter(
 
     private fun compressVideo(uri: Uri): File {
         val inputPath = getRealPathFromURI(uri)
-        val outputFile = File(context.cacheDir, "compressed_${File(inputPath).name}")
-        val outputPath = outputFile.absolutePath
-
-        val command = arrayOf(
-            "-i", inputPath,
-            "-vf", "scale=640:-1",
-            "-c:v", "mpeg4", // Fallback to a codec like mpeg4 if libx264 is unavailable
-            "-preset", "ultrafast",
-            "-crf", "28",
-            outputPath
-        )
-
-        val session = FFmpegKit.execute(command.joinToString(" "))
-
-        if (ReturnCode.isSuccess(session.returnCode)) {
-            Log.i("FFmpegKit", "Video compression successful")
-            return outputFile
-        } else {
-            Log.e("FFmpegKit", "Video compression failed: ${session.returnCode}")
-            return File(inputPath)
-        }
+        Log.w("VideoCompression", "FFmpegKit unavailable; using original video without compression.")
+        return File(inputPath)
     }
 
     fun uploadToServer() {
         val credentials = BasicAWSCredentials(
             BuildConfig.DO_SPACES_KEY, BuildConfig.DO_SPACES_SECRET
         )
-        val endpoint = BuildConfig.DO_SPACES_URL
+        val endpoint = BuildConfig.DO_SPACES_ENDPOINT
         val clientConfig = ClientConfiguration().apply {
             maxErrorRetry = 3
             connectionTimeout = 50000
@@ -212,7 +191,7 @@ class NewAdImagesAdapter(
             uploadObserver.setTransferListener(object : TransferListener {
                 override fun onStateChanged(id: Int, state: TransferState) {
                     if (state == TransferState.COMPLETED) {
-                        val fileUrl = "${BuildConfig.DO_SPACES_ENDPOINT}/$fileName"
+                        val fileUrl = "${BuildConfig.DO_SPACES_URL}/$fileName"
                         filePaths.add(fileUrl)
                         if (filePaths.size == fileUris.size) {
                             result.value = "refresh"

@@ -287,6 +287,52 @@ class Post : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    fun share(view: View) {
+        val ad = itemData
+        val content = buildString {
+            appendLine(getString(R.string.share_message_intro, getString(R.string.app_name)))
+            if (ad != null) {
+                if (!ad.title.isNullOrBlank()) {
+                    appendLine(getString(R.string.share_message_title, ad.title))
+                }
+                val priceLabel = ad.price_currency ?: ad.price
+                if (!priceLabel.isNullOrBlank()) {
+                    appendLine(getString(R.string.share_message_price, priceLabel))
+                }
+                appendLine(getString(R.string.share_message_id, ad.id.toString()))
+            }
+        }.trim()
+        val shareText =
+                content.ifEmpty {
+                    getString(R.string.share_message_default, getString(R.string.app_name))
+                }
+
+        val intent =
+                Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, shareText)
+                }
+        startActivity(Intent.createChooser(intent, getString(R.string.share_via)))
+    }
+
+    private fun applyMapType(mapType: Int) {
+        if (::map.isInitialized) {
+            map.mapType = mapType
+        }
+    }
+
+    fun satellite(view: View) {
+        applyMapType(GoogleMap.MAP_TYPE_SATELLITE)
+    }
+
+    fun terrain(view: View) {
+        applyMapType(GoogleMap.MAP_TYPE_TERRAIN)
+    }
+
+    fun normal(view: View) {
+        applyMapType(GoogleMap.MAP_TYPE_NORMAL)
+    }
+
     fun location(view: View) {
         binding.postMapLayout.visibility = View.VISIBLE
         binding.postPage.visibility = View.GONE

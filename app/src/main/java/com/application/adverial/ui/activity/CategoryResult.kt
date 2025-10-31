@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.application.adverial.R
 import com.application.adverial.databinding.ActivitySearchResultBinding
 import com.application.adverial.remote.Repository
@@ -64,9 +65,18 @@ class CategoryResult : AppCompatActivity() {
         adapter = SearchResultsAdapter(posts)
         binding.resultRecyclerView.adapter = adapter
 
-        binding.resultRecyclerView.setOnScrollChangeListener { _, _, _, _, _ ->
-            if (!binding.resultRecyclerView.canScrollVertically(1)) nextPage()
-        }
+        binding.resultRecyclerView.addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0 &&
+                                scrollPermission &&
+                                !recyclerView.canScrollVertically(1)
+                        ) {
+                            nextPage()
+                        }
+                    }
+                }
+        )
 
         nextPage()
 

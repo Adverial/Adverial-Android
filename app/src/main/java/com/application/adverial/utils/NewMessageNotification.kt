@@ -1,5 +1,6 @@
 package com.application.adverial.utils
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,6 +10,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.application.adverial.BuildConfig
 import com.application.adverial.R
 import com.application.adverial.remote.model.Conversation
@@ -32,16 +34,17 @@ object NewMessageNotification {
     val pusher = Pusher(BuildConfig.PUSHER_APP_KEY, options)
 
     pusher.connect(object : ConnectionEventListener {
-        override fun onConnectionStateChange(change: ConnectionStateChange) {
-            // Handle connection state changes if needed
-          //  Log.d("Pusher", "Connection state changed: ${change.currentState}")
-        }
+    override fun onConnectionStateChange(change: ConnectionStateChange) { /* ... */ }
 
-        override fun onError(message: String, code: String, e: Exception) {
-            // Handle connection errors if needed
-           // Log.e("Pusher", "Connection error: $message, code: $code", e)
-        }
-    }, ConnectionState.ALL)
+    override fun onError(message: String?, code: String?, e: Exception?) {
+        Log.e(
+            "Pusher",
+            "Connection error message=${message ?: "n/a"} code=${code ?: "n/a"}",
+            e
+        )
+    }
+}, ConnectionState.ALL)
+
 
     val userId = context.getSharedPreferences("user", Context.MODE_PRIVATE).getString("user_id", "")
  //   Log.d("Pusher", "User ID: $userId")
@@ -83,7 +86,8 @@ object NewMessageNotification {
     ) {
         createNotificationChannel(context, CHANNEL_ID, "Message Channel")
         val intent = Intent(context, MessageActivity::class.java).apply {
-         var   conversationRequest= Conversation(
+            val conversationRequest =
+                    Conversation(
                 chatPartnerId = 0,
                 conversionId = conversation_id,
                 chatPartnerName = user_name,
@@ -117,8 +121,16 @@ object NewMessageNotification {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        with(NotificationManagerCompat.from(context)) {
-            notify(NOTIFICATION_ID, builder.build())
+        val notificationManager = NotificationManagerCompat.from(context)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                        ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS
+                        ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        ) {
+            notificationManager.notify(NOTIFICATION_ID, builder.build())
+        } else {
+            Log.w("NewMessageNotification", "Missing POST_NOTIFICATIONS permission; skipping notify.")
         }
     }
 

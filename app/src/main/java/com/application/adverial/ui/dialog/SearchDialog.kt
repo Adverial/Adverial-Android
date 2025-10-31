@@ -79,7 +79,8 @@ class SearchDialog : DialogFragment() {
         }
 
         val renderEffect = android.graphics.RenderEffect.createBlurEffect(radius, radius, android.graphics.Shader.TileMode.CLAMP)
-        val outputBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
+        val safeConfig = bitmap.config ?: Bitmap.Config.ARGB_8888
+        val outputBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, safeConfig)
         val canvas = android.graphics.Canvas(outputBitmap)
         val paint = android.graphics.Paint().apply {
             setRenderEffect(renderEffect)

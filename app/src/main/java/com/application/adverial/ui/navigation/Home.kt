@@ -92,9 +92,18 @@ class Home : AppCompatActivity() {
         binding.homeProducts.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         homeAdsAdapter = HomePostsAdapter(posts)
         binding.homeProducts.adapter = homeAdsAdapter
-        binding.homeProducts.setOnScrollChangeListener { _, _, _, _, _ ->
-            if (!binding.homeProducts.canScrollVertically(1)) nextPage()
-        }
+        binding.homeProducts.addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0 &&
+                                scrollPermission &&
+                                !recyclerView.canScrollVertically(1)
+                        ) {
+                            nextPage()
+                        }
+                    }
+                }
+        )
 
         val coroutineScope = CoroutineScope(Dispatchers.IO)
         coroutineScope.async(Dispatchers.IO) {

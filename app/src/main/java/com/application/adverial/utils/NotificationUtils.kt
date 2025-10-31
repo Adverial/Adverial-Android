@@ -1,10 +1,10 @@
 package com.application.adverial.utils
 
 import android.app.Activity
-import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 
 object NotificationUtils {
@@ -21,8 +21,6 @@ object NotificationUtils {
         }
     }
 
-    fun areNotificationsEnabled(context: Context): Boolean {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        return notificationManager.areNotificationsEnabled()
-    }
+    fun areNotificationsEnabled(context: Context): Boolean =
+            NotificationManagerCompat.from(context).areNotificationsEnabled()
 }

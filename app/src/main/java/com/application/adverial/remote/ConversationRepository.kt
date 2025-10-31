@@ -28,7 +28,7 @@ class ConversationRepository(val context: Context) {
 
     val initialConversationLiveData = MutableLiveData<ConversationResponse>()
     val userConversationsLiveData = MutableLiveData<List<Conversation>>()
-    val sendMessageLiveData = MutableLiveData<MessageResponse>()
+    val sendMessageLiveData = MutableLiveData<MessageResponse?>()
     val messagesLiveData = MutableLiveData<List<Message>>()
 
     fun initialConversation(partnerUserId: Int, adId: Int?) {
@@ -312,7 +312,7 @@ class ConversationRepository(val context: Context) {
     fun getUserConversationsResponse(): LiveData<List<Conversation>> {
         return userConversationsLiveData
     }
-    fun getSendMessageResponse(): LiveData<MessageResponse> {
+    fun getSendMessageResponse(): LiveData<MessageResponse?> {
         return sendMessageLiveData
     }
     fun getMessagesResponse(): LiveData<List<Message>> {

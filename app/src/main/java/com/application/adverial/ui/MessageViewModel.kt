@@ -14,7 +14,8 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
 
     fun getMessagesResponse(): LiveData<List<Message>> = repository.getMessagesResponse()
 
-    fun getSendMessageResponse(): LiveData<MessageResponse> = repository.getSendMessageResponse()
+    fun getSendMessageResponse(): LiveData<MessageResponse?> =
+            repository.getSendMessageResponse()
 
     fun loadMessagesByConversationId(conversationId: Int) {
         repository.getMessagesByConversationId(conversationId)

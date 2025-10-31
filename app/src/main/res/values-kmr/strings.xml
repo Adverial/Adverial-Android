@@ -230,5 +230,12 @@
     <string name="rating">هەڵسەنگاندن</string>
     <string name="review">نێرین</string>
     <string name="review_hint">ئەزموونا خوە ب ڤێ بەرهەمێ رە پارڤەکە...</string>
+    <string name="share_via">Share via</string>
+    <string name="share_message_intro">Check out this ad on %1$s.</string>
+    <string name="share_message_title">Title: %1$s</string>
+    <string name="share_message_price">Price: %1$s</string>
+    <string name="share_message_id">Listing ID: %1$s</string>
+    <string name="share_message_default">Check out this ad on %1$s.</string>
+    <string name="signup_phone_hint">ژمارەی تەلەفونەکەت داخڵ بکە</string>
 
 </resources>

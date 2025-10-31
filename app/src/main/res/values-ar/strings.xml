@@ -230,5 +230,12 @@
     <string name="rating">التقييم</string>
     <string name="review">المراجعة</string>
     <string name="review_hint">شارك تجربتك مع هذا المنتج...</string>
+    <string name="share_via">مشاركة عبر</string>
+    <string name="share_message_intro">اطلع على هذا الإعلان على %1$s.</string>
+    <string name="share_message_title">العنوان: %1$s</string>
+    <string name="share_message_price">السعر: %1$s</string>
+    <string name="share_message_id">رقم الإعلان: %1$s</string>
+    <string name="share_message_default">اطلع على هذا الإعلان على %1$s.</string>
+    <string name="signup_phone_hint">أدخل رقم هاتفك</string>
 
 </resources>

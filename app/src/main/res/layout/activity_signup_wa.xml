@@ -35,7 +35,6 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:onClick="back"
             android:padding="@dimen/_5sdp"
             android:src="@drawable/im_close"
             app:layout_constraintEnd_toEndOf="@+id/imageView42"
@@ -132,7 +131,6 @@
             android:background="@drawable/rounded_full2"
             android:backgroundTint="@color/red"
             android:fontFamily="@font/regular"
-            android:onClick="register"
             android:text="@string/signup"
             android:textAllCaps="false"
             android:textColor="@color/menu_text"
@@ -150,7 +148,6 @@
             android:text="@string/already_have_account"
             android:textColor="@color/menu_text"
             android:textSize="@dimen/_12ssp"
-            android:onClick="gotoLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signup_button" />
